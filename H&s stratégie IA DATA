@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>H&S Group — Stratégie Data & IA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5efe5;
+      --bg-soft: #efe7da;
+      --panel: rgba(255,255,255,0.72);
+      --panel-strong: rgba(255,255,255,0.92);
+      --panel-alt: #f8f3eb;
+      --line: rgba(90,73,48,0.12);
+      --line-strong: rgba(90,73,48,0.18);
+      --text: #2b241d;
+      --muted: #6f6357;
+      --muted-2: #948676;
+      --accent: #8f7757;
+      --accent-2: #bca27f;
+      --accent-3: #d9c3a3;
+      --shadow: 0 14px 50px rgba(70,53,35,0.10);
+      --shadow-soft: 0 6px 24px rgba(70,53,35,0.07);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --data: #7e6a4c;
+      --data-bg: rgba(126,106,76,0.10);
+      --data-border: rgba(126,106,76,0.22);
+      --ia: #5e564d;
+      --ia-bg: rgba(94,86,77,0.10);
+      --ia-border: rgba(94,86,77,0.22);
+      --trans: #aa8b61;
+      --trans-bg: rgba(170,139,97,0.12);
+      --trans-border: rgba(170,139,97,0.22);
+      --lot1: #9a8260;
+      --lot2: #7d6b57;
+      --lot3: #c2aa86;
+      --priority-1: #7a5845;
+      --priority-2: #9a775c;
+      --priority-3: #8f8b80;
+      --priority-4: #aba295;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Inter, sans-serif; color: var(--text); background:
+      radial-gradient(circle at top left, rgba(255,255,255,.66), transparent 35%),
+      radial-gradient(circle at bottom right, rgba(188,162,127,.18), transparent 30%),
+      linear-gradient(180deg, #f7f1e8, #efe7da 60%, #f4ede4); height: 100vh; overflow: hidden; }
+    body::before { content:''; position: fixed; inset:0; pointer-events:none; opacity:.5; background-image: linear-gradient(rgba(70,53,35,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(70,53,35,.018) 1px, transparent 1px); background-size: 34px 34px; mask-image: radial-gradient(circle at center, black 55%, transparent 90%); }
+    button, input, select { font: inherit; }
+    img { display:block; max-width:100%; }
+
+    .app { display:grid; grid-template-columns: 300px 1fr; grid-template-rows: 84px 1fr; height:100vh; }
+    .topnav { grid-column:1/-1; display:flex; align-items:center; gap:18px; padding:18px 28px; backdrop-filter: blur(20px); background: rgba(247,241,232,.72); border-bottom:1px solid var(--line); position:relative; z-index:20; }
+    .brand { display:flex; align-items:center; gap:16px; min-width:0; }
+    .brand-logo { width:138px; height:40px; display:flex; align-items:center; }
+    .brand-copy small { display:block; color:var(--muted); text-transform:uppercase; letter-spacing:.22em; font-size:10px; margin-bottom:4px; }
+    .brand-copy strong { font-size:14px; font-weight:700; letter-spacing:.02em; }
+    .topnav-divider { width:1px; height:36px; background:var(--line); }
+    .topnav-search { position:relative; width:min(420px, 100%); }
+    .topnav-search input { width:100%; height:46px; padding:0 18px 0 46px; border:1px solid var(--line); border-radius:999px; background: rgba(255,255,255,.58); color:var(--text); outline:none; box-shadow: inset 0 1px 0 rgba(255,255,255,.6); }
+    .topnav-search input::placeholder { color:var(--muted-2); }
+    .topnav-search .si { position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:16px; }
+    .topnav-pills { margin-left:auto; display:flex; gap:6px; flex-wrap:wrap; padding:6px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.42); box-shadow: inset 0 1px 0 rgba(255,255,255,.5); }
+    .nav-pill { border:1px solid transparent; background: transparent; color:var(--muted); border-radius:999px; padding:10px 14px; font-size:12px; font-weight:600; cursor:pointer; transition:.2s ease; }
+    .nav-pill:hover, .nav-pill.active { background:rgba(255,255,255,.94); color:var(--text); border-color:rgba(90,73,48,.08); box-shadow: 0 6px 18px rgba(70,53,35,.08); }
+    .badge-count { display:inline-flex; align-items:center; justify-content:center; min-width:20px; height:20px; padding:0 6px; margin-left:6px; border-radius:999px; background:var(--text); color:white; font-size:10px; }
+
+    .sidebar { padding:22px 18px 26px; border-right:1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,.18)); overflow:auto; }
+    .sidebar-block, .stats-row { background: var(--panel); border:1px solid rgba(255,255,255,.55); box-shadow: var(--shadow-soft); backdrop-filter: blur(16px); border-radius:22px; }
+    .stats-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:12px; margin-bottom:16px; }
+    .stat-box { background: rgba(255,255,255,.58); border:1px solid var(--line); border-radius:16px; padding:14px 12px; text-align:center; }
+    .stat-num { font-family:'Cormorant Garamond', serif; font-size:34px; line-height:1; }
+    .stat-lbl { color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.14em; margin-top:6px; }
+    .sidebar-block { padding:16px; margin-bottom:14px; }
+    .s-label { font-size:10px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.18em; margin-bottom:10px; }
+    .filter-chip-row { display:flex; flex-wrap:wrap; gap:8px; }
+    .fchip, .ent-chip { border:1px solid var(--line); background: rgba(255,255,255,.66); color:var(--muted); border-radius:999px; padding:8px 12px; font-size:12px; cursor:pointer; transition:.18s ease; }
+    .fchip:hover, .ent-chip:hover, .fchip.active-all, .ent-chip.active { color:var(--text); border-color:var(--line-strong); background:white; }
+    .fchip.active-data { color:var(--data); border-color:var(--data-border); background:var(--data-bg); }
+    .fchip.active-ia { color:var(--ia); border-color:var(--ia-border); background:var(--ia-bg); }
+    .fchip.active-trans { color:var(--trans); border-color:var(--trans-border); background:var(--trans-bg); }
+    .fchip.active-p1 { color:var(--priority-1); border-color:rgba(122,88,69,.22); background:rgba(122,88,69,.08); }
+    .filter-select { width:100%; height:44px; border-radius:14px; border:1px solid var(--line); padding:0 14px; background: rgba(255,255,255,.72); color:var(--text); outline:none; }
+
+    .main { overflow:auto; }
+    .hero { padding:34px 34px 26px; }
+    .hero-shell { background: linear-gradient(135deg, rgba(255,255,255,.86), rgba(255,255,255,.58)); border:1px solid rgba(255,255,255,.7); box-shadow: var(--shadow); border-radius: 34px; padding:28px 30px; position:relative; overflow:hidden; }
+    .hero-shell::after { content:''; position:absolute; right:-80px; top:-90px; width:280px; height:280px; border-radius:50%; background: radial-gradient(circle, rgba(188,162,127,.24), transparent 60%); }
+    .hero-eyebrow { color:var(--muted); text-transform:uppercase; letter-spacing:.18em; font-size:11px; margin-bottom:14px; }
+    h1 { font-family:'Cormorant Garamond', serif; font-size:58px; line-height:.96; font-weight:600; max-width:920px; letter-spacing:-.02em; margin-bottom:16px; }
+    .hero-sub { max-width:760px; font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
+    .hero-kpis { display:grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap:14px; margin-bottom:22px; }
+    .hero-kpi { padding:16px 18px; border-radius:18px; background: rgba(255,255,255,.62); border:1px solid var(--line); }
+    .hero-kpi-num { font-family:'Cormorant Garamond', serif; font-size:34px; }
+    .hero-kpi-lbl { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.16em; margin-top:4px; }
+    .logo-strip { display:grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap:12px; }
+    .logo-card { height:74px; background: rgba(255,255,255,.65); border:1px solid var(--line); border-radius:18px; display:flex; align-items:center; justify-content:center; padding:14px; }
+    .logo-card img { max-height:34px; width:auto; object-fit:contain; filter: grayscale(100%) contrast(1.02) brightness(.78); opacity:.92; }
+
+    .vision-grid { display:none; }
+
+    .section-tabs { display:flex; gap:10px; padding:0 34px 16px; position:sticky; top:0; z-index:5; backdrop-filter: blur(18px); background: linear-gradient(180deg, rgba(245,239,229,.92), rgba(245,239,229,.72), transparent); }
+    .stab { padding:13px 16px; border-radius:16px; border:1px solid var(--line); background:rgba(255,255,255,.55); color:var(--muted); font-size:13px; font-weight:600; cursor:pointer; transition:.18s ease; }
+    .stab.active, .stab:hover { color:var(--text); background:white; border-color:var(--line-strong); box-shadow:var(--shadow-soft); }
+    .entities-row { display:flex; flex-wrap:wrap; gap:8px; padding:0 34px 18px; }
+
+    .panel { display:none; } .panel.active { display:block; }
+    .explorer-header { display:flex; gap:12px; align-items:center; padding:0 34px 8px; }
+    .explorer-title { color:var(--muted); font-size:13px; }
+    .explorer-count { font-family:'Cormorant Garamond', serif; font-size:28px; }
+    .sort-btn { margin-left:auto; padding:10px 14px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.7); color:var(--text); cursor:pointer; }
+    .cards-grid { padding:12px 34px 34px; display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:16px; }
+    .use-card { background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.68)); border:1px solid rgba(255,255,255,.78); border-radius:26px; padding:18px; box-shadow:var(--shadow-soft); cursor:pointer; transition:.2s ease; position:relative; overflow:hidden; }
+    .use-card::before { content:''; position:absolute; inset:0 auto 0 0; width:4px; background:var(--data); opacity:.85; }
+    .use-card.type-ia::before { background:var(--ia); }
+    .use-card.type-trans::before { background:var(--trans); }
+    .use-card:hover { transform:translateY(-3px); box-shadow:var(--shadow); }
+    .card-entity-row { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:14px; }
+    .entity-id { display:flex; align-items:center; gap:12px; min-width:0; }
+    .entity-logo { width:42px; height:42px; border-radius:14px; background:rgba(255,255,255,.85); border:1px solid var(--line); display:grid; place-items:center; padding:8px; overflow:hidden; flex-shrink:0; }
+    .entity-logo.sm { width:34px; height:34px; border-radius:12px; padding:6px; }
+    .entity-logo img { width:100%; height:100%; object-fit:contain; filter: grayscale(100%) contrast(1.02) brightness(.68); }
+    .entity-logo.fallback { font-size:11px; font-weight:700; color:var(--muted); letter-spacing:.12em; }
+    .entity-name { font-size:12px; font-weight:700; color:var(--text); }
+    .entity-detail { font-size:11px; color:var(--muted); margin-top:2px; }
+    .prio-dot { width:10px; height:10px; border-radius:50%; margin-top:4px; flex-shrink:0; }
+    .card-top { margin-bottom:10px; }
+    .card-badges, .panel-eyebrow { display:flex; flex-wrap:wrap; gap:8px; }
+    .badge { padding:6px 10px; border-radius:999px; border:1px solid var(--line); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; background:rgba(255,255,255,.62); }
+    .badge-data { color:var(--data); background:var(--data-bg); border-color:var(--data-border); }
+    .badge-ia { color:var(--ia); background:var(--ia-bg); border-color:var(--ia-border); }
+    .badge-trans { color:var(--trans); background:var(--trans-bg); border-color:var(--trans-border); }
+    .badge-lot1 { color:var(--lot1); background:rgba(154,130,96,.10); border-color:rgba(154,130,96,.22); }
+    .badge-lot2 { color:var(--lot2); background:rgba(125,107,87,.10); border-color:rgba(125,107,87,.22); }
+    .badge-lot3 { color:var(--lot3); background:rgba(194,170,134,.18); border-color:rgba(194,170,134,.32); }
+    .badge-p1 { color:var(--priority-1); background:rgba(122,88,69,.08); border-color:rgba(122,88,69,.2); }
+    .badge-p2 { color:var(--priority-2); background:rgba(154,119,92,.09); border-color:rgba(154,119,92,.22); }
+    .badge-p3 { color:var(--priority-3); background:rgba(143,139,128,.09); border-color:rgba(143,139,128,.22); }
+    .badge-p4 { color:var(--priority-4); background:rgba(171,162,149,.12); border-color:rgba(171,162,149,.26); }
+    .badge-qw { color:#7a5f3d; background:rgba(217,195,163,.26); border-color:rgba(188,162,127,.34); }
+    .card-title { font-size:20px; line-height:1.3; font-weight:700; margin-bottom:8px; }
+    .card-summary { font-size:13px; color:var(--muted); line-height:1.65; min-height:64px; }
+    .card-footer { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:14px; }
+    .val-tag, .tag-item { padding:8px 10px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.58); font-size:11px; color:var(--muted); }
+    .card-arrow { margin-left:auto; font-size:18px; color:var(--muted); }
+    .no-results { padding:60px 20px; text-align:center; color:var(--muted); grid-column:1/-1; }
+    .empty-mark { font-size:44px; margin-bottom:10px; color:var(--accent-2); }
+
+    .roadmap-wrap { padding:12px 34px 34px; }
+    .roadmap-intro { display:flex; align-items:flex-end; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+    .roadmap-intro h2 { font-family:'Cormorant Garamond', serif; font-size:42px; margin-bottom:8px; }
+    .roadmap-intro p { color:var(--muted); max-width:760px; line-height:1.7; }
+    .roadmap-status { padding:10px 14px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.74); font-size:12px; color:var(--muted); }
+    .lots-grid { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:18px; margin-top:24px; align-items:start; }
+    .lot-col { background:linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.66)); border-radius:30px; border:1px solid rgba(255,255,255,.78); box-shadow:var(--shadow-soft); overflow:hidden; position:relative; }
+    .lot-col::before { content:''; position:absolute; inset:0 0 auto 0; height:4px; opacity:.95; }
+    .lot-col.lot-1::before { background:linear-gradient(90deg, rgba(154,130,96,.9), rgba(154,130,96,.3)); }
+    .lot-col.lot-2::before { background:linear-gradient(90deg, rgba(125,107,87,.9), rgba(125,107,87,.3)); }
+    .lot-col.lot-3::before { background:linear-gradient(90deg, rgba(194,170,134,.95), rgba(194,170,134,.35)); }
+    .lot-header { padding:22px 20px 18px; display:flex; align-items:center; gap:14px; border-bottom:1px solid var(--line); }
+    .lot-step { width:46px; height:46px; border-radius:18px; display:grid; place-items:center; font-weight:800; background:rgba(255,255,255,.88); border:1px solid var(--line); box-shadow: inset 0 1px 0 rgba(255,255,255,.65); }
+    .lot-copy { flex:1; }
+    .lot-title { font-size:17px; font-weight:700; }
+    .lot-sub { color:var(--muted); font-size:12px; margin-top:4px; line-height:1.45; }
+    .lot-horizon { padding:8px 10px; border-radius:999px; background:rgba(255,255,255,.82); border:1px solid var(--line); font-size:11px; color:var(--muted); white-space:nowrap; }
+    .lot-body { padding:16px; display:flex; flex-direction:column; gap:12px; min-height:220px; }
+    .road-card { background:rgba(255,255,255,.76); border:1px solid var(--line); border-radius:22px; padding:15px; cursor:pointer; transition:.18s ease; }
+    .road-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-soft); }
+    .road-card-head { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .road-card-ent { font-size:10px; text-transform:uppercase; letter-spacing:.16em; color:var(--muted); }
+    .road-card-title { font-size:15px; font-weight:700; margin-bottom:7px; line-height:1.4; }
+    .road-card-sum { font-size:12px; line-height:1.6; color:var(--muted); }
+    .road-card-footer { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .road-empty { border:1px dashed var(--line-strong); border-radius:22px; padding:18px; color:var(--muted); background:rgba(255,255,255,.42); min-height:120px; display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.6; }
+
+    .op-wrap { padding:12px 34px 34px; }
+    .op-sections { display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; }
+    .op-section { background:var(--panel); border:1px solid rgba(255,255,255,.74); box-shadow:var(--shadow-soft); border-radius:28px; padding:22px; }
+    .op-section-title { font-size:22px; font-weight:700; margin-bottom:6px; }
+    .op-section-sub { color:var(--muted); font-size:13px; margin-bottom:16px; }
+    .team-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .role-card, .ent-item, .kpi-box, .card-like { background:rgba(255,255,255,.7); border:1px solid var(--line); border-radius:18px; }
+    .role-card { padding:14px; }
+    .role-title { font-size:13px; font-weight:700; margin-bottom:4px; }
+    .role-desc { font-size:12px; color:var(--muted); line-height:1.55; }
+    .budget-bars { display:flex; flex-direction:column; gap:12px; }
+    .bbar-top { display:flex; justify-content:space-between; gap:12px; margin-bottom:6px; }
+    .bbar-lbl { font-size:13px; color:var(--text); }
+    .bbar-pct { font-size:12px; color:var(--muted); font-weight:700; }
+    .bbar-track { height:10px; border-radius:999px; background:rgba(255,255,255,.62); border:1px solid var(--line); overflow:hidden; }
+    .bbar-fill { height:100%; border-radius:999px; }
+    .entites-list { display:grid; gap:10px; }
+    .ent-item { display:flex; align-items:center; gap:12px; padding:12px; cursor:pointer; transition:.18s ease; }
+    .ent-item:hover { transform:translateY(-2px); box-shadow:var(--shadow-soft); }
+    .ent-name { font-weight:700; }
+    .ent-role { color:var(--muted); font-size:12px; }
+    .ent-count { margin-left:auto; padding:6px 10px; border-radius:999px; border:1px solid var(--line); background:white; font-size:11px; }
+
+    .detail-overlay { position:fixed; inset:0; background:rgba(43,36,29,.28); backdrop-filter: blur(8px); opacity:0; pointer-events:none; transition:.2s ease; z-index:40; }
+    .detail-overlay.open { opacity:1; pointer-events:auto; }
+    .detail-panel { position:fixed; top:0; right:0; width:min(740px, 100vw); height:100vh; background:linear-gradient(180deg, #f7f1e8, #efe7da); border-left:1px solid var(--line); transform:translateX(100%); transition:.24s ease; z-index:50; display:flex; flex-direction:column; }
+    .detail-panel.open { transform:translateX(0); }
+    .panel-header { padding:22px 24px 10px; display:flex; gap:12px; align-items:flex-start; border-bottom:1px solid var(--line); background:rgba(247,241,232,.86); backdrop-filter:blur(16px); }
+    .panel-close { margin-left:auto; width:40px; height:40px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.8); cursor:pointer; color:var(--muted); }
+    .panel-body { padding:22px 24px; overflow:auto; }
+    .panel-title { font-family:'Cormorant Garamond', serif; font-size:42px; line-height:1.02; margin-bottom:12px; }
+    .panel-summary { padding:18px 20px; border-radius:22px; background:rgba(255,255,255,.76); border:1px solid var(--line); line-height:1.75; color:var(--muted); margin-bottom:18px; }
+    .detail-grid, .split { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .detail-section { margin-bottom:14px; }
+    .card-like { padding:16px; }
+    .detail-section-title { font-size:10px; text-transform:uppercase; letter-spacing:.18em; color:var(--muted); margin-bottom:10px; }
+    .detail-text { color:var(--text); line-height:1.72; font-size:14px; }
+    .kpi-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+    .kpi-box { padding:12px 14px; font-size:12px; line-height:1.55; }
+    .horizon-badge { padding:10px 12px; border-radius:16px; border:1px solid var(--line); background:white; display:inline-flex; font-weight:700; }
+    .comex-box { padding:18px 20px; border-radius:22px; background:linear-gradient(135deg, rgba(255,255,255,.88), rgba(217,195,163,.25)); border:1px solid rgba(188,162,127,.35); line-height:1.75; font-style:italic; }
+    .nav-cards-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:16px 24px 22px; border-top:1px solid var(--line); background:rgba(247,241,232,.9); }
+    .nav-card-btn { border:1px solid var(--line); background:rgba(255,255,255,.78); border-radius:18px; padding:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer; text-align:left; }
+    .nav-card-btn[disabled] { opacity:.45; cursor:not-allowed; }
+    .nav-card-btn-lbl { font-size:10px; text-transform:uppercase; letter-spacing:.16em; color:var(--muted); margin-bottom:4px; }
+    .nav-card-btn-title { font-size:12px; font-weight:700; color:var(--text); line-height:1.45; }
+    .nav-arrow { font-size:18px; color:var(--muted); }
+    .highlighted { background:rgba(217,195,163,.55); border-radius:4px; padding:0 2px; }
+
+    @media (max-width: 1200px) { .app { grid-template-columns: 280px 1fr; } .vision-grid,.hero-kpis,.logo-strip,.lots-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 900px) { .app { grid-template-columns:1fr; grid-template-rows:84px auto 1fr; } .sidebar { order:2; border-right:none; border-top:1px solid var(--line); } .main { order:3; } .topnav { flex-wrap:wrap; height:auto; } h1 { font-size:44px; } .op-sections,.detail-grid,.split { grid-template-columns:1fr; } .nav-cards-row { grid-template-columns:1fr; } }
+    @media (max-width: 640px) { .hero,.vision-grid,.section-tabs,.entities-row,.explorer-header,.cards-grid,.roadmap-wrap,.op-wrap { padding-left:18px; padding-right:18px; } .hero-shell { padding:22px; } h1 { font-size:36px; } .logo-strip,.vision-grid,.hero-kpis,.lots-grid,.team-grid { grid-template-columns:1fr; } .cards-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <nav class="topnav">
+    <div class="brand">
+      <div class="brand-logo"><img src="logo_hns.png" alt="H&S Group"></div>
+      <div class="brand-copy"><small>Groupe H&amp;S</small><strong>Plateforme stratégique Data &amp; IA</strong></div>
+    </div>
+    <div class="topnav-divider"></div>
+    <div class="topnav-search"><span class="si">⌕</span><input type="text" id="searchInput" placeholder="Rechercher un use case, une entité, une technologie…" autocomplete="off"></div>
+    <div class="topnav-pills" id="lotPills">
+      <button class="nav-pill active" onclick="filterLot('all', this)">Tous les lots</button>
+      <button class="nav-pill" onclick="filterLot('Lot 1', this)">Lot 1 <span class="badge-count">9</span></button>
+      <button class="nav-pill" onclick="filterLot('Lot 2', this)">Lot 2 <span class="badge-count">8</span></button>
+      <button class="nav-pill" onclick="filterLot('Lot 3', this)">Lot 3 <span class="badge-count">7</span></button>
+    </div>
+  </nav>
+
+  <aside class="sidebar">
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num" id="totalCount">24</div><div class="stat-lbl">Use cases</div></div>
+      <div class="stat-box"><div class="stat-num">6</div><div class="stat-lbl">Entités</div></div>
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-lbl">Lots</div></div>
+      <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">Transverses</div></div>
+    </div>
+    <div class="sidebar-block">
+      <div class="s-label">Dimension</div>
+      <div class="filter-chip-row" id="dimFilter">
+        <button class="fchip active-all" onclick="filterDim('all',this)">Tous</button>
+        <button class="fchip" onclick="filterDim('Data',this)">Data</button>
+        <button class="fchip" onclick="filterDim('IA',this)">IA</button>
+        <button class="fchip" onclick="filterDim('Transverse',this)">Transverse</button>
+      </div>
+    </div>
+    <div class="sidebar-block">
+      <div class="s-label">Entité</div>
+      <select class="filter-select" id="entitySelect" onchange="filterEntity(this.value)">
+        <option value="all">Toutes les entités</option>
+        <option value="Dislog">Dislog</option>
+        <option value="One Retail">One Retail</option>
+        <option value="LVE">LVE / Logistique</option>
+        <option value="WB Media">WB Media</option>
+        <option value="Chari">Chari</option>
+        <option value="Kaya">Kaya Immobilier</option>
+        <option value="Transverse">Transverse</option>
+      </select>
+    </div>
+    <div class="sidebar-block">
+      <div class="s-label">Priorité</div>
+      <div class="filter-chip-row" id="prioFilter">
+        <button class="fchip active-all" onclick="filterPrio('all',this)">Tous</button>
+        <button class="fchip" onclick="filterPrio('Très prioritaire',this)">Très prioritaire</button>
+        <button class="fchip" onclick="filterPrio('Prioritaire',this)">Prioritaire</button>
+        <button class="fchip" onclick="filterPrio('Structurant',this)">Structurant</button>
+      </div>
+    </div>
+    <div class="sidebar-block">
+      <div class="s-label">Valeur métier</div>
+      <select class="filter-select" id="valueSelect" onchange="filterValue(this.value)">
+        <option value="all">Tous types de valeur</option>
+        <option value="Pilotage">Pilotage</option>
+        <option value="Productivité">Productivité</option>
+        <option value="Marge">Marge</option>
+        <option value="Cash">Cash</option>
+        <option value="Croissance">Croissance</option>
+        <option value="IPO readiness">IPO readiness</option>
+        <option value="M&A">Intégration M&amp;A</option>
+        <option value="Client">Expérience client</option>
+      </select>
+    </div>
+    <div class="sidebar-block">
+      <div class="s-label">Quick wins</div>
+      <div class="filter-chip-row"><button class="fchip" id="qwBtn" onclick="toggleQW(this)">Afficher seulement</button></div>
+    </div>
+  </aside>
+
+  <main class="main" id="mainContent">
+    <section class="hero">
+      <div class="hero-shell">
+        <div class="hero-eyebrow">Vision 2026–2028</div>
+        <h1>Transformer H&amp;S en plateforme de pilotage élégante, lisible et data-driven.</h1>
+        <p class="hero-sub">Une version plus premium, plus sobre et plus crédible du support stratégique : moins de bruit visuel, plus de hiérarchie, une vraie lecture roadmap, et les logos des entités intégrés dans l’expérience.</p>
+        <div class="hero-kpis">
+          <div class="hero-kpi"><div class="hero-kpi-num">24</div><div class="hero-kpi-lbl">Use cases identifiés</div></div>
+          <div class="hero-kpi"><div class="hero-kpi-num">6</div><div class="hero-kpi-lbl">Entités couvertes</div></div>
+          <div class="hero-kpi"><div class="hero-kpi-num">3</div><div class="hero-kpi-lbl">Lots structurants</div></div>
+          <div class="hero-kpi"><div class="hero-kpi-num">0–24</div><div class="hero-kpi-lbl">Mois de transformation</div></div>
+        </div>
+        <div class="logo-strip">
+          <div class="logo-card"><img src="logo_dislog.png" alt="Dislog"></div>
+          <div class="logo-card"><img src="logo_oneretail.png" alt="One Retail"></div>
+          <div class="logo-card"><img src="logo_lve.png" alt="La Voie Express"></div>
+          <div class="logo-card"><img src="logo_wbafrica.jpg" alt="WB Africa"></div>
+          <div class="logo-card"><img src="logo_chari.png" alt="Chari"></div>
+          <div class="logo-card"><img src="logo_kaya.png" alt="Kaya Immobilier"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-tabs">
+      <div class="stab active" onclick="showTab('explorer', this)">Explorateur</div>
+      <div class="stab" onclick="showTab('roadmap', this)">Roadmap</div>
+      <div class="stab" onclick="showTab('model', this)">Modèle opérationnel</div>
+    </div>
+
+    <div class="entities-row" id="entRow">
+      <button class="ent-chip all active" onclick="filterEntityChip('all',this)">Toutes les entités</button>
+      <button class="ent-chip" onclick="filterEntityChip('Dislog',this)">Dislog</button>
+      <button class="ent-chip" onclick="filterEntityChip('One Retail',this)">One Retail</button>
+      <button class="ent-chip" onclick="filterEntityChip('LVE',this)">LVE / Logistique</button>
+      <button class="ent-chip" onclick="filterEntityChip('WB Media',this)">WB Media</button>
+      <button class="ent-chip" onclick="filterEntityChip('Chari',this)">Chari</button>
+      <button class="ent-chip" onclick="filterEntityChip('Kaya',this)">Kaya Immobilier</button>
+      <button class="ent-chip" onclick="filterEntityChip('Transverse',this)">Transverse</button>
+    </div>
+
+    <div class="panel active" id="panel-explorer">
+      <div class="explorer-header">
+        <div class="explorer-title">Résultats</div>
+        <div class="explorer-count"><span id="visibleCount">24</span> use cases</div>
+        <button class="sort-btn" onclick="cycleSortMode()">Trier par : <span id="sortLabel">Priorité</span></button>
+      </div>
+      <div class="cards-grid" id="cardsGrid"></div>
+    </div>
+
+    <div class="panel" id="panel-roadmap">
+      <div class="roadmap-wrap">
+        <div class="roadmap-intro">
+          <div>
+            <h2>Roadmap de transformation</h2>
+            <p>La lecture se fait de gauche à droite : fondations, accélération, puis intelligence augmentée. Les filtres appliqués pilotent aussi cette vue.</p>
+          </div>
+          <div class="roadmap-status" id="roadmapStatus">Vue complète</div>
+        </div>
+        <div class="lots-grid" id="lotsGrid"></div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-model">
+      <div class="op-wrap">
+        <div class="op-sections">
+          <div class="op-section">
+            <div class="op-section-title">Équipe Data Office</div>
+            <div class="op-section-sub">Structure cible recommandée</div>
+            <div class="team-grid">
+              <div class="role-card"><div class="role-title">Head of Data</div><div class="role-desc">Pilotage stratégique, gouvernance, arbitrage et sponsor COMEX.</div></div>
+              <div class="role-card"><div class="role-title">Lead Data / Strategy</div><div class="role-desc">Cadrage, priorisation, orchestration des use cases et animation métiers.</div></div>
+              <div class="role-card"><div class="role-title">Data Engineers ×3</div><div class="role-desc">Architecture, ingestion, pipelines, qualité et exposition des données.</div></div>
+              <div class="role-card"><div class="role-title">Analytics / BI ×2</div><div class="role-desc">Datamarts, tableaux de bord, self-service et adoption des KPI.</div></div>
+              <div class="role-card"><div class="role-title">Data Product Owner</div><div class="role-desc">Traduction besoin métier ↔ delivery, cadrage des releases.</div></div>
+              <div class="role-card"><div class="role-title">ML Engineer / AI</div><div class="role-desc">Scoring, forecasting, agents IA et industrialisation des modèles.</div></div>
+            </div>
+          </div>
+          <div class="op-section">
+            <div class="op-section-title">Budget & investissement</div>
+            <div class="op-section-sub">Répartition indicative progressive</div>
+            <div class="budget-bars">
+              <div class="bbar"><div class="bbar-top"><span class="bbar-lbl">Ressources humaines</span><span class="bbar-pct">40%</span></div><div class="bbar-track"><div class="bbar-fill" style="width:40%;background:var(--data)"></div></div></div>
+              <div class="bbar"><div class="bbar-top"><span class="bbar-lbl">Plateforme Data</span><span class="bbar-pct">25%</span></div><div class="bbar-track"><div class="bbar-fill" style="width:25%;background:var(--lot1)"></div></div></div>
+              <div class="bbar"><div class="bbar-top"><span class="bbar-lbl">BI & licences</span><span class="bbar-pct">20%</span></div><div class="bbar-track"><div class="bbar-fill" style="width:20%;background:var(--lot2)"></div></div></div>
+              <div class="bbar"><div class="bbar-top"><span class="bbar-lbl">IA & intégrations</span><span class="bbar-pct">15%</span></div><div class="bbar-track"><div class="bbar-fill" style="width:15%;background:var(--lot3)"></div></div></div>
+            </div>
+          </div>
+          <div class="op-section" style="grid-column:1/-1">
+            <div class="op-section-title">Entités & maturité</div>
+            <div class="op-section-sub">Vue synthétique des priorités par verticale</div>
+            <div class="entites-list">
+              <div class="ent-item" onclick="filterEntityChip('Dislog', document.querySelector('.ent-chip:nth-child(2)')); showTab('explorer', document.querySelectorAll('.stab')[0])"><span class="entity-logo sm"><img src="logo_dislog.png" alt="Dislog"></span><div><div class="ent-name">Dislog</div><div class="ent-role">Distribution nationale — priorité Finance, marge et IPO readiness</div></div><div class="ent-count">5 use cases</div></div>
+              <div class="ent-item" onclick="filterEntityChip('One Retail', document.querySelector('.ent-chip:nth-child(3)')); showTab('explorer', document.querySelectorAll('.stab')[0])"><span class="entity-logo sm"><img src="logo_oneretail.png" alt="One Retail"></span><div><div class="ent-name">One Retail</div><div class="ent-role">Pilotage magasin, stock, assortiment, référentiel</div></div><div class="ent-count">4 use cases</div></div>
+              <div class="ent-item" onclick="filterEntityChip('LVE', document.querySelector('.ent-chip:nth-child(4)')); showTab('explorer', document.querySelectorAll('.stab')[0])"><span class="entity-logo sm"><img src="logo_lve.png" alt="La Voie Express"></span><div><div class="ent-name">LVE / Logistique</div><div class="ent-role">Performance opérationnelle, tournées, qualité de service</div></div><div class="ent-count">4 use cases</div></div>
+              <div class="ent-item" onclick="filterEntityChip('WB Media', document.querySelector('.ent-chip:nth-child(5)')); showTab('explorer', document.querySelectorAll('.stab')[0])"><span class="entity-logo sm"><img src="logo_wbafrica.jpg" alt="WB Africa"></span><div><div class="ent-name">WB Media</div><div class="ent-role">Rentabilité client, ROI, monétisation média</div></div><div class="ent-count">3 use cases</div></div>
+              <div class="ent-item" onclick="filterEntityChip('Chari', document.querySelector('.ent-chip:nth-child(6)')); showTab('explorer', document.querySelectorAll('.stab')[0])"><span class="entity-logo sm"><img src="logo_chari.png" alt="Chari"></span><div><div class="ent-name">Chari</div><div class="ent-role">LTV, risque crédit, croissance B2B</div></div><div class="ent-count">3 use cases</div></div>
+              <div class="ent-item" onclick="filterEntityChip('Kaya', document.querySelector('.ent-chip:nth-child(7)')); showTab('explorer', document.querySelectorAll('.stab')[0])"><span class="entity-logo sm"><img src="logo_kaya.png" alt="Kaya"></span><div><div class="ent-name">Kaya Immobilier</div><div class="ent-role">Cashflow, budget, pilotage programmes</div></div><div class="ent-count">3 use cases</div></div>
+              <div class="ent-item" onclick="filterEntityChip('Transverse', document.querySelector('.ent-chip:nth-child(8)')); showTab('explorer', document.querySelectorAll('.stab')[0])"><span class="entity-logo sm fallback">TR</span><div><div class="ent-name">Fonctions transverses</div><div class="ent-role">Finance, RH, ESG, M&amp;A, gouvernance groupe</div></div><div class="ent-count">2 use cases</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="detail-overlay" id="overlay" onclick="closePanel()"></div>
+<aside class="detail-panel" id="detailPanel">
+  <div class="panel-header">
+    <div class="panel-eyebrow" id="panelEyebrow"></div>
+    <button class="panel-close" onclick="closePanel()">×</button>
+  </div>
+  <div class="panel-body" id="panelBody"></div>
+  <div class="nav-cards-row" id="panelNav"></div>
+</aside>
+
+<script>
+
+const ENTITY_META = {
+  "Dislog": { label: "Dislog Group", logo: "logo_dislog.png", mono: "DG" },
+  "One Retail": { label: "One Retail", logo: "logo_oneretail.png", mono: "OR" },
+  "LVE": { label: "La Voie Express", logo: "logo_lve.png", mono: "LVE" },
+  "WB Media": { label: "WB Africa", logo: "logo_wbafrica.jpg", mono: "WB" },
+  "Chari": { label: "Chari", logo: "logo_chari.png", mono: "CH" },
+  "Kaya": { label: "Kaya Immobilier", logo: "logo_kaya.png", mono: "KY" },
+  "Transverse": { label: "Transverse", logo: "", mono: "TR" }
+};
+const LOT_META = {
+  "Lot 1": { title: "Fondations & visibilité", horizon: "0–6 mois", subtitle: "Data platform, cockpits, quick wins" },
+  "Lot 2": { title: "Automatisation & productivité", horizon: "6–12 mois", subtitle: "Agents, workflows, intégration" },
+  "Lot 3": { title: "IA & transformation", horizon: "12–24 mois", subtitle: "Forecast, scoring, intelligence augmentée" }
+};
+function normalizeEntityKey(entity) {
+  if (!entity) return 'Transverse';
+  if (entity.startsWith('LVE')) return 'LVE';
+  if (entity.startsWith('WB')) return 'WB Media';
+  return entity;
+}
+function getEntityMeta(entity) {
+  return ENTITY_META[normalizeEntityKey(entity)] || ENTITY_META['Transverse'];
+}
+function entityLogoHTML(entity, cls='entity-logo') {
+  const meta = getEntityMeta(entity);
+  if (meta.logo) return `<span class="${cls}"><img src="${meta.logo}" alt="${meta.label}"></span>`;
+  return `<span class="${cls} fallback">${meta.mono}</span>`;
+}
+function entityLabelHTML(entity, detail='') {
+  const meta = getEntityMeta(entity);
+  return `<div class="entity-id">${entityLogoHTML(entity)}<div><div class="entity-name">${meta.label}</div>${detail?`<div class="entity-detail">${detail}</div>`:''}</div></div>`;
+}
+function plainIcon(name){
+  const map = {search:'⌕', data:'◐', ai:'✦', transverse:'⋯', roadmap:'⇢', model:'▣', kpi:'◆', close:'×', prev:'←', next:'→'};
+  return map[name] || '•';
+}
+
+const USE_CASES = [
+  {
+    id: "dislog-pnl",
+    entity: "Dislog", dim: "Data", lot: "Lot 1",
+    priority: "Très prioritaire", quickwin: false,
+    value: ["Pilotage","IPO readiness","Cash"],
+    title: "Pilotage Finance & P&L Groupe",
+    summary: "Fiabiliser le pilotage financier consolidé et multi-scénarios du groupe.",
+    problem: "Aujourd'hui, les clôtures financières sont lentes, dispersées dans Excel et difficilement comparables entre sociétés. Le COMEX ne dispose pas d'une vision consolidée en temps quasi-réel.",
+    objective: "Permettre au COMEX de piloter un P&L consolidé, multi-sociétés, avec comparaison Réel / Budget / Forecast en quasi temps-réel.",
+    how: "Extraction AX via SSIS ou Azure Data Factory. Structuration STG → ODS → DWH en modèle en étoile. Exposition SSAS/Power BI avec analyses multi-sociétés et multi-scénarios.",
+    sources: ["Dynamics AX","Budget Excel","AGIRH","ERP filiales"],
+    tech: ["SQL Server","SSIS","SSAS","Power BI","Azure Data Factory"],
+    deliverables: ["Cockpit finance COMEX","P&L consolidé groupe","Réel vs Budget vs Forecast","Tableau de bord clôture mensuelle"],
+    dependencies: ["Mapping comptable unifié","Référentiels sociétés","Validation métier Finance"],
+    horizon: "0–3 mois",
+    maturity: "Moyen",
+    comex: "Ce use case est le socle de l'IPO readiness. Sans P&L consolidé fiable, le groupe ne peut pas se présenter sereinement à des investisseurs ou à un auditeur externe. C'est une priorité absolue."
+  },
+  {
+    id: "dislog-marge",
+    entity: "Dislog", dim: "Data", lot: "Lot 1",
+    priority: "Très prioritaire", quickwin: true,
+    value: ["Marge","Pilotage","Cash"],
+    title: "Analyse de marge produit & SKU",
+    summary: "Identifier les SKU rentables, les pertes cachées et les opportunités de pricing.",
+    problem: "La marge est calculée globalement, sans décomposition par SKU, canal de vente ou client. Les équipes commerciales ne savent pas quels produits sont réellement rentables.",
+    objective: "Produire une vue de marge nette par SKU, par client, par canal, avec détection des anomalies et alertes automatiques.",
+    how: "Extraction des mouvements de vente et coûts d'achat depuis AX. Modélisation DWH avec table des faits ventes et dimensions SKU/client/canal. Dashboard marge avec drill-down.",
+    sources: ["Dynamics AX","Catalogues produits","Données logistique"],
+    tech: ["SQL Server","Power BI","Python (calcul marge)"],
+    deliverables: ["Dashboard marge par SKU","Classement produits rentables vs déficitaires","Alertes marge < seuil"],
+    dependencies: ["Mapping produits fiable","Données coûts complets dans AX"],
+    horizon: "0–3 mois",
+    maturity: "Moyen",
+    comex: "Permettre aux directeurs commerciaux d'arbitrer sur la rentabilité réelle de leur portefeuille produit. Impact direct sur la marge opérationnelle du groupe."
+  },
+  {
+    id: "dislog-forecast",
+    entity: "Dislog", dim: "IA", lot: "Lot 3",
+    priority: "Structurant", quickwin: false,
+    value: ["Marge","Cash","Croissance"],
+    title: "Prévision des ventes & optimisation stock",
+    summary: "Anticiper la demande par SKU et optimiser les niveaux de stock pour réduire la casse.",
+    problem: "Les ruptures de stock et surstocks coûtent cher. Sans modèle prédictif, les approvisionnements sont basés sur l'expérience manuelle des équipes.",
+    objective: "Modèle ML de forecast des ventes à horizon 4–12 semaines, intégré au processus d'approvisionnement.",
+    how: "Collecte historique 3 ans. Feature engineering (saisonnalité, promotions, événements). Modèle XGBoost ou Prophet. Intégration dans Power BI avec recommandations.",
+    sources: ["Historique ventes AX","Données promotions","Calendrier événements"],
+    tech: ["Python","XGBoost","Prophet","Azure ML","Power BI"],
+    deliverables: ["Modèle de forecast SKU","Dashboard prévisions vs réel","Recommandations de réapprovisionnement"],
+    dependencies: ["Data Lake opérationnel","Historique ventes propre","Data Platform Lot 1"],
+    horizon: "9–18 mois",
+    maturity: "Avancé",
+    comex: "Réduire le besoin en fonds de roulement grâce à un stock optimisé. Impact estimé : réduction de 10–20% du stock dormant."
+  },
+  {
+    id: "dislog-ipo",
+    entity: "Dislog", dim: "Data", lot: "Lot 1",
+    priority: "Très prioritaire", quickwin: false,
+    value: ["IPO readiness","Pilotage","Cash"],
+    title: "Consolidation multi-entités & IPO readiness",
+    summary: "Construire la vision comptable et analytique consolidée requise pour une introduction en bourse.",
+    problem: "Le groupe dispose de multiples entités avec des référentiels comptables disparates. La consolidation est manuelle et sujette à erreurs.",
+    objective: "Produire des états financiers consolidés automatisés, auditables et conformes aux standards requis pour une IPO.",
+    how: "Modélisation d'un ODS groupe avec règles de consolidation. Élimination des flux internes. Exposition via SSAS.",
+    sources: ["AX multi-sociétés","Données comptables filiales","Référentiels groupes"],
+    tech: ["SQL Server","SSAS","Power BI","Azure Data Factory"],
+    deliverables: ["Rapport de consolidation automatisé","Cockpit IPO","Piste d'audit complète"],
+    dependencies: ["P&L Dislog Lot 1","Référentiels sociétés","Validation DAF"],
+    horizon: "3–6 mois",
+    maturity: "Moyen",
+    comex: "La préparation à l'IPO passe par une transparence financière irréprochable. Ce projet est la condition préalable à toute discussion avec des banques ou investisseurs."
+  },
+  {
+    id: "dislog-simplif",
+    entity: "Dislog", dim: "IA", lot: "Lot 2",
+    priority: "Prioritaire", quickwin: true,
+    value: ["Productivité","Cash"],
+    title: "Automatisation & simplification ADV",
+    summary: "Automatiser le traitement des commandes, factures et réclamations clients.",
+    problem: "L'ADV (Administration Des Ventes) génère un volume élevé de tâches manuelles répétitives : saisie, rapprochement, relances.",
+    objective: "Réduire de 40% le temps de traitement ADV grâce à l'automatisation des flux récurrents.",
+    how: "Analyse des flux actuels. Identification des tâches automatisables. RPA sur les flux de commandes. Agent IA pour le tri et la qualification des emails entrants.",
+    sources: ["AX","Email clients","Portail commandes"],
+    tech: ["Power Automate","RPA (UiPath ou Automation Anywhere)","Azure OpenAI"],
+    deliverables: ["Processus ADV automatisé","Dashboard suivi traitement","Réduction délais de traitement"],
+    dependencies: ["Connexion AX","Définition des règles métier ADV"],
+    horizon: "3–9 mois",
+    maturity: "Faible",
+    comex: "Libérer les équipes ADV de la saisie répétitive pour les recentrer sur la relation client et la résolution de problèmes complexes."
+  },
+  {
+    id: "retail-cockpit",
+    entity: "One Retail", dim: "Data", lot: "Lot 1",
+    priority: "Très prioritaire", quickwin: true,
+    value: ["Pilotage","Marge","Productivité"],
+    title: "Cockpit pilotage magasin",
+    summary: "Donner à chaque directeur de magasin une vue temps-réel de ses KPI : CA, marge, stock, trafic.",
+    problem: "Les directeurs de magasin n'ont pas de tableau de bord centralisé. Les données sont dispersées entre plusieurs systèmes ou disponibles uniquement en fin de mois.",
+    objective: "Dashboard quotidien par magasin, accessible depuis mobile et desktop, avec alertes automatiques.",
+    how: "Extraction des données de caisse et ERP retail. Structuration en DWH retail. Power BI avec actualisation quotidienne et mode mobile.",
+    sources: ["Caisse (POS)","ERP retail","Données RH","Inventaire"],
+    tech: ["SQL Server","Power BI","Azure Data Factory"],
+    deliverables: ["Dashboard directeur magasin","Alertes KPI","Vue réseau pour le siège"],
+    dependencies: ["Connexion POS","Référentiel magasins"],
+    horizon: "0–3 mois",
+    maturity: "Faible",
+    comex: "Donner aux responsables retail les instruments de pilotage qu'ils n'ont jamais eus. Réduction des écarts de performance entre magasins."
+  },
+  {
+    id: "retail-stock",
+    entity: "One Retail", dim: "Data", lot: "Lot 1",
+    priority: "Très prioritaire", quickwin: true,
+    value: ["Cash","Marge","Client"],
+    title: "Gestion des ruptures & optimisation stock",
+    summary: "Détecter et anticiper les ruptures de stock pour éviter les pertes de CA et améliorer l'expérience client.",
+    problem: "Les ruptures de stock en rayon ne sont détectées qu'avec retard. Le réassort est géré manuellement et souvent trop tardif.",
+    objective: "Tableau de bord temps réel des ruptures par magasin et par rayon, avec alertes automatiques au responsable.",
+    how: "Flux de données POS en temps quasi-réel. Calcul de stock disponible par référence. Algorithme de détection de rupture imminente.",
+    sources: ["POS temps-réel","Inventaire","Commandes fournisseurs"],
+    tech: ["Azure Stream Analytics","Power BI","SQL Server"],
+    deliverables: ["Alerte rupture temps-réel","Tableau de bord stock par magasin","Rapport hebdomadaire assortiment"],
+    dependencies: ["Flux POS connecté","Inventaire digitalisé"],
+    horizon: "3–6 mois",
+    maturity: "Moyen",
+    comex: "Chaque rupture coûte du CA perdu et dégrade l'expérience client. Ce projet est un quick win avec un ROI immédiat sur les ventes."
+  },
+  {
+    id: "retail-assort",
+    entity: "One Retail", dim: "IA", lot: "Lot 2",
+    priority: "Prioritaire", quickwin: false,
+    value: ["Marge","Croissance","Client"],
+    title: "Optimisation de l'assortiment par IA",
+    summary: "Recommander le bon assortiment par magasin en fonction du profil local de la clientèle.",
+    problem: "L'assortiment est identique dans tous les magasins, sans tenir compte des différences de clientèle, de localisation ou de saisonnalité.",
+    objective: "Modèle IA qui recommande les adaptations d'assortiment par magasin, avec simulation d'impact marge.",
+    how: "Analyse des historiques de vente par magasin. Clustering des profils de clientèle. Modèle de recommandation. Interface de validation par category manager.",
+    sources: ["Historique ventes POS","Données clients","Données concurrence"],
+    tech: ["Python","Scikit-learn","Power BI"],
+    deliverables: ["Recommandations assortiment par magasin","Simulation impact marge","Rapport category manager"],
+    dependencies: ["Cockpit retail Lot 1","Données clients collectées"],
+    horizon: "6–12 mois",
+    maturity: "Avancé",
+    comex: "Personnaliser l'offre au niveau local pour maximiser la marge par m². Levier important de différenciation concurrentielle."
+  },
+  {
+    id: "retail-unif",
+    entity: "One Retail", dim: "Data", lot: "Lot 2",
+    priority: "Structurant", quickwin: false,
+    value: ["Pilotage","M&A"],
+    title: "Unification progressive des référentiels retail",
+    summary: "Créer un référentiel produit et client unifié pour tous les formats retail du groupe.",
+    problem: "Chaque format retail (supérettes, franchises, etc.) a ses propres systèmes et codes produits. L'intégration de nouvelles enseignes est longue et coûteuse.",
+    objective: "Référentiel produit groupe unique permettant l'onboarding rapide de nouvelles enseignes en 4 semaines maximum.",
+    how: "Audit des référentiels existants. Définition du modèle cible. Outil de mapping et de normalisation. API d'accès commune.",
+    sources: ["POS multi-formats","ERP retail","Fournisseurs"],
+    tech: ["SQL Server","API REST","Azure Data Factory"],
+    deliverables: ["Référentiel produit groupe","Outil de mapping","Documentation onboarding"],
+    dependencies: ["Gouvernance data validée","Engagement des SI métiers"],
+    horizon: "6–12 mois",
+    maturity: "Faible",
+    comex: "Fondation indispensable pour accélérer les acquisitions retail et standardiser le pilotage du réseau."
+  },
+  {
+    id: "lve-tracking",
+    entity: "LVE", dim: "Data", lot: "Lot 1",
+    priority: "Très prioritaire", quickwin: true,
+    value: ["Pilotage","Client","Productivité"],
+    title: "Tracking logistique temps réel",
+    summary: "Donner une visibilité en temps-réel sur les tournées, livraisons et incidents.",
+    problem: "Aujourd'hui, le suivi des livraisons est assuré manuellement par téléphone. Il n'existe pas de traçabilité centralisée des tournées.",
+    objective: "Plateforme de suivi temps-réel avec alertes automatiques en cas de retard ou d'incident.",
+    how: "Intégration des GPS des véhicules. Flux temps-réel vers Azure. Dashboard opérationnel pour les dispatchers et managers.",
+    sources: ["GPS véhicules","TMS existant","Données clients"],
+    tech: ["Azure IoT Hub","Azure Stream Analytics","Power BI","API GPS"],
+    deliverables: ["Dashboard tracking temps-réel","Alertes retard automatiques","Rapport performance livraison"],
+    dependencies: ["Déploiement GPS véhicules","Connexion TMS"],
+    horizon: "0–3 mois",
+    maturity: "Faible",
+    comex: "Le tracking temps-réel est devenu un standard. Son absence expose le groupe à des pertes clients et à une incapacité à répondre aux SLA contractuels."
+  },
+  {
+    id: "lve-cout",
+    entity: "LVE", dim: "Data", lot: "Lot 1",
+    priority: "Prioritaire", quickwin: false,
+    value: ["Marge","Cash","Pilotage"],
+    title: "Coût par tournée & performance opérationnelle",
+    summary: "Calculer et piloter le coût réel par tournée pour identifier les optimisations potentielles.",
+    problem: "Le coût par livraison n'est pas connu avec précision. Les tournées ne sont pas optimisées, entraînant des kilomètres inutiles et des coûts carburant élevés.",
+    objective: "Dashboard coût par tournée, chauffeur et zone. Identification des tournées déficitaires avec recommandations d'optimisation.",
+    how: "Modélisation des coûts complets (carburant, temps chauffeur, amortissement). Calcul par tournée dans le DWH. Dashboard directeur exploitation.",
+    sources: ["GPS","RH (temps chauffeur)","Carburant","TMS"],
+    tech: ["SQL Server","Power BI","Python (optimisation)"],
+    deliverables: ["Dashboard coût tournée","Classement performances","Rapport mensuel exploitation"],
+    dependencies: ["Tracking Lot 1","Données RH connectées"],
+    horizon: "3–6 mois",
+    maturity: "Moyen",
+    comex: "La logistique est un centre de coût majeur. Réduire de 5% le coût par tournée représente un impact significatif sur l'EBITDA."
+  },
+  {
+    id: "lve-modern",
+    entity: "LVE", dim: "Data", lot: "Lot 2",
+    priority: "Structurant", quickwin: false,
+    value: ["Productivité","M&A","Pilotage"],
+    title: "Modernisation messagerie & SI logistique",
+    summary: "Moderniser le système d'information logistique pour préparer l'intégration de nouvelles activités.",
+    problem: "Le SI logistique actuel est vieillissant, peu intégré et difficilement évolutif. Il bloque la capacité d'absorption de nouveaux contrats.",
+    objective: "Nouveau TMS intégré avec connecteurs data natifs, permettant l'onboarding rapide de nouveaux clients logistique.",
+    how: "Audit SI actuel. Sélection TMS cible. Migration progressive. Développement des connecteurs data.",
+    sources: ["TMS legacy","Excel opérationnel","Clients logistique"],
+    tech: ["TMS moderne","Azure","SQL Server","API REST"],
+    deliverables: ["Nouveau SI logistique","Connecteurs data","Documentation processus"],
+    dependencies: ["Budget SI validé","Plan de migration","Formation équipes"],
+    horizon: "6–18 mois",
+    maturity: "Faible",
+    comex: "Condition sine qua non pour que LVE puisse absorber de nouveaux clients et devenir un actif valorisable dans une logique IPO ou M&A."
+  },
+  {
+    id: "lve-route",
+    entity: "LVE", dim: "IA", lot: "Lot 3",
+    priority: "Structurant", quickwin: false,
+    value: ["Marge","Productivité","Cash"],
+    title: "Optimisation IA des tournées",
+    summary: "Optimiser automatiquement les plans de tournées avec un algorithme d'IA.",
+    problem: "La planification des tournées est réalisée manuellement ou avec des outils basiques. Elle ne prend pas en compte toutes les contraintes de manière optimale.",
+    objective: "Réduire de 10–15% les kilomètres parcourus grâce à un algorithme d'optimisation de tournées.",
+    how: "Algorithme de VRP (Vehicle Routing Problem) avec contraintes. Intégration temps-réel des commandes. Suggestion automatique au dispatcher.",
+    sources: ["Commandes","GPS","Contraintes horaires clients"],
+    tech: ["Python (OR-Tools)","Azure ML","API cartographie"],
+    deliverables: ["Moteur d'optimisation tournées","Interface dispatcher","Rapport économies réalisées"],
+    dependencies: ["Tracking Lot 1","Modernisation SI Lot 2","Données historiques tournées"],
+    horizon: "12–18 mois",
+    maturity: "Avancé",
+    comex: "Transformer LVE en opérateur logistique intelligent et compétitif capable de différencier son offre par la technologie."
+  },
+  {
+    id: "wbm-roi",
+    entity: "WB Media", dim: "Data", lot: "Lot 1",
+    priority: "Très prioritaire", quickwin: true,
+    value: ["Pilotage","Marge","Client"],
+    title: "Mesure du ROI campagne publicitaire",
+    summary: "Unifier et mesurer le retour sur investissement de chaque campagne publicitaire sur tous les canaux.",
+    problem: "Le ROI des campagnes est calculé canal par canal, sans vision unifiée. Il est impossible de comparer la rentabilité entre TV, digital et print.",
+    objective: "Tableau de bord ROI unifié par campagne, avec attribution multi-canal et recommandation d'optimisation du media mix.",
+    how: "Collecte des données campagnes (impressions, coûts, conversions). Modèle d'attribution. Dashboard directeur media.",
+    sources: ["Plateformes digitales (Meta, Google)","Données TV","Données clients annonceurs"],
+    tech: ["Python","SQL Server","Power BI","API plateformes media"],
+    deliverables: ["Dashboard ROI campagne","Rapport attribution","Recommandation media mix"],
+    dependencies: ["Accès APIs media","Définition KPI communs"],
+    horizon: "0–3 mois",
+    maturity: "Moyen",
+    comex: "Permettre à WB Media de démontrer à ses clients le ROI réel de leurs investissements publicitaires. Différenciateur commercial majeur."
+  },
+  {
+    id: "wbm-client",
+    entity: "WB Media", dim: "Data", lot: "Lot 2",
+    priority: "Prioritaire", quickwin: false,
+    value: ["Marge","Croissance","Client"],
+    title: "Rentabilité client & scoring portefeuille",
+    summary: "Calculer la rentabilité réelle par client et identifier les comptes à développer ou restructurer.",
+    problem: "WB Media ne connaît pas avec précision la rentabilité nette de chaque client. Certains clients représentent un volume élevé mais une marge faible.",
+    objective: "Scoring de rentabilité par client avec recommandations de gestion du portefeuille.",
+    how: "Modélisation des coûts de production et de service par client. Score de rentabilité. Dashboard commercial.",
+    sources: ["Données facturation","Données production","Données temps équipe"],
+    tech: ["SQL Server","Power BI","Python"],
+    deliverables: ["Score rentabilité client","Matrice portefeuille","Tableau de bord commercial"],
+    dependencies: ["Données coûts de production","Temps équipes trackés"],
+    horizon: "3–9 mois",
+    maturity: "Moyen",
+    comex: "Identifier les 20% de clients qui génèrent 80% de la marge et concentrer les efforts commerciaux sur les bons comptes."
+  },
+  {
+    id: "wbm-creativ",
+    entity: "WB Media", dim: "IA", lot: "Lot 3",
+    priority: "Vision long terme", quickwin: false,
+    value: ["Productivité","Croissance","Client"],
+    title: "Analyse de performance créative par IA",
+    summary: "Analyser automatiquement la performance des créatifs publicitaires pour en déduire des insights.",
+    problem: "L'analyse de la performance des visuels et messages publicitaires est qualitative et subjective. Les équipes créatives manquent de données objectives.",
+    objective: "Modèle IA qui analyse les créatifs (image, texte, vidéo) et prédit leur performance avant diffusion.",
+    how: "Computer vision pour analyse visuelle. NLP pour analyse des textes. Modèle prédictif de performance basé sur l'historique.",
+    sources: ["Archives créatifs","Données performance campagnes","Benchmarks sectoriels"],
+    tech: ["Azure OpenAI","Computer Vision","Python","Power BI"],
+    deliverables: ["Outil d'analyse créatifs","Score prédictif performance","Rapport insights créatifs"],
+    dependencies: ["Base de données créatifs historique","Données performance Lot 1"],
+    horizon: "12–24 mois",
+    maturity: "Avancé",
+    comex: "Donner à WB Media un avantage technologique unique sur le marché de la publicité au Maroc."
+  },
+  {
+    id: "chari-ltv",
+    entity: "Chari", dim: "Data", lot: "Lot 2",
+    priority: "Prioritaire", quickwin: false,
+    value: ["Croissance","Cash","Client"],
+    title: "Analyse cohortes & LTV",
+    summary: "Comprendre la valeur vie client et les comportements de rétention sur la plateforme Chari.",
+    problem: "Les décisions d'acquisition et de fidélisation sont prises sans connaissance précise de la LTV (Lifetime Value) des clients.",
+    objective: "Modèle de cohortes et de LTV permettant d'optimiser les investissements d'acquisition et de fidélisation.",
+    how: "Analyse des cohortes d'activation. Calcul LTV par segment. Dashboard product & marketing.",
+    sources: ["Base clients Chari","Données transactions","Données RFM"],
+    tech: ["Python","SQL","Power BI","dbt"],
+    deliverables: ["Rapport cohortes mensuel","Modèle LTV","Dashboard product analytics"],
+    dependencies: ["Données transactions nettoyées","Identifiants clients stables"],
+    horizon: "3–9 mois",
+    maturity: "Moyen",
+    comex: "Chari doit piloter sa croissance par la donnée. La LTV est la métrique fondamentale pour justifier les investissements d'acquisition client."
+  },
+  {
+    id: "chari-credit",
+    entity: "Chari", dim: "IA", lot: "Lot 2",
+    priority: "Prioritaire", quickwin: false,
+    value: ["Cash","Marge","Croissance"],
+    title: "Scoring risque crédit",
+    summary: "Évaluer automatiquement le risque crédit des commerçants pour les offres de paiement différé.",
+    problem: "L'évaluation du risque crédit est manuelle et lente. Elle freine le déploiement des offres de crédit commercial.",
+    objective: "Modèle de scoring crédit automatisé permettant une décision en moins de 2 minutes.",
+    how: "Feature engineering sur les données comportementales et transactionnelles. Modèle de classification (XGBoost). Intégration dans le flux de commande.",
+    sources: ["Historique transactions","Comportement commandes","Données externes (si disponibles)"],
+    tech: ["Python","XGBoost","Azure ML","API REST"],
+    deliverables: ["Modèle scoring crédit","API décision crédit","Dashboard risque"],
+    dependencies: ["Historique transactions 12+ mois","Données de défaut labelisées"],
+    horizon: "6–12 mois",
+    maturity: "Avancé",
+    comex: "Le crédit commercial est le principal levier de croissance et de fidélisation de Chari. Automatiser le scoring ouvre la voie à une offre massive et maîtrisée."
+  },
+  {
+    id: "chari-recom",
+    entity: "Chari", dim: "IA", lot: "Lot 3",
+    priority: "Structurant", quickwin: false,
+    value: ["Croissance","Client","Marge"],
+    title: "Recommandation produit personnalisée",
+    summary: "Recommander les bons produits aux bons commerçants au bon moment.",
+    problem: "Le catalogue Chari est large mais la navigation est peu personnalisée. Les commerciaux ne peuvent pas suggérer proactivement des produits.",
+    objective: "Moteur de recommandation produit intégré à l'app Chari avec personnalisation par segment de commerçant.",
+    how: "Collaborative filtering. Content-based filtering. Intégration dans l'app mobile via API.",
+    sources: ["Historique commandes","Catalogue produits","Données commerçants"],
+    tech: ["Python","Surprise / LightFM","Azure ML","API REST","React Native"],
+    deliverables: ["Moteur de recommandation","Intégration app","A/B tests résultats"],
+    dependencies: ["LTV et cohortes Lot 2","Données comportementales","Catalogue produits structuré"],
+    horizon: "12–18 mois",
+    maturity: "Avancé",
+    comex: "Augmenter le panier moyen et la fréquence d'achat grâce à une expérience personnalisée. Effet direct sur le GMV de la plateforme."
+  },
+  {
+    id: "kaya-budget",
+    entity: "Kaya", dim: "Data", lot: "Lot 1",
+    priority: "Prioritaire", quickwin: true,
+    value: ["Pilotage","Cash","IPO readiness"],
+    title: "Budget vs Réel & suivi de trésorerie projet",
+    summary: "Piloter en temps-réel l'avancement budgétaire et la trésorerie de chaque projet immobilier.",
+    problem: "Le suivi budgétaire des projets est réalisé sur Excel, avec des mises à jour manuelles peu fréquentes. Les dépassements sont détectés trop tard.",
+    objective: "Dashboard temps-réel Budget vs Réel et prévision de trésorerie par projet.",
+    how: "Extraction des données comptables et avancement travaux. Modélisation en DWH projet. Dashboard directeur de programme.",
+    sources: ["Comptabilité projet","Planning travaux","Données sous-traitants"],
+    tech: ["SQL Server","Power BI","Excel (migration)"],
+    deliverables: ["Dashboard budget projet","Alerte dépassement","Prévision cash par projet"],
+    dependencies: ["Structuration comptabilité analytique","Codes projets cohérents"],
+    horizon: "0–3 mois",
+    maturity: "Faible",
+    comex: "La maîtrise du budget et de la trésorerie projet est la clé de la rentabilité immobilière. C'est aussi un critère fort pour les partenaires financiers."
+  },
+  {
+    id: "kaya-soustraitant",
+    entity: "Kaya", dim: "Data", lot: "Lot 2",
+    priority: "Structurant", quickwin: false,
+    value: ["Marge","Pilotage","Productivité"],
+    title: "Évaluation & pilotage des sous-traitants",
+    summary: "Créer un référentiel de performance des sous-traitants pour mieux piloter les délais et la qualité.",
+    problem: "La sélection et l'évaluation des sous-traitants est peu formalisée. Les retards et défauts qualité ne sont pas traqués systématiquement.",
+    objective: "Base de données sous-traitants avec scoring qualité, délais et prix pour optimiser les décisions d'attribution.",
+    how: "Collecte des données de performance passée. Grille de scoring. Dashboard directeur technique.",
+    sources: ["Contrats sous-traitants","Rapports de chantier","Données coûts"],
+    tech: ["SQL Server","Power BI","Excel"],
+    deliverables: ["Base sous-traitants scorée","Dashboard pilotage","Processus d'évaluation standardisé"],
+    dependencies: ["Collecte données historiques","Définition critères de scoring"],
+    horizon: "6–12 mois",
+    maturity: "Faible",
+    comex: "Réduire les dépassements de délais et de budget en choisissant les meilleurs sous-traitants sur la base de données factuelles."
+  },
+  {
+    id: "kaya-cashflow",
+    entity: "Kaya", dim: "IA", lot: "Lot 3",
+    priority: "Vision long terme", quickwin: false,
+    value: ["Cash","IPO readiness","Pilotage"],
+    title: "Prévision IA du cashflow projet",
+    summary: "Modèle prédictif de cashflow par projet pour anticiper les besoins de financement.",
+    problem: "La prévision de trésorerie est réalisée manuellement sur Excel. Elle ne prend pas en compte les incertitudes et les scénarios adverses.",
+    objective: "Modèle prédictif de cashflow avec intervalles de confiance et simulation de scénarios.",
+    how: "Données historiques projets. Modèle de simulation Monte Carlo. Dashboard CFO.",
+    sources: ["Historique projets","Planning travaux","Données commerciales"],
+    tech: ["Python","Monte Carlo","Power BI"],
+    deliverables: ["Modèle prévision cashflow","Dashboard CFO","Rapport scenarios"],
+    dependencies: ["Dashboard budget Lot 1","Historique projets complété"],
+    horizon: "12–24 mois",
+    maturity: "Avancé",
+    comex: "Anticiper les besoins de trésorerie pour éviter les tensions financières et rassurer les partenaires financiers."
+  },
+  {
+    id: "transv-rh",
+    entity: "Transverse", dim: "Data", lot: "Lot 2",
+    priority: "Prioritaire", quickwin: false,
+    value: ["Productivité","Pilotage","IPO readiness"],
+    title: "Data RH groupe — Pilotage social consolidé",
+    summary: "Créer un tableau de bord RH groupe permettant de piloter les effectifs, la masse salariale et la performance.",
+    problem: "Le pilotage RH est géré entité par entité. Le COMEX n'a pas de vision consolidée des effectifs, de la masse salariale et des indicateurs sociaux.",
+    objective: "Dashboard RH groupe avec indicateurs clés : effectifs, turnover, masse salariale, formation.",
+    how: "Connexion AGIRH et outils RH entités. Modélisation DWH RH. Dashboard COMEX.",
+    sources: ["AGIRH","Excel RH entités","Données paie"],
+    tech: ["SQL Server","Power BI","Azure Data Factory"],
+    deliverables: ["Dashboard RH groupe","Rapport social consolidé","Indicateurs ESG RH"],
+    dependencies: ["Accès AGIRH toutes entités","Codification postes unifiée"],
+    horizon: "3–9 mois",
+    maturity: "Moyen",
+    comex: "La visibilité sur les ressources humaines est indispensable pour piloter la transformation et préparer une future gouvernance."
+  },
+  {
+    id: "transv-esg",
+    entity: "Transverse", dim: "Data", lot: "Lot 3",
+    priority: "Structurant", quickwin: false,
+    value: ["IPO readiness","Pilotage","Partenaires"],
+    title: "Reporting ESG & développement durable",
+    summary: "Structurer la collecte et le reporting des indicateurs ESG pour répondre aux attentes des investisseurs.",
+    problem: "Le groupe ne dispose pas d'un reporting ESG structuré. C'est un prérequis croissant pour les financements et les partenariats.",
+    objective: "Plateforme de collecte et de reporting ESG couvrant l'ensemble des entités du groupe.",
+    how: "Identification des indicateurs ESG cibles. Collecte structurée dans chaque entité. Dashboard ESG groupe.",
+    sources: ["Données énergie","Données RH","Données achats responsables","Données sociétaux"],
+    tech: ["Power BI","SQL Server","Formulaires de collecte standardisés"],
+    deliverables: ["Rapport ESG annuel","Dashboard ESG temps-réel","Processus de collecte"],
+    dependencies: ["Engagement des entités","Définition des indicateurs"],
+    horizon: "12–18 mois",
+    maturity: "Faible",
+    comex: "L'ESG n'est plus optionnel pour un groupe qui cherche à lever des fonds ou entrer en bourse. C'est un actif stratégique à construire maintenant."
+  }
+];
+
+let state = {
+  dim: 'all',
+  entity: 'all',
+  lot: 'all',
+  priority: 'all',
+  value: 'all',
+  quickwin: false,
+  search: '',
+  sort: 'priority'
+};
+ 
+const SORT_MODES = ['priority','entity','lot','title'];
+const SORT_LABELS = { priority:'Priorité', entity:'Entité', lot:'Lot', title:'Titre' };
+let sortIdx = 0;
+ 
+// ═══════════════════════════════════════════════════════════
+//  FILTER FUNCTIONS
+// ═══════════════════════════════════════════════════════════
+function renderAll() {
+  renderCards();
+  renderRoadmap();
+}
+
+function filterDim(v, btn) {
+  state.dim = v;
+  document.querySelectorAll('#dimFilter .fchip').forEach(b => b.className = 'fchip');
+  btn.classList.add(v === 'all' ? 'active-all' : v === 'Data' ? 'active-data' : v === 'IA' ? 'active-ia' : 'active-trans');
+  renderAll();
+}
+function filterEntity(v) {
+  state.entity = v;
+  document.querySelectorAll('.ent-chip').forEach(c => {
+    c.classList.remove('active');
+    const val = c.textContent.trim();
+    if ((v === 'all' && val === 'Toutes les entités') || val.startsWith(v.split('/')[0].trim())) c.classList.add('active');
+  });
+  renderAll();
+}
+function filterEntityChip(v, btn) {
+  state.entity = v;
+  document.querySelectorAll('.ent-chip').forEach(c => c.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('entitySelect').value = v;
+  renderAll();
+}
+function filterLot(v, btn) {
+  state.lot = v;
+  document.querySelectorAll('#lotPills .nav-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+function filterPrio(v, btn) {
+  state.priority = v;
+  document.querySelectorAll('#prioFilter .fchip').forEach(b => b.className = 'fchip');
+  btn.classList.add(v === 'all' ? 'active-all' : 'active-p1');
+  renderAll();
+}
+function filterValue(v) { state.value = v; renderAll(); }
+function toggleQW(btn) {
+  state.quickwin = !state.quickwin;
+  btn.classList.toggle('active-trans', state.quickwin);
+  renderAll();
+}
+function cycleSortMode() {
+  sortIdx = (sortIdx + 1) % SORT_MODES.length;
+  state.sort = SORT_MODES[sortIdx];
+  document.getElementById('sortLabel').textContent = SORT_LABELS[state.sort];
+  renderAll();
+}
+
+document.getElementById('searchInput').addEventListener('input', function() {
+  state.search = this.value.toLowerCase();
+  renderAll();
+});
+
+// ═══════════════════════════════════════════════════════════
+//  PRIORITY ORDER
+// ═══════════════════════════════════════════════════════════
+const PRIO_ORDER = { 'Très prioritaire':0, 'Prioritaire':1, 'Structurant':2, 'Vision long terme':3 };
+const LOT_ORDER  = { 'Lot 1':0, 'Lot 2':1, 'Lot 3':2 };
+ 
+function getPrioBadgeClass(p) {
+  return p === 'Très prioritaire' ? 'badge-p1' : p === 'Prioritaire' ? 'badge-p2' : p === 'Structurant' ? 'badge-p3' : 'badge-p4';
+}
+function getLotBadgeClass(l) {
+  return l === 'Lot 1' ? 'badge-lot1' : l === 'Lot 2' ? 'badge-lot2' : 'badge-lot3';
+}
+function getDimBadgeClass(d) {
+  return d === 'Data' ? 'badge-data' : d === 'IA' ? 'badge-ia' : 'badge-trans';
+}
+function getCardTypeClass(d) {
+  return d === 'Data' ? 'type-data' : d === 'IA' ? 'type-ia' : 'type-trans';
+}
+ 
+// ═══════════════════════════════════════════════════════════
+//  RENDER CARDS
+// ═══════════════════════════════════════════════════════════
+function matchesFilters(uc) {
+  if (state.dim !== 'all' && uc.dim !== state.dim) return false;
+  if (state.entity !== 'all' && !uc.entity.startsWith(state.entity.split('/')[0].trim()) && uc.entity !== state.entity) return false;
+  if (state.lot !== 'all' && uc.lot !== state.lot) return false;
+  if (state.priority !== 'all' && uc.priority !== state.priority) return false;
+  if (state.value !== 'all' && !uc.value.includes(state.value)) return false;
+  if (state.quickwin && !uc.quickwin) return false;
+  if (state.search) {
+    const hay = (uc.title + ' ' + uc.entity + ' ' + uc.summary + ' ' + (uc.tech||[]).join(' ')).toLowerCase();
+    if (!hay.includes(state.search)) return false;
+  }
+  return true;
+}
+ 
+function highlight(text) {
+  if (!state.search) return text;
+  const escaped = state.search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(`(${escaped})`, 'gi');
+  return text.replace(re, '<mark class="highlighted">$1</mark>');
+}
+
+function getFilteredCases() {
+  return USE_CASES.filter(matchesFilters);
+}
+
+function updateRoadmapStatus(filtered) {
+  const el = document.getElementById('roadmapStatus');
+  if (!el) return;
+  const active = [];
+  if (state.dim !== 'all') active.push(state.dim);
+  if (state.entity !== 'all') active.push(state.entity);
+  if (state.lot !== 'all') active.push(state.lot);
+  if (state.priority !== 'all') active.push(state.priority);
+  if (state.value !== 'all') active.push(state.value);
+  if (state.quickwin) active.push('Quick wins');
+  if (state.search) active.push(`Recherche : ${state.search}`);
+  el.textContent = active.length ? `${filtered.length} use cases affichés · ${active.join(' · ')}` : 'Vue complète';
+}
+ 
+// ═══════════════════════════════════════════════════════════
+//  ROADMAP RENDER
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+//  DETAIL PANEL
+// ═══════════════════════════════════════════════════════════
+function closePanel() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('detailPanel').classList.remove('open');
+  currentId = null;
+}
+ 
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePanel();
+});
+ 
+// ═══════════════════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════════════════
+function showTab(id, btn) {
+  document.querySelectorAll('.stab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.getElementById('entRow').style.display = (id === 'explorer') ? 'flex' : 'none';
+  if (id === 'roadmap') renderRoadmap();
+}
+ 
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
+
+
+function renderCards() {
+  const grid = document.getElementById('cardsGrid');
+  let filtered = getFilteredCases();
+  filtered.sort((a,b) => {
+    if (state.sort === 'priority') return (PRIO_ORDER[a.priority]||9) - (PRIO_ORDER[b.priority]||9);
+    if (state.sort === 'lot')      return (LOT_ORDER[a.lot]||9) - (LOT_ORDER[b.lot]||9);
+    if (state.sort === 'entity')   return a.entity.localeCompare(b.entity);
+    return a.title.localeCompare(b.title);
+  });
+
+  document.getElementById('visibleCount').textContent = filtered.length;
+  document.getElementById('totalCount').textContent = USE_CASES.length;
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="no-results"><div class="empty-mark">◌</div><p>Aucun use case ne correspond aux filtres sélectionnés.</p></div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map((uc, i) => {
+    const valTags = uc.value.slice(0,2).map(v => `<span class="val-tag">${v}</span>`).join('');
+    return `
+    <article class="use-card ${getCardTypeClass(uc.dim)}" style="animation-delay:${i*0.03}s" onclick="openDetail('${uc.id}')">
+      <div class="card-entity-row">
+        ${entityLabelHTML(uc.entity, uc.lot)}
+        <div class="prio-dot" style="background:${uc.priority==='Très prioritaire'?'var(--priority-1)':uc.priority==='Prioritaire'?'var(--priority-2)':'var(--priority-3)'}"></div>
+      </div>
+      <div class="card-top">
+        <div class="card-badges">
+          <span class="badge ${getDimBadgeClass(uc.dim)}">${uc.dim}</span>
+          <span class="badge ${getLotBadgeClass(uc.lot)}">${uc.lot}</span>
+          ${uc.quickwin ? '<span class="badge badge-qw">Quick win</span>' : ''}
+        </div>
+      </div>
+      <h3 class="card-title">${highlight(uc.title)}</h3>
+      <p class="card-summary">${highlight(uc.summary)}</p>
+      <div class="card-footer">
+        ${valTags}
+        <span class="card-arrow">→</span>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+
+function renderRoadmap() {
+  const lots = ['Lot 1','Lot 2','Lot 3'];
+  const grid = document.getElementById('lotsGrid');
+  const filtered = getFilteredCases();
+  updateRoadmapStatus(filtered);
+
+  grid.innerHTML = lots.map(lotKey => {
+    const meta = LOT_META[lotKey];
+    const items = filtered
+      .filter(u => u.lot === lotKey)
+      .sort((a,b) => (PRIO_ORDER[a.priority]||9) - (PRIO_ORDER[b.priority]||9));
+
+    const cards = items.length ? items.map(uc => `
+      <article class="road-card" onclick="openDetail('${uc.id}')">
+        <div class="road-card-head">
+          ${entityLogoHTML(uc.entity, 'entity-logo sm')}
+          <div class="road-card-ent">${getEntityMeta(uc.entity).label}</div>
+        </div>
+        <div class="road-card-title">${highlight(uc.title)}</div>
+        <div class="road-card-sum">${highlight(uc.summary)}</div>
+        <div class="road-card-footer">
+          <span class="badge ${getDimBadgeClass(uc.dim)}">${uc.dim}</span>
+          <span class="badge ${getPrioBadgeClass(uc.priority)}">${uc.priority}</span>
+          ${uc.quickwin ? '<span class="badge badge-qw">Quick win</span>' : ''}
+        </div>
+      </article>`).join('') : `<div class="road-empty">Aucun sujet ne correspond aux filtres actifs pour ${lotKey.toLowerCase()}.</div>`;
+
+    return `
+      <section class="lot-col ${lotKey.toLowerCase().replace(' ','-')}">
+        <header class="lot-header">
+          <div class="lot-step">${lotKey.replace('Lot ','')}</div>
+          <div class="lot-copy">
+            <div class="lot-title">${meta.title}</div>
+            <div class="lot-sub">${meta.subtitle}</div>
+          </div>
+          <div class="lot-horizon">${meta.horizon}</div>
+        </header>
+        <div class="lot-body">${cards}</div>
+      </section>`;
+  }).join('');
+}
+
+let currentId = null;
+function openDetail(id) {
+  currentId = id;
+  const uc = USE_CASES.find(u => u.id === id);
+  if (!uc) return;
+
+  const eyebrow = document.getElementById('panelEyebrow');
+  eyebrow.innerHTML = `
+    ${entityLabelHTML(uc.entity)}
+    <span class="badge ${getDimBadgeClass(uc.dim)}">${uc.dim}</span>
+    <span class="badge ${getLotBadgeClass(uc.lot)}">${uc.lot}</span>
+    <span class="badge ${getPrioBadgeClass(uc.priority)}">${uc.priority}</span>
+    ${uc.quickwin ? '<span class="badge badge-qw">Quick win</span>' : ''}
+  `;
+
+  const body = document.getElementById('panelBody');
+  body.innerHTML = `
+    <div class="panel-title">${uc.title}</div>
+    <div class="panel-summary">${uc.summary}</div>
+    <div class="detail-grid">
+      <div class="detail-section card-like">
+        <div class="detail-section-title">Problème actuel</div>
+        <div class="detail-text">${uc.problem}</div>
+      </div>
+      <div class="detail-section card-like">
+        <div class="detail-section-title">Objectif visé</div>
+        <div class="detail-text">${uc.objective}</div>
+      </div>
+    </div>
+    <div class="detail-section card-like">
+      <div class="detail-section-title">Approche recommandée</div>
+      <div class="detail-text">${uc.how}</div>
+    </div>
+    <div class="detail-section card-like">
+      <div class="detail-section-title">Sources de données</div>
+      <div class="tag-list">${uc.sources.map(s=>`<span class="tag-item">${s}</span>`).join('')}</div>
+    </div>
+    <div class="detail-section card-like">
+      <div class="detail-section-title">Technologies & stack</div>
+      <div class="tag-list">${uc.tech.map(t=>`<span class="tag-item">${t}</span>`).join('')}</div>
+    </div>
+    <div class="detail-section card-like">
+      <div class="detail-section-title">Livrables & KPI</div>
+      <div class="kpi-row">${uc.deliverables.map(d=>`<div class="kpi-box">${d}</div>`).join('')}</div>
+    </div>
+    <div class="detail-section card-like">
+      <div class="detail-section-title">Dépendances & prérequis</div>
+      <div class="tag-list">${uc.dependencies.map(d=>`<span class="tag-item">${d}</span>`).join('')}</div>
+    </div>
+    <div class="detail-section split">
+      <div class="card-like">
+        <div class="detail-section-title">Horizon</div>
+        <div class="horizon-badge"><span>${uc.horizon}</span></div>
+      </div>
+      <div class="card-like">
+        <div class="detail-section-title">Valeur métier</div>
+        <div class="tag-list">${uc.value.map(v=>`<span class="tag-item">${v}</span>`).join('')}</div>
+      </div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">Lecture COMEX</div>
+      <div class="comex-box">${uc.comex}</div>
+    </div>`;
+
+  const all = USE_CASES;
+  const idx = all.findIndex(u => u.id === id);
+  const prev = all[idx - 1];
+  const next = all[idx + 1];
+  document.getElementById('panelNav').innerHTML = `
+    <button class="nav-card-btn" ${prev ? `onclick="openDetail('${prev.id}')"` : 'disabled'}>
+      <span class="nav-arrow">←</span>
+      <div><div class="nav-card-btn-lbl">Précédent</div><div class="nav-card-btn-title">${prev ? prev.title : '—'}</div></div>
+    </button>
+    <button class="nav-card-btn" ${next ? `onclick="openDetail('${next.id}')"` : 'disabled'}>
+      <div><div class="nav-card-btn-lbl">Suivant</div><div class="nav-card-btn-title">${next ? next.title : '—'}</div></div>
+      <span class="nav-arrow">→</span>
+    </button>`;
+
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('detailPanel').classList.add('open');
+}
+
+renderAll();
+</script>
+</body>
+</html>
