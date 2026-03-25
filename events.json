@@ -1,10 +1,5 @@
 {
-  "meta": {
-    "version": 1,
-    "updated_at": "2026-03-25T00:00:00Z",
-    "source": "HS_Planning_2026_v5.html"
-  },
-  "nxtId": 400,
+  "updated_at": "2026-03-25T19:55:00Z",
   "events": [
     {
       "id": 1,
@@ -2304,18 +2299,18 @@
     {
       "id": 256,
       "g": "One Retail",
-      "bu": "Beauty",
-      "e": "Beauty For You",
-      "n": "Affichage BFY",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Affichage",
       "m": 2,
       "t": "Affichage"
     },
     {
       "id": 257,
       "g": "One Retail",
-      "bu": "Beauty",
-      "e": "Beauty For You",
-      "n": "Affichage BFY",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Affichage",
       "m": 3,
       "t": "Affichage"
     },
@@ -2813,6 +2808,87 @@
       "n": "Campagne Festival du Bricolage",
       "m": 12,
       "t": "Campagne"
+    },
+    {
+      "id": 313,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Rallye Nour",
+      "m": 4,
+      "t": "Événement"
+    },
+    {
+      "id": 314,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Campagne Raison d`être",
+      "m": 5,
+      "t": "Campagne"
+    },
+    {
+      "id": 315,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Campagne Puissance du groupe",
+      "m": 5,
+      "t": "Campagne"
+    },
+    {
+      "id": 316,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Affichage Trophée Hassan ll",
+      "m": 5,
+      "t": "Affichage"
+    },
+    {
+      "id": 317,
+      "g": "H&S Group",
+      "bu": "",
+      "e": "",
+      "n": "Hatim Ammor",
+      "m": 3,
+      "t": "Événement"
+    },
+    {
+      "id": 318,
+      "g": "One Retail",
+      "bu": "",
+      "e": "",
+      "n": "Salon de la franchise",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 319,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Marocotel",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 320,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Affichage",
+      "m": 4,
+      "t": "Affichage"
+    },
+    {
+      "id": 321,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Ftour BFY",
+      "m": 3,
+      "t": "Événement"
     }
   ]
 }
