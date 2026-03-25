@@ -1,0 +1,2818 @@
+{
+  "meta": {
+    "version": 1,
+    "updated_at": "2026-03-25T00:00:00Z",
+    "source": "HS_Planning_2026_v5.html"
+  },
+  "nxtId": 400,
+  "events": [
+    {
+      "id": 1,
+      "g": "H&S Group",
+      "bu": "",
+      "e": "",
+      "n": "Lancement nouveau site web",
+      "m": 2,
+      "t": "Lancement"
+    },
+    {
+      "id": 2,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Bollywood Roadshow Rabat + Casa",
+      "m": 1,
+      "t": "Événement"
+    },
+    {
+      "id": 3,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Campagne ISO",
+      "m": 2,
+      "t": "Campagne"
+    },
+    {
+      "id": 4,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Spectable Ramadan Casa",
+      "m": 3,
+      "t": "Événement"
+    },
+    {
+      "id": 5,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Le porteur d'histoire Casa + Rabat",
+      "m": 4,
+      "t": "Événement"
+    },
+    {
+      "id": 6,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Remise de diplome ISCAE",
+      "m": 5,
+      "t": "Événement"
+    },
+    {
+      "id": 7,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "IPO Dislog Affichage",
+      "m": 6,
+      "t": "Autre"
+    },
+    {
+      "id": 8,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Rose Royal rabat + Casa",
+      "m": 9,
+      "t": "Événement"
+    },
+    {
+      "id": 9,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: J'aimerais arrêté Casa + RABAT",
+      "m": 10,
+      "t": "Événement"
+    },
+    {
+      "id": 10,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Sherlock Holmes CASA + RABAT",
+      "m": 11,
+      "t": "Événement"
+    },
+    {
+      "id": 11,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: La belle et la bete Casa",
+      "m": 12,
+      "t": "Événement"
+    },
+    {
+      "id": 12,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Satanas & Mordicus Marrakech",
+      "m": 3,
+      "t": "Événement"
+    },
+    {
+      "id": 13,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: 7 cup Marrakech",
+      "m": 4,
+      "t": "Événement"
+    },
+    {
+      "id": 14,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Caftan week",
+      "m": 5,
+      "t": "Événement"
+    },
+    {
+      "id": 15,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Campagne IPO",
+      "m": 6,
+      "t": "Campagne"
+    },
+    {
+      "id": 16,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Campagne IPO",
+      "m": 7,
+      "t": "Campagne"
+    },
+    {
+      "id": 17,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Andalussyat",
+      "m": 12,
+      "t": "Événement"
+    },
+    {
+      "id": 18,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Satanas & Mordicus Casa",
+      "m": 2,
+      "t": "Événement"
+    },
+    {
+      "id": 19,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Dislog Padel Masters",
+      "m": 4,
+      "t": "Événement"
+    },
+    {
+      "id": 20,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Dislog golf open",
+      "m": 5,
+      "t": "Événement"
+    },
+    {
+      "id": 21,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: La belle et la bete Casa",
+      "m": 12,
+      "t": "Événement"
+    },
+    {
+      "id": 22,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: 8m2 Rabat + Casa",
+      "m": 2,
+      "t": "Événement"
+    },
+    {
+      "id": 23,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: ASS TROPHEE HII DE GOLF",
+      "m": 5,
+      "t": "Événement"
+    },
+    {
+      "id": 24,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Al Capone Rabat + Casa",
+      "m": 12,
+      "t": "Événement"
+    },
+    {
+      "id": 25,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Carmen Rabat + Casa",
+      "m": 5,
+      "t": "Événement"
+    },
+    {
+      "id": 26,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Festival du film",
+      "m": 12,
+      "t": "Événement"
+    },
+    {
+      "id": 27,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "EV: Santa pour enfant Casa",
+      "m": 12,
+      "t": "Événement"
+    },
+    {
+      "id": 28,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "",
+      "n": "Congrès: Officine Pharma Africa Meeting",
+      "m": 1,
+      "t": "Congrès"
+    },
+    {
+      "id": 29,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "",
+      "n": "Congrès: WHX Dubai",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 30,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "",
+      "n": "Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 31,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "",
+      "n": "Congrès CPHI",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 32,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD",
+      "n": "Lancement Site WEB",
+      "m": 1,
+      "t": "Lancement"
+    },
+    {
+      "id": 33,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD",
+      "n": "Congrès: WHX Dubai",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 34,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD",
+      "n": "Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 35,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD",
+      "n": "Congrès CPHI",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 36,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD",
+      "n": "MEDICA TRADE FAIR Congrès",
+      "m": 11,
+      "t": "Congrès"
+    },
+    {
+      "id": 37,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD",
+      "n": "International eHealth Forum 4ème édition ? Congrès",
+      "m": 11,
+      "t": "Congrès"
+    },
+    {
+      "id": 38,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — ERAMEDIC",
+      "n": "Congrès: WHX Dubai",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 39,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — ERAMEDIC",
+      "n": "33-ème Congrès National de L'AMU",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 40,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — ERAMEDIC",
+      "n": "Congrès 19ÈME WCA2026 et SMAAR 15 au 19 avril 2026",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 41,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — ERAMEDIC",
+      "n": "Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 42,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — ERAMEDIC",
+      "n": "SMNC 13 au 17 octobre 2026 Congrès",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 43,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — ERAMEDIC",
+      "n": "Congrès SMACOT 26 AU 20 AVRIL 2026",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 44,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — SCOMEDICA",
+      "n": "Congrès: WHX Dubai",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 45,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — SCOMEDICA",
+      "n": "Congrès SEEnergy",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 46,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — SCOMEDICA",
+      "n": "Congrès JPFSA",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 47,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — SCOMEDICA",
+      "n": "Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 48,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — SCOMEDICA",
+      "n": "GRAIN & MILLING Congrès",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 49,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — FARMALAC",
+      "n": "Congrès: WHX Dubai",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 50,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — FARMALAC",
+      "n": "Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2027",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 51,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — FARMALAC",
+      "n": "Congrès CPHI",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 52,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — AFROBIOMEDIC",
+      "n": "Congrès: WHX Dubai",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 53,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — AFROBIOMEDIC",
+      "n": "Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2028",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 54,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès de la société marocaine biomédical ( SMB ) 26 fev",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 55,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès AMBM 2-4 avril",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 56,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès 4ème journées du centre de fertilité de Meknes",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 57,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "SMCC - Journées Marocaines de Biologie Clinique Congrès",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 58,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès africain ANTLM",
+      "m": 11,
+      "t": "Congrès"
+    },
+    {
+      "id": 59,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès: WHX Dubai",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 60,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès pour Journée d'hématoligie biologique de l'oriental",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 61,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès AMBRG",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 62,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès de la Société marocaine de génétique médicale",
+      "m": 11,
+      "t": "Congrès"
+    },
+    {
+      "id": 63,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès africain de pathologie digitale",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 64,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 65,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès de la SMALMI",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 66,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "DMD — MEGAFLEX",
+      "n": "Congrès Journées SMAMM",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 67,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès : AL HOKAMA",
+      "m": 1,
+      "t": "Congrès"
+    },
+    {
+      "id": 68,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Lancement site web",
+      "m": 2,
+      "t": "Lancement"
+    },
+    {
+      "id": 69,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès SMO",
+      "m": 3,
+      "t": "Congrès"
+    },
+    {
+      "id": 70,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AMICALE",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 71,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 72,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AMCAR - PARTICIPATION 04-06 Juin",
+      "m": 6,
+      "t": "Congrès"
+    },
+    {
+      "id": 73,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Cardio SUD",
+      "m": 7,
+      "t": "Congrès"
+    },
+    {
+      "id": 74,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Azelastin-Comod",
+      "m": 8,
+      "t": "Campagne"
+    },
+    {
+      "id": 75,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès SMO-Ophta-Casa",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 76,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès CPHI",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 77,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne AM",
+      "m": 11,
+      "t": "Campagne"
+    },
+    {
+      "id": 78,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès ALHOKAMAA 30-31dec",
+      "m": 12,
+      "t": "Congrès"
+    },
+    {
+      "id": 79,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès: Officine Pharma Africa Meeting",
+      "m": 1,
+      "t": "Congrès"
+    },
+    {
+      "id": 80,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès WHX Dubai",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 81,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AMMF - KEBBAJ",
+      "m": 3,
+      "t": "Congrès"
+    },
+    {
+      "id": 82,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AES:ASSOCIATION DU ENDO DU SUD",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 83,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne CAPLOR",
+      "m": 5,
+      "t": "Campagne"
+    },
+    {
+      "id": 84,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AMOC",
+      "m": 6,
+      "t": "Congrès"
+    },
+    {
+      "id": 85,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Tambacor",
+      "m": 7,
+      "t": "Campagne"
+    },
+    {
+      "id": 86,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AFOMEK",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 87,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "congrès FON -FEDERATION DES OMNIPRATICIENS DU NORD",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 88,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès APEI",
+      "m": 11,
+      "t": "Congrès"
+    },
+    {
+      "id": 89,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès SMC",
+      "m": 12,
+      "t": "Congrès"
+    },
+    {
+      "id": 90,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès: Sigma",
+      "m": 1,
+      "t": "Congrès"
+    },
+    {
+      "id": 91,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Tanger HEART",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 92,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Printemps de cardiologie",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 93,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Bactrim/ Tiberal",
+      "m": 5,
+      "t": "Campagne"
+    },
+    {
+      "id": 94,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Journée endo oriental",
+      "m": 6,
+      "t": "Congrès"
+    },
+    {
+      "id": 95,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: Allergo-Comod",
+      "m": 7,
+      "t": "Événement"
+    },
+    {
+      "id": 96,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Cardio sud-Agadir",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 97,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès ADN Fes",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 98,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès CARDIO DU NORD",
+      "m": 11,
+      "t": "Congrès"
+    },
+    {
+      "id": 99,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "ASSED-Casa Congrès",
+      "m": 12,
+      "t": "Congrès"
+    },
+    {
+      "id": 100,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: Berrchid :Diabalex",
+      "m": 1,
+      "t": "Événement"
+    },
+    {
+      "id": 101,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Flonox/ ATB",
+      "m": 2,
+      "t": "Campagne"
+    },
+    {
+      "id": 102,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne AM",
+      "m": 3,
+      "t": "Campagne"
+    },
+    {
+      "id": 103,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Journée de la femme cardiologue",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 104,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Journée FKIH Bensalleh",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 105,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès de la micronutrition",
+      "m": 6,
+      "t": "Congrès"
+    },
+    {
+      "id": 106,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: STAFF CHU",
+      "m": 7,
+      "t": "Événement"
+    },
+    {
+      "id": 107,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès SMSL",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 108,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès SMEDIAN",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 109,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès ASMPR",
+      "m": 11,
+      "t": "Congrès"
+    },
+    {
+      "id": 110,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Journées mohammedia Congrès",
+      "m": 12,
+      "t": "Congrès"
+    },
+    {
+      "id": 111,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: Meknes Dibalex &HTA",
+      "m": 1,
+      "t": "Événement"
+    },
+    {
+      "id": 112,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: URO Flonox",
+      "m": 2,
+      "t": "Événement"
+    },
+    {
+      "id": 113,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès ACOR",
+      "m": 3,
+      "t": "Congrès"
+    },
+    {
+      "id": 114,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AOPR",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 115,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AGSMF",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 116,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès La SAMIR-Ophta",
+      "m": 6,
+      "t": "Congrès"
+    },
+    {
+      "id": 117,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Falifer",
+      "m": 7,
+      "t": "Campagne"
+    },
+    {
+      "id": 118,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Falifer",
+      "m": 8,
+      "t": "Campagne"
+    },
+    {
+      "id": 119,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Journée Mohamedia",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 120,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Journées Endo Oriental",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 121,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: STAFF CHU",
+      "m": 11,
+      "t": "Événement"
+    },
+    {
+      "id": 122,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "ACP Rabat Congrès",
+      "m": 12,
+      "t": "Congrès"
+    },
+    {
+      "id": 123,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: Marrakech:Diabalex",
+      "m": 1,
+      "t": "Événement"
+    },
+    {
+      "id": 124,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès ACOP",
+      "m": 3,
+      "t": "Congrès"
+    },
+    {
+      "id": 125,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès SMORL",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 126,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AGP",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 127,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Allergo-Comod",
+      "m": 6,
+      "t": "Campagne"
+    },
+    {
+      "id": 128,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Allergo-Comod",
+      "m": 7,
+      "t": "Campagne"
+    },
+    {
+      "id": 129,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Journée Hopital militaire rabat cardio",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 130,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AGDMF",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 131,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Cardio B Congrès",
+      "m": 12,
+      "t": "Congrès"
+    },
+    {
+      "id": 132,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: Khouribga HTA",
+      "m": 1,
+      "t": "Événement"
+    },
+    {
+      "id": 133,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: Neosynephrine",
+      "m": 3,
+      "t": "Événement"
+    },
+    {
+      "id": 134,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AL AMAL",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 135,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AFMAPATH",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 136,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès Journées CHU Agadir",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 137,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne AM",
+      "m": 10,
+      "t": "Campagne"
+    },
+    {
+      "id": 138,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "RESO Congrès",
+      "m": 12,
+      "t": "Congrès"
+    },
+    {
+      "id": 139,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: Mohamedia Diablex",
+      "m": 1,
+      "t": "Événement"
+    },
+    {
+      "id": 140,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Neosynephrine",
+      "m": 3,
+      "t": "Campagne"
+    },
+    {
+      "id": 141,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AMU",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 142,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès JIOP",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 143,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Falifer",
+      "m": 9,
+      "t": "Campagne"
+    },
+    {
+      "id": 144,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès SMG-Ophta Marrakech",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 145,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "SOMACHIR Congrès",
+      "m": 12,
+      "t": "Congrès"
+    },
+    {
+      "id": 146,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Neovis",
+      "m": 1,
+      "t": "Campagne"
+    },
+    {
+      "id": 147,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Neovis",
+      "m": 2,
+      "t": "Campagne"
+    },
+    {
+      "id": 148,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Flonox/ ATB",
+      "m": 3,
+      "t": "Campagne"
+    },
+    {
+      "id": 149,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès SRMGO",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 150,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne CAPLOR",
+      "m": 5,
+      "t": "Campagne"
+    },
+    {
+      "id": 151,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne CAPLOR",
+      "m": 6,
+      "t": "Campagne"
+    },
+    {
+      "id": 152,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Siccaprotect",
+      "m": 9,
+      "t": "Campagne"
+    },
+    {
+      "id": 153,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Camapagne Timo-comod",
+      "m": 10,
+      "t": "Autre"
+    },
+    {
+      "id": 154,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Camapagne Timo-comod",
+      "m": 11,
+      "t": "Autre"
+    },
+    {
+      "id": 155,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "SOMIPEV",
+      "m": 12,
+      "t": "Autre"
+    },
+    {
+      "id": 156,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "APA Congrès",
+      "m": 1,
+      "t": "Congrès"
+    },
+    {
+      "id": 157,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Bactrim/ Tiberal",
+      "m": 4,
+      "t": "Campagne"
+    },
+    {
+      "id": 158,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Bactrim/ Tiberal",
+      "m": 5,
+      "t": "Campagne"
+    },
+    {
+      "id": 159,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Bactrim/ Tiberal",
+      "m": 6,
+      "t": "Campagne"
+    },
+    {
+      "id": 160,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "JPIT Congrès",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 161,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "CAMPAGNE ATB",
+      "m": 10,
+      "t": "Campagne"
+    },
+    {
+      "id": 162,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "CAMPAGNE ATB",
+      "m": 11,
+      "t": "Campagne"
+    },
+    {
+      "id": 163,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "CAMPAGNE ATB",
+      "m": 12,
+      "t": "Campagne"
+    },
+    {
+      "id": 164,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Ramadna Diabalex",
+      "m": 1,
+      "t": "Campagne"
+    },
+    {
+      "id": 165,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Ramadna Diabalex",
+      "m": 2,
+      "t": "Campagne"
+    },
+    {
+      "id": 166,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: STAFF CHU",
+      "m": 4,
+      "t": "Événement"
+    },
+    {
+      "id": 167,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: ODM5",
+      "m": 5,
+      "t": "Événement"
+    },
+    {
+      "id": 168,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne AM",
+      "m": 9,
+      "t": "Campagne"
+    },
+    {
+      "id": 169,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "ADN Fes Congrès",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 170,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "PharmaEXPO Congrès",
+      "m": 1,
+      "t": "Congrès"
+    },
+    {
+      "id": 171,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne ODM5",
+      "m": 4,
+      "t": "Campagne"
+    },
+    {
+      "id": 172,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne ODM5",
+      "m": 5,
+      "t": "Campagne"
+    },
+    {
+      "id": 173,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "AGON Congrès",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 174,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "AGSMF Congrès",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 175,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne Flonox/ ATB",
+      "m": 1,
+      "t": "Campagne"
+    },
+    {
+      "id": 176,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Campagne AM",
+      "m": 4,
+      "t": "Campagne"
+    },
+    {
+      "id": 177,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "AMEF Congrès",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 178,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "TR: Infection Urinaire et respiratoire",
+      "m": 1,
+      "t": "Événement"
+    },
+    {
+      "id": 179,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "Congrès: Officine Pharma Africa Meeting",
+      "m": 1,
+      "t": "Congrès"
+    },
+    {
+      "id": 180,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "LES JDM (GRDVS) Congrès",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 181,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "SMD Congrès",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 182,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "ADEPRA Congrès",
+      "m": 11,
+      "t": "Congrès"
+    },
+    {
+      "id": 183,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "WHX Dubai Congrès",
+      "m": 2,
+      "t": "Congrès"
+    },
+    {
+      "id": 184,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "CODEPCA 10-11 Avril 2026 Congrès",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 185,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 186,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "PARA EXPO 26-28juin Congrès",
+      "m": 6,
+      "t": "Congrès"
+    },
+    {
+      "id": 187,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "OFFICINE BEAUTY PLUS Congrès",
+      "m": 9,
+      "t": "Congrès"
+    },
+    {
+      "id": 188,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH",
+      "n": "Congrès CPHI",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 189,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH — Kaline",
+      "n": "Affichage ( Klift ou White TBD) - 10 Jan au 15 Fev",
+      "m": 1,
+      "t": "Affichage"
+    },
+    {
+      "id": 190,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH — Kaline",
+      "n": "Affichage ( Klift ou White TBD) - 10 Jan au 15 Fev",
+      "m": 2,
+      "t": "Affichage"
+    },
+    {
+      "id": 191,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH — Kaline",
+      "n": "Affichage Whitening",
+      "m": 11,
+      "t": "Affichage"
+    },
+    {
+      "id": 192,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "KPH — Kaline",
+      "n": "Congrès: Officine Pharma Africa Meeting",
+      "m": 1,
+      "t": "Congrès"
+    },
+    {
+      "id": 193,
+      "g": "Dislog Group",
+      "bu": "Food",
+      "e": "KPH",
+      "n": "Affichage EDITA ( fin 10jan)",
+      "m": 1,
+      "t": "Affichage"
+    },
+    {
+      "id": 194,
+      "g": "Dislog Group",
+      "bu": "Food",
+      "e": "KPH",
+      "n": "Affichage Baccari, Edita, Maroja (Back to school)",
+      "m": 9,
+      "t": "Affichage"
+    },
+    {
+      "id": 195,
+      "g": "Dislog Group",
+      "bu": "Food",
+      "e": "KPH",
+      "n": "Affichage Baccari, Edita, Maroja (Back to school)",
+      "m": 10,
+      "t": "Affichage"
+    },
+    {
+      "id": 196,
+      "g": "Dislog Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Affichage ACE Mega Brand",
+      "m": 11,
+      "t": "Affichage"
+    },
+    {
+      "id": 197,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Campagne Annonce officiel",
+      "m": 2,
+      "t": "Campagne"
+    },
+    {
+      "id": 198,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Campagne 6 métiers",
+      "m": 3,
+      "t": "Campagne"
+    },
+    {
+      "id": 199,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Logis Med congrès",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 200,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Campagne ABM",
+      "m": 8,
+      "t": "Campagne"
+    },
+    {
+      "id": 201,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Campagne ABM",
+      "m": 9,
+      "t": "Campagne"
+    },
+    {
+      "id": 202,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Congrès Logiterre",
+      "m": 10,
+      "t": "Congrès"
+    },
+    {
+      "id": 203,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Croissance HUB - Témoignage client",
+      "m": 11,
+      "t": "Autre"
+    },
+    {
+      "id": 204,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Campagne ESG",
+      "m": 2,
+      "t": "Campagne"
+    },
+    {
+      "id": 205,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Lancement Reranding nouvelle charte",
+      "m": 2,
+      "t": "Lancement"
+    },
+    {
+      "id": 206,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Lancement Reranding nouvelle charte",
+      "m": 3,
+      "t": "Lancement"
+    },
+    {
+      "id": 207,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Lancement Reranding nouvelle charte",
+      "m": 4,
+      "t": "Lancement"
+    },
+    {
+      "id": 208,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Campagne 24/7",
+      "m": 6,
+      "t": "Campagne"
+    },
+    {
+      "id": 209,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Campagne 24/7",
+      "m": 7,
+      "t": "Campagne"
+    },
+    {
+      "id": 210,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Campagne Positionnement FLS",
+      "m": 2,
+      "t": "Campagne"
+    },
+    {
+      "id": 211,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Campagne Positionnement FLS",
+      "m": 3,
+      "t": "Campagne"
+    },
+    {
+      "id": 212,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Salons BTOB Congrès",
+      "m": 5,
+      "t": "Congrès"
+    },
+    {
+      "id": 213,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "EV: Inauguration nouvelle plateforme 4 février",
+      "m": 2,
+      "t": "Événement"
+    },
+    {
+      "id": 214,
+      "g": "LVE Group",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Lancement site web",
+      "m": 2,
+      "t": "Lancement"
+    },
+    {
+      "id": 215,
+      "g": "One Retail",
+      "bu": "Hygiène",
+      "e": "KPH",
+      "n": "Lancement Site WEB",
+      "m": 1,
+      "t": "Lancement"
+    },
+    {
+      "id": 216,
+      "g": "One Retail",
+      "bu": "Lifestyle",
+      "e": "Franprix",
+      "n": "Lancement",
+      "m": 6,
+      "t": "Lancement"
+    },
+    {
+      "id": 217,
+      "g": "One Retail",
+      "bu": "Lifestyle",
+      "e": "Monoprix",
+      "n": "Lancement",
+      "m": 9,
+      "t": "Lancement"
+    },
+    {
+      "id": 218,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre aéroport",
+      "m": 1,
+      "t": "Offre"
+    },
+    {
+      "id": 219,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre saint valentin + rose",
+      "m": 2,
+      "t": "Offre"
+    },
+    {
+      "id": 220,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre aid",
+      "m": 3,
+      "t": "Offre"
+    },
+    {
+      "id": 221,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Lancement Rebranding",
+      "m": 4,
+      "t": "Lancement"
+    },
+    {
+      "id": 222,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "EV: Nostalgia lover",
+      "m": 5,
+      "t": "Événement"
+    },
+    {
+      "id": 223,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Activation Icebike",
+      "m": 7,
+      "t": "Événement"
+    },
+    {
+      "id": 224,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre ramadan",
+      "m": 2,
+      "t": "Offre"
+    },
+    {
+      "id": 225,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre ramadan",
+      "m": 3,
+      "t": "Offre"
+    },
+    {
+      "id": 226,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Maroc hotel Congrès",
+      "m": 4,
+      "t": "Congrès"
+    },
+    {
+      "id": 227,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "EV: Caftan week",
+      "m": 5,
+      "t": "Événement"
+    },
+    {
+      "id": 228,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "EV: Semaine du cheval",
+      "m": 7,
+      "t": "Événement"
+    },
+    {
+      "id": 229,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Activation glovo + glovo market",
+      "m": 3,
+      "t": "Activation"
+    },
+    {
+      "id": 230,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "EV: Jazzablanca",
+      "m": 7,
+      "t": "Événement"
+    },
+    {
+      "id": 231,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre printemps /été",
+      "m": 3,
+      "t": "Offre"
+    },
+    {
+      "id": 232,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre printemps /été",
+      "m": 4,
+      "t": "Offre"
+    },
+    {
+      "id": 233,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre printemps /été",
+      "m": 5,
+      "t": "Offre"
+    },
+    {
+      "id": 234,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre printemps /été",
+      "m": 6,
+      "t": "Offre"
+    },
+    {
+      "id": 235,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre printemps /été",
+      "m": 7,
+      "t": "Offre"
+    },
+    {
+      "id": 236,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre printemps /été",
+      "m": 8,
+      "t": "Offre"
+    },
+    {
+      "id": 237,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre automne / hiver",
+      "m": 9,
+      "t": "Offre"
+    },
+    {
+      "id": 238,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre automne / hiver",
+      "m": 10,
+      "t": "Offre"
+    },
+    {
+      "id": 239,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre automne / hiver",
+      "m": 11,
+      "t": "Offre"
+    },
+    {
+      "id": 240,
+      "g": "One Retail",
+      "bu": "Restauration",
+      "e": "Venezia",
+      "n": "Offre automne / hiver",
+      "m": 12,
+      "t": "Offre"
+    },
+    {
+      "id": 241,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Lancement 28 janvier",
+      "m": 1,
+      "t": "Lancement"
+    },
+    {
+      "id": 242,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Offre saint valentin: 15% selection coup de cœur",
+      "m": 2,
+      "t": "Offre"
+    },
+    {
+      "id": 243,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Post journalier thème: bienvenue ! On devoile nos secrets week 1",
+      "m": 2,
+      "t": "Activation"
+    },
+    {
+      "id": 244,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Post aid",
+      "m": 3,
+      "t": "Activation"
+    },
+    {
+      "id": 245,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "EV: Pop up malls",
+      "m": 4,
+      "t": "Événement"
+    },
+    {
+      "id": 246,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Post journalier thème: Pour l'amour de la beauté week 2",
+      "m": 2,
+      "t": "Activation"
+    },
+    {
+      "id": 247,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "post journee de la femme",
+      "m": 3,
+      "t": "Activation"
+    },
+    {
+      "id": 248,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "soirée lancement",
+      "m": 4,
+      "t": "Événement"
+    },
+    {
+      "id": 249,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Post décompte lancement + annonce -20%",
+      "m": 1,
+      "t": "Activation"
+    },
+    {
+      "id": 250,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Post journalier thème: L'expertise au service de votre peau week 3",
+      "m": 2,
+      "t": "Activation"
+    },
+    {
+      "id": 251,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Activation : Marque page librairie",
+      "m": 3,
+      "t": "Activation"
+    },
+    {
+      "id": 252,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Activation : studio yoga",
+      "m": 4,
+      "t": "Activation"
+    },
+    {
+      "id": 253,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Activation fleuriste",
+      "m": 2,
+      "t": "Activation"
+    },
+    {
+      "id": 254,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Post journalier thème: Préparez votre peau pour un mois serein week 4",
+      "m": 2,
+      "t": "Activation"
+    },
+    {
+      "id": 255,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Activation : pressing",
+      "m": 3,
+      "t": "Activation"
+    },
+    {
+      "id": 256,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Affichage BFY",
+      "m": 2,
+      "t": "Affichage"
+    },
+    {
+      "id": 257,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Affichage BFY",
+      "m": 3,
+      "t": "Affichage"
+    },
+    {
+      "id": 258,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Offre lancement : 20% sur tout le site",
+      "m": 1,
+      "t": "Offre"
+    },
+    {
+      "id": 259,
+      "g": "One Retail",
+      "bu": "Beauty",
+      "e": "Beauty For You",
+      "n": "Offre pré-ramadan : packs routine ramadan",
+      "m": 2,
+      "t": "Offre"
+    },
+    {
+      "id": 260,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisionnère renover à petit prix",
+      "m": 1,
+      "t": "Campagne"
+    },
+    {
+      "id": 261,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisionnière renover à petit prix",
+      "m": 2,
+      "t": "Campagne"
+    },
+    {
+      "id": 262,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisonnière Printemps",
+      "m": 3,
+      "t": "Campagne"
+    },
+    {
+      "id": 263,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisonnière Printemps",
+      "m": 4,
+      "t": "Campagne"
+    },
+    {
+      "id": 264,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne aménagement plein air, salon, ombrage",
+      "m": 5,
+      "t": "Campagne"
+    },
+    {
+      "id": 265,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne Indispensable : peinture, electricité, quincaillerie",
+      "m": 6,
+      "t": "Campagne"
+    },
+    {
+      "id": 266,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisonnière : aménagement plein air et entretien piscine",
+      "m": 7,
+      "t": "Campagne"
+    },
+    {
+      "id": 267,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisonnière : aménagement plein air et entretien piscine",
+      "m": 8,
+      "t": "Campagne"
+    },
+    {
+      "id": 268,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "EV: Atelier B2C",
+      "m": 9,
+      "t": "Événement"
+    },
+    {
+      "id": 269,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre : revetement sol",
+      "m": 10,
+      "t": "Offre"
+    },
+    {
+      "id": 270,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisonnière chauffage",
+      "m": 11,
+      "t": "Campagne"
+    },
+    {
+      "id": 271,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisonnière chauffage",
+      "m": 12,
+      "t": "Campagne"
+    },
+    {
+      "id": 272,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre Solde Chauffage",
+      "m": 1,
+      "t": "Offre"
+    },
+    {
+      "id": 273,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisonnière Ramadan",
+      "m": 2,
+      "t": "Campagne"
+    },
+    {
+      "id": 274,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne indispensables : outillage te matériel de chantier",
+      "m": 3,
+      "t": "Campagne"
+    },
+    {
+      "id": 275,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne aménagement plein air, salon, ombrage",
+      "m": 4,
+      "t": "Campagne"
+    },
+    {
+      "id": 276,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne Indispensable : peinture, electricité, quincaillerie",
+      "m": 5,
+      "t": "Campagne"
+    },
+    {
+      "id": 277,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisonnière : camping et plage",
+      "m": 6,
+      "t": "Campagne"
+    },
+    {
+      "id": 278,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre : jeux et gonflable",
+      "m": 7,
+      "t": "Offre"
+    },
+    {
+      "id": 279,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre: solde plein air",
+      "m": 8,
+      "t": "Offre"
+    },
+    {
+      "id": 280,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisionnière foire au prix",
+      "m": 9,
+      "t": "Campagne"
+    },
+    {
+      "id": 281,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne saisionnière foire au prix",
+      "m": 10,
+      "t": "Campagne"
+    },
+    {
+      "id": 282,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre: Luminaire et eclairage",
+      "m": 11,
+      "t": "Offre"
+    },
+    {
+      "id": 283,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre: décoration, cadeaux",
+      "m": 12,
+      "t": "Offre"
+    },
+    {
+      "id": 284,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre Pet food",
+      "m": 1,
+      "t": "Offre"
+    },
+    {
+      "id": 285,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Post Ramadan",
+      "m": 2,
+      "t": "Activation"
+    },
+    {
+      "id": 286,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre Netoyage, Aspiration + insecticide",
+      "m": 3,
+      "t": "Offre"
+    },
+    {
+      "id": 287,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre materiel de chantier",
+      "m": 4,
+      "t": "Offre"
+    },
+    {
+      "id": 288,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre chauffe-eaux",
+      "m": 5,
+      "t": "Offre"
+    },
+    {
+      "id": 289,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre : fraicheur",
+      "m": 6,
+      "t": "Offre"
+    },
+    {
+      "id": 290,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Post : Coupe du monde 2026 + Fete du throne",
+      "m": 7,
+      "t": "Événement"
+    },
+    {
+      "id": 291,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "post : oued eddahad, rev roi peup/jeunesse",
+      "m": 8,
+      "t": "Activation"
+    },
+    {
+      "id": 292,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "offre : rangement",
+      "m": 9,
+      "t": "Offre"
+    },
+    {
+      "id": 293,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "offre : rangement",
+      "m": 10,
+      "t": "Offre"
+    },
+    {
+      "id": 294,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "post: marche verte + independance + Black Friday",
+      "m": 11,
+      "t": "Activation"
+    },
+    {
+      "id": 295,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Post : DIY",
+      "m": 12,
+      "t": "Activation"
+    },
+    {
+      "id": 296,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Post : Nouvel an, can, nouvel an amazigh",
+      "m": 1,
+      "t": "Activation"
+    },
+    {
+      "id": 297,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre Pet food",
+      "m": 2,
+      "t": "Offre"
+    },
+    {
+      "id": 298,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "EV: Atelier B2C",
+      "m": 3,
+      "t": "Événement"
+    },
+    {
+      "id": 299,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Ouverture Almaz",
+      "m": 4,
+      "t": "Événement"
+    },
+    {
+      "id": 300,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Post: Aid el Adha, Bricolage",
+      "m": 5,
+      "t": "Activation"
+    },
+    {
+      "id": 301,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Post : Coupe du monde 2026 + environnement",
+      "m": 6,
+      "t": "Événement"
+    },
+    {
+      "id": 302,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "campagne saisionnière : Entretien et organisation de la maison",
+      "m": 8,
+      "t": "Campagne"
+    },
+    {
+      "id": 303,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "campagne saisionnière : Entretien et organisation de la maison",
+      "m": 9,
+      "t": "Campagne"
+    },
+    {
+      "id": 304,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne indispensables: salle de bain et préparation hiver",
+      "m": 10,
+      "t": "Campagne"
+    },
+    {
+      "id": 305,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne indispensables: salle de bain et préparation hiver",
+      "m": 11,
+      "t": "Campagne"
+    },
+    {
+      "id": 306,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "EV: Atelier B2C",
+      "m": 12,
+      "t": "Événement"
+    },
+    {
+      "id": 307,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Post: aid el fitr, femme, recyclage, eau,",
+      "m": 3,
+      "t": "Activation"
+    },
+    {
+      "id": 308,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Post: Terre, Fete du Travail",
+      "m": 4,
+      "t": "Activation"
+    },
+    {
+      "id": 309,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "EV: Atelier: Mr.Bricolage Bouskoura + atelier B2C",
+      "m": 5,
+      "t": "Événement"
+    },
+    {
+      "id": 310,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Offre sécurité maison",
+      "m": 6,
+      "t": "Offre"
+    },
+    {
+      "id": 311,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "EV: Atelier B2C",
+      "m": 11,
+      "t": "Événement"
+    },
+    {
+      "id": 312,
+      "g": "One Retail",
+      "bu": "Bricolage",
+      "e": "Mr.Bricolage",
+      "n": "Campagne Festival du Bricolage",
+      "m": 12,
+      "t": "Campagne"
+    }
+  ]
+}
