@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H&S Group — Planning 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f7fa;
+  --white:#ffffff;
+  --b1:#e4e8ef;
+  --b2:#c8d0de;
+  --text:#111827;
+  --sub:#6b7a99;
+  --sub2:#9aa3b8;
+  --navy:#1a2a4a;
+  --blue:#2a5298;
+  --mid:#3d6ec2;
+  --light:#6a9fd4;
+  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.05);
+  --sh2:0 8px 28px rgba(0,0,0,.12);
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* ══ TOPBAR ══════════════════════════════════════ */
+.topbar{
+  background:var(--white);border-bottom:1px solid var(--b1);
+  height:58px;padding:0 24px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  box-shadow:0 1px 0 var(--b1);
+}
+.logo{height:36px;object-fit:contain;display:block}
+.topbar-right{display:flex;align-items:center;gap:20px}
+.kpis{display:flex;gap:20px;align-items:center}
+.kpi{text-align:right}
+.kpi-v{font-size:17px;font-weight:700;color:var(--blue);line-height:1}
+.kpi-l{font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:var(--sub2);margin-top:2px}
+.btn-edit{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:8px;
+  background:var(--blue);color:#fff;
+  border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;
+  cursor:pointer;transition:background .15s;white-space:nowrap;
+}
+.btn-edit:hover{background:var(--navy)}
+.btn-edit svg{flex-shrink:0}
+.btn-import{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:8px;
+  background:var(--white);color:var(--blue);
+  border:1.5px solid var(--blue);
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:500;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.btn-import:hover{background:#eef4fc}
+.btn-import svg{flex-shrink:0}
+/* import overlay */
+.import-overlay{
+  position:fixed;inset:0;background:rgba(26,42,74,.55);
+  z-index:500;display:none;align-items:center;justify-content:center;
+}
+.import-overlay.open{display:flex}
+.import-box{
+  background:var(--white);border-radius:14px;padding:28px 32px;
+  width:420px;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center;
+}
+.import-spinner{
+  width:36px;height:36px;border-radius:50%;
+  border:3px solid var(--b1);border-top-color:var(--blue);
+  animation:spin .7s linear infinite;margin:0 auto 14px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.import-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
+.import-sub{font-size:12px;color:var(--sub)}
+.import-ok{font-size:22px;margin-bottom:10px}
+.import-stats{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0;
+}
+.import-stat{
+  background:var(--bg);border:1px solid var(--b1);border-radius:8px;
+  padding:8px 16px;text-align:center;
+}
+.import-stat-v{font-size:18px;font-weight:700;color:var(--blue)}
+.import-stat-l{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:.5px}
+.import-err{color:#c84848;font-size:12px;margin-top:8px;line-height:1.5}
+
+
+/* ══ FILTER BAR ══════════════════════════════════ */
+.fbar{
+  background:var(--white);border-bottom:1px solid var(--b1);
+  padding:0 24px;flex-shrink:0;
+  display:flex;gap:0;overflow-x:auto;scrollbar-width:none;
+}
+.fbar::-webkit-scrollbar{display:none}
+.ftab{
+  padding:0 18px;height:40px;display:flex;align-items:center;gap:6px;
+  font-size:11.5px;font-weight:500;color:var(--sub);
+  cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;
+  transition:color .14s,border-color .14s;user-select:none;
+}
+.ftab:hover{color:var(--text)}
+.ftab.on{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-icon{display:flex;align-items:center;opacity:.7}
+.ftab.on .tab-icon{opacity:1}
+
+/* ══ CHIP ROW ════════════════════════════════════ */
+.cbar{
+  background:var(--bg);border-bottom:1px solid var(--b1);
+  padding:7px 24px;min-height:44px;
+  display:flex;gap:6px;align-items:center;flex-wrap:wrap;flex-shrink:0;
+}
+.cbar-hint{font-size:11px;color:var(--sub);font-style:italic}
+.chip{
+  padding:4px 12px;border-radius:20px;font-size:11px;font-weight:500;
+  cursor:pointer;border:1.5px solid;transition:opacity .14s;user-select:none;
+}
+.chip.on{opacity:1}.chip.off{opacity:.22}
+.chip:hover{opacity:.7}
+
+/* ══ BODY ════════════════════════════════════════ */
+.body{display:flex;flex:1;overflow:hidden}
+
+/* ══ SIDEBAR ═════════════════════════════════════ */
+.sidebar{
+  width:0;flex-shrink:0;overflow:hidden;
+  background:var(--white);border-right:1px solid var(--b1);
+  display:flex;flex-direction:column;
+  transition:width .25s cubic-bezier(.4,0,.2,1);
+}
+.sidebar.open{width:300px}
+.sb-inner{width:300px;display:flex;flex-direction:column;height:100%;overflow:hidden}
+.sb-head{
+  padding:14px 16px;border-bottom:1px solid var(--b1);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.sb-head-title{font-size:12px;font-weight:600;color:var(--text)}
+.sb-close{width:24px;height:24px;border-radius:6px;border:1px solid var(--b1);background:none;cursor:pointer;font-size:12px;color:var(--sub);display:flex;align-items:center;justify-content:center;transition:all .14s}
+.sb-close:hover{background:var(--bg);color:var(--text)}
+.sb-scroll{flex:1;overflow-y:auto;padding:14px 16px}
+.sb-scroll::-webkit-scrollbar{width:3px}
+.sb-scroll::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+
+/* sidebar sections */
+.sb-sec{margin-bottom:22px}
+.sb-sec-t{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--sub2);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--b1)}
+.fl{margin-bottom:8px}
+.fl label{display:block;font-size:10.5px;font-weight:500;color:var(--sub);margin-bottom:3px}
+.fi,.fs{
+  width:100%;padding:6px 9px;border:1px solid var(--b1);border-radius:7px;
+  font-family:'Inter',sans-serif;font-size:11.5px;color:var(--text);background:var(--bg);
+  outline:none;transition:border .14s;
+}
+.fi:focus,.fs:focus{border-color:var(--mid)}
+.fb{
+  width:100%;padding:7px;border-radius:7px;border:none;
+  background:var(--blue);color:#fff;
+  font-family:'Inter',sans-serif;font-size:11.5px;font-weight:600;
+  cursor:pointer;transition:background .14s;margin-top:4px;
+}
+.fb:hover{background:var(--navy)}
+
+/* color pickers */
+.color-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--b1)}
+.color-row:last-child{border:none}
+.color-label{font-size:11px;color:var(--text);display:flex;align-items:center;gap:7px}
+.color-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.color-input{width:32px;height:22px;border:1px solid var(--b1);border-radius:5px;padding:1px;cursor:pointer;background:none}
+
+/* visibility toggles */
+.tog-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--b1)}
+.tog-row:last-child{border:none}
+.tog-label{font-size:11px;color:var(--text);display:flex;align-items:center;gap:7px}
+.tog{width:30px;height:17px;border-radius:9px;background:var(--b2);cursor:pointer;position:relative;transition:background .18s;flex-shrink:0}
+.tog.on{background:var(--blue)}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:transform .18s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.tog.on::after{transform:translateX(13px)}
+
+/* event list */
+.eli{
+  display:flex;align-items:flex-start;gap:7px;padding:7px 9px;
+  border:1px solid var(--b1);border-radius:7px;background:var(--bg);
+  margin-bottom:5px;
+}
+.eli:hover{border-color:var(--b2)}
+.eli-dot{width:7px;height:7px;border-radius:2px;flex-shrink:0;margin-top:3px}
+.eli-info{flex:1;min-width:0}
+.eli-name{font-size:11px;font-weight:500;color:var(--text);line-height:1.3}
+.eli-meta{font-size:9.5px;color:var(--sub);margin-top:1px}
+.eli-actions{display:flex;gap:3px;flex-shrink:0}
+.eli-btn{width:19px;height:19px;border-radius:4px;border:none;background:none;cursor:pointer;font-size:11px;color:var(--sub2);display:flex;align-items:center;justify-content:center;transition:all .14s}
+.eli-btn:hover{background:#fde8e8;color:#c84848}
+.eli-btn.edit:hover{background:#eef4fc;color:var(--blue)}
+
+/* ══ ROADMAP AREA ════════════════════════════════ */
+.rmap-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.rmap-scroll{flex:1;overflow-y:auto;padding:20px 24px 60px}
+.rmap-scroll::-webkit-scrollbar{width:4px}
+.rmap-scroll::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+
+/* density */
+.density{
+  background:var(--white);border:1px solid var(--b1);border-radius:12px;
+  padding:16px 20px;margin-bottom:16px;box-shadow:var(--sh);
+}
+.density-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--sub);margin-bottom:12px}
+.d-cols{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;align-items:flex-end;height:64px}
+.dc{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:opacity .14s}
+.dc:hover{opacity:.75}
+.dc-bar{width:100%;border-radius:3px 3px 0 0;min-height:3px;transition:height .45s cubic-bezier(.34,1.56,.64,1)}
+.dc-n{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--sub2)}
+.dc-c{font-size:9.5px;font-weight:600;color:var(--sub2);height:14px;display:flex;align-items:center}
+.dc.hi .dc-n,.dc.hi .dc-c{color:var(--blue)}
+.dc.hi .dc-bar{outline:2px solid var(--blue);outline-offset:1px}
+
+/* roadmap card */
+.rcard{background:var(--white);border:1px solid var(--b1);border-radius:12px;overflow:hidden;box-shadow:var(--sh)}
+
+/* axis */
+.axis{display:grid;grid-template-columns:repeat(12,1fr);border-bottom:2px solid var(--b1);background:var(--white);position:sticky;top:0;z-index:10}
+.am{
+  padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  border-right:1px solid var(--b1);cursor:pointer;transition:background .14s;user-select:none;
+}
+.am:last-child{border-right:none}
+.am:hover{background:#f8f9fc}
+.am.now{background:#edf3fc}
+.am.zoom{background:#dde9f8}
+.am-tk{width:1.5px;background:var(--b2)}
+.am.now .am-tk{background:var(--blue);width:2px}
+.am-n{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--sub2)}
+.am.now .am-n{color:var(--blue)}
+.am.zoom .am-n{color:var(--navy)}
+.am-c{font-size:8.5px;color:var(--sub2);font-weight:500}
+.am.now .am-c{color:var(--mid)}
+.now-pip{width:5px;height:5px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px rgba(42,82,152,.15)}
+
+/* events grid */
+.egrid{display:grid;grid-template-columns:repeat(12,1fr)}
+.mc{
+  padding:6px 4px;border-right:1px solid var(--b1);
+  display:flex;flex-direction:column;gap:3px;
+  cursor:pointer;transition:background .14s;min-height:50px;
+}
+.mc:last-child{border-right:none}
+.mc:hover{background:#fafbfd}
+.mc.now{background:#f5f9ff}
+.mc.zoom{background:#eef4fc}
+
+/* event pills */
+.ep{
+  padding:3px 6px;border-radius:4px;border-left:2.5px solid;
+  font-size:9.5px;line-height:1.35;font-weight:500;
+  cursor:pointer;word-break:break-word;
+  transition:transform .12s,box-shadow .12s;
+  animation:pu .2s ease both;
+}
+@keyframes pu{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:none}}
+.ep:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.ep-more{font-size:8.5px;color:var(--sub);text-align:center;padding:2px 4px;border-radius:3px;background:var(--bg);border:1px dashed var(--b2)}
+
+/* zoom panel */
+.zpanel{display:none;border-top:2px solid var(--b1);background:var(--bg);padding:18px 20px;animation:sd .18s ease}
+.zpanel.open{display:block}
+@keyframes sd{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.zh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.zt{font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px}
+.zs{font-size:11px;color:var(--sub);font-weight:400}
+.zbtn{padding:4px 11px;border-radius:6px;border:1px solid var(--b1);background:var(--white);font-size:11px;color:var(--sub);cursor:pointer;transition:all .14s}
+.zbtn:hover{border-color:var(--b2);color:var(--text)}
+.zgrid{display:flex;flex-wrap:wrap;gap:8px}
+.zc{
+  background:var(--white);border:1px solid var(--b1);border-radius:8px;
+  padding:10px 12px;min-width:180px;max-width:230px;
+  border-top:3px solid;box-shadow:var(--sh);
+  transition:transform .14s,box-shadow .14s;animation:pu .18s ease both;
+}
+.zc:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
+.zc-n{font-size:11.5px;font-weight:600;line-height:1.4;margin-bottom:7px;color:var(--text)}
+.zc-m{display:flex;gap:4px;flex-wrap:wrap}
+.zb{padding:2px 6px;border-radius:3px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+
+/* legend */
+.legend{border-top:1px solid var(--b1);background:var(--white);padding:10px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.leg-t{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--sub2)}
+.leg{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--sub)}
+.leg-d{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* edit modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:100;display:none;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:14px;padding:24px;width:340px;box-shadow:var(--sh2)}
+.modal-t{font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.modal-actions{display:flex;gap:8px;margin-top:16px}
+.modal-btn{flex:1;padding:7px;border-radius:7px;border:1px solid var(--b1);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .14s}
+.modal-btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.modal-btn.primary:hover{background:var(--navy)}
+.modal-btn:hover{background:var(--bg)}
+
+/* toast */
+.toast{position:fixed;bottom:22px;right:22px;z-index:200;background:var(--navy);color:#fff;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,.2);transform:translateY(50px);opacity:0;transition:all .22s ease;pointer-events:none}
+.toast.show{transform:none;opacity:1}
+
+/* tooltip */
+#tip{position:fixed;z-index:300;pointer-events:none;background:var(--navy);color:#e8eef8;border-radius:9px;padding:10px 14px;max-width:220px;font-size:11.5px;opacity:0;transition:opacity .1s;box-shadow:0 6px 24px rgba(0,0,0,.2)}
+#tip.on{opacity:1}
+#tip .tn{font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.4}
+#tip .tr{color:rgba(200,215,240,.65);margin-top:2px}
+#tip .tr span{color:#e8eef8}
+#tip .tb{display:inline-block;margin-top:6px;padding:2px 7px;border-radius:3px;font-size:9.5px;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYoAAAEGCAYAAAB7DNKzAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAABriklEQVR4nO39V5ckR5agCX5XRIkx5+7hQYCgQIAXyayszDPdvXv6zO7ppz392DM/tB+md3Z7prp6eqsyqzKrMoEECyAQQDDn1JiqyN0HUTUz9/Dg7uHuAfkODBZmbkRUTFWuXA6RSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUjk1JHTHkAkEom8KgvzN9UYg4hFRBGxgB89NiYZPQaPqozuVRVXeFS1+jQPgKrD+YKNrXtxfayIExF5LZYWrupRz2t1Zq2tvYUXW/6BSt4kSTNMYpDEkpoEAINFRMArzheoG1IOewz7+/jenbdvLt4wC/PXNU1T8jwnyxqIWFQV9QLiQQ1iFMEiZvy8YEE86gXFhXtVRMK990FIiEh4nypBoCiqDu89zpeUZbitr/8gAPPzV3Vj4y08xw9xJg/w0sXrmtgMYwwYO3q+lvwigmAwxox+4FfFWguiYWU76r76XqcH10NVUPVkVnGuwLlwMnnvefjo9E+cd67cUGstWZaF3ZMXvA/jRsMOLMxvuCDAHLivd2Bhep/8+xOvV4PK+L5+PkkyvK8vuPEc1heid2XY+dnwuzrnKIoB9x/cPfU5HDFzW9N8mjydJsmmaORTtJrTJI0cciC1JGKwkmCxiBrwCr6k39ul7Hfp93YY9LYZDLYphz2KYZfh3rdn5xjPKJcv39Y0yUjTHGNMpRGAMQZrLd4xOrfqhR8YCQDn3Og5OPhaVcXapP5LWFcmbsjBtWX8PldpJC6MwZcURUFRDnn48Ju38jc9kwe1tHBVs6xBkiRkeQMRqVRIRiqjVDs3x5Eb2hemXrCeugBWJxyMdxtAJRhKEikpigHD4ZAHD384c/N57d0PNU1z0jTDSFIJCwENF4NTjxclnAqKiAHGj73XA4+fdm9U8DK+r59PkvTJHZsIqh5Rh1DgdTgSJsNhn5/uf3/68zh3S03aYX7+Mmk+RbM1Q55OkyYtkqRBmjSRzNBngBePqYQv3qKlggszIN5hcBiGoENcGYTG3v4W/cEu271V+v1tWI3aBsDC0nuaZRlJkmAkwVqLtWnY0AHeHzqXvD+wAamFQr1pS5Jk9Lf6dZP3hXcHhQNy4HMm78evAdQEDUU9I80DF8xWrgzf4UuGw3Bur6ycoY3PK3CmB78wd02nZ+aw1pKmOYJFldGiAqDm2Yeg+hxBomZSeTjIaEehlbAyGBO+vygKStfn3t0/nuk5BFicv6btdodmo421eaWqg0cmNKWxgBRRDmsWTxekz/679+B9CYSLzdog4L2WeF+QSEmvv8sP974+9XmU6RuaNWdotGdpdxZI8g6N5gw2bZBnzXAOigEXzj8vSq/s4jQcrzUZQorBYiQlqRY6xIP3ICXelzg/DFqo9tnvrTAs9unubLK7uYp7+K+nPg9vks7UNbU2JU1TsiwjTbPROTKpCQAjE1N9LYpRUmPwWh7YzKkqZVni/XijN6nRTi7+vro3xlTfMTZJQfW8molRmNFYwoeUiNSfUb1EfKV16EhgaelGZquyLHHOsXmOfCBnfqAL8zc1z3OazTZpEi7UsCuuBIXIyB7+KojY0bL2JP7AvZjw7+FwyKDXZzDcZ2PtDOx+X5BLFz7QVmuaNE0RDB7BY8DIaIc0eS9GKYbuiecn740kz/271yAojDFYqUx5vsC5Ib7Y44cfvzzdOZy5rZ3OPK2pRVrtebLmDHkeBISqBMEpDud7+LJHUexTFj2cG+KKIixIGJKsRZo2SbMmWd4mSdt4kwSB7A2lhxIQEwSIsYqlh/ddysEu3e11dtbvs7/5mHLli3NzXr0qs9O3dGZ+HuTpgiExdrTgHjYNKY7EKGU5pCzLAwLBOYdzbiQwvPds79yTmemrOt70GdJGWn1e0FhqS0WSJBiThI2BmmpsBjATGokjvK1aJ2TStOoOHEv9p/pYgsYxZDDY5eGjs69tnPkB1ly+9Im2mp3KplhJdRH8a5qefPXj1xhlQpOodySuUi09ZTmk19tn9dFX52buJrm49KF2Oh2SJEMRnFp04viPulifhTETguEp1Ds+EUU0PB4OB5Suz6MHfz7VeWy/8xtttOeZmlmi3V4gSVsoGWg2Grsr9hkMtun11uj31un11hn2d/GHzUWtq2ryBlneJmtOk7TazC+9i8mnsNkUkrQpJcV5G+ZdHXmiWB2QSIFlgO9vs7vxgM1Hd9ndfITbPnvmzNfl4vIH2sg72Cyrzj3DQfORju8nNIF6cVfVoNGXA9QNKMohKyvfHcs8zcxdrZzlTdI0BU0qQWIQ7MgEPjJx4Sb8Fk/6OQ4/NxJm3geN2hb0ujv8+NPxjP+kONODO8zF5Q90qjOHMRYwI0HhDzmdJnn2QndYrTzwF8DjnCNJDEY8w6LP3t4Oayvn2568tHBDpzozZI0manLKavoOq+j1RXmYw8KkFhSTr61n1RiDcwWqjiS1GIThsE+3t0e/32V783TU76mlj3X2wjs0565hG9OkSQMlwRcTDlP19HrbbG88ZHPzR1x/FXZfzkRmLn2izdmLzC1dpz1zCbXTDF0GJidJm6QYimGXxDgyU6DlLgk9BruPWb1/h52NhwzWzuem5DALC9e02Z6mkXcwkoYnjVCqR/zkeeZHGzNRKlNU2ImXwz79fp/hcMjG5slr80vLtzXLMvKsSZJkwMHFX6n9IeH1hwXCSKAcGmnYkDqM9jHi+Orrs21yTJ7/krPDo8dfiTGfaCNvBSfp4QXrpfGVz/WQsBAf/LT44JPQgrIs6PX2z72QAFhd/16S5D0VazCpBTET4YVyyIR0+PGh+xrxgB6aywnTnSjel5SuoNvb4/HDU/JJtG7q3NJF5heWSJpzkE9D0sEZgzqPTRT1JYP9Hfb3N9lcfUhvfxW2//BK4/UPP5f9h5+zv/0LnV7cZm7+GvnUEonJwJU4crzP8MbjNCyISdogm8uxJidJGqxhtFg7Xc3rdbl48T3Nmx2ytIUxduQjEz1orlFVxIAYCbtYdZSuwLmC4XBAMRiMQlPfBKuPw3m6tPye5nkeHOsmHUVdlc6PYsGDqaoOfpkMCqn+OYEnbETCe5+ujZ8VzpWgAHjw8HN558onapM2Iin6XNPTs/4ekm8m9SpTB/lUJBZK5yj6vdNb3E6Ah4+/lXfe+VBzk4EYjFhQj1JFJIlAZXtHa5Wj8tVUF7evE5RGwQA6nstqDp0rQBSjinpHOeif3jx2PtCZhUssXbrK9MwCzjTo0wSToVqgpgAd4Mt9drbvsf74HuXaMe30Hvyz7OwP1Hb7zC32aE4tYZpzDE2CE0FIUAxOHQNnyK2hMQ2LYlGxrHrUbZxPYXHlygfabE+TpQ1UDaXT6pwTvC8x+HAdS7j4VD2CYgwUwz5FUXD//ulqVauPx6HMly69r3meBxMlCWKq3Bn1VZSgAWTkLH82dfDH2ebcCQqAohjQaDSCI/W1XBS1xD/KnR12wcYYfFEyLAav80VnksGgh01a2CRHDvllDjvyD96HvxulCoWFo62YwXRnbLjo1XtKV5zIsTyPbPEvdfHCu3TmLpM2phiQI6aJJwvx9IRQ3bLYZWfzRzbXvqM87l389uey2RtqubONuXKd6cXrmGZKYnKMVNFmktIvHWVpsOQ0Zy8xU4Y4/XVXKNvnJ/dicfG6tlvT2DQnsQ28h7KKGDMGjLFjx64ogiJ1sIMrKApHb3+X1dWz5aepcyWuXHlfG62p4L+QsJqoetT7Kk8pqRKXnkfUKE6EoggJbmJ92Jk8I+zp+b/T0T9SUHtBncMNC1ZXz09004uyuvqDXM6mVSpVGjhof32hk/xgaLE5/BYNDmyL4L3Dl29eUORLf6kXLl5ndukqtjHL0CUMnEU1xVtB1GGNIlqwt7PGxsoPDB+f0O59+I3srnxDI+2rmIJsySL5LFYyVAw2sYhP8RqibkopydqLzC4OKYddtre/PZFhHTcXlt7XVqtDmjcBwbvgT9RDpqZJe74xgkFw6iiHA/r97pnO7L9//xu5ePm2pmlICLQmxYoh5Fv6oC09xUcRqE21rxeQ8yY4l4JiY/MHaTbbapIs2DuB52UOH33/DNSAhPC6ojidXfCboCxLkrSucXMwznzSGfd06sS7owh2XGOCOcE5x+PVNxsK2Fj4SC9cfJeF5XdR22HoEkimMDahPyyxxlfRNY7B/h47G+v0HvzpxMe4ev+3sl/09Ep7hjy1iG1SlgaxTVQsXhRvE3qFxyYt2jNLVQjtB1psnm3n9sWl29psTZNlOV6rqCYj1aI5rqdUln60QQnnmeK1ZDDo0e12OQ+lMR49CGbUi5c/0MkQflXFO4fIUUvs2Tc1Hebs6zxPoSzLEPusdXjr8dxEw80ARqUqx3Dmz9dXxjkHXkbH/TK3MeMY84PzCIkYjBp8qbjCHTmGkyKZuqqLy1eYnl/E5m1KUkqf4CRFkzaS5OF1ViiHA7Y2Ntle33pj4+uu/ElW175j0F/F0MVrD+d7OEqGzjNwUJJQaorN2nSm55meXXxj43sVrly6rVNTM+R5AyEFkhBiSlrlKFQZ1hLyklQVI0GTUOcZ9vr09vbPhZCY5NGDr2R/Z5tub4+yHAYt2tSC0WM03M6jkIBzLChUlURGQZiveA/1Dznm4JQYwxM1X94qfIlSHjrGqhzFc08P86Sp6QhCklGJc+VrDPTlsO2r2phaZnbxKmo79J2g1iJJErJjhwWJsYg6UvFo2WNvewXd+v0bXaC2HnzLcPcxxg3IBRITylWIqWpnWYNXgycnzWdpthfIpm+dWVtFo9kibzawNg1hr3WRREIYaV0TDcCapLLnhw0FPmgT6xtnPwHtKFZW70h3b5vBsBfCwZPkufkHIVbw7C/D59L0BFAWAwbDHibJgSqr8lBBsPDv8XuOtrnX5UBGqZMhWkE84Oj3dnm0cn4ciC/L+sZ3MjX1mSamESKeJBs5HY1JUByHHdyKPFHyJAgMGU94NdcOpXRDBFcVC3wztOZvsXTpA2heCNnR4lFRoAjxRV6gUNLc4gY7dHceUnQfvbHxjdj6XjYfLGrTzNGem8aS0neCsSUqLkRPJobSZTTSeaZm3mWz8YDhzpsf6vN45+rHKknKoKjOGZtWtZB4wjopXnA4LIJRKMse3f0dHp/za21j456wAe9c+URD0VINeV+VJmXqarQStCpjLCpvVtN+Fc6+KHsKoVa8PyAcJu9fjCdT7w88Dzj/5nbBp4UriyopbrLAmqnC+8wRlrdJH8+zT6HJ0gyvW+n3RZGZj7TVuUDWWqSkxZAMJ0k4DikxlIgvseqQskSLPm6wj9s4Hdt/2d9muL+LDgrEaVV5Niy2QVCD0wTnM8S0SLL2aQzzmVx85wPNGg3EJEG4iX3yWjy0URCqTZ33FOWAh4/Pt5CYpD/Yp7e/O6pbNd6QhrJBdbY3nA+N4uyP8Bkc18LzRHnhCd5mR3ZNXaRsstjicTEZQfWmBMX07CydmVnyZuNApdC6B4GqolXhNq8lw0GfYb//RsZ2FN2Vr2Vvd5PBcH9UjVTwGHlyzpIko9E8W4JiYfm6ttvtUPKCg8EQI56iTYbS8gWDwdsVfr62dld+uv+5lK6Pc0P0kInbYl/IbHtWONeCYjKUE15Wm3j+Z6sqa2vn0176Mhwu3XGcTC4abyLUMZ29qZ3OAo1mBy9BGwqCYfya+jkvoM4zGPTod/dPemjPZG9/i3K4D1JiJZS+P5jlGxIbkySh0Wic6lgP02hUlRKqnid1CftxhdXJHJzJG0Co9Pq2CYqanZ1N+oMu6kqMDQUmx9ea4bUqmr5Bzr2gAI7UBI7z8992nnacx3X8J/HbPI28PUtzag5JM4ryqF3seNEN5gBHWQwohqenUQAMelsM+ruo64OWGK2rBBws2BgK4yWkc9fOxMl54eJ7miYN1AvO1fkQZhT2+uxAkKp+U1m+tW1H11e/l253F69DrFAJi8kowfPB+RnpERyO83+dBWlS2JzU7vqsc5IL+puYTzN1TVudBbLmNMbmdWGIJyviYlATtAxD6BXwJiOyjsIV+/T6OwyHYVEJ7TchkQTUYBGshBygsixDc6QzQKvVDpWIq5pFRuoQWDMx74c0CdGRXzAIiuGpjP1NsbVxT/r9HkU5AB+y0k9qc3tSnGtBUXOck364beLS0o2zcUWeICdpenqTAjfLZ8hbc9i8g9oUP1qstOplbUfhmkrdX2ScBXKq9H6QYriLK/oYHNbIaHcOIZgsFKgMIaTl7unvwJeXb2lo5hTm1ppk1J547Ft5lkbhQfwb812dJo8efC27u9sMh31QrfJGzk+gzKlfH6/LSUvlkQr9FnNUT2t4syaj48CkLWzSAjK81iXoj84uH5WIPkOHWJYDnO8j4qomTwYTunAjeBKjiA+msrNAI28i2OCTqLLwReyoi9vB8+lwhOFYONSNrd52Vh59I4NhD+9dpTGeHwF5rlfByd3LqOXgM3bGR0U2HTY3HXaQ/xxY2whF1+r5hNAD4HXmYjLayRhz4vMp7fd0emaRNJ+mUItTQao+y4pDvEO8Vq1ZoVQf4vitxVgLZ2BDUAy7oAXWhPV0srNbliUoBb3+DkVxuv6UmnCq1I2Hxj6K0Od6HBJ6lMZaP/a+ZO2cJti9Cg/vfyHDfhd8iZiqGOI5WGtO/+qInFnOwwlckyYN0mwKkzQQEwrshaqkdekEQlmRKvEJqvLoxmCzlDTPT2voI7wWeF9WO07FaJX5rg51Q4rhPsPhHmVxuhFaAMtLNzVNcw5XDZ4MR3424xpPC2fEMf+mKIoBXgsSEfDnwx8aBUWExflrWu/6D/tozgtZo0neaGOyFipJlYkQwkwBrFZdApTQY6NKFVZjyfI2eaNzamOvmZx7o4LBYkSwBtACV3YZ9nfOhKDIspwsy0aPX9jHpTK+UZ9zJzfOs8ijx19JMeyiFEwm4p1lzm0Jj8jxEUwFtmp9OjbFee9RE5zBWjcmqlEdNY3SA+WjdeJOD284T4wsa2CSBkYyQiscNxJ8Bo/4KioHwUllGkPwKtg8Jz8DSWxiDWInhIUxOBdqUaEFg/4Ove42xdbpZzBbk2IkwZ+DRe4sMhh0sanF2Oa58IOe/RFGTpyn2ZHPEyGayeARnEooi2CCkDB4jNT1qerKt6E8SekVY3PyRpNk8b1TPfhaWAeqZCyvoEox6LK3u8X+zuppDnGEiH3q+XK0+emoas1S+WDO5zn3OjxevSu93j5KCFyYnb96pichCooIK2vfS1mWB4IB6uSu80Qo0wFaZQaH4Y8jS6QqZz1J6QGbkDZbp14aI+QgmKrDW4iKsdbivaPX32VvZ43uysn3yngR6jGi5gkn9eT90xmfW9baZ7zu7eXRo++kLEPE11m/1s726CKnxnnTLnxViA5jwRysNSSqo0xnUbCTfhgEYxOyRpNm63T9FLUJEA4utP1+l+2tTba2109raAdYmLumhzsgqoaQz6PLdMAT2oSGmzFmVCPq58hg0AvdOs+4oyb6KCJcWLyhSZIc6aNgtNk7HPN9tmLAR/4IE7KDQ9E/GHU0rMxNY6r6T8YiRjBJk+SUHdqStiDJQRIEweLwgy7F3hq7m/fQlX86E6vJOOjhNYYjHjQIxyTJnv/6txRX9PFucOZ73pxrjeKAPfdpHesOVYY9sKAY88SuebIk9klUUz2LjBzXVa38UJBOD6jDIoJMlB44GCE1DnU8ULZBQlsW5eSTi+rduAecekoF9QZPgpLhsahYVEzoNSJlOE6T0B14xE4xPXuZzrW/OpUfXJY+09b0MoU2ceTkaQbFLoOde+w8/CP9H/7rmRASAOrHtYrG54I9cDMm9Pwe/10P3IyplD8sqc25svz+23+hHcHa2j357tvfS5ac7cM/14ICOFA07cg/H3LUvg2O2zeGvEgZhrOBc6G/OX7sa/ESzBt+IilsTBBkxiR4Ekq1mKxNu7NwKuNvtmbImx0aeQtrhEF/i93Nn1h7+CX7Wz+cypiehqoeqBD7ejfB2JQ8b7Ewd7YduifJwwenX5LlWZxrQREX+jfHWZ9rdQXOD/HeIQSfhHg38k+MZYSn7rpWa1Aigndgk5yZ2SXalz97owebzH6o0+15MpugrksxWGdv6yc21r5n69F3DDfvnOlF5HXwqog1ZHlOu336uSyRo4mCIvLCnGUtzLkC9UOEEiNVdzg/KRAUj3siKqcsy1GNIvUJjeYc0zMX3ujYZ6YusjC7QJYaiv42W2t3WX30JTsPv4H9786ckNjYvvtkL9xXQDF4keDUTlLyRot33/3obJ5gP3OioIi8NGdx3p0fgi8QKULxPJ5e90u1aj7pldL1g63cJJSFQWjR6VygvfRmfBWdub/W+bllptrT4Absbd1n/fHX9L//P4Tdb86ckKgJ8/r6JkmvSqme0oPYlLzZ4tq1T87eCfYz51xHPb3IgvXs18Tz8XmE+VOOqulzlmavLHoUwz2ysoeYFCtJyAfR2qYeek/XJij1AgLqKuc9llITvIdGc4Gp2Yv0uzfVnfCO/srld2l1OuztrfN49T5rmw/Q9dPp3f0yaD2fr3keiFh8SH7BiJAkGSLCO+98qD/99OWZn4efC+dao4i8Oc6iFjHJYONLGfZ2KPq7+LKH8QUGRfyzM4ettbhhQamKNTmlZpi0w9TMMlOzyyc+bmMduzvr/HjvK1a//a9yHoQE1HkT/rXDOr2EeltqLIrg1WJsTqPV5ur1T8/2Sfcz4q3XKCLHh6oib6p40yswHOzhhruYrIkxCVYTkLpc+vh1Bo9Xg0FJEkNRFKQmx9isiuYxZM1ZWlOLbLVvKPvfn9hBP3z4HYUX9te/OLsTewR1Zd7X3WsKFiOmamAEOI9NDGmak6Yp7733V9rt7vHgwenXt/o5c641ijoP4mm17l9VkBxVkuBtpg4nnewhMcpqPjJv4mie5RN4E/O4s/kYP+ySSomUJWmSUKeF+dqZzdhkAiGstu694Zzi1DIoDdgWCxevMrN48UTHvLX6ZzlvQgKg19/He89k1eHJviPP+r0Pn1OecdkYNULpPc4bnDekeYtWZ4arVz/WxcWfb/jsaXOuBUUkMonb+U4GvS180cVQomWBOh/qP3GwvERd98mIIhoKB4ZEbsGJxUuCl5ypuYu0rvxlXKAOMdmlbdKUdzzNv8ZlyNUL1qY0Gy2mp2e5cul0Czf+XDnXpqdI5DB7u2u0pxbp5HMMXYFiqYMWHONuYpY6Ax+C4LBVWzmDWsFripLRmbtEUfbp9XqqG1+fu53/SbG+eU/anRlN7biU/KtojoqrYiUOZvmHGIqQNCnGYNMUk2akScb17DPtD3qU5ZC1tbOdqPa2EDWKCOub9+Qs50i8DPuPPpdhf2fU+tTU7TFG4ZwHcytq6uQ7h8OLxxtwYrHZFM3OEu2pk3dsnzeKYoD3wZR3lPbwMufT0a81oXWtU8rS4x2opKSNJlOdWWZnFriweO38n7TngKhRRN46+t1dykEXkzSrxksgEsI4g0AowWcIYecqoqg4VASVOjlPETGUmpI155meG1D2/0b7j38Xd7AVw+GQrOEx9mCP9Ek/xfPMT3Wb2vCGumbYZNlxrYRRaKAllYZhktCTe2p6gVZrSgeDAQ8fn928k/NOFBQR4OgdnYhUNoDzRXd/l72dXRrTM6EnhdTx/rVWYaoOfVQJxiFBz0sI+/RCeA0JgpKmHaamlnCDLuXgtpZb0QQFsL5xV/LmjBqbPdFT4nAZ8hfDA1X+S122WBUzKexVUe8o1aN48rQNSZM887Sa01oUBf1+l5X1GCV1nERBETlAuLjP9zXWXf1ctvIrupAtkaWhjaur2rIeqDwxWSRQQsVcb4C6p7YGYeFVsFmLmdkL+OEWq1tfv9HjOcv0+31qQXE4Uu5FCGG2WvUxP/Q8oEZQKm0lxEcFrQ8N7W01RLZZAzbLSJOSNM3J88+0KHsMh0M2tqIf43X5mQuK6uTUQ49/poxi40fOxdBK1I96Ojx5vfkzegn2d9fx81ugLSCrDktAEtAqpBMwakFDiGYwgyhOBNSCGLwKlIIhJW1MMT27zODKp7pz/2x0mjtthsM+Wd5AfTK6jA6ajp7ECyPfERDOq5EWV2l8o0Q+W5XBL0cvFzEYo4ixlA7E15FWihhDmuWkWYbSxjlHZ2pGB4Mej1eilvGqnGtBMXJIHvr5X0TtDTsegzu0+KnWsfaK+Zl0aJyZu6phS1YF/uBRp+GCNqa6qA/t+J5xyYWSGXXpj9cNlXw1Btv/JCuPnF5ueTSbR5Jp0PaodadSICgiCaGPdmWW8rVYrKKiSk+SphgEXziyziILl25TYrV7/19+9gvP3u4PkqRGW3mCWIuqoL5EOehvGHkiJIQh+ypZz8pk06I61LaceKoIAv2Q3yKofr6Ooq2elWBe1Fp1tIi15M2UvDlFe2pOi6JgMBgwGAzY3jp7BRfPKj/bLfTBqJe60RHUp3Td8P2s97I9DrY374n3Hq/lqLaTsZDY830ddVf+IIP9VXA7pKKIKlqCxWIMOF880R9BfBByUv1bRFAvlE7wahDbIm0s0GhdgM6t8+fAOQG2Nr6XbncHUUeSmCrS1R957ejo3owV+aN6yogevD3RWnXiM+WIGyYIK7GISTE2Ic2aNJod2p0Zpmfmeefdv9blpfgbvgjnWqN4EZ7s7Tt5XrhKG6lOQPGgHjGEe+qOb283M0c0jBlpAU+9jOqL9mwL0q3Nx8znU2SNIUYzvISudiKCV8XVJg71qJSoVodcbVUNCXiPcx6jhixtkDSEzsxF3KDP9t6dUzy6s8Ojx9/ItfxTzdMklEHBYA04f/A8kUoojDTSCSFxEuHZ3vtRh726q2WapiRJCFSQZsrUVEeDltFjZe2H8707OiHeekEBR5uiRo/N5C4lCAlVP46wOIdRPy+LMSa0EjVpMB0cKOHxNEFwPq6n3Z/+RbLmtKb5PEkjQzSvNgAaelDUgqJqjYrUS5qvfBnVhlYNaIJXJU0s7fYCZtHhB7/Q3cf/fD4m44TZ7+6BDXWaRMxE+9ujz6E6sGCUdAdMag3Hce2NM8V1JDQm/oo1CTY1JElKo9Gk1epUobbRnzHJz0JQwJPC4uDj+uQMKq4EQz0iwurq27/DUJWRg7cWAKpVKe6zrTC8ELsbD8nyWWaTJmmWUHpBvSdJEkpflfaoo29Gp4ICrtodW8QYvE9wXhGnmHSK5hRMz+9QuKH216Jze23trsBVnZmZw6SGkP4QlpixYbfWLMLjuvbWJDpS6yaj0l5tTGPzlz+0AQrnundhwyDGkBiwSUaSNrjR/At1zlGUQ4pi8LPPAP/ZCAo4OnvUV60wR05XpErC+vmcF3W9nnFobDAd8CzL0zliuP6tbOczmmVTtKcTRBoYknFROhGMCshEbVwJ4ZeqY1OVqlL64Og2toFJPI2ZZabKIf1hqezE/glra/ckyzJtiEHEYrDohJlyHEV3mHHG/ElSX9f1fT0yKcGLYtSAychsioqQFgPKRptmo6ODckg5HLKx8fMTGj8rQQEHBUCwU4dTxahUTrjKGedDiN7iwg1dWz+5MtNngSxtYEyI/lGty4lXWtdbISqg++CfZCtpqTEpzfYSJIbCARKcnh5Thcf6arcbFrVw70KYLIARVIRSPUKCbUzTmb+MAzaMKFt/fqvPlRfhwYNvZXn5hubNDnmWVDkSVdFFzMHQ2Akf4dPKeEy8kJdVccefqYceV59alaFXFK8h5wbRSpgJJmmQCpDkpDhcWZI1Ozro99lc//lETf2sBMWRWoJWyVVVtm7AUtuoW61pLpgPtCyHwRmGhGgZLxgbylc/i+dFTanqM3MRkuTZP5EvjooEeYqd93CfYxVUUhqNBmmaBsE5KjleveWpmlVdCe6ZwztT7G0/ot2aptOexkjKsHCQ5iMHK4ynqF7MjISABsGgpkoMM9UMe0iTNo0pg1el3+/R3XrTR3U2efz4e7l8+T3N8xy0CkEm5OiE6NU66ulkNYnJ6+9wldt6YyRiECsktZbhyyA0vGKMBfUgCdYkJEmDNPM0m47pmTnd39vCl8Vbr2Wce0FhjEGPWMzGC9yze0sktbNW6mSf6mG1c8mbHfJmZ5TUUy+iIelHQsbvc3jaYqvyYvVw6s848nVHyAmdqJ9zsD/AUULlyR4Co/IJVP6LA190+DPOz/Xhtr+RjbSpad5gZu5drGZ4JJiSFEQtYMCF8hChBhSoOKj7WNRaFwZE8JJQupSkMc380jsY/Vvd++kfz8+knCBBs7iledag0ehgJMH5EuchkQST2FFtLSZ6UtQ5Tgd5ikP8iWvicF6UPvXcH/nkNPym9aZPTBXEcPijNZiljQgmsYjJaDYyBoMeSZbryqO3t9bUuRcUr495yr8rdJyVLOIr233osVwVFGCUTXrEvUhtox0/H3I0DCq+ShI6+u/BASdVQTuDoIc+n+o5Drx+fLF4VM3EfSWYDOOkJF/njdS+CXugbPSTV8v5pr/2r7I/Paet5jRZcwEngA+aFArWmFAPwvtR4iX4EFYLqEzm3IBTQSRBkiZ5c5rpuYto8de6//j3b9fEvSKPH98RgCuXP9Rms01iGxgTIpBcMQyXl6nCaa0d+YK8D685XEPqME9u/o5BM9HJzHA4aP4aX3vqPdYmZFkDIxnNG3+l5WBIv99lfePuW/X7/8wFhTk62Yfx6TYO966qy0llu6ycdCLgRaqT68l7VVMVvgz3QhWSWX+vShVTPs5k1YmTMdjQDwuc8et1QlDU6vSIie9VrfwNIiFHRIJNflIdF5ncj5kjs97fBvY2HtBM2yxkLcQ28VVOV73mhE5rBvUKEsqOj812oU+0UYMXg/eCsRZLhm1MkRohUcGXhfbW30wkVHv+U81bbbI0xyQpYlMwVe0lDULQu9BkCOdwzuFdgZYFzhegJa7cp797covb/QdfyuWL72urqaRpGs5rCcEkqCCmquXk6/DsWqt4A2F34g+c6yGk42lTUa0DFcOyQERIspxUMmgoWbNBnjd1MOi9NQLjZy4onoPUJ+44W7veYHvvcTjEGhTFVKWpD9+LD7tRowQbt44f++rz6/pKYhT1nnG9pSefl1oDqcMLq9XNKKgoBofTUEDBi8ciOK2+D62+N4xP0VExt3HM+9tPf+sb2Uk62sjbNOYyrGlijcWpRV2oIhuioQ4rVJVGWZnjjEKJI/i0DEhOlhvMjNLvdRl0e+p7d05sobhw8X3Nmu+QtRbodKaxeQNjM0K/vhD6aUwy+n1D1LcD5/GuxJcDBv0t0tRhGNDvL+veziPWHp5MSPiDR9/I0sJ1bbVaZFmOTVKEpDLBhra06sPcG5ONqsaeHJPn/EFt4ShG7VonHOSuDLlX3pchF0ksjbxFI23gXIdms6m9fpf19fMdZv8zFxT+OTtmH+rX+GCimRQYvtqZ4xWREId/1L1oiJ4JVQjC88YoolTtN6vPofp7ZYwCRs+LHnrMWBOohx/2X2E8prIqmUqgSGVfl9F7xup53Xd8XANp7AsJUU/nk3TmY+00W8zPthj2t/nx7sG6TNtrvxexVi/kTZLWLHnWwTnoe4/3BowBK5Uvoq7+FISErSbFS+iUZ6vWna50GElJ0ymmZy7jvWftYan0T2aRmJ9fpD17C8lmMWIp1DAsQcVibI6kFucq86ihCv9VMIokJUnSJ29N0cgdwh47O5697vpJDHXE6vpdYR3eufSeZnkTkzUAqXx+ISjgwPl3ONJjZBI6rsoAfkITnwwCOdq3ePj5LMtGgtiVHleVLjFiEWtotUICYpZkep77ZfzMBQU8rX5M/Tdrg7PX48b2fYCq4F198RlctR85+t5K2KmGOPLwPMqE8Jm4ABRq56nUWoXU0SGVU3XksJbR5440CXR02ouWgFaWEzdq1gMOFctwGKK5hNo+/OIO9rNKuvCZzs9dZrrdoZF6ikH3yNdtPf6dZJ0ZncKRJxZjGiTGUvjKbDjKI6kjdmqndzCJGAAbIqPwFucMrgqpbLTnmbfKsL9Hdxct945fWGzv7KDZLolvkDYaIAZvBK9CqQ684KptQR3ybDRsFELUUYq1lsL1GPSHbG7tsfbjm8lI/ulh+J7lS7c1SXOyrEGSJBhJRvk8L1Ly/nk+iuedx5NJt1olWY6DO8xThMVkgEx9vYxb7mrt+hPFYMnzJlmSkuefaq+3x+PV82eOioICeKqwEGUw7FOWJWVZ4r3HTOy4vS+x9e5nFPZ38N4gTzyPkXFm6hGRWIdzPQ5zMMxPqC8njztyHPXzvhIY43FYSi9kaYNGo1E5E80oRNYY8/Q8ivqDzhjTl/9KOzMXabUukKUZ+zurbG4dLSgA1ld/QCWEIaeNOaCJtSnOVHWCRhuDg0EPRhM8HlFHXS03+JHCrtjYJnljluVLV1lPSjb2fjj2Y3340+ey3k+0M7vN/MIyralpkizDS8LQgfMGsRaqTHSFypYWNE+rUDhlZ7fL5uY6W5snq00cxeOHX0tn5qq2Wo48z0lsfqA200lX0BHG19LobB5tlPyTvorJ2lQCZelRI1jq99RBJtWna4mowdqUPIMksWTZbf3x/vlqfnX+BYU82674fI4QEhOOy62tNTbXTs7OfBZYXPpI08xWORvjQ/WM5+HgPRNC4nXn//iYufwXOrv4Lu32EqilHA7Z3d5id/OLp/5+budb2c+tdtpBQJgkRYzHYShVsdWxmdpMqdWuXENKVhm2jmHWrAENTZLCopwys/AOg0GfvdmuDk8gGW+49i+yZ0tt5A6RAUk+jdgGYlLE2OC49hNBC1X4qWBC1rkfMthfY3vzMaeVWb63fU/2tmFh6T3N0iKYajLBSoaj5MD5NRIcpjoFjyraORlFWOVEHYXU2yA/Cio5mGr0dI0mmGkr02218Qsbt9pcPDEO73HB+YJNclpJyrV3P9Effvz83Kwr519QvARHJ/XUDqrKQUnYzThXUpQ9jDzLNPV2oK6HlTb4Eo8JhQDF4jX0BQjO74PzUK2ZjDNrJ5LWpAqzRaqCb0er8MeFXbytc7PX6Ewt02rOYa1l2Nuit7fK3s7D576/u/qVbIpqI22QTc/QLQYM1ZNkTbytbPwerPrg9PdKQoIxCcYnOHzItZCimhPFeEFMyv5AmZq9CbR4bJo62Dj+AoLDx5/LxnBf5ULJ3EKTNJmicBbnIEsNQ/XB1y6COrCSkpgELXZx+w/ob3yL7px+b4311bHZ6/KljzTPm1iTYowNph09GNmnEoS3n7hGx2aj4O8LYvvQuVtbAZBRdVsrlVipHeij87X+vDok7lCElBpwk99QC+Txd6nakNGvBqfhNUme8P57f6tbm6usnoPKDz8rQfFsJmKlJ+yW5pk+jLcDGeWCPClI/cT/D5ibqrBbo/5Uu9yZpVvanLtEY+oiNp1FTRPUheY5vkdv98VU/K2Vr6XZWlSVNkn7ArlpUuDQUsPiUJkQMdVs+RDRxiivIviCtKpG7I3BeAFSVCx5c5G5+R6bOtTB5vGHzfY378q2NNTQYmouw2ZTWOwo61zUIISdr1HwTtFiSNndwA83j3s4r82Dh0H7Wl58X5MkI8+bpEmGNWHJqgsHOhkHmQQqjUnCv4Gw8am2Nlr5BXW0468i3Kp31/d19sazTMMvmk1eh78fMONWocHt1hSN7EPt9bqsneGWrVFQRM4184uXaM9dpJXPgssQFVQdZdmn19t7qc9aXXlAadospE3yZo6rakF5BVPlohgxSNhEBtONmEp+Go4yg6gJ72m2W2TJMkb2WdE9LbeO36G5t/GlYKfVZtO0khxjG5WVPQlCYhQCGvxrruizs7PF1u7ZXaAer4VIocW5m9potEiShCTJQmkOEYyEiCmq8vh1jMnBKrG1sAgJqSFKqfr9knFCn4hM1KEaC4OnacN18MerIiLkzRZoikkMa1uv/lknTRQUkXNJZ+49nVpcpjl9gUZrFisNSheiwrx3DIY9dvdebqdcdu/K1lpbk7xBB8VmHaxmOEmqxceGsGgEb0ooZbQAHaTWwAzqHSoKkpDkbToziwyLfda27h7DLDxJv7tJv79J3p7C2rrNaBI0HxHUlBgB74cUZY/9/d0TGcdxs7Y5LsC3OH9d8zwnSXOSrAHGIgJmIhCjvpmRBlL/RsF0FUpABZ+Smsnw2LoywpjDQmfy388TFM/TOlQVKwlZlnPl0m29//BsOrmjoIicO6R5VVuzl5hbfBef5QgZrgTnQgNM7wcMBl0G2y8f6lnsfC4bqVFjYGr+CsaEXWuJxVe1ftRIyHy2HlOHcFbp3Tre0uLQYPsWKL0iDtLGLHOLnqErdefH3x37olDufyPdvVltTi/Qak5VqTkJaCjNEpJGHap9yuH+C5vmzhJrE9nOS8u3NbFZ1bUuq/xj42KAUlUYqDUJYFxPyoTnRA9XPJhc3Cf/LUf8+/VM094FGW4kodFo8s7l9/WnB2cv3yIKisi5oz13ifbMZdLmAoWC+hRXVu518fhiSFnsv/LnD9b/KHuNTJuNnDQHk06TSGha5LUKbhLBV9EukxvQg1HDoWy5IuG9XsiyBs2pC8yUJcXQae8EakLt76/T6W3TmbkATlGxIQPah5Izqg5X9hgMzoc28SxWHwdBNzd7XZM8I09yTJKQ2QxJLEY9ThSjdb4RoyKQwSctqNTmp/p+bKKD54eoP4uj3jvpTBdjMWYcDmyt4d0rZy98NgqKyLmiffmvdf7Cu+SdZYa+AXicD/Z3axK8HzIYdhkMXl1QAGzf/ydJjNW5hYS0mWDSFFuVm/DB+oRHQ/EOhVEq5SiHxVfPEcqlCEhVTsOJpdG6wPIly46objz6w7EuCm7nO+n33tFy0AfbDrtpl4C4kNXPgHK4T7+3dZxfe6psHvL5XFy6rUmWYggZ0lYSxIQ8IWskVCnQkMV+uPo+HIxaehpPr8g8+ZqjPuOgCavq/gIGjGSkuePCheu6snJ2EvOioIicKzrTS0zPXYRkhv1uQZoE04IRi6kSoAbDfYqy99rftf7jP0qnvaBJ2iJJWySEbnie2uZdx+kHQh2tg5/h1U2U1U4ptUSLIWJbzMw1kOE+6kvdXDneSKhi2GMw7JE0CWGlBlBFfYlniC/2KN8CjeJpPFoNO/L52auaJAlZ2iDLGpAkmKohV1ie5dBSf6jdwBERTi/bO+NpDnElVB+2jOvJBQd9Sp43z5SwiIKioi72VdfGr5/7OfTMhoOq9IGmRa8Q1lHbial3SsdUgnb22t/o1OwSnryqaZSGgoyiqAM1HmME70vKzePpPnbv+y+4cMmzeKmBzWcw3uOcgK12pmVdWiUkW3nq468WmOqxHyWeGMQ0QDyFGzC/dBV1Bd1eoYPdr47tXBPV0C/FFdhMggbkfCglU/QY9ncYbp49W/hxszERcro4f03TNCVNM/I8J01ynHcHNIqg+enEeV+/XZ/0cUCIjHsGzysBYqQOwK/aF3hBxJJnLbIsY2XlJQ/4hIiCInIu6Cx/pNOzyyT5FGozRDOSFFTLkFBlgl05uJDLY/teHfwgezuzmuQtOvNKmreDf4Kq253UJbEP7kufrP8TOhkaNaO4eo9SuD5Ts8sUaniEqjsm57IrSsphQZoZvDpUBTElRh3e9XDD1zPNnUfWNsabvqWFq5rnTbK8hYjFmrRycB+MmlIJDvFQ0dYc2FAed1c+rUyoo66ballevqV1T4/TJAqKCPDkzqfuI3wWaMze0pn5K7Q7i5ikybCuX2WSsANTi1KGMusjk9Dxsb/xL+JUVBKhM3+B1DYoa/u2D20+6+8MGdmjtN0Djm1V8LXjtMpWL0nJm7PM2YzSe9bEq9s5hsJ8VZSPsVBqAeJITAluyLC3y3Bv+7W/4jyzuh40jaBlZKRZiJwyWi2JEpzMIwuDEK6HKjs8+KmEKtX6lZksl6aAV4OKIj4Ii0beZmHhmp52mfIoKCJnvlJsls/Rai2SZbOUmobuZ1JibZ2F6yubQdXLwx+/gOtv/kF2GqkaC432HDbN8Sat2vAeKpA48oSO+3+E533l3LRVKQiDJg16ZR9jcxYuXEaM8sgVyv7rLQx5klfd4RwiDrGKlRJX7NHb22Rv881UiT3rHNAylq5pkgSBkeYNrA2bAPXg8VUzyLrLZWV+es1r57BWMi5REoRSmuZkaf5a33EcREEROdNI+z3N23Mk+SyYJorF2hCiKlIydinVmoTCCdXn2nn4W1FVXbigNKfmMQgFoIQFRaRuN1sViatiZ82EnRsceB+644mgJmeojgTI8oS5BaUsh2ysGvW7r14DSCTFaKi1JaYksQnqevR6W+zvvvkqseeBSX/kpUu3NM+bJFldzdZircHX+RZVDwrzmv63um3AyGk+UeKc8B9Jkj3t7W+Ms1H2M3KmeNEY8TdBozNN1pjGmBbOWbwLUSJGPGhJ3c86CIcJYXFC7D76nextr+F6+4grMSPBdLiRjgl1lrS2abvx+EIXK1SVQiFptCBtMHQGm7W4eOkaF5bffa1xStUCVdUhxqHSZzDcY393jf3106kSe554+PCO3L37J9nd26Lb3ad0Q0QUm8gome84u0Ie6fPQUGbd2pTlpVunejFGjSLy3MiM0yTL26R5B0yOdwmOEiOKMQWldxhpVKaeKvNN/Imb0nY2VkhNg5Y32E4SSo/WfQjUVBEzZhxBNppKVxWNGns1Sq/YNAc8ZTHAmoRms8P83BLu3b/R1VfI3s7NTTWSYLAhUx1HWQ7Z726y/zP3Tbwsjx8ER/Lixfe0kTtsVpv0TCUwXu86cVVYrJ3Ys6serMuV2Iw8a77W97wuUVBEzjRp1iTNGiRpTumkWmvrKqgayphTL84SylUcUzju0xjufiV7Sao2EaY6HdSbKgy2fkVoXhR8JgoSNB8Ao7ZaWyyGBKcaugyqB0nxCKUTbDbD4vJ1ysLr5qOXLE2eJZisMpsQihb6QZ+yt4sbvr25EyfJ2qPg07lw+X1tNJpkWYa1KWVZ1Yeq3VQv0sxrIh7XjPxZR7/UY0itYNOMhblrur55Ok7tcy0oRIJ6XU/8ZK/dmsmN8cHnD8ZEe69Vl6snX/O2c7iQ2stvyA9mqE6kolRV2/WJngAvgp15X1utDmqEwg1wasBU4/SgLkT1SGLRsupnbRoIJ+/82938k+xu/ol30v+XZq0lskaCd6HVkyQJYsoQo2+GI0Fh1KDeYHwCPizimS1RH8J5RSxOhUFRZRA3MuYvp2ja1u21H9HeiyVfyUyD6QtL2KQFRYIpSvp72wxWH1Funv3eB2eZlaoO07tXb2qz0cH4DIzFILhQCAxTZ+A7He0e1FRJdxLMgaoh0EFG5UPGhc5DPxiAYOYqSodgyfLT0yrOtaCAOgU+cjo8Z/F/TadylrUwklQJa2ERVu9RMVgFV5t3XIggCv3LE4x9c6f1xtqPTM2GEhE2aeOwqJdRhBNmnHp4EFPViQp+i+AkDcLOiQShgiVrCtOzBV5LetuJFrsvEK1kDcPSAY5mktLr7dHfWmV/9V+jkDgmfrwXEjqvXf1U08QiSYJVoVTFOYeIxYid6BJZdb8LGX2AwwtYX5U/P1CFeFykUKvOe0ZOtvnX8zj3guIonlVDPnJ+aOTN0HtAqjBFnSynYJCq25j3IXTRmBDfnqY5+cItHayffKJSd+UPIjbTZiP0SDDWAhaPxZKi3oAkIGW4/AW8OIwMKitFWeVb1AvKwfiSNM1pT89grWNHlPXdb587plZzhiTJsImi0qfXXWNr68ExH3kEoNvbp9kQbNIehz37sP5IXVOK1w+vCAUD7fNfeEK8lYICorB4G8iyLPTxfkoyoIiAB6+16QwUj0kS0ixn8IbG2euusLedoqrkTcFmBkOGV4N4ize+KvNdF6LzeFMATDTKOUxwkBeuxNiMZmsK7wY4/9e6df/pFWfTxY90qjVHnqRYC8PeDvv7j+nvnK1qpG8Lq6vfy+LidTUm5DyIWEJCvh+5zdAJ4V+3UgVeNOj0cOn00+DcCwqRp9cS+rn4GN5WrE2xNg05B6OrzgTzEwIm5C6od1AVVnN4rLVkaeuNjdNv35W17bsML/1KZ+Y9bWPAgnEJahOMS8dahZShUKgMAXA+mJnEm5GJrUYxDMsSa4REGrTbC6GUhGS6sfYI+k86NpuNWfK8jRGlLLrsbD+k1117Y3Pxc2Rt7a7AdW012+SVFuwUyqLEJGmVeBnWIveSQuKo+lKnwbkXFJG3l1rVrs1LeijQQOoSGSpVIbfwvE0z8lb7jY935+FvxVqr1qQ02oI1HbTypUBlfhBPsE9rqPakY3OCqh7QnsJOMh2F/BprmUoTxGQMnLL/8IcD32+nbmu7NUOe5wieQX+H7Y379DajNnHSBGERfBbhvJXqd9ODJlM5uPifF6KgiJxJsqmgzgMjsxKH2o6OTFAEtVx8UPcTm9FoTNO+8KHur7zZ5LK9rQchCE+VVhu8DYXIg7Co8y1CYUCvBqseRlUbxrtML1TCIUUocWJQ8VhjaLQN8wuGNMl168f/Fo4vvaZzsxfodKZIjNAf7LG784j9jeMtXx55Nt3eLtZabNrE2ipgoQrihlD4rxYiL8Lr9uU+Lt5qQfFqoZ6Rs4AxIaGpFgb1b3kglLkKIaTyV6gJAkWSlDRrkeVTvOkaqcXePdnYu4cxRpPEkLdtMIdphpOqZwUSfBahKDlQn6t1LahDZglJUV9QqOLFYpI27RlLnudQ/k+6tbFCsz3DzOwieZ7hfJ/e/gbr6/ff8NFHVld/kDxvaiPNSKytQrmPXoSe7p86mtM0pZ9rQTG22x39Q4S/PVn+efw3mOw9AVR5FCdTRviscqCs8kS1TBGpfAPVAvwSQldH7wsLelm+XOnvJElGJZ3FCCLgfTkq9zxKtnOe1FqceryWwfmtHqeGZnuW7dY19d03n6S09uP/JUXZ1+VLkOazeNtBvTD0Gpyd2EoXGjc0UNVgpFKP1kKySu22kmJtMioZYpMOWbvJwpIwPX0BhyJJgoqn29tlffMBbud4enJEXo6ffvpSrr77iSatBK8HC/3Z0SagWrteYomJPorIqVIL3LrhTp2bcpqCMoS8+mpcB5sBHaTO7huHyoox2KRFlnXIGtP0u2948BXbD/9Z8kaqrc5FmlPLJEkb8YYSM6FRHExWPJrquNXgxYf+1wJgaHUWcI0pvA5RKej1dtnaWmP3wR+jkDhFnHM456rf6fz/FOe6KOB5cgadZQ4IiiOy108D5xzel6Ms1kDIavXqUNyoKJtW2oWqw4Wed5ikSaM5R6ezSNK6eWoHsvL9P8jO1j2G/VVE9zBSBm3IgS+r/gYSji0UDAw3o3WkTLh5CX4Lj8Gp4FTwKkjaxGZtknwKT8r2zh4ba49P63AjFcPhkLIsx1q616qAxLiA5HmyWJxrQRE5Hs7iCet9EATOFSMhUF90QdsIQqQuPwLB1x1eU2doN5maWaTZmj7VY9n48feys3WP3t5jtNzHMMR4hz6rj+aoIu7T8Sr0S8fAQeEtXi2FA4Zn7/f8ubG69p3UgmKS19ncnuZ1eq4FRdQojofDrR2P0i7eNMXePfHqRiW8xWgIepLaVBPMUlqZqOrHiFB6xXmDV0OrOUOzPXtqx1Gz+t0/ydbGTwx664jvkUiJFZBRuYb65g/cDB5bhdJK1btgJDDFg1GcuNBOJ2mGBk/TF07rMCMTFEUR6jn51xcWfnSenw5RUDyHpaVrb/32bDLjc1JYnGYmKEBRDI4UXnVEVD08xY1qJkGIKnIenFps0qDTnmF26cNT/x03fvhn2dt+xKC7Cdqnkb7I/B5s7TrZK0RVkSTcvDGI5LRb88zOXqSx+PGpH+/PnbIsDxTcfFUmNenTIjqzn8PPQWux1o4ax9dJa2fhsPv9Ps45jK930yGKTSvHdRAalTvYe9TU2dsgkoA61HtarQ5+do6t1VM8mIrNzYcMS2FmNqE9lRLqQhnMIYe2TDwWxoUva9GiBI3CMUSNoE5xPsXYNtOdZazu0JWebq/GarGnhTvCtDjqiouvTKTPpl5/ghn2GabKE+ZcaxTHQ63y10x2S/t5CApjk7GgkAmnKlQL2BGnSfX3p4SIB/T1Tq9i2MeXBeqKUCG2vpXgULwHKwbjAV9nwAqCxRsBaxioYvIOeXuRueUPTn2XXW7dle2Nh/R2H+GKLZCCg1FPdRXZQ7cJnI6LtpelR/3YTGhtSqM1xdTsJabm33kDRxR5Gptb34mq4g7FwOrI9+RRqSvH1jy5Hgke1eCXOy3OtUbhnCMFnhVe+DyVT72dKK1Q7Va9R3EYY05V3Xtj2ITCKdaWWJuEXbya0E9BBAshiWJiKg9ZXZlsAVq/fFRbn7qry8vRX/+zDGevaCftkCEMSo9Th01TEIsrSxKFVKGUEG7qBJx4REqcgE0S+qqYfIHphWuUTnV37ZRLWux/L/vGKdqnuXSLpDmHlSw0wfFClmWICmVZVBrTeGFxKCoGL2DUYDQLglI9KkNKD6V4bDpLZyHn4u1M97ZX2Hscw2XfNPNzN7TWzo0NWqDzDqc6qjQsYvEOfEjFx6ggUpsXXVV1QBm4PiurJ18N+Wmca0Hx/Pjz5zEhudVMRJnU9z+PCrRPHmPVUhRPKEBx1JsmOhM9g1EC3yviih5aDDG5w1aNfWqVXSX0faiHI5XlyeDxIuE3NbYyU7VJGwu02/vsrn39yuM5Lrq796S7e4/FrK0ND2lrmtSkOK+U5RBjEsRWJopD0U+iYOp+Fj4JO05qWR6SJZ2mCNCefgfnDcOB1+HW52//yXzGUKOYiZ45PuRPjijLcqwxat1zYuyXU/WUbkhRvKlayEdzrgXFZGb2qzqL6uzfg89ZBHfk395GniYMj6Mp1OsKil53l7y1T+anMaaJQVAfKjyJSCjZXZVuVlGMBq1CdFLAGUQsjbyDTF/AXfmlrt7/pzOxaG49/onpoadlPHlnBsUyKEscRejcpyFpS9QgDqxaUBt6cwPu0GapNgWaKiGv0WqBziOU9FLV3dUvjv24Ly2/r947Hq/GTPBJRubc8TPV/Th6zXuPVJ3sgo+w8kN4RYzivaMoBjx6/M2pzu25FhSTGsHhRf2lF/h616YGxB35mW8rbyIU9lU/f39/m6y5RbM9R9LISYwNNY+8VpqDx4R9d/VFoTCGUBXbU4N6cArGZOSNGaamLlFe+KVurpy+sCh3vpJ9X2gr8aSpI23OkqaGwjs8Hi+mapupWIKAMBoEh2rokjZp1QvzbPEaNKtB4ciaUyymCXtpAl51d/3Px3rcWdrAJsJFuaWPVk7PPHLWSJIsaIZy0O8gYkc1verOdYcTXeumXIp76fI3J8G5FhRPW3yOY3EXQreqn4OLQgi20nBCjx3CjIOIGJ/oLzchtcZnjOHCheu6svJifZ9rXO8HGfRmtBjskuYtEptUrUYBCW0iHT4UDqx302pCQdZKmVEPzgkYQ2pb5J0lpjQhyTJd/el/nPrCNtj7Tn7a+w6vv9apRUfamkWSHNWw4B/MswC8YrRAAWsUJ5M9yWsfkUVFcaUhkYSsmdKhig4To3trx2iGkpQ0y2iJ5crlD/X+gzdbsfesUkcTwkRJnAkTt6qSGFuZnsZhtFJvdgTKYYErhqd4FIFzHfX0+jthf+BHO/y5p5109qZ4UkU+PiZzH5Lk1fYl/cEOve42RbGPFU9iwBqDqSuvHtpVAxj1VYlnMCKIGLxalJQkm6I1dYGZuSvMLJ5+fkXNg+/+QbY3VikGQ6wmJJIiPkU0AQ1zp+oqjTfc142OJs/Vej4Ug00bOCz9AkiaTM9dZn75Ou3FXx7bcRfegxqSJKPV6nD13U/OzJyeFnOzVzVJEoyxB64tqX1nhJLjqorXMtSFUjfKERIJ2sRgMBj1ujhNzq1GMT97Vce7p6NNRC/cDlX8OH+AyR/VkibZsY35rPJKQqJemV9kesViTDKx6305it27spdPa9JoY00OtoWt8g8cBPMMOirbLCpI5ez13pOIAWvx3lNWZ41kLVLrmV28RqPR0O3tLfq7p39B9vf7dKY8aWJRSbC100FCGCzicOJBdKLg3BH7PRUQgxjBOcV5QSUjyzOmTEbpElTQ7urrm99Kpwxd8OklSU7eTLh29S90MOidum39tMiyBmmaHhAMQXRXeT+HQp5Fw4bGiKLqKYqC0vV5+OhsNJ06t4LiKCYFxouan54QMhJ6BIhYtGqr+XPgpDQK9UKI33w9dtf+VZrtac2zFmkuqOQhqU6qjLvQMHsUjFUfjroCkhxjBAc474NjWCxGGswuvUuv2cDbFmoSHWx/e6oXpiVFnEcKB5RkxoZigFXmeYi714lmNqGkiSio1DvRKkkLQUuPSLCTOy0oncFaS2fmAlmWsWNVh70N9rZfXUh673EewGGtJUkybDOE+ZblDV1b//kl/aVpSmKzI8M4gvAIf7HW4lyBhAC9qpy+Y1j06Z9W2eMjOLeCIs+aZGmjapE5TnOvedGFT9VVZaypErYmejJgaDbbLC5e17Og/p0EC/PXtSxLkkpz8j4Ix9F8Si0oD9rAJ0OIn6VWeO9JrJCmOf2912sjtLnxgCRrstBsY63QKwrKEtQmJJXKXlfpFB92ZmmaAp7CVwEKdhyD5Y2l5zNs8wLzFzvknVm2OtO6d/+f3/hvPXvxE52ducjM9AWytE2v36W338NmOWmeYbKEkqopiE1CQqHzSOmxRkAU50qcCpiw0TGAQ4KcNgbIKdUHYWlbNDuWdmrZWn9AUWY62H+13Wu3u0eaWprNJgBFUQKCmIyFhWXa7bbu7+2ytvHm+4KcBsvLtzRrNvASTKS+3sgwXpfSqt+IK4Yhukk9rvCkVkKQRjlgc/3srDnnVlCcfERSXQri9GsenSSHoy1ebUqf9iaDTNjQE5u+yoePKHa/k/3mtOZZk1bHk9oGkjZwCHUdbqlMYsEq4wBfhYy6kd0eCHkWGAwpai1iE5pTKZJm5I229vbW6T4+/lDSw7QWP9Pm1ByzU7M08wbqPFs7j9na2mZ7e5tGq0F7Zob23By20cZLTqEG7xJQQ6qOEHEhCL7y29TNm6qFSmSkaYVyIePmOVljkc40FD5hP2/o/sa/vvQxd/e+l87Up+qcw1SmluAz0TDDaZNmQ1lauK6rZ2jxOykaeRNrqlRg70c9syevtfC8G0U3WRvmTF1Bt7vH48dnK3rs3AqK4/PDH9opH0i8M2EDZ87xND0HW2WHjrQClXFf3wNz/LJRTyGSI7QzDb2es+z1/T3bK38QYxK1BpqdBVKTgrch7smHXhQiUvWcNiGXWSaiourigRKiTZyERdUaQ9rMmGrktFpteq0phlPzure1jhv26e0cn/mkPfWetttTJHkHn83T6EzTbjTB9eh2N9jaeMDa6u8FYNiHnQ1Y0F9qa3qZpL2ESadRk6AeRB2Kp27uZI2ArZzaLkgHMzJGAQhqguDwKmiS0ZhaZiFr0my3SfJMtx/+7uWP1btRRaqRY12Duc8kOc1WQtbIyRtN7fb22di4d6YWwuPiyrsfa9pojkJgFQlJkAeS6MJjVYe14Tc0EqKd9oddHjz86szNzbldAetIHVXzQg7Vl+KAsOCt9lOEWO9xUMBkNcCXS7g7uiZU7esJ35WwvHRdH6++3q5yd3eFLAtd3tKmA5OTSFblHIDzlRZoBPUEm34t4Kq6OqF3dbDrex8WVVVPZnKSRGhNpTQaHaY68wz6+/RnLuig36UsBhTFgOH+S5hRsquaZQ0aeYtGq0Wr1aKRt7BpiyEtjEno9/v09zfY23rERiUkJlm/+0+yt/yBTs95OrOWNM0AgxHFiuBUQRWxBlOZT42AHojvNgeKPSpCr1ASk5I0Z2inFlIDRnX7JRMSvQ5DRBZJFVYuo520MUJiE5IkIUkyJLFYc1NX196uBL2l5VvaaDQwklSlf8am7MnAmlCiQ7FGSG1QCL0vGQz7/Pjj8ea4HBfnVlCE0DODOzbrU92W8snFzpiEhbmrur759u2Csiyras7U0TUH+5DrM8xKL6pd1D2DjUlGvpDXody/J1vWaL8YMn/Bk+dTpI1pVDKKwuOcBMeuEVSDVWqUVwETYbOgGhL28EEjKUQxJBgaJFlOmitpY0DW6FG6waiZkive07KsFkcfEv4OlkS3ldkywVqLTXOyLCPL8tG5ixpaktLt7bG3tcru1iP2Np9u+hk8/kq2C1EdOqanC7LGNCapwrg1hKmq92PvkfPVJmBiI1D54SDkoHhVnFeMGIxt0epcwJqENGno7u46g40Xy4lYW7kjjSsfacgdSEaCImiUglODERArZHkbIxnvtD7Rn+69PWVFms0W1qZ450N/EDE8GWDjg+PaBDOpagnqGfT3uffT2dMkas6loLh88baGmPyTntdghkmS5FjMJmeRNE2raJmxoKiZjM54OvXCA0/XKsaf+aq5FIcZ7NyVwc5dGs1MVR1JaklTgzcJwQji8dgD1W29gPX1mKuQxCp2XRKDqBk1iFHJQJXSCJiUpNnAih/V36l7IjeS9EAjIVMJJluZeCbnQIwZ1f0pvQcdUuw/Yn97g+2NFbo7z18ohhtfyka3r/T2aM9cpDWzgCY51lpSQlVdEcVr2LGO6j+FGah+rhCkqcYgxgZHf1mSGCFPO3RmGmRph057nnXT1H5vi2L/+aa3YdHDpBlZJRzBjLQK70PJTREwkpJkhkQN165+qq4cMBgMWF0/nxuxuYVr2mq1SdN8ZLYd9Z4/cP2E+Vf14bJSR1EOcMXwTAsJOPmV9thZXrqunc4MWdpBK/edyqtHPYUfL1Q3VdVRDZ3wIR7xISmvGHa5e+9P526+nsX1G+9rI5vHU5cZGCcBUdn6nR7WGvyBf4eFWDGjjLcgCKTKNg3mrBILKAWuHLDf3ebho+Nzak5f+kSnZi/Rbi9gsxm8NPBiwrmBQ8WNauhYHzJljVaOdSnD7q46fu/rORgnXIY6Uj7swKXq202Irko0HfcYEF8VK6zDVZUkqc4nqUJbnWdYDikGQ7TYYf/xN2yvvFom8/TMJ5rPXydrzdFst0iSJBShq0yJSl39eOy8pgoNBnBi8El1/ZQO8UomlswaEl/ghl32d9bp7a2yt/OIna3nm0WWL7ynjUYHmwSTGpgwnxJMLsaO51C0xKpHfUFZlhTF+RMYly7d0jRvVTkTNvQxF4tUmfST/d6DKTeUC3fOoX5Ib3+HtbWzf7znTqPIGk2yvIlgwq5sNMUhGHBsEnnRe55M653ACyTGYJPklUpQnGUa+RRIUtVDqi5mQvy9qFa2mcPvmpw/qn/LxN8CSng67K8sahRVi7EZeaNzrMex8/Bzcc6pqKfVAZspig2Jd9UxjPcQwmR/h9rZHnpwh2MQ7MjH4UpfVdgLDnOvEqKIREAsqkm1+Grl/q9MmFoE4aAahJEqaElZDhj0duju7lH2t9h/RSEBsLP9udArtDl3kdlylla7HYRFklY+vKqEPsko2qumflwWA5IsxaYpvvSUoTUgDoNJcuaXrzCYapG2MmzD6OajZ5uKHq98K0uLNzXPHWIzMpuFSCsxiDGIhPlVFPVhMU1sQmI9edYizwfkeVMHg96ZFxhXr95WsQ2ytIWIUJYepx5rgissnFOhha+VEAGoOLwWuHJIUQzPhZCAc6ZRLC2/p53ONFnaQLE4p+gozt9UzrSXExRWhIOtJie6SInifRl+eFGKYsje/g5rj8+3sFhYuqGzUzOkeRvn6w5roSGOAVTsyIRydD+O8fyFhbAKgT1UklxEgqO1Kk9Qd6Tz3tPrdxkO9llfPd4Et4Urf6VTcxdodWZIshb9oUNMhkqCUtnOK39JEBLF6CIY7f7UVFrEk59fm5PC7tCAyYN5xZWAxwgkOIx4RAuMeBIpUF8w6G2zu7fFzvYqu4+ON/Q2bd/QqZlZpmbmaLWnSbIWYlK8pjixKHmVDWxQbLhujOL8MPxOlakozIMLfhzj0GJAmoD4Ab3uBt3dTXrdTbZ/+pfnjn9x8apOtWcQk1QZ9TY0lULwLsx3ZmR0Do1KV6inKHsUxYCiHPLw4dnJ7r5w4abmeU6eNUiSjGEpGJtXuUcOdR7nC6BKebESjk09zpcMBj3u3Tt/tbDOzYAXl28HIZE1ACi94pyO4pVrXja3YrzPOtiLom46FRa48JleS4piSLe7x/o5FRYzc9d1qjNDs9kmSVKUBDdhtjtsvnte46ZJQXEUtiqdAZORaspwOMQVfe7fezLC53XpLNzSVnuWtNmhPTWPSZrYtA2SUHqD81Rlyu3IJDWOSHmykudR9xB25UWVM2CtJTFCanwoEeL74AtcsY8fdhn0dtjbW2d/b5P9zZNNPJu7+IlOTS2StaZJsjYmaWCSJmIaODWUTildKHGdZsHprhKSLD2Tv7+iviSzBoPDl30ohxTDLrs7W+xvr7K/9vzfb2nhqmZ5i0ajg0kyjAS/mKpiXFXvqOreJkZHwiIIj9A7vT/o8eDB6ZWzWFy4oVnWIMsykiQjSRLEphTDSjurrwHvMDY4q42BctjFq6vMaj0ePz6fSYfnYtAXLr6vnakZ8rwZIijKcVXXUSG0pwiI53a4G20bK3v6yK5eR7DoSIUMKfZSCYseq2dop/MiLF94T7NmFZpp0yrOu95FjsP4XpwnBcSz3l8XPBt9ly9wZZd+b5dHJ3AB5TM3dXr2AmmzTaM5Q5o1qx1tVazNJLjSoGasCR32bT17PkI5DRENkU0mmJ7Koo8bdPHDPrs7a5SDPXrdHbrbby6JKmtf07TRpjO1gMmaNJrTZHmbxOaoscHUiAWTITI2TfmqMZSaykfjQxKd1RJByYxiBYb9HoPeKmtrX7L28PnaBcDS0g3NGk3SNMfYYNM37snkWRFG11o4X1wVPFDgnKN0wafhXMFJmoLnZq9qp9MZCQZrD9ZuCv45CeVLfNgwhdNn3E65t79HUQx4/Ph8lzE504NfWrqhjVY7FNhK8mAzdop3wWFnraV0xYH3HL6wn3mh6zjWW6r4yeCM1Nq/TWKE0gdnqBhDYi0eRzEYMhj0eXj/bEcrAFxYvKZ5I8yjTfMQwucV5xxiDwral9XIxm0bJ3baE/92zo0u+MO7dsEjWjLs9+j1ejxaOZmLKZ26qa3OLHkjRKbYNCfPm6RZG2NaoezFU0yT4fzwVbirHvy7lBjrUC1Q5yjLIcNBn353n8H+DuWwx+7ay2c6Hzdp57ameYu82SHPmqSNBnnWDCaTpAkmwxhblWsJQQBUpeZD6K3iywJxjsQKmTWhq165R+kfs7/3iO2tLR4/fHGTyuLFW5raFEuoDTUqoFdRnzP1+XOgOm7V8Md7D1rgvaMsHWVZUJYO7x3eKxtb92Rp4YZC6F9ShwWHdKGQU7KyFs65hYVrmiQJiU2D0K/CfOtS4aZKuh0He1TjTCxOq17u6kb9IwaDHsPhgI23pPTPmTyI5aXrmjVykiQjS3O8mJHd2FdDHu1OXXmk6eOFFjytY8wFo6GvQbjX6t6RpylONVws4rFI1a+4dlYNcK6gKAp+un/2dg1X3/lAkyTD2KRqomIxklBqqA1U21AnmbwoX6Zn+FFCuk40OrxTD79fmEf1Ycc4HA4pioLhsH9ijszm9E1NswatVock79BozqKSVnOj1a5RR49rQaEqIdrJ17+7oAwwFBRll2F/QL/fZ9jvMuh1Ge6dzWQym1/XJAs5HTbJaE/NYpKUNMmRJAkOekK0EhryQAwS8kxcEXphhPx3RPqkyYDhcIf9/V32u7uv5HOan7+qWZaFKgGE6zpNw/UfyoIk1TlUa7+1wHBVJ78guFXd6Heq7/v94eh3q32YIjoS/Hkzqx7XwshOnK8TgoqDWqeIYCwUvhhd/0HrKRkMBmy9ZZnnZ/JgLl64oTYNql4dnenrWH8dh8OijjQNgZeT+8DaKfs8VzZVKFsdxjZpetFDtuvJv9cnmrGKEYf3ZZWIVfLg4dk4QS4uhx1SiOBJQimBaudsTBU6qg6loJ4/FRndW5HR42fNo6g+O6bM+9HnTP4utr4wddzgRVVHJoaiKHjw6GRNNVn7qtq0g0qdNRxuaZqOxpSm6Wj3WpZlFcYZTB/qhhgzpCh7dM95wbvm7HW1aRZ8B2II/S8M3mkwvZgqwMG56thLDCHEs66ptbd7fHNw6eJtDblLIehgpN1IMtGzQcJGkYMmw8lrtc7bOTJ8XrTqR+6Z1HbD6+sglzpsepw7M978KL1hl6IcnPsAl+fxVh9c5Ghmpq/q9s7ZEGhnnamFa6qq7L1lO8TzxNzsVbWVSchIVpUyDwIjrxJhDwuCSVPqM1skmypb+oBpK2ge4/uwgSnLkuFwSFmWbG693YLhMD+rg41EIm8Xy4vv6+TiX/sua63jqMrPBywHEx0uVRU3sg4EzWF9/XxripFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIm+SGzdu6NWrV/W0xxGJnCZy2gOIvDwff/yxLiwsMDU1xXRniizLSJKEsizpdrv0ej16vR5FUfD48WO+/vabE/+dP/vkU52fn0dESJIE7z1JkmCtfeb7Cleyu7vLzs4Of/7zn0/tfLx27ZrOzc0xOzvL9PQ07XabLMtot9sURcFwOGQwGLC/v8/6+jorKyt8++23b2y8H374oS4tLZEkCZubm/zhD394re/+zW9+o81mk93dXX73u98d+3H86pd/o9PT0zQaDVQVVcV7j/ceESFNU5Ikod/vj553zjEcDtnb2+Nf//THuDadIZLTHkDkxfjoo4/08uXLXLhwgVpI5HlOOQyLmHMOay1pmqKqlGWJc47t7W0+/fRT/fHHH/ntPx3/glDz3nvvcevWLfI8p9FoMBwOMcbgnDvwOpGDQxBr6Pf77O/v86tf/UofPnzI999//8YW4Zs3b+rCwgKXL19maWlpNK/GGFR1NH5jDMYYvPfs7e2xtrbG+++/r/fv3+df//VfT3yst27d4v333ydNU3744Qf+8Ic/vPJn/fKXv9S/+Iu/YGFhgfX1dXq9nn7++efHdgy333tf33//fS5fvjzaKNTnZj2H3vvR85OPyzJsHD7++GPd3t7mzp07b2SjE3k2UVCcca5du6bvvfcet2/fZm5uDoCiKNjb22N1dZWNtXW63S7OOVqtFq1WiyzLRv9eWlriwoULvPvuu1y+fFn//Oc/n8iFV3+ntZayLFlZWaHX65HnOTAWECJyQFjYNKHdbnPhwgUuXrzIlStXuHjxIp1OR1931/w8/vZv/1b/8i//kk6nQ7PZBGA4HLK7u0u322UwGFCWJdba0fE1Gg1arRbXrl3De8+7777LxYsX9b/8l/9yomOtNbUsy56rpT2PNE3pdDpMT09jjBn9RseFMYZmsznSyvb29tjb20NVsdaONId6bie1jGazyfT0NNPT03jvmZ2dZX5+Xv9///gPUVicIlFQnHF+8YtfcP36dRYXF9ne3ua7777j3r17PHr0iHv37j3z4vnlX/9CL1y4wDvvvMPS0hKXL19mdXWVr7/95tjHWZsSBoMBjx8/5p//+Z/55z/8/rkX9yeffKKXL1/mypUrLCwsMDc3x/vvv1+bIvSPfzwZE8R/+A//QT/55JORmWx9fZ2HDx/y4MED1tfX+f7775/43uvXr+vS0hKXLl3i0qVLzMzMsLi4yPT0NLOzs/ov//IvfPXVVycy3lqjsdaSJK932XrvKcuSfr9PURQMBoNjGmVARFBViqKg3+9z584dvvzyS/70xbO1lvdu3hqdr5cvX2Z6eprPPvuMTqeDc05PUiOOPJsoKM4o169f11/84hfcuHGD2dlZ7t69y+9///uXsif/0+//WQA+/vAjvX37NkVR8ODBgxMZrzGGwWCAiLC9vf1CQgLg888/l88//xyA//Sf/pPWZp8PPviA7e1t/vjHPx77WP/jf/yPev36ddI0xTnH119/zVdfffXcRf7u3bty9+5dAG7fvq03b97k9u3bTE1Ncf36dZrNJiKiX3755bEvaLUWMRgMnjDnvSxpmo40FGMMWZYdxxBHiMjIdCcirK6uPldIAHz73R359rs7APzb/+nf6F/8xV+wvLzMlStXGAwGrK6u6t17P0RhcQpEQXFG+fjjj3nvvffodDrcu3eP3/72t6/swPziyz/LF1/++biHeABjDEmSICKvbBr53e9+R7vd5tatWyRJwtWrV7l69ao+T3N6Gf7Nv/k3euHCBZrNJr1ej6+++opvv/32pX0iX3/9tXz99deoqr7//vtMT0+zuLjI+++/z5dffnlcwz331NrLy/L3/9d/F2OM1maoixcvcuHCBe7e++EERhl5Hua0BxB5kr/5m7/R69evMz09zf7+Pl988cVrR7m8CerIllfd8d65c0dWVlbw3tPtdkd+gePis88+05s3b7KwsIAxhtXVVe7cufNajvP/7X/73+TevXsMBgOmp6e5efMmv/71r3/W4bS1H2ry9iqsrq6yu7uLqjI/P8/CwsIxjzTyokRBcQZZWFig3W6zs7PDt99+y3//7//93AiJOnrlVSnLkqIoRlqJMcd3itYRY8YYdnd3+emnn/jmm9d37H/33Xesr68DMDU1xcWLF197rG8LzrlX0iiAUVjycDgEeG3fTOTViYLiDLKwsECj0aDX63H//v3THs4LU9umX2dxb7VaOOeoY/yP09E6OzuLtZbBYMDGxgYrKyvH8rl/+tOfZGNjg7IsERGWlpb41a9+9bPWKmqsta9siqwjzOpIuqIojnl0kRclCoozxu3bt7XZbKKqDAYDdnZ2TntIL0RtXqhzOF6F3/zmN3r16lUajcbI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" alt="H&S Group">
+  <div class="topbar-right">
+    <div class="kpis" id="kpis"></div>
+    <label class="btn-import" title="Importer un fichier Excel (.xlsx) au même format">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1v7M3 5l3 3 3-3"/><path d="M1 9v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V9"/></svg>
+      Importer Excel
+      <input type="file" id="xlsx-input" accept=".xlsx" style="display:none" onchange="importXLSX(this)">
+    </label>
+
+    <button class="btn-edit" onclick="toggleSidebar()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z"/></svg>
+      Éditer le planning
+    </button>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="fbar" id="fbar"></div>
+<div class="cbar" id="cbar"></div>
+
+<!-- BODY -->
+<div class="body">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-inner">
+      <div class="sb-head">
+        <span class="sb-head-title">Édition du planning</span>
+        <button class="sb-close" onclick="toggleSidebar()"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l8 8M9 1L1 9"/></svg></button>
+      </div>
+      <div class="sb-scroll">
+
+        <!-- ADD -->
+        <div class="sb-sec">
+          <div class="sb-sec-t">Ajouter un événement</div>
+          <div class="fl"><label>Nom</label><input id="f-name" class="fi" placeholder="Ex: Congrès SMPR"></div>
+          <div class="fl"><label>Groupe</label>
+            <select id="f-g" class="fs">
+              <option>H&S Group</option><option>Dislog Group</option><option>LVE Group</option><option>One Retail</option>
+            </select>
+          </div>
+          <div class="fl"><label>BU / Entité (optionnel)</label><input id="f-bu" class="fi" placeholder="Ex: Healthcare"></div>
+          <div class="fl"><label>Mois</label>
+            <select id="f-m" class="fs">
+              <option value="1">Janvier</option><option value="2">Février</option><option value="3">Mars</option>
+              <option value="4">Avril</option><option value="5">Mai</option><option value="6">Juin</option>
+              <option value="7">Juillet</option><option value="8">Août</option><option value="9">Septembre</option>
+              <option value="10">Octobre</option><option value="11">Novembre</option><option value="12">Décembre</option>
+            </select>
+          </div>
+          <div class="fl"><label>Type</label>
+            <select id="f-t" class="fs">
+              <option>Congrès</option><option>Événement</option><option>Campagne</option>
+              <option>Lancement</option><option>Affichage</option><option>Offre</option><option>Activation</option>
+            </select>
+          </div>
+          <button class="fb" onclick="addEv()">+ Ajouter à la roadmap</button>
+        </div>
+
+        <!-- COULEURS GROUPES -->
+        <div class="sb-sec">
+          <div class="sb-sec-t">Couleurs — Groupes</div>
+          <div id="gc-pickers"></div>
+        </div>
+
+        <!-- COULEURS TYPES -->
+        <div class="sb-sec">
+          <div class="sb-sec-t">Couleurs — Types d'événements</div>
+          <div id="tc-pickers"></div>
+        </div>
+
+        <!-- VISIBILITÉ -->
+        <div class="sb-sec">
+          <div class="sb-sec-t">Masquer / Afficher</div>
+          <div id="vis-togs"></div>
+        </div>
+
+        <!-- LISTE -->
+        <div class="sb-sec">
+          <div class="sb-sec-t">Événements <span id="ev-cnt" style="color:var(--sub2)"></span></div>
+          <!-- Search + filters -->
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+            <input id="ev-search" class="fi" placeholder="🔍  Rechercher un événement…"
+              oninput="buildList()" style="font-size:11px">
+            <div style="display:flex;gap:5px">
+              <select id="ev-f-groupe" class="fs" onchange="buildList()" style="font-size:10.5px;flex:1">
+                <option value="">Tous les groupes</option>
+                <option>H&S Group</option>
+                <option>Dislog Group</option>
+                <option>LVE Group</option>
+                <option>One Retail</option>
+              </select>
+              <select id="ev-f-mois" class="fs" onchange="buildList()" style="font-size:10.5px;flex:1">
+                <option value="">Tous les mois</option>
+                <option value="1">Janvier</option><option value="2">Février</option>
+                <option value="3">Mars</option><option value="4">Avril</option>
+                <option value="5">Mai</option><option value="6">Juin</option>
+                <option value="7">Juillet</option><option value="8">Août</option>
+                <option value="9">Septembre</option><option value="10">Octobre</option>
+                <option value="11">Novembre</option><option value="12">Décembre</option>
+              </select>
+            </div>
+            <select id="ev-f-type" class="fs" onchange="buildList()" style="font-size:10.5px">
+              <option value="">Tous les types</option>
+              <option>Congrès</option><option>Événement</option><option>Campagne</option>
+              <option>Lancement</option><option>Affichage</option><option>Offre</option><option>Activation</option>
+            </select>
+          </div>
+          <div id="ev-list"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="rmap-area">
+    <div class="rmap-scroll">
+      <div class="density"><div class="density-lbl">Densité mensuelle — 2026</div><div class="d-cols" id="dcols"></div></div>
+      <div class="rcard">
+        <div class="axis"  id="axis"></div>
+        <div class="egrid" id="egrid"></div>
+        <div class="zpanel" id="zpanel"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <div class="modal-t">Modifier l'événement</div>
+    <div class="fl"><label>Nom</label><input id="m-name" class="fi"></div>
+    <div class="fl"><label>Mois</label>
+      <select id="m-mon" class="fs">
+        <option value="1">Janvier</option><option value="2">Février</option><option value="3">Mars</option>
+        <option value="4">Avril</option><option value="5">Mai</option><option value="6">Juin</option>
+        <option value="7">Juillet</option><option value="8">Août</option><option value="9">Septembre</option>
+        <option value="10">Octobre</option><option value="11">Novembre</option><option value="12">Décembre</option>
+      </select>
+    </div>
+    <div class="fl"><label>Type</label>
+      <select id="m-type" class="fs">
+        <option>Congrès</option><option>Événement</option><option>Campagne</option>
+        <option>Lancement</option><option>Affichage</option><option>Offre</option><option>Activation</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeModal()">Annuler</button>
+      <button class="modal-btn primary" onclick="saveEdit()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT OVERLAY -->
+<div class="import-overlay" id="import-overlay">
+  <div class="import-box" id="import-box">
+    <div class="import-spinner" id="import-spinner"></div>
+    <div class="import-title" id="import-title">Lecture du fichier…</div>
+    <div class="import-sub"   id="import-sub">Analyse de la feuille "Planning Groupe 2026"</div>
+    <div class="import-stats" id="import-stats" style="display:none"></div>
+    <div class="import-err"   id="import-err"></div>
+    <button class="fb" id="import-close" style="display:none;margin-top:4px" onclick="closeImport()">Fermer</button>
+  </div>
+</div>
+
+<div id="tip"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const MN  = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc'];
+const MNF = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const NOW = 3;
+
+// ── COLORS (mutable) ──────────────────────────────
+const GC = {'H&S Group':'#2a5298','Dislog Group':'#1e7fc4','LVE Group':'#0f9e7b','One Retail':'#c8860a'};
+const TC = {
+  'Congrès':   {c:'#2a5298',bg:'#eef4fc',tx:'#1a3a7a',cs:'congres'},
+  'Événement': {c:'#b8780a',bg:'#fef8ed',tx:'#7a4a00',cs:'evenement'},
+  'Campagne':  {c:'#0f9e7b',bg:'#edfaf4',tx:'#0a5a40',cs:'campagne'},
+  'Lancement': {c:'#6b48c8',bg:'#f3f0fd',tx:'#3a2080',cs:'lancement'},
+  'Affichage': {c:'#c84848',bg:'#fdeaea',tx:'#7a1010',cs:'affichage'},
+  'Offre':     {c:'#0e90a8',bg:'#edf8fb',tx:'#064a58',cs:'offre'},
+  'Activation':{c:'#c86420',bg:'#fdf2ea',tx:'#7a3010',cs:'activation'},
+};
+
+// ── DATASET ───────────────────────────────────────
+let EVTS = [
+  {id:1,g:'H&S Group',bu:'',e:'',n:'Lancement nouveau site web',m:2,t:'Lancement'},
+  {id:2,g:'Dislog Group',bu:'',e:'',n:'EV: Bollywood Roadshow Rabat + Casa',m:1,t:'Événement'},
+  {id:3,g:'Dislog Group',bu:'',e:'',n:'Campagne ISO',m:2,t:'Campagne'},
+  {id:4,g:'Dislog Group',bu:'',e:'',n:'EV: Spectable Ramadan Casa',m:3,t:'Événement'},
+  {id:5,g:'Dislog Group',bu:'',e:'',n:'EV: Le porteur d\'histoire Casa + Rabat',m:4,t:'Événement'},
+  {id:6,g:'Dislog Group',bu:'',e:'',n:'EV: Remise de diplome ISCAE',m:5,t:'Événement'},
+  {id:7,g:'Dislog Group',bu:'',e:'',n:'IPO Dislog Affichage',m:6,t:'Autre'},
+  {id:8,g:'Dislog Group',bu:'',e:'',n:'EV: Rose Royal rabat + Casa',m:9,t:'Événement'},
+  {id:9,g:'Dislog Group',bu:'',e:'',n:'EV: J\'aimerais arrêté Casa + RABAT',m:10,t:'Événement'},
+  {id:10,g:'Dislog Group',bu:'',e:'',n:'EV: Sherlock Holmes CASA + RABAT',m:11,t:'Événement'},
+  {id:11,g:'Dislog Group',bu:'',e:'',n:'EV: La belle et la bete Casa',m:12,t:'Événement'},
+  {id:12,g:'Dislog Group',bu:'',e:'',n:'EV: Satanas & Mordicus Marrakech',m:3,t:'Événement'},
+  {id:13,g:'Dislog Group',bu:'',e:'',n:'EV: 7 cup Marrakech',m:4,t:'Événement'},
+  {id:14,g:'Dislog Group',bu:'',e:'',n:'EV: Caftan week',m:5,t:'Événement'},
+  {id:15,g:'Dislog Group',bu:'',e:'',n:'Campagne IPO',m:6,t:'Campagne'},
+  {id:16,g:'Dislog Group',bu:'',e:'',n:'Campagne IPO',m:7,t:'Campagne'},
+  {id:17,g:'Dislog Group',bu:'',e:'',n:'EV: Andalussyat',m:12,t:'Événement'},
+  {id:18,g:'Dislog Group',bu:'',e:'',n:'EV: Satanas & Mordicus Casa',m:2,t:'Événement'},
+  {id:19,g:'Dislog Group',bu:'',e:'',n:'EV: Dislog Padel Masters',m:4,t:'Événement'},
+  {id:20,g:'Dislog Group',bu:'',e:'',n:'EV: Dislog golf open',m:5,t:'Événement'},
+  {id:21,g:'Dislog Group',bu:'',e:'',n:'EV: La belle et la bete Casa',m:12,t:'Événement'},
+  {id:22,g:'Dislog Group',bu:'',e:'',n:'EV: 8m2 Rabat + Casa',m:2,t:'Événement'},
+  {id:23,g:'Dislog Group',bu:'',e:'',n:'EV: ASS TROPHEE HII DE GOLF',m:5,t:'Événement'},
+  {id:24,g:'Dislog Group',bu:'',e:'',n:'EV: Al Capone Rabat + Casa',m:12,t:'Événement'},
+  {id:25,g:'Dislog Group',bu:'',e:'',n:'EV: Carmen Rabat + Casa',m:5,t:'Événement'},
+  {id:26,g:'Dislog Group',bu:'',e:'',n:'EV: Festival du film',m:12,t:'Événement'},
+  {id:27,g:'Dislog Group',bu:'',e:'',n:'EV: Santa pour enfant Casa',m:12,t:'Événement'},
+  {id:28,g:'Dislog Group',bu:'Healthcare',e:'',n:'Congrès: Officine Pharma Africa Meeting',m:1,t:'Congrès'},
+  {id:29,g:'Dislog Group',bu:'Healthcare',e:'',n:'Congrès: WHX Dubai',m:2,t:'Congrès'},
+  {id:30,g:'Dislog Group',bu:'Healthcare',e:'',n:'Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026',m:5,t:'Congrès'},
+  {id:31,g:'Dislog Group',bu:'Healthcare',e:'',n:'Congrès CPHI',m:10,t:'Congrès'},
+  {id:32,g:'Dislog Group',bu:'Healthcare',e:'DMD',n:'Lancement Site WEB',m:1,t:'Lancement'},
+  {id:33,g:'Dislog Group',bu:'Healthcare',e:'DMD',n:'Congrès: WHX Dubai',m:2,t:'Congrès'},
+  {id:34,g:'Dislog Group',bu:'Healthcare',e:'DMD',n:'Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026',m:5,t:'Congrès'},
+  {id:35,g:'Dislog Group',bu:'Healthcare',e:'DMD',n:'Congrès CPHI',m:10,t:'Congrès'},
+  {id:36,g:'Dislog Group',bu:'Healthcare',e:'DMD',n:'MEDICA TRADE FAIR Congrès',m:11,t:'Congrès'},
+  {id:37,g:'Dislog Group',bu:'Healthcare',e:'DMD',n:'International eHealth Forum 4ème édition ? Congrès',m:11,t:'Congrès'},
+  {id:38,g:'Dislog Group',bu:'Healthcare',e:'DMD — ERAMEDIC',n:'Congrès: WHX Dubai',m:2,t:'Congrès'},
+  {id:39,g:'Dislog Group',bu:'Healthcare',e:'DMD — ERAMEDIC',n:'33-ème Congrès National de L\'AMU',m:4,t:'Congrès'},
+  {id:40,g:'Dislog Group',bu:'Healthcare',e:'DMD — ERAMEDIC',n:'Congrès 19ÈME WCA2026 et SMAAR 15 au 19 avril 2026',m:4,t:'Congrès'},
+  {id:41,g:'Dislog Group',bu:'Healthcare',e:'DMD — ERAMEDIC',n:'Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026',m:5,t:'Congrès'},
+  {id:42,g:'Dislog Group',bu:'Healthcare',e:'DMD — ERAMEDIC',n:'SMNC 13 au 17 octobre 2026 Congrès',m:10,t:'Congrès'},
+  {id:43,g:'Dislog Group',bu:'Healthcare',e:'DMD — ERAMEDIC',n:'Congrès SMACOT 26 AU 20 AVRIL 2026',m:4,t:'Congrès'},
+  {id:44,g:'Dislog Group',bu:'Healthcare',e:'DMD — SCOMEDICA',n:'Congrès: WHX Dubai',m:2,t:'Congrès'},
+  {id:45,g:'Dislog Group',bu:'Healthcare',e:'DMD — SCOMEDICA',n:'Congrès SEEnergy',m:4,t:'Congrès'},
+  {id:46,g:'Dislog Group',bu:'Healthcare',e:'DMD — SCOMEDICA',n:'Congrès JPFSA',m:4,t:'Congrès'},
+  {id:47,g:'Dislog Group',bu:'Healthcare',e:'DMD — SCOMEDICA',n:'Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026',m:5,t:'Congrès'},
+  {id:48,g:'Dislog Group',bu:'Healthcare',e:'DMD — SCOMEDICA',n:'GRAIN & MILLING Congrès',m:10,t:'Congrès'},
+  {id:49,g:'Dislog Group',bu:'Healthcare',e:'DMD — FARMALAC',n:'Congrès: WHX Dubai',m:2,t:'Congrès'},
+  {id:50,g:'Dislog Group',bu:'Healthcare',e:'DMD — FARMALAC',n:'Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2027',m:5,t:'Congrès'},
+  {id:51,g:'Dislog Group',bu:'Healthcare',e:'DMD — FARMALAC',n:'Congrès CPHI',m:10,t:'Congrès'},
+  {id:52,g:'Dislog Group',bu:'Healthcare',e:'DMD — AFROBIOMEDIC',n:'Congrès: WHX Dubai',m:2,t:'Congrès'},
+  {id:53,g:'Dislog Group',bu:'Healthcare',e:'DMD — AFROBIOMEDIC',n:'Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2028',m:5,t:'Congrès'},
+  {id:54,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès de la société marocaine biomédical ( SMB ) 26 fev',m:2,t:'Congrès'},
+  {id:55,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès AMBM 2-4 avril',m:4,t:'Congrès'},
+  {id:56,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès 4ème journées du centre de fertilité de Meknes',m:5,t:'Congrès'},
+  {id:57,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'SMCC - Journées Marocaines de Biologie Clinique Congrès',m:10,t:'Congrès'},
+  {id:58,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès africain ANTLM',m:11,t:'Congrès'},
+  {id:59,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès: WHX Dubai',m:2,t:'Congrès'},
+  {id:60,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès pour Journée d\'hématoligie biologique de l\'oriental',m:4,t:'Congrès'},
+  {id:61,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès AMBRG',m:5,t:'Congrès'},
+  {id:62,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès de la Société marocaine de génétique médicale',m:11,t:'Congrès'},
+  {id:63,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès africain de pathologie digitale',m:4,t:'Congrès'},
+  {id:64,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026',m:5,t:'Congrès'},
+  {id:65,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès de la SMALMI',m:4,t:'Congrès'},
+  {id:66,g:'Dislog Group',bu:'Healthcare',e:'DMD — MEGAFLEX',n:'Congrès Journées SMAMM',m:5,t:'Congrès'},
+  {id:67,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès : AL HOKAMA',m:1,t:'Congrès'},
+  {id:68,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Lancement site web',m:2,t:'Lancement'},
+  {id:69,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès SMO',m:3,t:'Congrès'},
+  {id:70,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AMICALE',m:4,t:'Congrès'},
+  {id:71,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026',m:5,t:'Congrès'},
+  {id:72,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AMCAR - PARTICIPATION 04-06 Juin',m:6,t:'Congrès'},
+  {id:73,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Cardio SUD',m:7,t:'Congrès'},
+  {id:74,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Azelastin-Comod',m:8,t:'Campagne'},
+  {id:75,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès SMO-Ophta-Casa',m:9,t:'Congrès'},
+  {id:76,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès CPHI',m:10,t:'Congrès'},
+  {id:77,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne AM',m:11,t:'Campagne'},
+  {id:78,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès ALHOKAMAA 30-31dec',m:12,t:'Congrès'},
+  {id:79,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès: Officine Pharma Africa Meeting',m:1,t:'Congrès'},
+  {id:80,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès WHX Dubai',m:2,t:'Congrès'},
+  {id:81,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AMMF - KEBBAJ',m:3,t:'Congrès'},
+  {id:82,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AES:ASSOCIATION DU ENDO DU SUD',m:4,t:'Congrès'},
+  {id:83,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne CAPLOR',m:5,t:'Campagne'},
+  {id:84,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AMOC',m:6,t:'Congrès'},
+  {id:85,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Tambacor',m:7,t:'Campagne'},
+  {id:86,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AFOMEK',m:9,t:'Congrès'},
+  {id:87,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'congrès FON -FEDERATION DES OMNIPRATICIENS DU NORD',m:10,t:'Congrès'},
+  {id:88,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès APEI',m:11,t:'Congrès'},
+  {id:89,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès SMC',m:12,t:'Congrès'},
+  {id:90,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès: Sigma',m:1,t:'Congrès'},
+  {id:91,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Tanger HEART',m:2,t:'Congrès'},
+  {id:92,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Printemps de cardiologie',m:4,t:'Congrès'},
+  {id:93,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Bactrim/ Tiberal',m:5,t:'Campagne'},
+  {id:94,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Journée endo oriental',m:6,t:'Congrès'},
+  {id:95,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: Allergo-Comod',m:7,t:'Événement'},
+  {id:96,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Cardio sud-Agadir',m:9,t:'Congrès'},
+  {id:97,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès ADN Fes',m:10,t:'Congrès'},
+  {id:98,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès CARDIO DU NORD',m:11,t:'Congrès'},
+  {id:99,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'ASSED-Casa Congrès',m:12,t:'Congrès'},
+  {id:100,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: Berrchid :Diabalex',m:1,t:'Événement'},
+  {id:101,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Flonox/ ATB',m:2,t:'Campagne'},
+  {id:102,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne AM',m:3,t:'Campagne'},
+  {id:103,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Journée de la femme cardiologue',m:4,t:'Congrès'},
+  {id:104,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Journée FKIH Bensalleh',m:5,t:'Congrès'},
+  {id:105,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès de la micronutrition',m:6,t:'Congrès'},
+  {id:106,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: STAFF CHU',m:7,t:'Événement'},
+  {id:107,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès SMSL',m:9,t:'Congrès'},
+  {id:108,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès SMEDIAN',m:10,t:'Congrès'},
+  {id:109,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès ASMPR',m:11,t:'Congrès'},
+  {id:110,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Journées mohammedia Congrès',m:12,t:'Congrès'},
+  {id:111,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: Meknes Dibalex &HTA',m:1,t:'Événement'},
+  {id:112,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: URO Flonox',m:2,t:'Événement'},
+  {id:113,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès ACOR',m:3,t:'Congrès'},
+  {id:114,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AOPR',m:4,t:'Congrès'},
+  {id:115,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AGSMF',m:5,t:'Congrès'},
+  {id:116,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès La SAMIR-Ophta',m:6,t:'Congrès'},
+  {id:117,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Falifer',m:7,t:'Campagne'},
+  {id:118,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Falifer',m:8,t:'Campagne'},
+  {id:119,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Journée Mohamedia',m:9,t:'Congrès'},
+  {id:120,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Journées Endo Oriental',m:10,t:'Congrès'},
+  {id:121,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: STAFF CHU',m:11,t:'Événement'},
+  {id:122,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'ACP Rabat Congrès',m:12,t:'Congrès'},
+  {id:123,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: Marrakech:Diabalex',m:1,t:'Événement'},
+  {id:124,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès ACOP',m:3,t:'Congrès'},
+  {id:125,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès SMORL',m:4,t:'Congrès'},
+  {id:126,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AGP',m:5,t:'Congrès'},
+  {id:127,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Allergo-Comod',m:6,t:'Campagne'},
+  {id:128,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Allergo-Comod',m:7,t:'Campagne'},
+  {id:129,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Journée Hopital militaire rabat cardio',m:9,t:'Congrès'},
+  {id:130,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AGDMF',m:10,t:'Congrès'},
+  {id:131,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Cardio B Congrès',m:12,t:'Congrès'},
+  {id:132,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: Khouribga HTA',m:1,t:'Événement'},
+  {id:133,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: Neosynephrine',m:3,t:'Événement'},
+  {id:134,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AL AMAL',m:4,t:'Congrès'},
+  {id:135,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AFMAPATH',m:5,t:'Congrès'},
+  {id:136,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès Journées CHU Agadir',m:9,t:'Congrès'},
+  {id:137,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne AM',m:10,t:'Campagne'},
+  {id:138,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'RESO Congrès',m:12,t:'Congrès'},
+  {id:139,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: Mohamedia Diablex',m:1,t:'Événement'},
+  {id:140,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Neosynephrine',m:3,t:'Campagne'},
+  {id:141,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès AMU',m:4,t:'Congrès'},
+  {id:142,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès JIOP',m:5,t:'Congrès'},
+  {id:143,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Falifer',m:9,t:'Campagne'},
+  {id:144,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès SMG-Ophta Marrakech',m:10,t:'Congrès'},
+  {id:145,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'SOMACHIR Congrès',m:12,t:'Congrès'},
+  {id:146,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Neovis',m:1,t:'Campagne'},
+  {id:147,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Neovis',m:2,t:'Campagne'},
+  {id:148,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Flonox/ ATB',m:3,t:'Campagne'},
+  {id:149,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Congrès SRMGO',m:4,t:'Congrès'},
+  {id:150,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne CAPLOR',m:5,t:'Campagne'},
+  {id:151,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne CAPLOR',m:6,t:'Campagne'},
+  {id:152,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Siccaprotect',m:9,t:'Campagne'},
+  {id:153,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Camapagne Timo-comod',m:10,t:'Autre'},
+  {id:154,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Camapagne Timo-comod',m:11,t:'Autre'},
+  {id:155,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'SOMIPEV',m:12,t:'Autre'},
+  {id:156,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'APA Congrès',m:1,t:'Congrès'},
+  {id:157,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Bactrim/ Tiberal',m:4,t:'Campagne'},
+  {id:158,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Bactrim/ Tiberal',m:5,t:'Campagne'},
+  {id:159,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Bactrim/ Tiberal',m:6,t:'Campagne'},
+  {id:160,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'JPIT Congrès',m:9,t:'Congrès'},
+  {id:161,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'CAMPAGNE ATB',m:10,t:'Campagne'},
+  {id:162,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'CAMPAGNE ATB',m:11,t:'Campagne'},
+  {id:163,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'CAMPAGNE ATB',m:12,t:'Campagne'},
+  {id:164,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Ramadna Diabalex',m:1,t:'Campagne'},
+  {id:165,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Ramadna Diabalex',m:2,t:'Campagne'},
+  {id:166,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: STAFF CHU',m:4,t:'Événement'},
+  {id:167,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: ODM5',m:5,t:'Événement'},
+  {id:168,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne AM',m:9,t:'Campagne'},
+  {id:169,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'ADN Fes Congrès',m:10,t:'Congrès'},
+  {id:170,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'PharmaEXPO Congrès',m:1,t:'Congrès'},
+  {id:171,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne ODM5',m:4,t:'Campagne'},
+  {id:172,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne ODM5',m:5,t:'Campagne'},
+  {id:173,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'AGON Congrès',m:9,t:'Congrès'},
+  {id:174,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'AGSMF Congrès',m:10,t:'Congrès'},
+  {id:175,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Flonox/ ATB',m:1,t:'Campagne'},
+  {id:176,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne AM',m:4,t:'Campagne'},
+  {id:177,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'AMEF Congrès',m:9,t:'Congrès'},
+  {id:178,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'TR: Infection Urinaire et respiratoire',m:1,t:'Événement'},
+  {id:179,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'Congrès: Officine Pharma Africa Meeting',m:1,t:'Congrès'},
+  {id:180,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'LES JDM (GRDVS) Congrès',m:9,t:'Congrès'},
+  {id:181,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'SMD Congrès',m:10,t:'Congrès'},
+  {id:182,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'ADEPRA Congrès',m:11,t:'Congrès'},
+  {id:183,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'WHX Dubai Congrès',m:2,t:'Congrès'},
+  {id:184,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'CODEPCA 10-11 Avril 2026 Congrès',m:4,t:'Congrès'},
+  {id:185,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'Congrès GITEX FUTURE HEALTH AFRICA 4-6 mai 2026',m:5,t:'Congrès'},
+  {id:186,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'PARA EXPO 26-28juin Congrès',m:6,t:'Congrès'},
+  {id:187,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'OFFICINE BEAUTY PLUS Congrès',m:9,t:'Congrès'},
+  {id:188,g:'Dislog Group',bu:'Healthcare',e:'KPH',n:'Congrès CPHI',m:10,t:'Congrès'},
+  {id:189,g:'Dislog Group',bu:'Healthcare',e:'KPH — Kaline',n:'Affichage ( Klift ou White TBD) - 10 Jan au 15 Fev',m:1,t:'Affichage'},
+  {id:190,g:'Dislog Group',bu:'Healthcare',e:'KPH — Kaline',n:'Affichage ( Klift ou White TBD) - 10 Jan au 15 Fev',m:2,t:'Affichage'},
+  {id:191,g:'Dislog Group',bu:'Healthcare',e:'KPH — Kaline',n:'Affichage Whitening',m:11,t:'Affichage'},
+  {id:192,g:'Dislog Group',bu:'Healthcare',e:'KPH — Kaline',n:'Congrès: Officine Pharma Africa Meeting',m:1,t:'Congrès'},
+  {id:193,g:'Dislog Group',bu:'Food',e:'KPH',n:'Affichage EDITA ( fin 10jan)',m:1,t:'Affichage'},
+  {id:194,g:'Dislog Group',bu:'Food',e:'KPH',n:'Affichage Baccari, Edita, Maroja (Back to school)',m:9,t:'Affichage'},
+  {id:195,g:'Dislog Group',bu:'Food',e:'KPH',n:'Affichage Baccari, Edita, Maroja (Back to school)',m:10,t:'Affichage'},
+  {id:196,g:'Dislog Group',bu:'Hygiène',e:'KPH',n:'Affichage ACE Mega Brand',m:11,t:'Affichage'},
+  {id:197,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Campagne Annonce officiel',m:2,t:'Campagne'},
+  {id:198,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Campagne 6 métiers',m:3,t:'Campagne'},
+  {id:199,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Logis Med congrès',m:5,t:'Congrès'},
+  {id:200,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Campagne ABM',m:8,t:'Campagne'},
+  {id:201,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Campagne ABM',m:9,t:'Campagne'},
+  {id:202,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Congrès Logiterre',m:10,t:'Congrès'},
+  {id:203,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Croissance HUB - Témoignage client',m:11,t:'Autre'},
+  {id:204,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Campagne ESG',m:2,t:'Campagne'},
+  {id:205,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Lancement Reranding nouvelle charte',m:2,t:'Lancement'},
+  {id:206,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Lancement Reranding nouvelle charte',m:3,t:'Lancement'},
+  {id:207,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Lancement Reranding nouvelle charte',m:4,t:'Lancement'},
+  {id:208,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Campagne 24/7',m:6,t:'Campagne'},
+  {id:209,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Campagne 24/7',m:7,t:'Campagne'},
+  {id:210,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Campagne Positionnement FLS',m:2,t:'Campagne'},
+  {id:211,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Campagne Positionnement FLS',m:3,t:'Campagne'},
+  {id:212,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Salons BTOB Congrès',m:5,t:'Congrès'},
+  {id:213,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'EV: Inauguration nouvelle plateforme 4 février',m:2,t:'Événement'},
+  {id:214,g:'LVE Group',bu:'Hygiène',e:'KPH',n:'Lancement site web',m:2,t:'Lancement'},
+  {id:215,g:'One Retail',bu:'Hygiène',e:'KPH',n:'Lancement Site WEB',m:1,t:'Lancement'},
+  {id:216,g:'One Retail',bu:'Lifestyle',e:'Franprix',n:'Lancement',m:6,t:'Lancement'},
+  {id:217,g:'One Retail',bu:'Lifestyle',e:'Monoprix',n:'Lancement',m:9,t:'Lancement'},
+  {id:218,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre aéroport',m:1,t:'Offre'},
+  {id:219,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre saint valentin + rose',m:2,t:'Offre'},
+  {id:220,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre aid',m:3,t:'Offre'},
+  {id:221,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Lancement Rebranding',m:4,t:'Lancement'},
+  {id:222,g:'One Retail',bu:'Restauration',e:'Venezia',n:'EV: Nostalgia lover',m:5,t:'Événement'},
+  {id:223,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Activation Icebike',m:7,t:'Événement'},
+  {id:224,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre ramadan',m:2,t:'Offre'},
+  {id:225,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre ramadan',m:3,t:'Offre'},
+  {id:226,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Maroc hotel Congrès',m:4,t:'Congrès'},
+  {id:227,g:'One Retail',bu:'Restauration',e:'Venezia',n:'EV: Caftan week',m:5,t:'Événement'},
+  {id:228,g:'One Retail',bu:'Restauration',e:'Venezia',n:'EV: Semaine du cheval',m:7,t:'Événement'},
+  {id:229,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Activation glovo + glovo market',m:3,t:'Activation'},
+  {id:230,g:'One Retail',bu:'Restauration',e:'Venezia',n:'EV: Jazzablanca',m:7,t:'Événement'},
+  {id:231,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre printemps /été',m:3,t:'Offre'},
+  {id:232,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre printemps /été',m:4,t:'Offre'},
+  {id:233,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre printemps /été',m:5,t:'Offre'},
+  {id:234,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre printemps /été',m:6,t:'Offre'},
+  {id:235,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre printemps /été',m:7,t:'Offre'},
+  {id:236,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre printemps /été',m:8,t:'Offre'},
+  {id:237,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre automne / hiver',m:9,t:'Offre'},
+  {id:238,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre automne / hiver',m:10,t:'Offre'},
+  {id:239,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre automne / hiver',m:11,t:'Offre'},
+  {id:240,g:'One Retail',bu:'Restauration',e:'Venezia',n:'Offre automne / hiver',m:12,t:'Offre'},
+  {id:241,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Lancement 28 janvier',m:1,t:'Lancement'},
+  {id:242,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Offre saint valentin: 15% selection coup de cœur',m:2,t:'Offre'},
+  {id:243,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Post journalier thème: bienvenue ! On devoile nos secrets week 1',m:2,t:'Activation'},
+  {id:244,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Post aid',m:3,t:'Activation'},
+  {id:245,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'EV: Pop up malls',m:4,t:'Événement'},
+  {id:246,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Post journalier thème: Pour l\'amour de la beauté week 2',m:2,t:'Activation'},
+  {id:247,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'post journee de la femme',m:3,t:'Activation'},
+  {id:248,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'soirée lancement',m:4,t:'Événement'},
+  {id:249,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Post décompte lancement + annonce -20%',m:1,t:'Activation'},
+  {id:250,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Post journalier thème: L\'expertise au service de votre peau week 3',m:2,t:'Activation'},
+  {id:251,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Activation : Marque page librairie',m:3,t:'Activation'},
+  {id:252,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Activation : studio yoga',m:4,t:'Activation'},
+  {id:253,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Activation fleuriste',m:2,t:'Activation'},
+  {id:254,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Post journalier thème: Préparez votre peau pour un mois serein week 4',m:2,t:'Activation'},
+  {id:255,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Activation : pressing',m:3,t:'Activation'},
+  {id:256,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Affichage BFY',m:2,t:'Affichage'},
+  {id:257,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Affichage BFY',m:3,t:'Affichage'},
+  {id:258,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Offre lancement : 20% sur tout le site',m:1,t:'Offre'},
+  {id:259,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Offre pré-ramadan : packs routine ramadan',m:2,t:'Offre'},
+  {id:260,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisionnère renover à petit prix',m:1,t:'Campagne'},
+  {id:261,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisionnière renover à petit prix',m:2,t:'Campagne'},
+  {id:262,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisonnière Printemps',m:3,t:'Campagne'},
+  {id:263,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisonnière Printemps',m:4,t:'Campagne'},
+  {id:264,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne aménagement plein air, salon, ombrage',m:5,t:'Campagne'},
+  {id:265,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne Indispensable : peinture, electricité, quincaillerie',m:6,t:'Campagne'},
+  {id:266,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisonnière : aménagement plein air et entretien piscine',m:7,t:'Campagne'},
+  {id:267,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisonnière : aménagement plein air et entretien piscine',m:8,t:'Campagne'},
+  {id:268,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'EV: Atelier B2C',m:9,t:'Événement'},
+  {id:269,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre : revetement sol',m:10,t:'Offre'},
+  {id:270,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisonnière chauffage',m:11,t:'Campagne'},
+  {id:271,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisonnière chauffage',m:12,t:'Campagne'},
+  {id:272,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre Solde Chauffage',m:1,t:'Offre'},
+  {id:273,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisonnière Ramadan',m:2,t:'Campagne'},
+  {id:274,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne indispensables : outillage te matériel de chantier',m:3,t:'Campagne'},
+  {id:275,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne aménagement plein air, salon, ombrage',m:4,t:'Campagne'},
+  {id:276,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne Indispensable : peinture, electricité, quincaillerie',m:5,t:'Campagne'},
+  {id:277,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisonnière : camping et plage',m:6,t:'Campagne'},
+  {id:278,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre : jeux et gonflable',m:7,t:'Offre'},
+  {id:279,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre: solde plein air',m:8,t:'Offre'},
+  {id:280,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisionnière foire au prix',m:9,t:'Campagne'},
+  {id:281,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisionnière foire au prix',m:10,t:'Campagne'},
+  {id:282,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre: Luminaire et eclairage',m:11,t:'Offre'},
+  {id:283,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre: décoration, cadeaux',m:12,t:'Offre'},
+  {id:284,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre Pet food',m:1,t:'Offre'},
+  {id:285,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Post Ramadan',m:2,t:'Activation'},
+  {id:286,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre Netoyage, Aspiration + insecticide',m:3,t:'Offre'},
+  {id:287,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre materiel de chantier',m:4,t:'Offre'},
+  {id:288,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre chauffe-eaux',m:5,t:'Offre'},
+  {id:289,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre : fraicheur',m:6,t:'Offre'},
+  {id:290,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Post : Coupe du monde 2026 + Fete du throne',m:7,t:'Événement'},
+  {id:291,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'post : oued eddahad, rev roi peup/jeunesse',m:8,t:'Activation'},
+  {id:292,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'offre : rangement',m:9,t:'Offre'},
+  {id:293,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'offre : rangement',m:10,t:'Offre'},
+  {id:294,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'post: marche verte + independance + Black Friday',m:11,t:'Activation'},
+  {id:295,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Post : DIY',m:12,t:'Activation'},
+  {id:296,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Post : Nouvel an, can, nouvel an amazigh',m:1,t:'Activation'},
+  {id:297,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre Pet food',m:2,t:'Offre'},
+  {id:298,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'EV: Atelier B2C',m:3,t:'Événement'},
+  {id:299,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Ouverture Almaz',m:4,t:'Événement'},
+  {id:300,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Post: Aid el Adha, Bricolage',m:5,t:'Activation'},
+  {id:301,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Post : Coupe du monde 2026 + environnement',m:6,t:'Événement'},
+  {id:302,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'campagne saisionnière : Entretien et organisation de la maison',m:8,t:'Campagne'},
+  {id:303,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'campagne saisionnière : Entretien et organisation de la maison',m:9,t:'Campagne'},
+  {id:304,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne indispensables: salle de bain et préparation hiver',m:10,t:'Campagne'},
+  {id:305,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne indispensables: salle de bain et préparation hiver',m:11,t:'Campagne'},
+  {id:306,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'EV: Atelier B2C',m:12,t:'Événement'},
+  {id:307,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Post: aid el fitr, femme, recyclage, eau,',m:3,t:'Activation'},
+  {id:308,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Post: Terre, Fete du Travail',m:4,t:'Activation'},
+  {id:309,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'EV: Atelier: Mr.Bricolage Bouskoura + atelier B2C',m:5,t:'Événement'},
+  {id:310,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre sécurité maison',m:6,t:'Offre'},
+  {id:311,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'EV: Atelier B2C',m:11,t:'Événement'},
+  {id:312,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne Festival du Bricolage',m:12,t:'Campagne'}
+];
+let nxtId = 400;
+
+// ── STATE ─────────────────────────────────────────
+const TABS = [
+  {id:'all',    lbl:'Tout',       icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M1 6.5h11M6.5 1a8 8 0 010 11M6.5 1a8 8 0 000 11"/></svg>`},
+  {id:'groupe', lbl:'Groupe',     icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="11" height="7" rx="1"/><path d="M4 5V3.5A2.5 2.5 0 019 3.5V5"/><path d="M6.5 8v1"/></svg>`, opts:()=>Object.keys(GC)},
+  {id:'bu',     lbl:'BU',         icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 10.5V4l5-3 5 3v6.5"/><path d="M4.5 10.5V8h4v2.5"/></svg>`, opts:()=>[...new Set(EVTS.map(e=>e.bu).filter(Boolean))].sort()},
+  {id:'entite', lbl:'Entité',     icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="4" r="2.5"/><path d="M1.5 11.5c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>`, opts:()=>[...new Set(EVTS.map(e=>e.e).filter(Boolean))].sort()},
+  {id:'type',   lbl:'Type',       icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="2"/><path d="M6.5 1v1.5M6.5 10v1.5M1 6.5h1.5M10 6.5h1.5M2.8 2.8l1 1M9.2 9.2l1 1M2.8 10.2l1-1M9.2 3.8l1-1"/></svg>`, opts:()=>Object.keys(TC)},
+];
+let activeTab = 'all';
+let selected  = new Set();
+let zoomedM   = null;
+let hidden    = new Set();
+let sideOpen  = false;
+let editId    = null;
+
+// ── UTILS ─────────────────────────────────────────
+function filtered(){
+  const tab = TABS.find(t=>t.id===activeTab);
+  return EVTS.filter(d=>{
+    if(hidden.has(d.g)) return false;
+    if(!tab.opts || selected.size===0) return true;
+    if(tab.id==='groupe') return selected.has(d.g);
+    if(tab.id==='bu')     return selected.has(d.bu);
+    if(tab.id==='entite') return selected.has(d.e);
+    if(tab.id==='type')   return selected.has(d.t);
+    return true;
+  });
+}
+function optColor(tid,opt){
+  if(tid==='groupe') return GC[opt]||'#888';
+  if(tid==='type')   return TC[opt]?.c||'#888';
+  if(tid==='bu'){    const e=EVTS.find(d=>d.bu===opt); return e?GC[e.g]:'#888'; }
+  if(tid==='entite'){ const e=EVTS.find(d=>d.e===opt); return e?GC[e.g]:'#888'; }
+  return '#888';
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+function toggleSidebar(){
+  sideOpen=!sideOpen;
+  document.getElementById('sidebar').classList.toggle('open',sideOpen);
+  if(sideOpen){
+    const el=document.getElementById('ev-list');
+    if(el) el.dataset.page='0';
+    buildPickers(); buildVis(); buildList();
+  }
+}
+
+// ── SIDEBAR BUILDERS ─────────────────────────────
+function buildPickers(){
+  // Group colors
+  let el=document.getElementById('gc-pickers'); el.innerHTML='';
+  Object.entries(GC).forEach(([g,c])=>{
+    const row=document.createElement('div'); row.className='color-row';
+    row.innerHTML=`<span class="color-label"><div class="color-dot" style="background:${c}"></div>${g}</span>
+      <input type="color" class="color-input" value="${c}" onchange="GC['${g}']=this.value;render();buildPickers()">`;
+    el.appendChild(row);
+  });
+  // Type colors
+  el=document.getElementById('tc-pickers'); el.innerHTML='';
+  Object.entries(TC).forEach(([t,v])=>{
+    const row=document.createElement('div'); row.className='color-row';
+    row.innerHTML=`<span class="color-label"><div class="color-dot" style="background:${v.c}"></div>${t}</span>
+      <input type="color" class="color-input" value="${v.c}" onchange="updateTypeColor('${t}',this.value)">`;
+    el.appendChild(row);
+  });
+}
+function updateTypeColor(t,c){
+  TC[t].c=c;
+  // derive bg and tx from hue
+  TC[t].bg=c+'18'; TC[t].tx=c;
+  render(); buildPickers();
+}
+function buildVis(){
+  const el=document.getElementById('vis-togs'); el.innerHTML='';
+  Object.entries(GC).forEach(([g,c])=>{
+    const on=!hidden.has(g);
+    const row=document.createElement('div'); row.className='tog-row';
+    row.innerHTML=`<span class="tog-label"><div class="color-dot" style="background:${c}"></div>${g}</span>
+      <div class="tog ${on?'on':''}" onclick="toggleGroup('${g}')"></div>`;
+    el.appendChild(row);
+  });
+}
+function toggleGroup(g){
+  hidden.has(g)?hidden.delete(g):hidden.add(g);
+  buildVis(); render();
+}
+function buildList(){
+  const el      = document.getElementById('ev-list');
+  const search  = (document.getElementById('ev-search')?.value||'').toLowerCase().trim();
+  const fGroupe = document.getElementById('ev-f-groupe')?.value||'';
+  const fMois   = parseInt(document.getElementById('ev-f-mois')?.value)||0;
+  const fType   = document.getElementById('ev-f-type')?.value||'';
+
+  let list = EVTS.filter(ev=>{
+    if(fGroupe && ev.g !== fGroupe) return false;
+    if(fMois   && ev.m !== fMois)   return false;
+    if(fType   && ev.t !== fType)   return false;
+    if(search  && !ev.n.toLowerCase().includes(search) &&
+                  !(ev.bu||'').toLowerCase().includes(search) &&
+                  !(ev.e||'').toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  const total    = list.length;
+  const pageSize = 25;
+  const page     = parseInt(el.dataset.page||'0');
+  const maxPage  = Math.max(0, Math.ceil(total/pageSize)-1);
+  const curPage  = Math.min(page, maxPage);
+  const start    = curPage * pageSize;
+  const shown    = list.slice(start, start+pageSize);
+
+  document.getElementById('ev-cnt').textContent =
+    search||fGroupe||fMois||fType
+      ? `(${total} résultats / ${EVTS.length} total)`
+      : `(${EVTS.length} événements)`;
+
+  el.innerHTML = '';
+  el.dataset.page = curPage;
+
+  if(!total){
+    el.innerHTML='<div style="text-align:center;color:var(--sub2);font-size:11px;padding:16px 0">Aucun résultat</div>';
+    return;
+  }
+
+  shown.forEach(ev=>{
+    const tc = TC[ev.t]||TC['Congrès'];
+    const gc = GC[ev.g]||'#888';
+    const item = document.createElement('div');
+    item.className='eli';
+    item.innerHTML=`
+      <div class="eli-dot" style="background:${tc.c}"></div>
+      <div class="eli-info">
+        <div class="eli-name">${ev.n}</div>
+        <div class="eli-meta">
+          <span style="color:${gc};font-weight:600">${ev.g}</span>${ev.bu?' · '+ev.bu:''}${ev.e?' · '+ev.e:''}
+          · ${MN[ev.m-1]} · <span style="color:${tc.c}">${ev.t}</span>
+        </div>
+      </div>
+      <div class="eli-actions">
+        <button class="eli-btn edit" onclick="openEdit(${ev.id})" title="Modifier">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1.5l2 2-6 6H1.5v-2l6-6z"/></svg>
+        </button>
+        <button class="eli-btn" onclick="delEv(${ev.id})" title="Supprimer">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 3h8M4 3V2h3v1M9 3l-.7 6.5a.5.5 0 01-.5.5H3.2a.5.5 0 01-.5-.5L2 3"/></svg>
+        </button>
+      </div>`;
+    el.appendChild(item);
+  });
+
+  if(total > pageSize){
+    const pages = Math.ceil(total/pageSize);
+    const nav   = document.createElement('div');
+    nav.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:8px 2px;margin-top:8px;border-top:1px solid var(--b1)';
+    nav.innerHTML=`
+      <button onclick="listPage(${curPage-1})" ${curPage===0?'disabled':''}
+        style="padding:3px 10px;border:1px solid var(--b1);border-radius:6px;background:var(--white);font-size:10.5px;cursor:pointer;color:var(--sub);opacity:${curPage===0?'.3':'1'}">
+        ← Préc.
+      </button>
+      <span style="font-size:10px;color:var(--sub2)">${start+1}–${Math.min(start+pageSize,total)} sur ${total}</span>
+      <button onclick="listPage(${curPage+1})" ${curPage>=pages-1?'disabled':''}
+        style="padding:3px 10px;border:1px solid var(--b1);border-radius:6px;background:var(--white);font-size:10.5px;cursor:pointer;color:var(--sub);opacity:${curPage>=pages-1?'.3':'1'}">
+        Suiv. →
+      </button>`;
+    el.appendChild(nav);
+  }
+}
+
+function listPage(p){
+  const el = document.getElementById('ev-list');
+  el.dataset.page = Math.max(0, p);
+  buildList();
+}
+
+// ── CRUD ──────────────────────────────────────────
+function addEv(){
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){document.getElementById('f-name').focus();return;}
+  EVTS.push({
+    id:nxtId++,
+    g:document.getElementById('f-g').value,
+    bu:document.getElementById('f-bu').value.trim(),
+    n:name,
+    m:parseInt(document.getElementById('f-m').value),
+    t:document.getElementById('f-t').value
+  });
+  document.getElementById('f-name').value='';
+  document.getElementById('f-bu').value='';
+  buildList(); render();
+  toast('Événement ajouté');
+}
+function delEv(id){
+  EVTS=EVTS.filter(e=>e.id!==id);
+  buildList(); render(); toast('Événement supprimé');
+}
+function openEdit(id){
+  const ev=EVTS.find(e=>e.id===id); if(!ev) return;
+  editId=id;
+  document.getElementById('m-name').value=ev.n;
+  document.getElementById('m-mon').value=ev.m;
+  document.getElementById('m-type').value=ev.t;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); editId=null; }
+function saveEdit(){
+  const ev=EVTS.find(e=>e.id===editId); if(!ev) return;
+  ev.n=document.getElementById('m-name').value.trim()||ev.n;
+  ev.m=parseInt(document.getElementById('m-mon').value);
+  ev.t=document.getElementById('m-type').value;
+  closeModal(); buildList(); render(); toast('Événement mis à jour');
+}
+
+// ── TABS & CHIPS ─────────────────────────────────
+function initTabs(){
+  const bar=document.getElementById('fbar');
+  bar.innerHTML='';
+  TABS.forEach(tab=>{
+    const el=document.createElement('div');
+    el.className='ftab'+(tab.id===activeTab?' on':''); el.id='ft-'+tab.id;
+    el.innerHTML=`<span class='tab-icon'>${tab.icon}</span>${tab.lbl}`;
+    el.onclick=()=>{
+      activeTab=tab.id; selected=new Set();
+      document.querySelectorAll('.ftab').forEach(x=>x.classList.remove('on'));
+      el.classList.add('on'); renderChips(); render();
+    };
+    bar.appendChild(el);
+  });
+}
+function renderChips(){
+  const bar=document.getElementById('cbar'); bar.innerHTML='';
+  const tab=TABS.find(t=>t.id===activeTab);
+  if(!tab.opts){bar.innerHTML='<span class="cbar-hint">Toutes les activités du groupe H&S</span>';return;}
+  const opts=tab.opts();
+  if(!opts.length){bar.innerHTML='<span class="cbar-hint">Aucun élément</span>';return;}
+
+  // For entite: add a small search input first
+  if(tab.id==='entite'){
+    const wrap = document.createElement('div');
+    wrap.style.cssText='display:flex;align-items:center;gap:8px;width:100%;flex-wrap:wrap;';
+    const inp = document.createElement('input');
+    inp.id='chip-search';
+    inp.placeholder='Rechercher une entité…';
+    inp.style.cssText='padding:3px 9px;border:1px solid var(--b1);border-radius:6px;font-family:Inter,sans-serif;font-size:11px;outline:none;background:var(--white);color:var(--text);width:170px;';
+    inp.oninput=()=>renderChips();
+    wrap.appendChild(inp);
+    bar.appendChild(wrap);
+  }
+
+  const search = document.getElementById('chip-search')?.value?.toLowerCase()||'';
+  const filtered_opts = search ? opts.filter(o=>o.toLowerCase().includes(search)) : opts;
+
+  filtered_opts.forEach(opt=>{
+    const c=optColor(tab.id,opt);
+    const chip=document.createElement('div');
+    chip.className='chip '+(selected.has(opt)?'on':'off');
+    chip.textContent=opt;
+    chip.style.cssText=`color:${c};border-color:${c};background:${c}11;`;
+    chip.onclick=()=>{selected.has(opt)?selected.delete(opt):selected.add(opt);renderChips();render();};
+    bar.appendChild(chip);
+  });
+}
+
+// ── RENDER ───────────────────────────────────────
+function render(){
+  const data=filtered();
+  renderKPIs(data); renderDensity(data);
+  renderAxis(data); renderEvents(data);
+  if(zoomedM) renderZoom(data,zoomedM); else document.getElementById('zpanel').className='zpanel';
+  renderLegend();
+}
+
+function renderKPIs(data){
+  const byT={};
+  data.forEach(d=>byT[d.t]=(byT[d.t]||0)+1);
+  const top=Object.entries(byT).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  document.getElementById('kpis').innerHTML=`
+    <div class="kpi"><div class="kpi-v">${data.length}</div><div class="kpi-l">Activités</div></div>
+    ${top.map(([t,n])=>`<div class="kpi"><div class="kpi-v" style="color:${TC[t]?.c||'#888'}">${n}</div><div class="kpi-l">${t}</div></div>`).join('')}`;
+}
+
+function renderDensity(data){
+  const cnts=Array(12).fill(0); data.forEach(d=>cnts[d.m-1]++);
+  const mx=Math.max(...cnts,1);
+  const el=document.getElementById('dcols'); el.innerHTML='';
+  MN.forEach((mon,i)=>{
+    const pct=cnts[i]/mx, isN=(i+1)===NOW, isZ=(i+1)===zoomedM;
+    const sat=Math.round(40+pct*45), lit=Math.round(72-pct*38);
+    const fill=cnts[i]>0?`hsl(220,${sat}%,${lit}%)`:'#e8edf5';
+    const col=document.createElement('div');
+    col.className='dc'+(isZ?' hi':'');
+    col.innerHTML=`
+      <div style="flex:1;display:flex;align-items:flex-end;width:100%">
+        <div class="dc-bar" style="height:${Math.max(pct*100,4)}%;background:${fill};${isN?'outline:2px solid #2a5298;outline-offset:1px':''}"></div>
+      </div>
+      <div class="dc-n" style="${isN?'color:#2a5298':''}">${mon}</div>
+      <div class="dc-c">${cnts[i]||''}</div>`;
+    col.onclick=()=>toggleZoom(i+1);
+    el.appendChild(col);
+  });
+}
+
+function renderAxis(data){
+  const cnts=Array(12).fill(0); data.forEach(d=>cnts[d.m-1]++);
+  const el=document.getElementById('axis'); el.innerHTML='';
+  MN.forEach((mon,i)=>{
+    const m=i+1,isN=m===NOW,isZ=m===zoomedM;
+    const div=document.createElement('div');
+    div.className='am'+(isN?' now':'')+(isZ?' zoom':'');
+    div.innerHTML=`<div class="am-tk" style="height:${isN?16:9}px"></div>
+      <div class="am-n">${mon}</div>
+      ${isN?'<div class="now-pip"></div>':''}
+      <div class="am-c">${cnts[i]?cnts[i]+' act.':''}</div>`;
+    div.onclick=()=>toggleZoom(m);
+    el.appendChild(div);
+  });
+}
+
+function renderEvents(data){
+  const byM=Array.from({length:12},()=>[]);
+  data.forEach(d=>byM[d.m-1].push(d));
+  const CAP=5, grid=document.getElementById('egrid'); grid.innerHTML='';
+  byM.forEach((evts,i)=>{
+    const m=i+1,isN=m===NOW,isZ=m===zoomedM;
+    const col=document.createElement('div');
+    col.className='mc'+(isN?' now':'')+(isZ?' zoom':'');
+    col.onclick=()=>toggleZoom(m);
+    evts.slice(0,CAP).forEach((ev,idx)=>{
+      const tc=TC[ev.t]||TC['Congrès'], gc=GC[ev.g]||'#888';
+      const pill=document.createElement('div');
+      pill.className='ep';
+      pill.style.cssText=`background:${tc.bg};border-color:${tc.c};color:${tc.tx};animation-delay:${idx*.03}s`;
+      pill.textContent=ev.n;
+      pill.addEventListener('mouseenter',e=>showTip(e,ev));
+      pill.addEventListener('mouseleave',hideTip);
+      pill.addEventListener('click',e=>e.stopPropagation());
+      col.appendChild(pill);
+    });
+    if(evts.length>CAP){
+      const m2=document.createElement('div');
+      m2.className='ep-more'; m2.textContent=`+${evts.length-CAP} autres`;
+      col.appendChild(m2);
+    }
+    grid.appendChild(col);
+  });
+}
+
+function toggleZoom(m){ zoomedM=zoomedM===m?null:m; render(); }
+
+function renderZoom(data,m){
+  const evts=data.filter(d=>d.m===m);
+  const panel=document.getElementById('zpanel');
+  if(!evts.length){panel.className='zpanel';return;}
+  panel.className='zpanel open';
+  panel.innerHTML=`<div class="zh">
+    <div class="zt">${MNF[m-1]} 2026 <span class="zs">${evts.length} activité${evts.length>1?'s':''}</span></div>
+    <button class="zbtn" onclick="zoomedM=null;render()"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l7 7M8 1L1 8"/></svg> Fermer</button>
+  </div><div class="zgrid" id="zg"></div>`;
+  const grid=document.getElementById('zg');
+  evts.forEach((ev,idx)=>{
+    const tc=TC[ev.t]||TC['Congrès'], gc=GC[ev.g]||'#888';
+    const card=document.createElement('div');
+    card.className='zc'; card.style.cssText=`border-top-color:${tc.c};animation-delay:${idx*.02}s`;
+    card.innerHTML=`<div class="zc-n">${ev.n}</div>
+      <div class="zc-m">
+        <span class="zb" style="background:${gc}15;color:${gc}">${ev.g}</span>
+        ${ev.bu?`<span class="zb" style="background:#f0f3f8;color:#6b7a99">${ev.bu}</span>`:''}
+        <span class="zb" style="background:${tc.bg};color:${tc.tx}">${ev.t}</span>
+      </div>`;
+    card.addEventListener('mouseenter',e=>showTip(e,ev));
+    card.addEventListener('mouseleave',hideTip);
+    grid.appendChild(card);
+  });
+}
+
+function renderLegend(){
+  document.getElementById('legend').innerHTML=`<span class="leg-t">Types :</span>
+    ${Object.entries(TC).map(([t,v])=>`<div class="leg"><div class="leg-d" style="background:${v.c}"></div>${t}</div>`).join('')}
+    <span style="margin-left:auto;font-size:9.5px;color:var(--sub2)">Cliquer sur un mois pour voir le détail</span>`;
+}
+
+// ── TOOLTIP ──────────────────────────────────────
+const tip=document.getElementById('tip');
+function showTip(e,ev){
+  const gc=GC[ev.g]||'#888', tc=TC[ev.t]||TC['Congrès'];
+  tip.innerHTML=`<div class="tn">${ev.n}</div>
+    <div class="tr">Groupe <span style="color:${gc}">${ev.g}</span></div>
+    ${ev.bu?`<div class="tr">BU <span>${ev.bu}</span></div>`:''}
+    ${ev.e?`<div class="tr">Entité <span>${ev.e}</span></div>`:''}
+    <div class="tr">Mois <span>${MNF[ev.m-1]} 2026</span></div>
+    <div class="tb" style="background:${tc.bg};color:${tc.tx}">${ev.t}</div>`;
+  tip.classList.add('on'); posT(e);
+}
+function hideTip(){ tip.classList.remove('on'); }
+document.addEventListener('mousemove',e=>{ if(tip.classList.contains('on')) posT(e); });
+function posT(e){
+  tip.style.left=Math.min(e.clientX+14,window.innerWidth-240)+'px';
+  tip.style.top=Math.min(e.clientY-8,window.innerHeight-170)+'px';
+}
+document.getElementById('modal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+
+// ── XLSX IMPORT ──────────────────────────────────
+function importXLSX(input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = ''; // reset so same file can be re-imported
+
+  // Show overlay loading
+  document.getElementById('import-overlay').classList.add('open');
+  document.getElementById('import-spinner').style.display = 'block';
+  document.getElementById('import-title').textContent = 'Lecture du fichier…';
+  document.getElementById('import-sub').textContent = 'Analyse de la feuille "Planning Groupe 2026"';
+  document.getElementById('import-stats').style.display = 'none';
+  document.getElementById('import-err').textContent = '';
+  document.getElementById('import-close').style.display = 'none';
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const wb = XLSX.read(e.target.result, {type:'array'});
+
+      // Find planning sheet
+      const sheetName = wb.SheetNames.find(s =>
+        s.toLowerCase().includes('planning groupe') || s.toLowerCase().includes('planning 2026')
+      );
+      if (!sheetName) throw new Error('Feuille "Planning Groupe 2026" introuvable.\nFeuilles disponibles : ' + wb.SheetNames.join(', '));
+
+      const ws = wb.Sheets[sheetName];
+      const rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:null});
+
+      // Validate header row
+      const header = (rows[0] || []).map(v => v ? String(v).trim() : '');
+      const hasMonths = ['Jan','Fév','Fev','Mar','Avr','Mai','Juin'].some(m =>
+        header.some(h => h && h.toLowerCase().includes(m.toLowerCase()))
+      );
+      if (!hasMonths) throw new Error('Format non reconnu : colonnes de mois introuvables.\nVérifiez que la ligne 1 contient Jan, Fév, Mar…');
+
+      // Find month column indices (cols 4-15 by default, but detect from header)
+      let mOffset = 4;
+      for (let i = 0; i < header.length; i++) {
+        if (header[i] && (header[i].toLowerCase().startsWith('jan'))) {
+          mOffset = i; break;
+        }
+      }
+
+      const STOP_WORDS = ['congrès','affichage','campagne','lancement','tr:','ev: evenements',
+                          'offres','post prévu','activations','légende','legend'];
+
+      function getType(name) {
+        const n = name.trim();
+        const low = n.toLowerCase();
+        if (low.startsWith('ev:') || ['inauguration','roadshow','spectacle','jazzablanca',
+            'nostalgia','golf','padel','icebike','caftan','trophee','semaine du cheval',
+            'pop up','soirée lancement','ouverture','bollywood','btob','rose royal',
+            'sherlock','belle et','capone','satanas','7 cup','iscae','porteur',
+            "j'aimerais",'andalussyat','santa','carmen','8m2','atelier b2c','rassemblement',
+            'remise de diplome','remise diplome'].some(k => low.includes(k))) return 'Événement';
+        if (['congrès','congres','workshop','forum','journée','journee','logis med','logiterre',
+             'gitex','whx','cphi','officine pharma','medica trade','pharmexpo',
+             'smnc','smacot','wca2026','ambm','smalmi','ambrg','smamm','smb ','jpfsa',
+             'seenergy','grain & milling','alhokama','smo','amcar','amoc','cardio sud',
+             'afomek','fon ','apei','smc','amicale','amu','codepca','para expo',
+             'jdm','adepra','smd ','beauty plus','acor','acop','aopr','smorl','srmgo',
+             'agp','agsmf','afmapath','al amal','jiop','agon','amef','jpit','acp ',
+             'asmpr','smedian','smsl','smcc','antlm','génétique','pathologie digitale',
+             'fertilité','hémato','apa ','sigma','heart','ammf','aes','samir-ophta',
+             'kebbaj','somachir','somipev','reso ','assed','ehealth','salons btob',
+             'maroc hotel'].some(k => low.includes(k))) return 'Congrès';
+        if (low.startsWith('tr:') || low.startsWith('tr :')) return 'Événement';
+        if (low.startsWith('post') && low.length < 80) return 'Activation';
+        if (low.startsWith('campagne') || low.includes('campagne ')) return 'Campagne';
+        if (low.startsWith('lancement') || low.includes('lancement ')) return 'Lancement';
+        if (low.startsWith('affichage')) return 'Affichage';
+        if (low.startsWith('offre') || low.includes('offre ')) return 'Offre';
+        if (low.startsWith('activation')) return 'Activation';
+        return 'Autre';
+      }
+
+      function cleanName(name) {
+        return name.trim()
+          .replace(/^(EV:|ev:|congrès\s*:|congrès\s|congres\s*:)/i, '')
+          .replace(/\s+/g, ' ').trim().slice(0, 85);
+      }
+
+      const newEvents = [];
+      let newId = 1;
+      let curG = null, curBU = null, curE = null;
+
+      for (let ri = 1; ri < rows.length; ri++) {
+        const row = rows[ri];
+        if (!row || !row.some(v => v !== null)) continue;
+
+        const g   = row[0] ? String(row[0]).trim() : null;
+        const bu  = row[1] ? String(row[1]).trim() : null;
+        const ent = row[2] ? String(row[2]).trim() : null;
+        const fil = row[3] ? String(row[3]).trim() : null;
+
+        // Skip legend rows
+        if (g && STOP_WORDS.some(s => g.toLowerCase().startsWith(s))) continue;
+
+        // Update hierarchy
+        if (g) { curG = g; if (!bu) curBU = null; if (!ent) curE = null; }
+        if (bu)  curBU = bu;
+        if (ent) curE  = ent;
+        const fullE = [curE, fil].filter(Boolean).join(' — ');
+
+        // Parse 12 month columns
+        for (let mi = 0; mi < 12; mi++) {
+          const val = row[mOffset + mi];
+          if (val === null || val === undefined) continue;
+          const raw = String(val).replace(/\n/g, ' ').trim();
+          if (!raw) continue;
+          newEvents.push({
+            id: newId++,
+            g:  curG || 'H&S Group',
+            bu: curBU || '',
+            e:  fullE,
+            n:  cleanName(raw),
+            m:  mi + 1,
+            t:  getType(raw)
+          });
+        }
+      }
+
+      if (newEvents.length === 0) throw new Error('Aucun événement trouvé.\nVérifiez que le fichier n\'est pas vide.');
+
+      // Replace dataset
+      EVTS = newEvents;
+      nxtId = newId + 1;
+
+      // Reset state
+      activeTab = 'all';
+      selected  = new Set();
+      zoomedM   = null;
+      hidden    = new Set();
+
+      // Stats by type
+      const byT = {};
+      newEvents.forEach(e => byT[e.t] = (byT[e.t]||0)+1);
+      const statsHtml = Object.entries(byT).sort((a,b)=>b[1]-a[1]).map(([t,n]) =>
+        `<div class="import-stat"><div class="import-stat-v">${n}</div><div class="import-stat-l">${t}</div></div>`
+      ).join('');
+
+      // Show success
+      document.getElementById('import-spinner').style.display = 'none';
+      document.getElementById('import-title').innerHTML = '<span class="import-ok">✓</span> Import réussi';
+      document.getElementById('import-sub').textContent  = `${newEvents.length} activités chargées depuis "${sheetName}"`;
+      document.getElementById('import-stats').innerHTML  = statsHtml;
+      document.getElementById('import-stats').style.display = 'flex';
+      document.getElementById('import-close').style.display = 'block';
+
+      // Re-render everything
+      document.getElementById('fbar').innerHTML = '';
+      activeTab='all'; selected=new Set(); zoomedM=null;
+      initTabs();
+      renderChips();
+      if(sideOpen){
+    const el=document.getElementById('ev-list');
+    if(el) el.dataset.page='0';
+    buildPickers(); buildVis(); buildList();
+  }
+      render();
+
+    } catch(err) {
+      document.getElementById('import-spinner').style.display = 'none';
+      document.getElementById('import-title').textContent = 'Erreur d\'import';
+      document.getElementById('import-sub').textContent   = '';
+      document.getElementById('import-err').textContent   = err.message;
+      document.getElementById('import-close').style.display = 'block';
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function closeImport() {
+  document.getElementById('import-overlay').classList.remove('open');
+}
+
+// ── EXPORT XLSX ──────────────────────────────────
+function exportXLSX() {
+  const wb = XLSX.utils.book_new();
+
+  // ── Planning sheet ──
+  const MONTHS = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc'];
+  const header = ['Groupe','BU','Entité','Filiales',...MONTHS];
+
+  // Group events by row key (g+bu+e) and month
+  const rowMap = new Map();
+  EVTS.forEach(ev => {
+    const key = `${ev.g}||${ev.bu}||${ev.e}`;
+    if (!rowMap.has(key)) rowMap.set(key, {g:ev.g, bu:ev.bu, e:ev.e, months: Array(12).fill('')});
+    const row = rowMap.get(key);
+    const existing = row.months[ev.m - 1];
+    row.months[ev.m - 1] = existing ? existing + ' / ' + ev.n : ev.n;
+  });
+
+  const aoa = [header];
+  rowMap.forEach(row => {
+    aoa.push([row.g, row.bu, row.e, '', ...row.months]);
+  });
+
+  // Add empty rows for future entries
+  for (let i = 0; i < 10; i++) aoa.push(Array(16).fill(''));
+
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+
+  // Column widths
+  ws['!cols'] = [
+    {wch:15},{wch:13},{wch:14},{wch:12},
+    ...Array(12).fill({wch:24})
+  ];
+
+  XLSX.utils.book_append_sheet(wb, ws, 'Planning Groupe 2026');
+
+  // ── Legend sheet ──
+  const legData = [
+    ["GUIDE D'UTILISATION — H&S Group Planning 2026"],
+    [],
+    ["COLONNES", "Description"],
+    ["A — Groupe",   "H&S Group / Dislog Group / LVE Group / One Retail"],
+    ["B — BU",       "Healthcare, Food, Hygiène, Restauration, Beauty, Lifestyle, Bricolage…"],
+    ["C — Entité",   "DMD, ERAMEDIC, MEGAFLEX, Steripharma, KPH, Venezia, Mr.Bricolage…"],
+    ["D — Filiales", "Sous-entité si applicable (Kaline, SCOMEDICA…)"],
+    ["E→P — Mois",   "Une activité par cellule. Utiliser les préfixes définis ci-dessous."],
+    [],
+    ["PRÉFIXES","Exemples"],
+    ["Congrès:",   "Congrès: WHX Dubai  /  Congrès CPHI  /  Congrès GITEX"],
+    ["EV:",        "EV: Jazzablanca  /  EV: Caftan Week  /  EV: Satanas & Mordicus"],
+    ["Campagne",   "Campagne ISO  /  Campagne Chauffage  /  Campagne Neovis"],
+    ["Lancement",  "Lancement site web  /  Lancement Rebranding"],
+    ["Affichage",  "Affichage EDITA  /  Affichage ACE Mega Brand"],
+    ["Offre",      "Offre Ramadan  /  Offre Saint Valentin  /  Offre Solde Chauffage"],
+    ["Activation", "Activation Glovo  /  Activation Icebike"],
+    ["TR:",        "TR: Diabalex Meknès  /  TR: URO Flonox  (Table Ronde)"],
+    ["Post",       "Post journée de la femme  /  Post Ramadan  (Réseaux sociaux)"],
+    [],
+    ["RÈGLES"],
+    ["• Hiérarchie Groupe/BU/Entité héritée vers le bas — laisser vide si identique à la ligne précédente."],
+    ["• Une cellule mois = une activité. Plusieurs activités le même mois → ajouter une ligne."],
+    ["• Ne pas modifier les noms de colonnes ni le nom de la feuille."],
+    ["• Importer via le bouton 'Importer Excel' dans le dashboard pour mettre à jour."],
+  ];
+  const wsLeg = XLSX.utils.aoa_to_sheet(legData);
+  wsLeg['!cols'] = [{wch:18},{wch:70}];
+  XLSX.utils.book_append_sheet(wb, wsLeg, 'Légende & Guide');
+
+  // Download
+  const date = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, `HS_Planning_2026_${date}.xlsx`);
+  toast('Export Excel téléchargé');
+}
+
+initTabs(); renderChips(); render();
+</script>
+</body>
+</html>
