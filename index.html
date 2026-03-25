@@ -705,25 +705,29 @@
       font-size: 12px; color: var(--ink-2);
       display: flex; align-items: flex-start; gap: 6px;
     }
-    .footer {
-  margin-top: 80px;
-  padding: 30px 20px;
-  text-align: center;
-  border-top: 1px solid #e5dfd6;
-}
-.footer-label {
-  display:block;
-  font-size:11px;
-  color:#a8a094;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  margin-bottom:6px;
-}
-.footer-authors {
-  font-size:14px;
-  color:#2d2d2d;
-  font-weight:500;
-}
+    
+    .site-signature{
+      width:100%;
+      margin-top:32px;
+      padding:18px 24px 24px;
+      text-align:center;
+      border-top:1px solid #e7dfd4;
+      background:transparent;
+    }
+    .site-signature-label{
+      display:block;
+      margin-bottom:4px;
+      font-size:10px;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:#a59a8a;
+    }
+    .site-signature-authors{
+      font-size:15px;
+      font-weight:500;
+      color:#2f2a24;
+    }
+    
     .kpi-box::before { content: '•'; color: var(--ink-2); flex-shrink: 0; font-size: 11px; margin-top: 1px; }
     .horizon-badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -1203,10 +1207,6 @@
       </div>
     </div>
   </main>
-  <footer class="footer">
-  <span class="footer-label">Plateforme conçue par</span>
-  <span class="footer-authors">Adib & Elias</span>
-</footer>
 </div>
  
 <!-- DETAIL OVERLAY & PANEL -->
@@ -2065,6 +2065,10 @@ document.addEventListener('error', function(e){
 
 applyFilters();
 </script>
+  <footer class="site-signature">
+  <span class="site-signature-label">Plateforme & Contenu conçus par</span>
+  <span class="site-signature-authors">Adib & Elias</span>
+</footer>
 </body>
 </html>
  
