@@ -310,6 +310,118 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
 #tip .tr{color:rgba(200,215,240,.65);margin-top:2px}
 #tip .tr span{color:#e8eef8}
 #tip .tb{display:inline-block;margin-top:6px;padding:2px 7px;border-radius:3px;font-size:9.5px;font-weight:600}
+
+/* ══ RESPONSIVE ══════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* body ne bloque plus le scroll */
+  body { height:auto; overflow:auto; }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    height:auto; padding:10px 14px;
+    flex-wrap:wrap; gap:10px;
+  }
+  .logo { height:28px; }
+  .topbar-right { gap:8px; flex-wrap:wrap; width:100%; }
+  .kpis { gap:12px; flex-wrap:wrap; }
+  .kpi-v { font-size:15px; }
+  .btn-import, .btn-edit {
+    padding:5px 10px; font-size:11px;
+    flex:1; justify-content:center;
+  }
+
+  /* ── FILTER TABS ── */
+  .fbar { padding:0 10px; }
+  .ftab { padding:0 10px; height:38px; font-size:11px; }
+
+  /* ── CHIP BAR ── */
+  .cbar { padding:6px 10px; }
+  .chip { padding:3px 9px; font-size:10px; }
+
+  /* ── LAYOUT: sidebar devient drawer par-dessus ── */
+  .body { display:block; overflow:visible; }
+
+  .sidebar {
+    position:fixed; top:0; left:0; bottom:0;
+    z-index:400; width:0; overflow:hidden;
+    transition:width .25s ease;
+    box-shadow:none;
+  }
+  .sidebar.open {
+    width:88vw; max-width:320px;
+    box-shadow:4px 0 24px rgba(0,0,0,.18);
+  }
+  .sb-inner { width:88vw; max-width:320px; }
+
+  /* overlay derrière la sidebar mobile */
+  .mob-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(26,42,74,.4); z-index:399;
+  }
+  .mob-overlay.on { display:block; }
+
+  /* ── ROADMAP AREA ── */
+  .rmap-area { display:block; }
+  .rmap-scroll {
+    flex:none; overflow-y:visible;
+    padding:12px 10px 40px;
+  }
+
+  /* ── DENSITY ── */
+  .density { padding:12px 10px; margin-bottom:12px; }
+  .d-cols { height:50px; gap:3px; }
+  .dc-n { font-size:8px; }
+  .dc-c { font-size:8.5px; }
+
+  /* ── ROADMAP CARD : scroll horizontal ── */
+  .rcard { border-radius:8px; overflow:hidden; }
+
+  /* wrapper pour scroll horizontal */
+  .rcard-scroll-wrap {
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  .rcard-scroll-wrap::-webkit-scrollbar { height:3px; }
+  .rcard-scroll-wrap::-webkit-scrollbar-thumb { background:var(--b2); border-radius:2px; }
+
+  /* axis + egrid : largeur fixe, scroll horizontal */
+  .axis, .egrid {
+    grid-template-columns: repeat(12, 130px);
+    min-width: 1560px;
+  }
+  .am { padding:8px 4px 6px; }
+  .am-n { font-size:9px; }
+  .am-c { font-size:8px; }
+
+  .mc { padding:5px 4px; min-height:40px; }
+  .ep { font-size:9px; padding:2px 5px; }
+
+  /* ── ZOOM PANEL ── */
+  .zpanel { padding:14px 12px; }
+  .zgrid { gap:8px; }
+  .zc { min-width:140px; max-width:180px; padding:9px 10px; }
+  .zc-n { font-size:11px; }
+
+  /* ── LEGEND ── */
+  .legend { padding:8px 10px; gap:8px; }
+  .leg { font-size:10px; }
+  .leg-title { font-size:9px; }
+
+  /* ── MODAL ── */
+  .modal { width:92vw; padding:18px 16px; }
+
+  /* ── IMPORT BOX ── */
+  .import-box { width:90vw; padding:20px 16px; }
+  .import-stats { gap:8px; }
+  .import-stat { padding:6px 10px; }
+  /* axis non-sticky à l'intérieur du scroll horizontal mobile */
+  .rcard-scroll-wrap .axis { position:static; }
+
+}
+
+@media (max-width: 400px) {
+  .axis, .egrid { grid-template-columns: repeat(12, 110px); min-width:1320px; }
+}
 </style>
 </head>
 <body>
@@ -337,6 +449,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
 <div class="cbar" id="cbar"></div>
 
 <!-- BODY -->
+<div class="mob-overlay" id="mob-overlay" onclick="toggleSidebar()"></div>
 <div class="body">
 
   <!-- SIDEBAR -->
@@ -357,7 +470,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
               <option>H&S Group</option><option>Dislog Group</option><option>LVE Group</option><option>One Retail</option>
             </select>
           </div>
-          <div class="fl"><label>BU / Entité (optionnel)</label><input id="f-bu" class="fi" placeholder="Ex: Healthcare"></div>
+          <div class="fl"><label>BU (optionnel)</label><input id="f-bu" class="fi" placeholder="Ex: Healthcare"></div>
+          <div class="fl"><label>Entité (optionnel)</label><input id="f-e" class="fi" placeholder="Ex: Steripharma"></div>
           <div class="fl"><label>Mois</label>
             <select id="f-m" class="fs">
               <option value="1">Janvier</option><option value="2">Février</option><option value="3">Mars</option>
@@ -436,8 +550,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
     <div class="rmap-scroll">
       <div class="density"><div class="density-lbl">Densité mensuelle — 2026</div><div class="d-cols" id="dcols"></div></div>
       <div class="rcard">
-        <div class="axis"  id="axis"></div>
-        <div class="egrid" id="egrid"></div>
+        <div class="rcard-scroll-wrap">
+          <div class="axis"  id="axis"></div>
+          <div class="egrid" id="egrid"></div>
+        </div>
         <div class="zpanel" id="zpanel"></div>
         <div class="legend" id="legend"></div>
       </div>
@@ -450,6 +566,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
   <div class="modal">
     <div class="modal-t">Modifier l'événement</div>
     <div class="fl"><label>Nom</label><input id="m-name" class="fi"></div>
+    <div class="fl"><label>Groupe</label>
+      <select id="m-g" class="fs">
+        <option>H&S Group</option><option>Dislog Group</option><option>LVE Group</option><option>One Retail</option>
+      </select>
+    </div>
+    <div class="fl"><label>BU (optionnel)</label><input id="m-bu" class="fi"></div>
+    <div class="fl"><label>Entité (optionnel)</label><input id="m-e" class="fi"></div>
     <div class="fl"><label>Mois</label>
       <select id="m-mon" class="fs">
         <option value="1">Janvier</option><option value="2">Février</option><option value="3">Mars</option>
@@ -465,6 +588,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
       </select>
     </div>
     <div class="modal-actions">
+      <button class="modal-btn danger" onclick="deleteCurrentEvent()">Supprimer</button>
       <button class="modal-btn" onclick="closeModal()">Annuler</button>
       <button class="modal-btn primary" onclick="saveEdit()">Enregistrer</button>
     </div>
@@ -760,8 +884,8 @@ let EVTS = [
   {id:253,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Activation fleuriste',m:2,t:'Activation'},
   {id:254,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Post journalier thème: Préparez votre peau pour un mois serein week 4',m:2,t:'Activation'},
   {id:255,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Activation : pressing',m:3,t:'Activation'},
-  {id:256,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Affichage',m:2,t:'Affichage'},
-  {id:257,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Affichage',m:3,t:'Affichage'},
+  {id:256,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Affichage BFY',m:2,t:'Affichage'},
+  {id:257,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Affichage BFY',m:3,t:'Affichage'},
   {id:258,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Offre lancement : 20% sur tout le site',m:1,t:'Offre'},
   {id:259,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Offre pré-ramadan : packs routine ramadan',m:2,t:'Offre'},
   {id:260,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne saisionnère renover à petit prix',m:1,t:'Campagne'},
@@ -816,16 +940,7 @@ let EVTS = [
   {id:309,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'EV: Atelier: Mr.Bricolage Bouskoura + atelier B2C',m:5,t:'Événement'},
   {id:310,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Offre sécurité maison',m:6,t:'Offre'},
   {id:311,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'EV: Atelier B2C',m:11,t:'Événement'},
-  {id:312,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne Festival du Bricolage',m:12,t:'Campagne'},
-  {id:313,g:'Dislog Group',bu:'',e:'',n:'Rallye Nour',m:4,t:'Événement'},
-  {id:314,g:'Dislog Group',bu:'',e:'',n:'Campagne Raison d`être',m:5,t:'Campagne'},
-  {id:315,g:'Dislog Group',bu:'',e:'',n:'Campagne Puissance du groupe',m:5,t:'Campagne'},
-  {id:316,g:'Dislog Group',bu:'',e:'',n:'Affichage Trophée Hassan ll',m:5,t:'Affichage'},
-  {id:317,g:'H&S Group',bu:'',e:'',n:'Hatim Ammor',m:3,t:'Événement'},
-  {id:318,g:'One Retail',bu:'',e:'',n:'Salon de la franchise',m:4,t:'Congrès'},
-  {id:319,g:'Dislog Group',bu:'',e:'',n:'Marocotel',m:4,t:'Congrès'},
-  {id:320,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Affichage',m:4,t:'Affichage'},
-  {id:321,g:'One Retail',bu:'Beauty',e:'Beauty For You',n:'Ftour BFY',m:3,t:'Événement'}
+  {id:312,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne Festival du Bricolage',m:12,t:'Campagne'}
 ];
 let nxtId = 400;
 
@@ -872,6 +987,7 @@ function toast(msg){
 function toggleSidebar(){
   sideOpen=!sideOpen;
   document.getElementById('sidebar').classList.toggle('open',sideOpen);
+  document.getElementById('mob-overlay').classList.toggle('on',sideOpen);
   if(sideOpen){
     const el=document.getElementById('ev-list');
     if(el) el.dataset.page='0';
@@ -1006,41 +1122,120 @@ function listPage(p){
 }
 
 // ── CRUD ──────────────────────────────────────────
-function addEv(){
+async function ensureAdminKey(){
+  let key = sessionStorage.getItem('hs_admin_key') || '';
+  if(key) return key;
+  key = prompt("Mot de passe admin pour modifier le planning :") || '';
+  if(!key) throw new Error('Mot de passe admin requis');
+  sessionStorage.setItem('hs_admin_key', key);
+  return key;
+}
+
+async function apiWrite(endpoint, payload){
+  const adminKey = await ensureAdminKey();
+  const res = await fetch(`/.netlify/functions/${endpoint}`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({...payload, adminKey})
+  });
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.error || data.details || `Erreur ${endpoint}`);
+  return data;
+}
+
+async function loadEventsFromRepo(opts={}){
+  const silent = !!opts.silent;
+  try{
+    const res = await fetch(`./events.json?t=${Date.now()}`, {cache:'no-store'});
+    if(!res.ok) throw new Error('events.json introuvable');
+    const data = await res.json();
+    EVTS = Array.isArray(data.events) ? data.events : [];
+    nxtId = EVTS.reduce((mx,e)=>Math.max(mx, Number(e.id)||0), 0) + 1;
+    if(sideOpen){
+      const el=document.getElementById('ev-list');
+      if(el) el.dataset.page='0';
+      buildList();
+    }
+    initTabs(); renderChips(); render();
+    const cnt=document.getElementById('ev-cnt');
+    if(cnt) cnt.textContent = `${EVTS.length}`;
+  }catch(err){
+    console.error(err);
+    if(!silent) toast('Erreur chargement events.json');
+  }
+}
+
+async function addEv(){
   const name=document.getElementById('f-name').value.trim();
   if(!name){document.getElementById('f-name').focus();return;}
-  EVTS.push({
-    id:nxtId++,
-    g:document.getElementById('f-g').value,
-    bu:document.getElementById('f-bu').value.trim(),
-    n:name,
-    m:parseInt(document.getElementById('f-m').value),
-    t:document.getElementById('f-t').value
-  });
-  document.getElementById('f-name').value='';
-  document.getElementById('f-bu').value='';
-  buildList(); render();
-  toast('Événement ajouté');
+  try{
+    await apiWrite('create-event', {
+      newEvent:{
+        id:nxtId,
+        g:document.getElementById('f-g').value,
+        bu:document.getElementById('f-bu').value.trim(),
+        e:document.getElementById('f-e').value.trim(),
+        n:name,
+        m:parseInt(document.getElementById('f-m').value),
+        t:document.getElementById('f-t').value
+      }
+    });
+    document.getElementById('f-name').value='';
+    document.getElementById('f-bu').value='';
+    document.getElementById('f-e').value='';
+    await loadEventsFromRepo({silent:true});
+    toast('Événement ajouté');
+  }catch(err){
+    alert(err.message || 'Erreur lors de la création');
+  }
 }
-function delEv(id){
-  EVTS=EVTS.filter(e=>e.id!==id);
-  buildList(); render(); toast('Événement supprimé');
+async function delEv(id){
+  try{
+    if(!confirm('Supprimer cet événement ?')) return;
+    await apiWrite('delete-event', {id});
+    await loadEventsFromRepo({silent:true});
+    toast('Événement supprimé');
+  }catch(err){
+    alert(err.message || 'Erreur lors de la suppression');
+  }
 }
 function openEdit(id){
   const ev=EVTS.find(e=>e.id===id); if(!ev) return;
   editId=id;
-  document.getElementById('m-name').value=ev.n;
+  document.getElementById('m-name').value=ev.n || '';
+  document.getElementById('m-g').value=ev.g || 'H&S Group';
+  document.getElementById('m-bu').value=ev.bu || '';
+  document.getElementById('m-e').value=ev.e || '';
   document.getElementById('m-mon').value=ev.m;
   document.getElementById('m-type').value=ev.t;
   document.getElementById('modal').classList.add('open');
 }
 function closeModal(){ document.getElementById('modal').classList.remove('open'); editId=null; }
-function saveEdit(){
+async function deleteCurrentEvent(){
+  if(editId==null) return;
+  await delEv(editId);
+  closeModal();
+}
+async function saveEdit(){
   const ev=EVTS.find(e=>e.id===editId); if(!ev) return;
-  ev.n=document.getElementById('m-name').value.trim()||ev.n;
-  ev.m=parseInt(document.getElementById('m-mon').value);
-  ev.t=document.getElementById('m-type').value;
-  closeModal(); buildList(); render(); toast('Événement mis à jour');
+  try{
+    await apiWrite('update-event', {
+      updatedEvent:{
+        ...ev,
+        n:document.getElementById('m-name').value.trim()||ev.n,
+        g:document.getElementById('m-g').value,
+        bu:document.getElementById('m-bu').value.trim(),
+        e:document.getElementById('m-e').value.trim(),
+        m:parseInt(document.getElementById('m-mon').value),
+        t:document.getElementById('m-type').value
+      }
+    });
+    closeModal();
+    await loadEventsFromRepo({silent:true});
+    toast('Événement mis à jour');
+  }catch(err){
+    alert(err.message || 'Erreur lors de la modification');
+  }
 }
 
 // ── TABS & CHIPS ─────────────────────────────────
@@ -1482,7 +1677,8 @@ function exportXLSX() {
   toast('Export Excel téléchargé');
 }
 
-initTabs(); renderChips(); render();
+loadEventsFromRepo({silent:true});
+setInterval(()=>loadEventsFromRepo({silent:true}), 30000);
 </script>
 </body>
 </html>
