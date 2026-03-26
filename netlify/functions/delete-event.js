@@ -74,11 +74,11 @@ exports.handler = async (event) => {
 
     const payload = JSON.parse(event.body || "{}");
     const id = Number(payload.id);
-    if (!id) return jsonResponse(400, { ok: false, error: "ID événement manquant." });
+    if (!id) return Response(400, { ok: false, error: "ID événement manquant." });
 
     const { sha, content } = await getGithubFile(config);
     const before = content.events.length;
-    content.events = content.events.filter((item) => Number(item.id) !== id);
+    json.events = json.events.filter(e => String(e.id) !== String(payload.id));
 
     if (content.events.length === before) {
       return jsonResponse(404, { ok: false, error: "Événement introuvable." });
