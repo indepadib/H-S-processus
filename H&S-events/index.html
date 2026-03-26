@@ -1175,16 +1175,13 @@ async function addEv(){
   if(!name){document.getElementById('f-name').focus();return;}
   try{
     await apiWrite('create-event', {
-      newEvent:{
-        id:nxtId,
-        g:document.getElementById('f-g').value,
-        bu:document.getElementById('f-bu').value.trim(),
-        e:document.getElementById('f-e').value.trim(),
-        n:name,
-        m:parseInt(document.getElementById('f-m').value),
-        t:document.getElementById('f-t').value
-      }
-    });
+  g: document.getElementById('f-g').value,
+  bu: document.getElementById('f-bu').value.trim(),
+  e: document.getElementById('f-e').value.trim(),
+  n: name,
+  m: parseInt(document.getElementById('f-m').value),
+  t: document.getElementById('f-t').value
+});
     document.getElementById('f-name').value='';
     document.getElementById('f-bu').value='';
     document.getElementById('f-e').value='';
@@ -1225,16 +1222,14 @@ async function saveEdit(){
   const ev=EVTS.find(e=>e.id===editId); if(!ev) return;
   try{
     await apiWrite('update-event', {
-      updatedEvent:{
-        ...ev,
-        n:document.getElementById('m-name').value.trim()||ev.n,
-        g:document.getElementById('m-g').value,
-        bu:document.getElementById('m-bu').value.trim(),
-        e:document.getElementById('m-e').value.trim(),
-        m:parseInt(document.getElementById('m-mon').value),
-        t:document.getElementById('m-type').value
-      }
-    });
+  id: ev.id,
+  g: document.getElementById('m-g').value,
+  bu: document.getElementById('m-bu').value.trim(),
+  e: document.getElementById('m-e').value.trim(),
+  n: document.getElementById('m-name').value.trim() || ev.n,
+  m: parseInt(document.getElementById('m-mon').value),
+  t: document.getElementById('m-type').value
+});
     closeModal();
     await loadEventsFromRepo({silent:true});
     toast('Événement mis à jour');
