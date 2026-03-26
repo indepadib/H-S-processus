@@ -1,0 +1,4698 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plateforme Processus – Achats / Retail / Finance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* ── PALETTE WARM EDITORIAL ── */
+      --bg:          #f5f0e8;
+      --bg-2:        #ede8df;
+      --surface:     #faf7f2;
+      --surface-2:   #f0ebe1;
+      --surface-3:   #e8e2d8;
+      --border:      rgba(80,60,30,0.10);
+      --border-md:   rgba(80,60,30,0.18);
+      --border-dark: rgba(80,60,30,0.28);
+
+      --ink:         #1c1710;
+      --ink-2:       #3d3425;
+      --muted:       #7a6e5e;
+      --muted-2:     #9b8f7d;
+
+      /* accent: cuivre chaud */
+      --accent:      #b5571a;
+      --accent-2:    #d4762b;
+      --accent-pale: rgba(181,87,26,0.08);
+      --accent-mid:  rgba(181,87,26,0.16);
+
+      /* status colors */
+      --emerald:     #2d6a4f;
+      --emerald-bg:  rgba(45,106,79,0.09);
+      --amber:       #92610a;
+      --amber-bg:    rgba(146,97,10,0.10);
+      --rouge:       #9b2335;
+      --rouge-bg:    rgba(155,35,53,0.09);
+      --indigo:      #3d4fa0;
+      --indigo-bg:   rgba(61,79,160,0.09);
+      --slate:       #4a5568;
+      --slate-bg:    rgba(74,85,104,0.09);
+
+      /* node palette */
+      --node-catman:      rgba(61,79,160,0.07);
+      --node-catman-b:    rgba(61,79,160,0.30);
+      --node-buyer:       rgba(146,97,10,0.08);
+      --node-buyer-b:     rgba(146,97,10,0.32);
+      --node-validation:  rgba(45,106,79,0.08);
+      --node-validation-b:rgba(45,106,79,0.32);
+      --node-system:      rgba(181,87,26,0.07);
+      --node-system-b:    rgba(181,87,26,0.28);
+      --node-risk:        rgba(155,35,53,0.07);
+      --node-risk-b:      rgba(155,35,53,0.30);
+      --node-decision:    rgba(146,97,10,0.06);
+      --node-decision-b:  rgba(146,97,10,0.35);
+
+      --radius:    14px;
+      --radius-sm: 8px;
+      --shadow:    0 2px 12px rgba(60,40,10,0.08), 0 1px 3px rgba(60,40,10,0.06);
+      --shadow-md: 0 6px 24px rgba(60,40,10,0.10), 0 2px 6px rgba(60,40,10,0.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+
+    button, input, select { font: inherit; }
+
+    /* ══ LAYOUT ══ */
+    .app {
+      display: grid;
+      grid-template-columns: 272px 1fr;
+      grid-template-rows: 58px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ══ TOPNAV ══ */
+    .topnav {
+      grid-column: 1 / -1;
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 22px;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: #faf7f2;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: #f5f0e8;
+      line-height: 1.1;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: rgba(245,240,232,0.45);
+      margin-top: 2px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .topnav-divider {
+      width: 1px;
+      height: 24px;
+      background: rgba(245,240,232,0.15);
+      flex-shrink: 0;
+    }
+
+    .topnav-search {
+      flex: 1;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .topnav-search input {
+      width: 100%;
+      background: rgba(245,240,232,0.08);
+      border: 1px solid rgba(245,240,232,0.14);
+      color: #f5f0e8;
+      padding: 8px 12px 8px 34px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .topnav-search input:focus {
+      background: rgba(245,240,232,0.12);
+      border-color: rgba(181,87,26,0.6);
+    }
+
+    .topnav-search input::placeholder { color: rgba(245,240,232,0.35); }
+
+    .topnav-search .srch-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(245,240,232,0.35);
+      pointer-events: none;
+    }
+
+    .topnav-stats {
+      display: flex;
+      gap: 6px;
+      margin-left: auto;
+    }
+
+    .nav-stat {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border-radius: 6px;
+      border: 1px solid rgba(245,240,232,0.12);
+      font-size: 12px;
+      color: rgba(245,240,232,0.55);
+    }
+
+    .nav-stat strong { color: #f5f0e8; font-weight: 600; }
+
+    .nav-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    .version-tag {
+      padding: 4px 10px;
+      background: rgba(181,87,26,0.25);
+      border: 1px solid rgba(181,87,26,0.4);
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #d4762b;
+      letter-spacing: 0.04em;
+    }
+
+    /* ══ SIDEBAR ══ */
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border-md);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 2px; }
+
+    .sidebar-block {
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-block:last-child { border-bottom: none; }
+
+    .s-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--muted);
+      margin-bottom: 9px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-col { display: flex; flex-direction: column; gap: 7px; }
+
+    .filter-select {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border-md);
+      color: var(--ink-2);
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+      transition: border-color 0.18s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237a6e5e' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+
+    .filter-select:hover, .filter-select:focus { border-color: var(--accent); }
+
+    /* process nav list */
+    .process-nav { display: flex; flex-direction: column; gap: 2px; }
+
+    .pnav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.14s;
+      border: 1px solid transparent;
+    }
+
+    .pnav-item:hover { background: var(--surface-2); }
+
+    .pnav-item.active {
+      background: var(--accent-pale);
+      border-color: rgba(181,87,26,0.22);
+    }
+
+    .pnav-item.active .pnav-title { color: var(--accent); font-weight: 600; }
+
+    .pnav-code {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-pale);
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      min-width: 54px;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    .pnav-title {
+      font-size: 12.5px;
+      color: var(--ink-2);
+      flex: 1;
+      min-width: 0;
+      line-height: 1.3;
+    }
+
+    .pnav-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* legend */
+    .legend-list { display: flex; flex-direction: column; gap: 4px; }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 4px 2px;
+    }
+
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* rule card */
+    .rule-card {
+      background: var(--accent-pale);
+      border: 1px solid rgba(181,87,26,0.18);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 12px 13px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .rule-icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--accent); display: grid; place-items: center; }
+    .rule-icon svg { display: block; }
+
+    .rule-text { font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+    .rule-text strong { color: var(--accent); }
+
+    /* ══ MAIN ══ */
+    .main {
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background: var(--bg);
+      min-width: 0;
+    }
+
+    .main::-webkit-scrollbar { width: 5px; }
+    .main::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 3px; }
+
+    /* ── PROCESS HEADER ── */
+    .process-header {
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      padding: 22px 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      box-shadow: var(--shadow);
+      animation: fadeUp 0.28s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 0 0 0 var(--radius);
+    }
+
+    .process-header-left { flex: 1; min-width: 0; padding-left: 12px; }
+
+    .ph-code {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--accent);
+      background: var(--accent-pale);
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .process-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .process-header p {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .process-header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 5px; justify-content: flex-end; }
+
+    .chip {
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    .chip-domain  { background: var(--indigo-bg);  color: var(--indigo);  border-color: rgba(61,79,160,0.22); }
+    .chip-stage   { background: var(--slate-bg);   color: var(--slate);   border-color: rgba(74,85,104,0.22); }
+    .chip-owner   { background: var(--emerald-bg); color: var(--emerald); border-color: rgba(45,106,79,0.22); }
+    .chip-critical{ background: var(--rouge-bg);   color: var(--rouge);   border-color: rgba(155,35,53,0.22); }
+    .chip-high    { background: var(--amber-bg);   color: var(--amber);   border-color: rgba(146,97,10,0.22); }
+    .chip-medium  { background: var(--emerald-bg); color: var(--emerald); border-color: rgba(45,106,79,0.22); }
+
+    .status-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      width: fit-content;
+      box-shadow: var(--shadow);
+    }
+
+    .tab {
+      padding: 7px 15px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+
+    .tab:hover { color: var(--ink-2); background: var(--surface-2); }
+
+    .tab.active {
+      background: var(--accent);
+      color: #faf7f2;
+      font-weight: 600;
+      box-shadow: 0 1px 6px rgba(181,87,26,0.35);
+    }
+
+    .panel { animation: fadeUp 0.22s ease; }
+    .panel.hidden { display: none; }
+
+    /* ── FLOWCHART ── */
+    .flow-container {
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      padding: 30px 24px;
+      overflow-x: auto;
+      overflow-y: visible;
+      box-shadow: var(--shadow);
+    }
+
+    .flow-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .flow-node {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      padding: 16px 20px;
+      border: 1px solid;
+      text-align: center;
+    }
+
+    .flow-node.catman     { background: var(--node-catman);     border-color: var(--node-catman-b);    }
+    .flow-node.buyer      { background: var(--node-buyer);      border-color: var(--node-buyer-b);     }
+    .flow-node.validation { background: var(--node-validation); border-color: var(--node-validation-b);}
+    .flow-node.system     { background: var(--node-system);     border-color: var(--node-system-b);    }
+    .flow-node.risk       { background: var(--node-risk);       border-color: var(--node-risk-b);      }
+
+    .flow-node.start, .flow-node.end {
+      width: auto;
+      min-width: 120px;
+      max-width: 200px;
+      border-radius: 999px;
+      padding: 10px 28px;
+      background: var(--surface-2);
+      border-color: var(--border-dark);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      align-self: center;
+    }
+
+    .flow-node.end {
+      background: var(--emerald-bg);
+      border-color: rgba(45,106,79,0.35);
+      color: var(--emerald);
+    }
+
+    .node-step {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .node-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: 5px;
+    }
+
+    .node-meta {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .actor-tag {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .catman     .actor-tag { background: rgba(61,79,160,0.12);  color: var(--indigo);  }
+    .buyer      .actor-tag { background: rgba(146,97,10,0.12);  color: var(--amber);   }
+    .validation .actor-tag { background: rgba(45,106,79,0.12);  color: var(--emerald); }
+    .system     .actor-tag { background: rgba(181,87,26,0.12);  color: var(--accent);  }
+    .risk       .actor-tag { background: rgba(155,35,53,0.12);  color: var(--rouge);   }
+
+    /* arrow */
+    .flow-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4px 0;
+    }
+
+    .flow-arrow-line {
+      width: 1.5px;
+      height: 20px;
+      background: var(--border-dark);
+    }
+
+    .flow-arrow-head {
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 7px solid var(--border-dark);
+    }
+
+    /* decision */
+    .decision-wrapper {
+      width: 100%;
+      max-width: 600px;
+      display: grid;
+      grid-template-columns: 1fr 200px 1fr;
+      align-items: start;
+      gap: 8px;
+    }
+
+    .diamond {
+      width: 210px;
+      height: 210px;
+      justify-self: center;
+    }
+
+    .diamond-inner {
+      width: 100%;
+      height: 100%;
+      background: var(--node-decision);
+      border: 1.5px solid var(--node-decision-b);
+      border-radius: 14px;
+      transform: rotate(45deg);
+      display: grid;
+      place-items: center;
+    }
+
+    .diamond-text {
+      transform: rotate(-45deg);
+      text-align: center;
+      padding: 16px;
+    }
+
+    .diamond-text .node-title { font-size: 13.5px; }
+
+    .branch-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 84px;
+      gap: 6px;
+    }
+
+    .branch-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+
+    .branch-label.yes { color: var(--emerald); }
+    .branch-label.no  { color: var(--rouge);   }
+
+    .branch-line {
+      height: 2px;
+      width: 80%;
+      background: var(--border-dark);
+      position: relative;
+    }
+
+    .branch-line.right::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: 50%;
+      transform: translateY(-50%);
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 7px solid var(--border-dark);
+    }
+
+    .branch-line.left::after {
+      content: '';
+      position: absolute;
+      left: -1px; top: 50%;
+      transform: translateY(-50%);
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-right: 7px solid var(--border-dark);
+    }
+
+    .branch-node {
+      background: var(--surface-2);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius-sm);
+      padding: 10px 13px;
+      font-size: 12.5px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.35;
+      max-width: 155px;
+    }
+
+    .branch-node.yes-node { border-color: rgba(45,106,79,0.3);  background: var(--emerald-bg); color: var(--emerald); }
+    .branch-node.no-node  { border-color: rgba(155,35,53,0.3);  background: var(--rouge-bg);   color: var(--rouge);   }
+
+    /* ── OVERVIEW ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .info-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink-2);
+      margin-bottom: 11px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .h4-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--ink-2);
+    }
+
+    .h4-icon svg { display: block; }
+
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+
+    .info-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .info-list li::before {
+      content: "–";
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-weight: 600;
+    }
+
+    .meta-quad {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .meta-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px 13px;
+    }
+
+    .meta-box .mk {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .meta-box .mv {
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.45;
+    }
+
+    /* ── RISKS & KPI ── */
+    .risks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .risk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 13px;
+      background: var(--rouge-bg);
+      border: 1px solid rgba(155,35,53,0.15);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.4;
+    }
+
+    .risk-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: rgba(155,35,53,0.12);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--rouge);
+    }
+    .risk-icon svg { display: block; }
+
+    .kpi-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 13px;
+      background: var(--emerald-bg);
+      border: 1px solid rgba(45,106,79,0.15);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.4;
+    }
+
+    .kpi-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: rgba(45,106,79,0.14);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--emerald);
+    }
+    .kpi-icon svg { display: block; }
+
+    /* ── SYSTEM & ACCOUNTING ── */
+    .impacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .impact-block {
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .impact-block h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-2);
+      margin-bottom: 11px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .impact-block h4 svg { display: block; flex-shrink: 0; color: var(--accent); }
+
+    .status-flow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 13px;
+      background: var(--surface-2);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+
+    .status-step {
+      padding: 4px 10px;
+      background: var(--bg);
+      border: 1px solid var(--border-dark);
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--ink-2);
+      white-space: nowrap;
+    }
+
+    .status-arrow { color: var(--muted); font-size: 13px; }
+
+    .scenario-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .scenario-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      background: var(--surface-2);
+      border-radius: 7px;
+      font-size: 12.5px;
+      color: var(--ink-2);
+      border: 1px solid var(--border);
+    }
+
+    .s-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: var(--accent-mid);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    /* ── TRACKER ── */
+    .tracker-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .tracker-table th {
+      background: var(--surface-2);
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border-md);
+    }
+
+    .tracker-table td {
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .tracker-table tr:last-child td { border-bottom: none; }
+    .tracker-table tr:hover td { background: var(--bg-2); }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pill.propose { background: var(--indigo-bg);  color: var(--indigo); }
+    .pill.analysis{ background: var(--amber-bg);   color: var(--amber);  }
+    .pill.test    { background: var(--slate-bg);   color: var(--slate);  }
+    .pill.valid   { background: var(--emerald-bg); color: var(--emerald);}
+    .pill.reject  { background: var(--rouge-bg);   color: var(--rouge);  }
+
+    /* ── EMPTY ── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 60px 20px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state .empty-icon { color: var(--muted); display: flex; }
+    .empty-state .empty-icon svg { display: block; }
+
+    /* ── KPI CARDS (tracker top) ── */
+    .kpi-top-grid {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .kpi-top-card {
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      flex: 1;
+      min-width: 120px;
+      box-shadow: var(--shadow);
+    }
+
+    .kpi-top-card .kv {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .kpi-top-card .kl {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .app { grid-template-columns: 230px 1fr; }
+      .overview-grid, .risks-grid, .impacts-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 780px) {
+      .app { grid-template-columns: 1fr; grid-template-rows: 58px auto 1fr; }
+      .sidebar { height: auto; }
+      .topnav-stats { display: none; }
+      .decision-wrapper { grid-template-columns: 1fr; }
+      .branch-side { padding-top: 0; }
+      .diamond { grid-column: 1; }
+    }
+  
+    body{min-height:100vh;}
+    #app { min-height:100vh; display:grid; grid-template-columns: 320px minmax(0,1fr); grid-template-rows:auto 1fr; }
+    .topnav { grid-column:1/-1; position:sticky; top:0; z-index:20; backdrop-filter: blur(8px); background:rgba(250,247,242,.86); border-bottom:1px solid var(--border-md); display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px 22px; }
+    .topnav-left{display:flex;align-items:center;gap:18px;min-width:0;}
+    .logo-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-weight:800;letter-spacing:.06em;box-shadow:var(--shadow);}
+    .logo-text{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);line-height:1;}
+    .logo-sub{font-size:12px;color:var(--muted);margin-top:4px;}
+    .world-switch{display:flex;align-items:center;gap:8px;background:var(--surface-2);padding:6px;border:1px solid var(--border-md);border-radius:999px;box-shadow: inset 0 1px 0 rgba(255,255,255,.45); flex-wrap:wrap;}
+    .world-btn{border:none;background:transparent;color:var(--ink-2);padding:10px 14px;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer;transition:.2s ease;}
+    .world-btn:hover{background:rgba(255,255,255,.6)}
+    .world-btn.active{background:var(--surface);box-shadow:var(--shadow);}
+    .world-btn.finance{opacity:.82}
+    .nav-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+    .world-pill{padding:8px 12px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border-md);background:var(--surface);color:var(--muted);}
+    .sidebar{background:linear-gradient(180deg, rgba(250,247,242,.95), rgba(240,235,225,.92));border-right:1px solid var(--border-md);overflow-y:auto;display:flex;flex-direction:column;}
+    .sidebar-intro{padding:18px 16px 12px;border-bottom:1px solid var(--border);}
+    .sidebar-intro h3{font-family:'Playfair Display',serif;font-size:22px;line-height:1.1;margin-bottom:8px;}
+    .sidebar-intro p{font-size:13px;color:var(--muted);line-height:1.55;}
+    .sidebar-search{padding:0 16px 14px;border-bottom:1px solid var(--border);}
+    .search-shell{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border-md);border-radius:12px;padding:10px 12px;box-shadow: inset 0 1px 0 rgba(255,255,255,.5);}
+    .search-shell input{border:none;background:transparent;outline:none;width:100%;font:inherit;color:var(--ink);}
+    .group-wrap{padding:10px 10px 16px;display:flex;flex-direction:column;gap:10px;}
+    .group-title{padding:8px 10px 2px;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+    .process-nav{display:flex;flex-direction:column;gap:6px;}
+    .pnav-item{display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:10px;padding:11px 12px;border-radius:14px;border:1px solid transparent;cursor:pointer;transition:.22s ease;background:transparent;}
+    .pnav-item:hover{background:rgba(255,255,255,.52);border-color:var(--border);}
+    .pnav-item.active{background:var(--surface);border-color:var(--border-dark);box-shadow:var(--shadow);}
+    .pnav-code{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent);padding-top:2px;min-width:54px;}
+    .pnav-title{font-size:13px;font-weight:650;color:var(--ink-2);line-height:1.35;}
+    .pnav-sub{display:block;font-size:11px;color:var(--muted);margin-top:4px;font-weight:500;}
+    .pnav-dot{width:9px;height:9px;border-radius:50%;margin-top:5px;opacity:.9;}
+    .main{overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:18px;}
+    .hero-empty,.empty-state{min-height:calc(100vh - 140px);display:grid;place-items:center;padding:24px;}
+    .hero-card{max-width:860px;background:linear-gradient(180deg,var(--surface),rgba(255,255,255,.72));border:1px solid var(--border-md);border-radius:28px;padding:34px;box-shadow:var(--shadow-md);}
+    .hero-card h1{font-family:'Playfair Display',serif;font-size:44px;line-height:1.02;margin-bottom:14px;max-width:12ch;}
+    .hero-card p{font-size:16px;line-height:1.65;color:var(--muted);max-width:66ch;}
+    .hero-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px;}
+    .hero-metric{background:var(--surface-2);border:1px solid var(--border);border-radius:18px;padding:16px;}
+    .hero-metric .v{font-family:'Playfair Display',serif;font-size:28px;color:var(--ink);}
+    .hero-metric .k{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:4px;}
+    .process-header{display:flex;justify-content:space-between;gap:22px;align-items:flex-start;background:linear-gradient(180deg,var(--surface),rgba(255,255,255,.86));border:1px solid var(--border-md);border-radius:24px;padding:24px 24px 18px;box-shadow:var(--shadow);}
+    .ph-code{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--accent-pale);border:1px solid var(--accent-mid);color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;}
+    .process-header h2{font-family:'Playfair Display',serif;font-size:36px;line-height:1.06;margin-bottom:10px;}
+    .process-header p{font-size:15px;color:var(--muted);line-height:1.65;max-width:72ch;}
+    .process-header-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-width:230px;}
+    .meta-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;}
+    .tab{border:none;background:var(--surface-2);padding:10px 14px;border-radius:999px;color:var(--ink-2);font-weight:700;cursor:pointer;border:1px solid transparent;transition:.2s ease;}
+    .tab.active{background:var(--surface);border-color:var(--border-dark);box-shadow:var(--shadow);}
+    .panel.hidden{display:none;}
+    .legend-grid{display:grid;grid-template-columns:1fr;gap:8px;}
+    .legend-row{font-size:12px;color:var(--ink-2);display:flex;align-items:center;gap:8px;}
+    .legend-swatch{width:12px;height:12px;border-radius:4px;border:1px solid rgba(0,0,0,.06)}
+    .world-note{padding:14px 16px;border-top:1px solid var(--border);margin-top:auto;}
+    .world-note .rule-card{margin:0;}
+    @media (max-width: 1100px){
+      #app{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;}
+      .sidebar{border-right:none;border-bottom:1px solid var(--border-md);max-height:none;}
+      .topnav{position:static;flex-direction:column;align-items:stretch;}
+      .topnav-left,.nav-meta{justify-content:space-between;}
+      .process-header{flex-direction:column;}
+      .process-header-right{align-items:flex-start;min-width:0;}
+    }
+    @media (max-width: 700px){
+      .main{padding:14px;}
+      .hero-card{padding:24px;}
+      .hero-card h1{font-size:34px;}
+      .hero-grid{grid-template-columns:1fr;}
+      .process-header h2{font-size:30px;}
+    }
+</style>
+</head>
+<body>
+  <div id="app"></div>
+<script>
+const purchaseProcesses = [
+  {
+    id: 'ACHA0',
+    code: 'ACHA 11',
+    title: 'Proposition produit magasin',
+    domain: 'Achats',
+    stage: 'Amont',
+    owner: 'Exploitation / Achats',
+    actors: ['Directeur magasin', 'Exploitation', 'Achats', 'Category Manager'],
+    priority: 'High',
+    status: 'Draft enrichi',
+    statusColor: 'orange',
+    description: 'Canal formalisé pour que les directeurs de magasin remontent les opportunités terrain, fournisseurs locaux ou produits clients, avec traçabilité et suivi time-to-market.',
+    objective: 'Créer un canal structuré de remontée terrain, filtrer les propositions pertinentes et accélérer la mise en marché.',
+    trigger: 'Opportunité locale, produit demandé par clients, fournisseur local intéressant, demande exploitation.',
+    includes: ['Soumission proposition magasin', 'Analyse Achats / Catman', 'Décision test ou référencement', 'Suivi time-to-market'],
+    excludes: ['Création fournisseur (ACHA 1)', 'Négociation conditions (ACHA 2)', 'Création article (ACHA 3)'],
+    validations: ['Analyse exploitation', 'Validation Achats', 'Validation Catman / Responsable catégorie'],
+    metrics: ['Time-to-market', 'Taux validation propositions', 'Délai moyen de décision'],
+    risks: ['Canal non structuré → opportunités perdues', 'Absence de visibilité sur délais', 'Propositions sans suivi'],
+    scenarios: ['Proposition produit local', 'Passage en test magasin', 'Validation référencement national', 'Refus avec justification'],
+    statusFlow: ['Proposé', 'En analyse Achats', 'Test magasin', 'Validé référencement national', 'Refusé'],
+    systemImpact: 'Enregistrement dans outil de suivi. Alimentation du cycle de référencement produit si validé.',
+    accountingImpact: 'Aucun impact comptable direct. KPI time-to-market suivi.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'catman', step: 'Étape 1', title: 'Soumission proposition magasin', meta: 'Produit, fournisseur, catégorie, argument commercial, magasin origine', actor: 'Directeur Magasin' },
+        { type: 'system', step: 'Étape 2', title: 'Enregistrement dans outil de suivi', meta: 'Catégorie, date, statut, origine, pilote de traitement', actor: 'Système' },
+        { type: 'catman', step: 'Étape 3', title: 'Analyse exploitation & Achats', meta: 'Pertinence terrain, potentiel commercial, cohérence assortiment, conditions fournisseur', actor: 'Achats / Catman' },
+        { type: 'decision', title: 'Proposition retenue ?', meta: 'Décision conjointe métier / achats', no: 'Refus – clôture dossier', yes: 'Test magasin ou référencement direct' },
+        { type: 'validation', step: 'Étape 4', title: 'Validation de l\'orientation', meta: 'Test magasin ou référencement direct selon enjeu et volume', actor: 'Acheteur' },
+        { type: 'system', step: 'Étape 5', title: 'Passage vers process achat', meta: 'La proposition validée alimente le cycle de référencement produit standard', actor: 'Système' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA1',
+    code: 'ACHA 1',
+    title: 'Sourcing & référencement fournisseur',
+    domain: 'Achats',
+    stage: 'Amont',
+    owner: 'Achats',
+    actors: ['Acheteur', 'Direction achat', 'Finance', 'Comptabilité fournisseur', 'IT / Master Data'],
+    priority: 'High',
+    status: 'À figer',
+    statusColor: 'orange',
+    description: 'Identifier, évaluer et référencer un fournisseur conforme aux exigences commerciales, logistiques, financières et réglementaires. Garantit la sécurisation des achats et la conformité contractuelle.',
+    objective: 'Sécuriser le panel fournisseurs avant toute négociation ou commande.',
+    trigger: 'Nouveau produit, nouveau partenaire local, remplacement fournisseur, optimisation marge.',
+    includes: ['Identification fournisseur', 'Analyse offre commerciale', 'Validation interne', 'Création Vendor D365', 'Paramétrage conditions paiement', 'Paramétrage dimensions analytiques'],
+    excludes: ['Négociation prix article (ACHA 2)', 'Création article (ACHA 3)'],
+    validations: ['Validation Direction Achats', 'Validation Finance si engagement important', 'Validation juridique si contrat', 'Analyse Inforisque'],
+    metrics: ['Délai onboarding fournisseur', 'Taux fournisseurs validés', 'Taux fournisseurs bloqués', 'Taux dossiers complets'],
+    risks: ['Mauvais compte comptable AP', 'Mauvaise condition paiement', 'Fournisseur non conforme', 'Risque fiscal'],
+    scenarios: ['Création fournisseur standard', 'Création fournisseur devise étrangère', 'Blocage fournisseur', 'Modification condition paiement', 'Fournisseur local vs national'],
+    statusFlow: ['Draft', 'Submitted', 'Approved', 'Active', 'Blocked'],
+    systemImpact: 'Fournisseur actif dans D365. Disponible pour création PO. Groupe fournisseur détermine comptes AP.',
+    accountingImpact: 'Pas d\'écriture immédiate. Le groupe fournisseur détermine le compte collectif AP dans le GL.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'buyer', step: 'Étape 1', title: 'Identification du fournisseur', meta: 'Analyse marché, comparaison offres, capacité logistique, conformité réglementaire', actor: 'Acheteur' },
+        { type: 'risk', step: 'Étape 2', title: 'Vérification conformité & Inforisque', meta: 'Solvabilité, historique, conformité réglementaire, classification (stratégique / opportuniste / local)', actor: 'Acheteur / Finance' },
+        { type: 'risk', step: 'Étape 3', title: 'Collecte dossier administratif', meta: 'RC, IF, RIB, TVA, contrat signé, facture, ICE, attestation fiscale, statut, ONSSA', actor: 'Acheteur' },
+        { type: 'decision', title: 'Fournisseur recevable ?', meta: 'Décision conformité / métier', no: 'Rejet ou dossier incomplet', yes: 'Poursuite référencement' },
+        { type: 'validation', step: 'Étape 4', title: 'Validation interne', meta: 'Direction Achats + Finance si engagement important + validation juridique si contrat', actor: 'Direction Achat / Finance' },
+        { type: 'system', step: 'Étape 5', title: 'Création fournisseur dans D365', meta: 'Vendor master, groupe fournisseur, conditions paiement, devise, taxes, mode paiement, dimensions analytiques', actor: 'Master Data / IT' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA2',
+    code: 'ACHA 2',
+    title: 'Négociation & conditions commerciales',
+    domain: 'Achats',
+    stage: 'Contractualisation',
+    owner: 'Achats',
+    actors: ['Acheteur', 'Directeur Achat', 'Fournisseur', 'Finance (DAF)', 'Contrôle de gestion'],
+    priority: 'High',
+    status: 'À figer',
+    statusColor: 'orange',
+    description: 'Définir et formaliser les conditions commerciales négociées : prix d\'achat, remises, RFA, conditions paiement, participation promotionnelle et pénalités logistiques. La marge future se joue ici.',
+    objective: 'Sécuriser la rentabilité future et paramétrer correctement les accords dans D365.',
+    trigger: 'Nouveau référencement article, renégociation annuelle, hausse matière première, optimisation marge.',
+    includes: ['Analyse coût cible', 'Négociation prix / RFA / paiement', 'Participations promotionnelles', 'Validation contractuelle', 'Paramétrage D365'],
+    excludes: ['Création commande (ACHA 4)', 'Réception marchandise (ACHA 5)'],
+    validations: ['Validation Direction Achats', 'Validation Finance / DAF', 'Validation Direction Générale si engagement important'],
+    metrics: ['Écart marge cible vs négociée', 'Taux contrats validés sans rework', 'Délai contractualisation'],
+    risks: ['Marge artificiellement surévaluée', 'RFA non récupérée', 'Promo financée par enseigne au lieu du fournisseur', 'Conditions paiement non respectées'],
+    scenarios: ['Création accord prix achat', 'Simulation RFA', 'Modification prix achat', 'Application condition paiement', 'Participation promo enregistrée'],
+    statusFlow: ['Draft', 'Submitted', 'Approved', 'Active', 'Blocked'],
+    systemImpact: 'Trade agreements (prix d\'achat). Conditions paiement. Accords RFA. Accords promotion fournisseur/remises. Purchase Agreements.',
+    accountingImpact: 'Prix achat → COGS + valorisation stock. RFA → réduction coût achat (recommandé) ou produit financier. Participation promo → Débit Fournisseur / Crédit Charge promo.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'buyer', step: 'Étape 1', title: 'Analyse coût cible', meta: 'PV cible, marge brute cible, positionnement concurrentiel, coût logistique', actor: 'Acheteur' },
+        { type: 'buyer', step: 'Étape 2', title: 'Négociation prix d\'achat', meta: 'Prix brut, remise immédiate, prix net — clarifier si net net ou brut avec remises arrière', actor: 'Acheteur / Fournisseur' },
+        { type: 'buyer', step: 'Étape 3', title: 'Négociation RFA', meta: 'RFA annuelle volume, trimestrielle, par palier (ex: 3% si CA > 1M / 5% si CA > 2M)', actor: 'Acheteur' },
+        { type: 'buyer', step: 'Étape 4', title: 'Négociation conditions paiement & promo', meta: '30j FDM, 60j, escompte anticipé. Participation promo fournisseur contractualisée', actor: 'Acheteur' },
+        { type: 'validation', step: 'Étape 5', title: 'Validation contractuelle interne', meta: 'Direction Achats + Finance / DAF + Direction Générale si engagement majeur', actor: 'Direction' },
+        { type: 'system', step: 'Étape 6', title: 'Formalisation & paramétrage D365', meta: 'Contrat signé + Trade Agreements + Purchase Agreements + accords RFA/promo paramétrés', actor: 'Acheteur / IT' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA3',
+    code: 'ACHA 3',
+    title: 'Construction assortiment & référencement article',
+    domain: 'Achats',
+    stage: 'Référencement',
+    owner: 'Catman',
+    actors: ['Acheteur', 'Category Manager', 'Master Data', 'Finance', 'Supply Chain', 'IT'],
+    priority: 'Critical',
+    status: 'Modèle validable',
+    statusColor: 'green',
+    description: 'Définir les articles commercialisés dans l\'enseigne et structurer leur intégration opérationnelle dans D365. Le Catman pilote l\'offre, l\'Acheteur sécurise la négociation, puis l\'article est créé et activé avec contrôle nomenclature.',
+    objective: 'Garantir cohérence de l\'offre, rentabilité produit, paramétrage correct stock / prix / TVA et déploiement maîtrisé en magasin.',
+    trigger: 'Nouveau produit, extension gamme, produit saisonnier, remplacement produit existant, introduction marque locale.',
+    includes: ['Étude catégorie', 'Définition assortiment cible', 'Décision GO/NO GO', 'Définition caractéristiques produit', 'Analyse échantillon', 'Validation référencement', 'Contrôle nomenclature', 'Paramétrage prix & logistique', 'Affectation assortiment', 'Activation article'],
+    excludes: ['Création fournisseur (ACHA 1)', 'Négociation conditions (ACHA 2)'],
+    validations: ['Signature Catman', 'Validation Acheteur', 'Validation Responsable catégorie'],
+    metrics: ['Délai référencement produit', '% produits rejetés', 'Marge moyenne validée', 'Time-to-market'],
+    risks: ['Mauvaise TVA', 'Mauvais prix en caisse', 'Mauvais coût', 'Article vendu mais non stocké', 'Stock négatif', 'Erreurs nomenclature = 80% des problèmes magasin'],
+    scenarios: ['Création article standard', 'Création article DLC', 'Création article multi-unité', 'Article affecté certains magasins', 'Modification prix après création'],
+    statusFlow: ['Draft', 'In Review (Catman)', 'Approved', 'Active'],
+    systemImpact: 'Product information management. Released product. Trade agreements. Retail assortment. Disponible commande, caisse, stock.',
+    accountingImpact: 'Aucun à la création. Impact futur : Revenue, COGS, TVA, Marge. Contrôle obligatoire : UOM, catégorie, TVA, code-barres, prix achat/vente, validation marge.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'catman', step: 'Étape 0', title: 'Étude catégorie', meta: 'Analyse marché, veille concurrentielle, benchmark prix, analyse assortiment existant', actor: 'Category Manager' },
+        { type: 'catman', step: 'Étape 1', title: 'Définition assortiment cible', meta: 'Profondeur gamme, positionnement prix, marques, segmentation produit → liste produits à rechercher', actor: 'Category Manager' },
+        { type: 'buyer', step: 'Étape 2', title: 'Sourcing & négociation', meta: 'Recherche fournisseur, négociation conditions, réception fiche référencement fournisseur', actor: 'Acheteur' },
+        { type: 'catman', step: 'Étape 3', title: 'Analyse produit & benchmark', meta: 'Qualité, packaging, conformité, goût (alimentaire), cohérence gamme, marge, merchandising', actor: 'Category Manager' },
+        { type: 'decision', title: 'Produit validé ?', meta: 'Décision Catman après étude produit', no: 'Rejet produit', yes: 'Référencement validé' },
+        { type: 'validation', step: 'Étape 4', title: 'Validation référencement', meta: 'Catman + Acheteur + Responsable catégorie : produit, marge, fournisseur validés', actor: 'Catman / Acheteur / Resp. Catégorie' },
+        { type: 'system', step: 'Étape 5', title: 'Création article dans D365', meta: 'Code article, libellé, code-barres, catégorie, TVA, UOM, conditionnement, poids/volume, DLC', actor: 'Master Data' },
+        { type: 'catman', step: 'Étape 6', title: 'Contrôle nomenclature', meta: 'Catman valide catégorie, marque, rattachement produit et cohérence merchandising', actor: 'Category Manager' },
+        { type: 'system', step: 'Étape 7', title: 'Paramétrage prix, logistique & affectation', meta: 'Prix achat/vente, marge théorique, stockable, Moving Average, fournisseur principal, magasins', actor: 'Master Data' },
+        { type: 'system', step: 'Étape 8', title: 'Activation article', meta: 'Date début vente, synchronisation vers POS, disponible commande et caisse', actor: 'Système' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA4',
+    code: 'ACHA 4',
+    title: 'Création & validation commande fournisseur',
+    domain: 'Achats',
+    stage: 'Exécution',
+    owner: 'Achats / Supply',
+    actors: ['Acheteur', 'Responsable Achat', 'Supply Chain', 'Finance'],
+    priority: 'High',
+    status: 'À figer',
+    statusColor: 'orange',
+    description: 'Formaliser un engagement d\'achat auprès d\'un fournisseur en sécurisant le respect des conditions négociées, le contrôle budgétaire, la traçabilité contractuelle et l\'intégration dans D365. La PO est un engagement juridique et financier.',
+    objective: 'Créer un PO conforme, traçable et budgétairement maîtrisé.',
+    trigger: 'Besoin réassort plateforme, achat spécifique promotion, engagement saisonnier, achat stock initial.',
+    includes: ['Création Purchase Order', 'Sélection articles & quantités', 'Conditions livraison', 'Vérification Trade Agreement', 'Validation workflow', 'Transmission fournisseur'],
+    excludes: ['Réception marchandise (ACHA 5)', 'Contrôle facture (ACHA 6)'],
+    validations: ['Validation Responsable Achat', 'Validation Direction si montant élevé', 'Contrôle budget si activé'],
+    metrics: ['Délai création PO', 'Taux écart prix PO vs Trade Agreement', 'Taux blocage budgétaire', '% erreur master data'],
+    risks: ['Achat hors contrat', 'Mauvais prix d\'achat', 'Dépassement budget', 'Réception sans PO'],
+    scenarios: ['Création PO standard', 'PO multi-articles', 'PO dépassant budget', 'Modification PO', 'Annulation PO', 'PO avec prix différent Trade Agreement'],
+    statusFlow: ['Draft', 'Submitted', 'Approved', 'Sent', 'Received', 'Invoiced'],
+    systemImpact: 'Engagement ouvert dans D365. Quantité en commande visible. Engagement financier futur. Pas d\'impact stock avant réception.',
+    accountingImpact: 'Aucune écriture comptable à la création. Impact en contrôle : engagement hors bilan, prévision cashflow.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'buyer', step: 'Étape 1', title: 'Création PO dans D365', meta: 'Fournisseur, articles, quantités, date livraison, prix issus des Trade Agreements', actor: 'Acheteur' },
+        { type: 'buyer', step: 'Étape 2', title: 'Contrôle prix & budget', meta: 'Vérification prix vs Trade Agreement, enveloppe achat, alerte dépassement', actor: 'Acheteur / Finance' },
+        { type: 'decision', title: 'PO conforme ?', meta: 'Prix / budget / contrat', no: 'Correction PO', yes: 'Passage en validation' },
+        { type: 'validation', step: 'Étape 3', title: 'Validation workflow', meta: 'Responsable Achat + niveau complémentaire si seuil dépassé — traçabilité obligatoire', actor: 'Responsable Achat' },
+        { type: 'system', step: 'Étape 4', title: 'Envoi commande fournisseur', meta: 'Transmission Email, EDI ou canal contractuel. PO = engagement fournisseur.', actor: 'Système / Acheteur' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA5',
+    code: 'ACHA 5',
+    title: 'Réception marchandise',
+    domain: 'Achats',
+    stage: 'Réception',
+    owner: 'Supply / Magasin',
+    actors: ['Plateforme logistique', 'Responsable magasin', 'Supply Chain', 'Achats'],
+    priority: 'High',
+    status: 'À figer',
+    statusColor: 'orange',
+    description: 'Valider la réception physique et système des marchandises commandées : mise à jour stock, déclenchement valorisation, alimentation du contrôle facture et garantie de conformité livraison.',
+    objective: 'Fiabiliser le stock reçu et sécuriser la suite du cycle P2P.',
+    trigger: 'Arrivée physique des marchandises suite à PO validée.',
+    includes: ['Réception totale', 'Réception partielle', 'Réception avec écart', 'Réception non-conformité', 'Réception plateforme', 'Réception direct magasin'],
+    excludes: ['Contrôle facture fournisseur (ACHA 6)', 'Retour fournisseur'],
+    validations: ['Validation réception par l\'opérationnel concerné'],
+    metrics: ['Taux réception conforme', 'Taux écarts', 'Délai saisie réception'],
+    risks: ['Stock incorrect', 'Mauvaise valorisation Moving Average', 'GRNI non soldé', 'Double paiement', 'Réception sans PO'],
+    scenarios: ['Réception totale', 'Réception partielle', 'Sur-livraison', 'Réception avec écart', 'Réception impact Moving Average', 'Réception sans PO (doit être bloquée)'],
+    statusFlow: ['PO Approved', 'Goods Received', 'Product Receipt Posted', 'GRNI Created'],
+    systemImpact: 'Stock augmente. Quantité en commande diminue. GRNI créé. Moving Average recalculé si applicable.',
+    accountingImpact: 'À la réception : Débit Inventory / Crédit GRNI. Le fournisseur n\'est pas encore crédité tant que la facture n\'est pas reçue.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'buyer', step: 'Étape 1', title: 'Contrôle livraison physique', meta: 'Bon livraison, quantité livrée, qualité marchandise, DLC si applicable — comparaison avec PO', actor: 'Plateforme / Magasin' },
+        { type: 'system', step: 'Étape 2', title: 'Enregistrement Product Receipt dans D365', meta: 'Quantité reçue, quantité refusée, motif écart — stock augmente, en-commande diminue', actor: 'Opérateur / Système' },
+        { type: 'decision', title: 'Écart de réception ?', meta: 'Partielle, sur-livraison, sous-livraison, non-conformité', no: 'Réception conforme → GRNI', yes: 'Traitement écart / litige' },
+        { type: 'validation', step: 'Étape 3', title: 'Validation & traçabilité réception', meta: 'Stock mis à jour, GRNI déclenché, écart documenté, litige ouvert si nécessaire', actor: 'Responsable réception' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA6',
+    code: 'ACHA 6',
+    title: 'Contrôle facture fournisseur (3-Way Match)',
+    domain: 'Finance',
+    stage: 'Contrôle',
+    owner: 'Finance / AP',
+    actors: ['Comptabilité fournisseur (AP)', 'Finance', 'Achat'],
+    priority: 'Critical',
+    status: 'À figer',
+    statusColor: 'orange',
+    description: 'Valider qu\'une facture fournisseur correspond bien à la commande passée, à la marchandise réceptionnée et aux conditions négociées. C\'est le processus clé de sécurisation financière avant tout paiement.',
+    objective: 'Éviter les paiements injustifiés et sécuriser la création de la dette AP.',
+    trigger: 'Réception facture fournisseur (papier, email, EDI).',
+    includes: ['Réception facture fournisseur', 'Rapprochement PO / Réception / Facture', 'Validation ou blocage', 'Création dette fournisseur'],
+    excludes: ['Paiement fournisseur', 'Gestion litige logistique détaillée'],
+    validations: ['3-Way Match : PO vs Product Receipt vs Facture', 'Validation AP si conforme', 'Blocage + demande achat si écart > seuil'],
+    metrics: ['% factures avec écart', 'Délai validation facture', 'Taux blocage', 'GRNI soldé'],
+    risks: ['Paiement double', 'Paiement sans réception', 'Marge erronée', 'GRNI non soldé', 'Risque fraude'],
+    scenarios: ['Facture conforme', 'Facture avec écart prix', 'Facture avec écart quantité', 'Facture sans réception', 'Facture avec modification coût Moving Average'],
+    statusFlow: ['Draft', 'Matched', 'Blocked', 'Approved', 'Posted'],
+    systemImpact: 'GRNI soldé. Création dette AP. Impact cashflow futur.',
+    accountingImpact: 'À validation facture : Débit GRNI + Débit TVA déductible / Crédit Fournisseur. La dette est née ici.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'risk', step: 'Étape 1', title: 'Réception facture fournisseur', meta: 'Référence PO, articles, quantités, prix, TVA — papier, email ou EDI', actor: 'Comptabilité AP' },
+        { type: 'system', step: 'Étape 2', title: 'Saisie Vendor Invoice dans D365', meta: 'Le système compare automatiquement prix PO, quantité réceptionnée et prix facturé', actor: 'Système' },
+        { type: 'decision', title: '3-Way Match OK ?', meta: 'PO vs Product Receipt vs Facture', no: 'Blocage + litige + demande achat', yes: 'Facture conforme' },
+        { type: 'validation', step: 'Étape 3', title: 'Validation facture', meta: 'Si écart toléré → validation. Si écart > seuil → blocage, demande clarification, création litige', actor: 'Finance / AP' },
+        { type: 'system', step: 'Étape 4', title: 'Comptabilisation & création dette AP', meta: 'Débit GRNI + Débit TVA / Crédit Fournisseur — dette fournisseur créée', actor: 'Système' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA7',
+    code: 'ACHA 7',
+    title: 'Gestion RFA (Remises de fin d\'année)',
+    domain: 'Finance',
+    stage: 'Contractualisation',
+    owner: 'Achats / Finance',
+    actors: ['Acheteur', 'Contrôle de gestion', 'Finance', 'Comptabilité fournisseur'],
+    priority: 'High',
+    status: 'À figer',
+    statusColor: 'orange',
+    description: 'Sécuriser, calculer et comptabiliser correctement les Remises de Fin d\'Année négociées avec les fournisseurs. La RFA est une remise arrière basée sur le volume ou le CA réalisé. Si non suivie → RFA oubliée = perte cash.',
+    objective: 'Refléter la marge réelle, suivre les engagements contractuels, éviter les pertes de remises.',
+    trigger: 'Signature contrat annuel, atteinte seuil volume, clôture période (trimestre / année).',
+    includes: ['Paramétrage accord RFA', 'Suivi cumul achats', 'Calcul périodique', 'Provision RFA', 'Facturation fournisseur', 'Encaissement'],
+    excludes: ['Remise immédiate', 'Participation promo ponctuelle'],
+    validations: ['Validation Finance sur modèle comptable (réduction coût vs produit financier)'],
+    metrics: ['RFA provisionnée vs encaissée', 'Délai encaissement RFA', 'Taux atteinte seuils'],
+    risks: ['RFA oubliée', 'Marge sous-évaluée ou surévaluée', 'Litige fournisseur', 'Perte cash importante'],
+    scenarios: ['Paramétrage accord RFA', 'Simulation atteinte seuil', 'Provision mensuelle', 'Facturation fin période', 'Encaissement RFA'],
+    statusFlow: ['Paramétré', 'En cours accumulation', 'Seuil atteint', 'Facturé', 'Encaissé'],
+    systemImpact: 'Réduction coût réel. Ajustement marge. Impact reporting catégorie. Suivi cumul automatique dans D365.',
+    accountingImpact: 'Provision mensuelle : Débit Fournisseur / Crédit Réduction coût achat. Facturation fin période : Débit Fournisseur / Crédit RFA à recevoir. Encaissement : Débit Banque / Crédit Fournisseur.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'system', step: 'Étape 1', title: 'Paramétrage accord RFA', meta: 'Fournisseur, période, base calcul (CA HT / volume), taux ou palier (ex: 3% > 1M / 5% > 2M)', actor: 'Acheteur / Finance' },
+        { type: 'system', step: 'Étape 2', title: 'Suivi cumul automatique', meta: 'D365 suit le cumul CA fournisseur, projette l\'atteinte du seuil, alerte si risque de perte', actor: 'Système' },
+        { type: 'buyer', step: 'Étape 3', title: 'Provision périodique (mensuelle recommandée)', meta: 'Débit Fournisseur / Crédit Réduction coût achat — pour refléter marge réelle en cours d\'année', actor: 'Finance' },
+        { type: 'buyer', step: 'Étape 4', title: 'Facturation fournisseur en fin période', meta: 'Émission facture RFA ou réception avoir fournisseur — Débit Fournisseur / Crédit RFA à recevoir', actor: 'Acheteur / Comptabilité' },
+        { type: 'validation', step: 'Étape 5', title: 'Encaissement RFA', meta: 'Débit Banque / Crédit Fournisseur — RFA encaissée', actor: 'Finance' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA8',
+    code: 'ACHA 8',
+    title: 'Participation promotion fournisseur',
+    domain: 'Achats',
+    stage: 'Contractualisation',
+    owner: 'Achats / Marketing',
+    actors: ['Acheteur', 'Marketing', 'Finance', 'Comptabilité fournisseur'],
+    priority: 'High',
+    status: 'À figer',
+    statusColor: 'orange',
+    description: 'Tracer, sécuriser et récupérer les montants que le fournisseur s\'engage à financer lors d\'une promotion. Éviter que la promotion soit financée uniquement par l\'enseigne et protéger la marge.',
+    objective: 'Récupérer la compensation promo fournisseur, protéger la marge opérationnelle.',
+    trigger: 'Lancement campagne promotionnelle, accord spécifique fournisseur.',
+    includes: ['Négociation co-financement promo', 'Paramétrage accord promo', 'Suivi ventes pendant promo', 'Calcul montant dû', 'Facturation ou réception avoir'],
+    excludes: ['RFA annuelle (ACHA 7)', 'Remise immédiate d\'achat'],
+    validations: ['Accord promotionnel avant lancement', 'Validation Finance sur traitement comptable'],
+    metrics: ['Montants dus vs encaissés', 'Taux récupération promo', 'Impact marge réelle'],
+    risks: ['Promo non récupérée', 'Marge négative', 'Litige fournisseur', 'Mauvaise analyse rentabilité'],
+    scenarios: ['Promo participation fixe', 'Promo participation %', 'Promo multi-articles', 'Facturation fournisseur', 'Encaissement'],
+    statusFlow: ['Accord signé', 'Promo active', 'Calcul en cours', 'Facturé', 'Encaissé'],
+    systemImpact: 'Amélioration marge réelle. Impact reporting promotion. Impact rentabilité catégorie.',
+    accountingImpact: 'Pendant promo : création créance fournisseur. Débit Fournisseur (créance) / Crédit Charge promotion. Puis encaissement.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'buyer', step: 'Étape 1', title: 'Accord promotionnel', meta: 'Articles concernés, période, mécanique promotion, taux participation fournisseur — doit être contractualisé', actor: 'Acheteur / Fournisseur' },
+        { type: 'system', step: 'Étape 2', title: 'Paramétrage accord dans D365', meta: 'Accord financier lié à la promo, période, fournisseur concerné — sans paramétrage → oubli récupération', actor: 'Acheteur / IT' },
+        { type: 'catman', step: 'Étape 3', title: 'Suivi ventes & calcul montant dû', meta: 'Suivi volume vendu pendant la période, calcul participation (ex: 1000 unités × 5 DH = 5 000 DH)', actor: 'Finance / Marketing' },
+        { type: 'buyer', step: 'Étape 4', title: 'Facturation fournisseur', meta: 'Émission facture à fournisseur OU réception avoir fournisseur', actor: 'Comptabilité' },
+        { type: 'validation', step: 'Étape 5', title: 'Encaissement', meta: 'Débit Banque / Crédit Fournisseur — compensation promo récupérée', actor: 'Finance' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA9',
+    code: 'ACHA 9',
+    title: 'Gestion litiges fournisseur',
+    domain: 'Achats',
+    stage: 'Contrôle',
+    owner: 'Achats / Finance',
+    actors: ['Achats', 'Finance (AP)', 'Logistique / Magasin', 'Fournisseur'],
+    priority: 'High',
+    status: 'À figer',
+    statusColor: 'orange',
+    description: 'Identifier, tracer et résoudre tout écart ou non-conformité lié à un fournisseur afin d\'éviter les paiements injustifiés, protéger la marge et maintenir une relation fournisseur saine.',
+    objective: 'Résoudre les litiges rapidement, bloquer les paiements en attente et documenter chaque cas.',
+    trigger: 'Réception non conforme, facture avec écart, problème qualité, non-respect promo / RFA.',
+    includes: ['Écart quantité reçue', 'Écart prix facturé', 'Produit non conforme', 'Livraison tardive', 'Non-respect conditions contractuelles'],
+    excludes: ['Litige client', 'Retour simple sans désaccord'],
+    validations: ['Blocage paiement si écart significatif', 'Déblocage après résolution'],
+    metrics: ['Délai résolution litige', 'Taux litiges résolus', 'Montant litiges en cours', 'Impact marge'],
+    risks: ['Paiement trop-perçu', 'Litiges non suivis', 'Marge détériorée', 'Tension fournisseur'],
+    scenarios: ['Facture avec écart prix', 'Facture avec écart quantité', 'Avoir partiel', 'Blocage et déblocage paiement'],
+    statusFlow: ['Open', 'In Progress', 'Pending Supplier', 'Resolved', 'Closed'],
+    systemImpact: 'Facture bloquée dans D365. GRNI potentiellement ajusté. Ajustement stock si nécessaire.',
+    accountingImpact: 'Si avoir : Débit Fournisseur / Crédit Charge ou Inventory selon nature correction.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'risk', step: 'Étape 1', title: 'Identification du litige', meta: 'Quantité reçue < facturée, prix ≠ PO, marchandise abîmée, RFA non versée', actor: 'Achats / Finance / Logistique' },
+        { type: 'system', step: 'Étape 2', title: 'Enregistrement & blocage', meta: 'Référence PO, facture, nature litige, montant concerné — blocage paiement si écart significatif', actor: 'Finance AP' },
+        { type: 'buyer', step: 'Étape 3', title: 'Résolution litige', meta: 'Avoir fournisseur, nouvelle facture corrigée, compensation RFA, refus partiel', actor: 'Acheteur / Fournisseur' },
+        { type: 'decision', title: 'Litige résolu ?', meta: 'Accord entre parties trouvé', no: 'Escalade / médiation', yes: 'Clôture et déblocage' },
+        { type: 'validation', step: 'Étape 4', title: 'Clôture litige & déblocage paiement', meta: 'Mise à jour dossier, déblocage paiement si conforme, notation fournisseur impactée', actor: 'Finance / Achats' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA10',
+    code: 'ACHA 10',
+    title: 'Analyse performance fournisseur & marge réelle',
+    domain: 'Finance',
+    stage: 'Pilotage',
+    owner: 'Direction Achat',
+    actors: ['Direction achat', 'Contrôle de gestion', 'Finance', 'Direction générale'],
+    priority: 'Medium',
+    status: 'À figer',
+    statusColor: 'orange',
+    description: 'Piloter la rentabilité réelle et la performance globale des fournisseurs : CA, marge brute théorique vs réelle (après RFA & promo), taux rupture, taux litige, rotation stock. Pour décider renégociation ou déférencement.',
+    objective: 'Prendre des décisions basées sur la marge réelle et non la seule marge théorique.',
+    trigger: 'Revue mensuelle, revue trimestrielle, négociation annuelle.',
+    includes: ['Extraction données D365', 'Calcul marge théorique', 'Calcul marge réelle', 'Analyse performance', 'Décision gestion'],
+    excludes: ['Analyse client'],
+    validations: ['Validation en revue performance périodique'],
+    metrics: ['Marge réelle %', 'Rotation', 'Taux démarque', 'Taux rupture', 'Taux litige'],
+    risks: ['Fournisseur non rentable conservé', 'Marge artificielle', 'Décisions sur mauvaise donnée'],
+    scenarios: ['Simulation marge fournisseur', 'Simulation impact RFA', 'Simulation promo cofinancée', 'Simulation variation coût'],
+    statusFlow: ['Extraction', 'Calcul', 'Analyse', 'Décision', 'Action'],
+    systemImpact: 'Ajustement stratégie achat. Mise à jour prix. Modification assortiment.',
+    accountingImpact: 'Pas d\'écriture directe, mais impact stratégique sur : Résultat, Budget, Cashflow.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'system', step: 'Étape 1', title: 'Extraction données D365', meta: 'Volume achat, volume vente, coût moyen, RFA provisionnée, participation promo, rotation, marge brute', actor: 'Contrôle de gestion' },
+        { type: 'buyer', step: 'Étape 2', title: 'Calcul marge théorique & réelle', meta: 'Marge théorique = PV – PA standard. Marge réelle = PV – coût réel (après RFA, promo, casse, fidélité)', actor: 'Contrôle de gestion' },
+        { type: 'catman', step: 'Étape 3', title: 'Analyse performance fournisseur', meta: 'Marge %, rotation, taux démarque, taux rupture, taux litige — par fournisseur et catégorie', actor: 'Direction Achat' },
+        { type: 'validation', step: 'Étape 4', title: 'Décision de gestion', meta: 'Renégociation, déférencement, augmentation prix, optimisation promo, maintien', actor: 'Direction Achat / DG' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA12',
+    code: 'ACHA 12',
+    title: 'Changement prix fournisseur',
+    domain: 'Achats',
+    stage: 'Exécution',
+    owner: 'Achats / Catman',
+    actors: ['Acheteur', 'Category Manager', 'Finance'],
+    priority: 'High',
+    status: 'À enrichir',
+    statusColor: 'purple',
+    description: 'Gérer les demandes de changement de prix fournisseur (hausse ou baisse) avec analyse d\'impact marge, validation Catman, mise à jour D365 et gestion de l\'impact sur le stock Moving Average.',
+    objective: 'Sécuriser tout changement de prix fournisseur avec validation marge et traçabilité.',
+    trigger: 'Demande fournisseur, hausse matière première, stratégie de repositionnement.',
+    includes: ['Analyse impact marge', 'Validation Catman', 'Validation Achat', 'Mise à jour D365', 'Gestion impact Moving Average'],
+    excludes: ['Négociation initiale (ACHA 2)'],
+    validations: ['Validation Catman', 'Validation Finance si impact significatif'],
+    metrics: ['Délai changement de prix', 'Impact marge avant/après', 'Taux demandes acceptées'],
+    risks: ['Impact non anticipé sur Moving Average', 'Mauvaise date d\'effet prix', 'Marge détériorée sans compensation'],
+    scenarios: ['Hausse prix fournisseur', 'Baisse prix fournisseur', 'Changement avec impact stock important'],
+    statusFlow: ['Demande reçue', 'Analyse marge', 'Validation Catman', 'Mise à jour D365', 'Appliqué'],
+    systemImpact: 'Mise à jour Trade Agreement D365. Impact Moving Average à surveiller. Date effet prix critique.',
+    accountingImpact: 'Impact COGS. Recalcul Moving Average. Impact valorisation stock existant.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'risk', step: 'Étape 1', title: 'Réception demande changement prix', meta: 'Demande fournisseur de hausse ou baisse — avec justification et date d\'effet souhaitée', actor: 'Acheteur' },
+        { type: 'buyer', step: 'Étape 2', title: 'Analyse impact marge', meta: 'Calcul impact sur marge brute, marge réelle, coût stock — Moving Average impacté', actor: 'Acheteur / Finance' },
+        { type: 'catman', step: 'Étape 3', title: 'Validation Catman', meta: 'Validation impact assortiment, cohérence gamme, positionnement prix de vente', actor: 'Category Manager' },
+        { type: 'decision', title: 'Changement accepté ?', meta: 'Impact marge acceptable ?', no: 'Négociation / refus', yes: 'Mise à jour D365' },
+        { type: 'system', step: 'Étape 4', title: 'Mise à jour Trade Agreement D365', meta: 'Nouveau prix, date d\'effet, gestion impact Moving Average et stock existant', actor: 'Acheteur / IT' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  },
+  {
+    id: 'ACHA13',
+    code: 'ACHA 13',
+    title: 'Blocage article',
+    domain: 'Achats',
+    stage: 'Référencement',
+    owner: 'Achats / Catman',
+    actors: ['Category Manager', 'Achats', 'Supply Chain', 'IT'],
+    priority: 'Medium',
+    status: 'À enrichir',
+    statusColor: 'purple',
+    description: 'Gérer le blocage ou la désactivation d\'un article : arrêt fournisseur, refonte catégorie, produit non rentable. Distinguer blocage achat (stop commande) vs blocage vente (stop caisse) et gérer le stock restant.',
+    objective: 'Désactiver proprement un article avec gestion du stock résiduel et impact POS.',
+    trigger: 'Demande fournisseur, arrêt produit, refonte catégorie annuelle.',
+    includes: ['Décision catégorie', 'Blocage vente', 'Liquidation stock'],
+    excludes: ['Suppression définitive article (archivage)'],
+    validations: ['Validation Catman', 'Validation Supply sur stock résiduel'],
+    metrics: ['Délai blocage', 'Stock résiduel liquidé', 'Impact POS'],
+    risks: ['Article encore vendu après blocage', 'Stock résiduel non géré', 'Impact POS non synchronisé'],
+    scenarios: ['Blocage achat uniquement', 'Blocage vente uniquement', 'Blocage total avec liquidation stock', 'Remplacement par nouvel article'],
+    statusFlow: ['Demande', 'Validation', 'Blocage achat', 'Blocage vente', 'Liquidation', 'Archivé'],
+    systemImpact: 'Désactivation dans D365. Blocage POS si blocage vente. Gestion stock résiduel.',
+    accountingImpact: 'Impact si dépréciation stock résiduel. Casse / démarque à provisionner si nécessaire.',
+    flow: {
+      nodes: [
+        { type: 'start', title: 'START' },
+        { type: 'catman', step: 'Étape 1', title: 'Décision blocage article', meta: 'Arrêt fournisseur, refonte catégorie, produit non rentable — préciser blocage achat vs vente', actor: 'Category Manager' },
+        { type: 'buyer', step: 'Étape 2', title: 'Analyse stock résiduel', meta: 'Quantité en stock, commandes en cours, délai liquidation estimé', actor: 'Supply Chain' },
+        { type: 'validation', step: 'Étape 3', title: 'Validation & blocage', meta: 'Blocage achat et/ou vente dans D365 selon décision — synchronisation POS', actor: 'Catman / IT' },
+        { type: 'system', step: 'Étape 4', title: 'Gestion stock résiduel', meta: 'Plan liquidation, dépréciation éventuelle, archivage article après épuisement stock', actor: 'Supply Chain / Finance' },
+        { type: 'end', title: 'END' }
+      ]
+    }
+  }
+];
+const retailProcesses = [
+  {
+    "id": "A1",
+    "code": "A1",
+    "title": "RÉCEPTION MARCHANDISE FOURNISSEUR EN",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Équipe réception magasin",
+    "actors": [
+      "Équipe réception magasin",
+      "Responsable magasin",
+      "Fournisseur / transporteur",
+      "Centrale achat (en cas d’écart majeur)"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Assurer la réception physique des marchandises livrées au magasin, garantir la conformité des quantités et mettre à jour correctement le stock dans D365.",
+    "objective": "Assurer la réception physique des marchandises livrées au magasin, garantir la conformité des quantités et mettre à jour correctement le stock dans D365.",
+    "trigger": "Arrivée du camion fournisseur au magasin.",
+    "includes": [
+      "Livraison directe fournisseur magasin",
+      "Scan palettes / colis",
+      "Contrôle quantités et DLC",
+      "Enregistrement réception dans D365",
+      "Gestion des écarts"
+    ],
+    "excludes": [
+      "Livraison plateforme centrale (traitée séparément)",
+      "WMS BLS"
+    ],
+    "validations": [
+      "Réception sans PO autorisée ? Non",
+      "Tolérance écart quantité ? Moins avec avoir/Plus refusée",
+      "Scan obligatoire ou saisie manuelle autorisée ? Scan obligatoire sinon on perds du",
+      "temps en caisse",
+      "Réception partielle autorisée ? En 24h tous les PO doivent être clôturés la même",
+      "journée"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Stock erroné",
+      "Survalorisation",
+      "Perte non détectée",
+      "Facture payée pour marchandise non reçue"
+    ],
+    "scenarios": [
+      "Réception complète conforme",
+      "Réception partielle",
+      "Réception avec écart",
+      "Réception avec produit endommagé",
+      "Réception avec ajustement coût ultérieur"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 1",
+          "title": "Réception physique",
+          "meta": "À l’arrivée du camion : | Vérification bon de livraison | Vérification référence commande",
+          "actor": "Équipe réception magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Scan palettes / colis",
+          "meta": "Si scan code SSCC ou code article : | Scan palette au produit | Vérification correspondance commande",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 3",
+          "title": "Saisie réception dans D365",
+          "meta": "Dans la commande fournisseur : | Enregistrement des quantités réellement reçues | Validation product receipt",
+          "actor": "Fournisseur / transporteur"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Gestion écarts réception",
+          "meta": "Si écart quantité : | Enregistrement quantité réellement reçue | Information fournisseur",
+          "actor": "Centrale achat (en cas d’écart majeur)"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "A2",
+    "code": "A2",
+    "title": "Réception plateforme → magasin",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Magasin (commande)",
+    "actors": [
+      "Magasin (commande)",
+      "Plateforme (préparation & expédition)",
+      "Responsable magasin",
+      "Contrôle stock"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Assurer le transfert correct des marchandises depuis la plateforme centrale vers le magasin, avec mise à jour fiable du stock et traçabilité complète.",
+    "objective": "Assurer le transfert correct des marchandises depuis la plateforme centrale vers le magasin, avec mise à jour fiable du stock et traçabilité complète.",
+    "trigger": "Besoin de réapprovisionnement magasin depuis la plateforme.",
+    "includes": [
+      "Commande magasin vers plateforme",
+      "Préparation plateforme",
+      "Expédition interne",
+      "Réception magasin",
+      "Gestion écarts"
+    ],
+    "excludes": [
+      "WMS BLS complexe",
+      "Transfert inter-enseignes"
+    ],
+    "validations": [
+      "Stock en transit activé ?",
+      "Scan obligatoire à réception ? Pas besoin",
+      "Tolérance écart interne ? Pas de tolérance, on remonte les écarts",
+      "Blocage si non réception sous X jours ?",
+      "Qui arbitre les écarts plateforme ? Controle de gestion"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Double stock",
+      "Stock fantôme en transit",
+      "Écart non détecté",
+      "Rupture magasin"
+    ],
+    "scenarios": [
+      "Transfert complet conforme",
+      "Transfert partiel",
+      "Transfert avec écart",
+      "Transfert non réceptionné",
+      "Transfert multi-articles"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 1",
+          "title": "Création commande interne",
+          "meta": "Le magasin crée une demande de réapprovisionnement vers la plateforme. | Dans D365 : | Sélection articles",
+          "actor": "Magasin (commande)"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Préparation plateforme",
+          "meta": "La plateforme : | Prépare les articles | Valide quantités expédiées",
+          "actor": "Plateforme (préparation & expédition)"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 3",
+          "title": "Expédition",
+          "meta": "Confirmation expédition dans D365. | Stock plateforme diminue | Stock transit augmente",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 4",
+          "title": "Réception magasin",
+          "meta": "À l’arrivée : | Contrôle quantités | Scan colis",
+          "actor": "Contrôle stock"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "A3",
+    "code": "A3",
+    "title": "Scan palettes / contrôle réception",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Équipe réception magasin",
+    "actors": [
+      "Équipe réception magasin",
+      "Responsable magasin"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Garantir que les marchandises livrées (fournisseur ou plateforme) correspondent exactement aux quantités et références attendues avant validation définitive dans D365.",
+    "objective": "Garantir que les marchandises livrées (fournisseur ou plateforme) correspondent exactement aux quantités et références attendues avant validation définitive dans D365.",
+    "trigger": "Arrivée marchandise en zone réception magasin (fournisseur ou plateforme).",
+    "includes": [
+      "Scan palette (SSCC si existant)",
+      "Scan colis",
+      "Scan article unitaire",
+      "Contrôle quantités",
+      "Contrôle DLC / lot",
+      "Contrôle état marchandise"
+    ],
+    "excludes": [
+      "Validation comptable",
+      "Traitement facture fournisseur"
+    ],
+    "validations": [
+      "Scan obligatoire ?",
+      "Gestion lot/DLC activée ?",
+      "Tolérance écart quantité ?",
+      "Qui valide refus partiel ?",
+      "Blocage si DLC trop courte ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Stock surévalué",
+      "Produit non conforme vendu",
+      "Pertes non détectées",
+      "Litiges financiers"
+    ],
+    "scenarios": [
+      "Scan palette conforme",
+      "Scan sans SSCC",
+      "Réception avec écart",
+      "Refus partiel",
+      "Produit DLC courte"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 1",
+          "title": "Identification livraison",
+          "meta": "Vérification référence commande ou transfert | Récupération document attendu dans D365",
+          "actor": "Équipe réception magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Scan palette / colis",
+          "meta": "Si SSCC présent : | Scan palette | Chargement automatique lignes attendues",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Contrôle quantités",
+          "meta": "Comparer : | Quantité attendue | Quantité réellement livrée",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 4",
+          "title": "Contrôle qualité & DLC",
+          "meta": "Vérification date limite de consommation | Vérification état emballage | Vérification température si nécessaire",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 5",
+          "title": "Enregistrement écarts",
+          "meta": "Si écart : | Quantité ajustée dans D365 | Motif renseigné",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "A4",
+    "code": "A4",
+    "title": "Gestion écarts réception",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Équipe réception magasin",
+    "actors": [
+      "Équipe réception magasin",
+      "Responsable magasin",
+      "Centrale achat (si litige majeur)",
+      "Fournisseur",
+      "Finance (indirectement)"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Traiter de manière structurée et traçable tout écart constaté lors de la réception marchandise afin de : Garantir l’exactitude du stock Éviter un paiement injustifié Assurer la traçabilité des litiges fournisseur Protéger la marge magasin",
+    "objective": "Traiter de manière structurée et traçable tout écart constaté lors de la réception marchandise afin de : Garantir l’exactitude du stock Éviter un paiement injustifié Assurer la traçabilité des litiges fournisseur Protéger la marge magasin",
+    "trigger": "Constat d’une différence entre la commande attendue et la marchandise réellement livrée lors du scan / contrôle réception.",
+    "includes": [
+      "Écart quantité (manquant / surplus)",
+      "Écart qualité (produit abîmé)",
+      "Écart DLC",
+      "Écart référence",
+      "Écart prix détecté à réception"
+    ],
+    "excludes": [
+      "Écart détecté à la facture (traité en contrôle facture fournisseur)"
+    ],
+    "validations": [
+      "Tolérance écart quantité (% ou unités) ?",
+      "Refus total obligatoire si écart > seuil ?",
+      "DLC minimum accepté ?",
+      "Qui valide surplus ?",
+      "Process formel de litige fournisseur ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Paiement marchandise non reçue",
+      "Stock fictif",
+      "Produits périmés en vente",
+      "Litiges fournisseurs non tracés"
+    ],
+    "scenarios": [
+      "Réception avec manquant",
+      "Réception avec surplus refusé",
+      "Réception avec produit abîmé",
+      "Réception DLC courte refusée",
+      "Réception validée partiellement"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 1",
+          "title": "Identification de l’écart",
+          "meta": "Types d’écarts possibles : | a) Manquant | b) Surplus",
+          "actor": "Équipe réception magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Saisie des quantités réelles dans D365",
+          "meta": "Le magasin doit enregistrer : | Quantité réellement acceptée | Quantité refusée",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 3",
+          "title": "Décision opérationnelle",
+          "meta": "Selon nature de l’écart : | Manquant : | Réception partielle",
+          "actor": "Centrale achat (si litige majeur)"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 4",
+          "title": "Communication fournisseur",
+          "meta": "Si écart significatif : | Information fournisseur | Demande avoir si nécessaire",
+          "actor": "Fournisseur"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Impact système",
+          "meta": "Si quantité inférieure : | Stock ajusté au réel | Si quantité supérieure acceptée :",
+          "actor": "Finance (indirectement)"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "A5",
+    "code": "A5",
+    "title": "Mise en stock réserve :",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Équipe magasin",
+    "actors": [
+      "Équipe magasin",
+      "Responsable réserve",
+      "Responsable magasin"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Assurer le rangement correct des marchandises réceptionnées dans la réserve magasin afin de : Garantir la disponibilité future en rayon Maintenir la cohérence entre stock physique et stock système Prévenir pertes et erreurs de localisation",
+    "objective": "Assurer le rangement correct des marchandises réceptionnées dans la réserve magasin afin de : Garantir la disponibilité future en rayon Maintenir la cohérence entre stock physique et stock système Prévenir pertes et erreurs de localisation",
+    "trigger": "Validation de la réception marchandise dans D365.",
+    "includes": [
+      "Déplacement physique marchandise vers réserve",
+      "Affectation emplacement (si gestion emplacement activée)",
+      "Organisation par catégorie / DLC / rotation"
+    ],
+    "excludes": [
+      "Mise en rayon (process suivant)",
+      "Inventaire"
+    ],
+    "validations": [
+      "Gestion emplacement activée ou non ?",
+      "Scan emplacement obligatoire ?",
+      "Process FIFO formalisé ?",
+      "Zone spécifique produits promo ?",
+      "Zone spécifique produits sensibles ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Produit non trouvé malgré stock",
+      "Mauvaise rotation → perte périssable",
+      "Stock théorique ≠ physique",
+      "Confusion entre promo / non promo"
+    ],
+    "scenarios": [
+      "Réception validée → mise réserve",
+      "Gestion emplacement activée",
+      "Produit DLC courte",
+      "Réorganisation réserve"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 1",
+          "title": "Validation réception",
+          "meta": "La réception doit être validée dans D365 avant rangement définitif. | Le stock devient disponible dans le magasin.",
+          "actor": "Équipe magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Organisation physique en réserve",
+          "meta": "Les marchandises sont : | Classées par catégorie | Identifiées clairement",
+          "actor": "Responsable réserve"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 3",
+          "title": "Gestion rotation (si applicable)",
+          "meta": "Application principe FIFO : | Ancien stock devant | Nouveau stock derrière",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "A6",
+    "code": "A6",
+    "title": "Mise en rayon",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Employé rayon",
+    "actors": [
+      "Employé rayon",
+      "Responsable rayon",
+      "Responsable magasin"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Assurer la disponibilité des produits en rayon à partir du stock réserve, en garantissant : Absence de rupture visible Bonne rotation des produits Cohérence entre stock système et réalité terrain",
+    "objective": "Assurer la disponibilité des produits en rayon à partir du stock réserve, en garantissant : Absence de rupture visible Bonne rotation des produits Cohérence entre stock système et réalité terrain",
+    "trigger": "Rupture ou faible niveau en rayon Planification quotidienne réassort Lancement promotion Approche date péremption",
+    "includes": [
+      "Réassort quotidien rayon",
+      "Mise en avant produits promo",
+      "Rotation produits (FIFO / DLC)",
+      "Mise à jour stock si gestion emplacement activée"
+    ],
+    "excludes": [
+      "Réception marchandise",
+      "Inventaire"
+    ],
+    "validations": [
+      "Génération liste réassort automatique ?",
+      "Seuil minimum paramétré ?",
+      "FIFO contrôlé ou manuel ?",
+      "Process contrôle DLC quotidien ?",
+      "Fréquence réassort ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Rupture malgré stock réserve",
+      "Vente produit périmé",
+      "Mauvaise rotation",
+      "Prix rayon incohérent"
+    ],
+    "scenarios": [
+      "Réassort manuel",
+      "Réassort avec seuil automatique",
+      "Produit DLC proche",
+      "Produit promo",
+      "Contrôle prix cohérent POS"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 1",
+          "title": "Identification besoin réassort",
+          "meta": "Détection via : | Observation terrain | Liste réassort générée par système",
+          "actor": "Employé rayon"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Prélèvement en réserve",
+          "meta": "L’employé : | Identifie produit en réserve | Applique FIFO (ancien stock d’abord)",
+          "actor": "Responsable rayon"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 3",
+          "title": "Mise en rayon",
+          "meta": "Placement produit | Respect facing | Mise en avant si promo",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 4",
+          "title": "Contrôle disponibilité",
+          "meta": "Vérifier : | Pas de produit périmé | Bonne rotation",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "A7",
+    "code": "A7",
+    "title": "Rotation produits (DLC / FIFO)",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Employé rayon",
+    "actors": [
+      "Employé rayon",
+      "Responsable rayon",
+      "Responsable magasin"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Garantir la rotation optimale des produits afin de : Réduire les pertes liées à la péremption Respecter les règles sanitaires Préserver la marge magasin Assurer la qualité produit pour le client",
+    "objective": "Garantir la rotation optimale des produits afin de : Réduire les pertes liées à la péremption Respecter les règles sanitaires Préserver la marge magasin Assurer la qualité produit pour le client",
+    "trigger": "Mise en rayon Réassort quotidien Contrôle périodique DLC Approche date péremption",
+    "includes": [
+      "Produits avec DLC (Date Limite de Consommation)",
+      "Produits à rotation rapide",
+      "Application du principe FIFO (First In – First Out)",
+      "Contrôle régulier des dates"
+    ],
+    "excludes": [
+      "Ajustement comptable des pertes (process A8)"
+    ],
+    "validations": [
+      "Gestion lot/DLC activée dans D365 ?",
+      "Contrôle DLC quotidien formalisé ?",
+      "Seuil “proche péremption” défini (ex : J-2) ?",
+      "Politique remise produits courts ?",
+      "Traçabilité retrait obligatoire ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Vente produit périmé",
+      "Perte importante non anticipée",
+      "Non conformité sanitaire",
+      "Marge détériorée"
+    ],
+    "scenarios": [
+      "Produit avec lot suivi",
+      "Produit sans lot",
+      "Produit proche péremption",
+      "Produit DLC dépassée retiré",
+      "FIFO appliqué correctement"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 1",
+          "title": "Identification des produits sensibles",
+          "meta": "Catégories concernées : | Produits frais | Produits surgelés",
+          "actor": "Employé rayon"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Application FIFO en réserve",
+          "meta": "Lors du réassort : | Ancien stock placé devant | Nouveau stock placé derrière",
+          "actor": "Responsable rayon"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Contrôle quotidien DLC",
+          "meta": "Vérification périodique : | Identification produits proches péremption | Décision commerciale possible (remise)",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 4",
+          "title": "Gestion produits proches péremption",
+          "meta": "Options : | Promotion courte durée | Mise en zone spécifique",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "A8",
+    "code": "A8",
+    "title": "Sortie casse / perte / péremption",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Employé rayon",
+    "actors": [
+      "Employé rayon",
+      "Responsable magasin",
+      "Contrôle de gestion"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Assurer la sortie contrôlée des articles non vendables afin de : Maintenir un stock exact Éviter la vente de produits non conformes Mesurer correctement les pertes Protéger la marge magasin",
+    "objective": "Assurer la sortie contrôlée des articles non vendables afin de : Maintenir un stock exact Éviter la vente de produits non conformes Mesurer correctement les pertes Protéger la marge magasin",
+    "trigger": "Constat d’un produit non vendable lors : Mise en rayon Contrôle DLC Manipulation Inventaire Incident en magasin",
+    "includes": [
+      "Produits endommagés (casse)",
+      "Produits volés (perte inconnue identifiée)",
+      "Produits périmés",
+      "Produits impropres à la vente"
+    ],
+    "excludes": [
+      "Ajustements issus inventaire global (traité dans process Inventaire)"
+    ],
+    "validations": [
+      "Motifs standard codifiés ?",
+      "Validation obligatoire au-delà d’un seuil ?",
+      "Contrôle double signature ?",
+      "Process spécifique produits sensibles ?",
+      "Reporting pertes par catégorie ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Pertes cachées",
+      "Fraude interne",
+      "Stock théorique incorrect",
+      "Marge artificiellement élevée"
+    ],
+    "scenarios": [
+      "Sortie casse simple",
+      "Sortie produit périmé",
+      "Sortie avec lot",
+      "Sortie multi-articles",
+      "Sortie validée par responsable"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 1",
+          "title": "Identification produit non vendable",
+          "meta": "Produit cassé | Emballage ouvert | DLC dépassée",
+          "actor": "Employé rayon"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Saisie sortie dans D365",
+          "meta": "Enregistrement d’un mouvement de sortie : | Sélection article | Quantité",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Validation mouvement",
+          "meta": "Après validation : | Diminution stock magasin",
+          "actor": "Contrôle de gestion"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 4",
+          "title": "Traitement physique",
+          "meta": "Selon procédure interne : | Destruction | Mise au rebut",
+          "actor": "Contrôle de gestion"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "A9",
+    "code": "A9",
+    "title": "Transfert inter-magasins",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Magasin émetteur",
+    "actors": [
+      "Magasin émetteur",
+      "Magasin receveur",
+      "Responsable magasin",
+      "Contrôle stock"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre le transfert contrôlé de marchandises entre deux magasins afin de : Optimiser les stocks Réduire les ruptures Éviter les pertes Maintenir la cohérence comptable",
+    "objective": "Permettre le transfert contrôlé de marchandises entre deux magasins afin de : Optimiser les stocks Réduire les ruptures Éviter les pertes Maintenir la cohérence comptable",
+    "trigger": "Rupture dans un magasin Surstock dans un autre Produit proche péremption à redistribuer Décision exploitation",
+    "includes": [
+      "Transfert magasin → magasin",
+      "Transfert partiel",
+      "Transfert avec écart",
+      "Transfert produit périssable"
+    ],
+    "excludes": [
+      "Transfert plateforme (process A2)"
+    ],
+    "validations": [
+      "Stock en transit activé ?",
+      "Workflow validation transfert ?",
+      "Autorisation transfert produit DLC courte ?",
+      "Seuil validation responsable ?",
+      "Fréquence transfert autorisée ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Double comptage stock",
+      "Stock en transit bloqué",
+      "Produit perdu non détecté",
+      "Déséquilibre magasin"
+    ],
+    "scenarios": [
+      "Transfert simple conforme",
+      "Transfert partiel",
+      "Transfert avec écart",
+      "Transfert produit périssable",
+      "Transfert multi-articles"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 1",
+          "title": "Création demande de transfert",
+          "meta": "Dans D365 : | Sélection magasin destination | Sélection articles",
+          "actor": "Magasin émetteur"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Préparation transfert (magasin émetteur)",
+          "meta": "Prélèvement en réserve | Application FIFO si périssable | Validation expédition",
+          "actor": "Magasin receveur"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 3",
+          "title": "Transport",
+          "meta": "Livraison interne | Bon de transfert joint",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 4",
+          "title": "Réception magasin receveur",
+          "meta": "À l’arrivée : | Contrôle quantités | Validation réception dans D365",
+          "actor": "Contrôle stock"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 5",
+          "title": "Gestion écarts",
+          "meta": "Si écart : | Ajustement quantité reçue | Investigation magasin émetteur",
+          "actor": "Contrôle stock"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "A10",
+    "code": "A10",
+    "title": "Retour fournisseur",
+    "world": "Retail",
+    "domain": "Back Office Stock & Flux",
+    "stage": "Exécution",
+    "owner": "Responsable magasin",
+    "actors": [
+      "Responsable magasin",
+      "Équipe réception",
+      "Fournisseur",
+      "Comptabilité fournisseur"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre le retour contrôlé de marchandises au fournisseur afin de : Corriger une réception non conforme Retourner des produits défectueux Gérer des produits invendables selon accord fournisseur Ajuster correctement le stock et la comptabilité",
+    "objective": "Permettre le retour contrôlé de marchandises au fournisseur afin de : Corriger une réception non conforme Retourner des produits défectueux Gérer des produits invendables selon accord fournisseur Ajuster correctement le stock et la comptabilité",
+    "trigger": "Constat d’un produit à retourner suite à : Écart réception Défaut qualité Accord fournisseur Politique retour spécifique",
+    "includes": [
+      "Retour suite à réception non conforme",
+      "Retour produit défectueux",
+      "Retour produit proche péremption si accord",
+      "Retour partiel ou total"
+    ],
+    "excludes": [
+      "Avoir commercial sans retour physique",
+      "RFA"
+    ],
+    "validations": [
+      "Retour sans autorisation centrale autorisé ?",
+      "Seuil validation responsable ?",
+      "Produits périssables retour possible ?",
+      "Délai maximum retour ?",
+      "Suivi litige centralisé ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Stock faux",
+      "Avoir non reçu",
+      "Produit sorti sans traçabilité",
+      "Litige non suivi"
+    ],
+    "scenarios": [
+      "Retour partiel réception récente",
+      "Retour après plusieurs semaines",
+      "Retour avec avoir",
+      "Retour produit périssable",
+      "Retour multi-articles"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 1",
+          "title": "Identification produit à retourner",
+          "meta": "Motifs possibles : | Défaut qualité | Produit abîmé",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 2",
+          "title": "Création demande de retour dans D365",
+          "meta": "Création d’un Return Order fournisseur : | Sélection fournisseur | Sélection articles",
+          "actor": "Équipe réception"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 3",
+          "title": "Sortie physique des produits",
+          "meta": "Préparation colis : | Séparation des produits | Identification claire",
+          "actor": "Fournisseur"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 4",
+          "title": "Validation expédition retour",
+          "meta": "Dans D365 : | Validation expédition | Stock magasin diminue",
+          "actor": "Comptabilité fournisseur"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Réception avoir fournisseur",
+          "meta": "À réception de l’avoir : | Débit : Fournisseur | Crédit : Compte retour fournisseur",
+          "actor": "Comptabilité fournisseur"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "C1",
+    "code": "C1",
+    "title": "Commande magasin vers fournisseur",
+    "world": "Retail",
+    "domain": "Commande Magasin",
+    "stage": "Exécution",
+    "owner": "Responsable magasin",
+    "actors": [
+      "Responsable magasin",
+      "Responsable rayon"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre au magasin de passer commande directement à un fournisseur afin de : Réapprovisionner rapidement Gérer des produits locaux Gérer fournisseur locaux et Marchés Corriger une rupture urgente",
+    "objective": "Permettre au magasin de passer commande directement à un fournisseur afin de : Réapprovisionner rapidement Gérer des produits locaux Gérer fournisseur locaux et Marchés Corriger une rupture urgente",
+    "trigger": "Rupture constatée Seuil minimum atteint Produit local spécifique",
+    "includes": [
+      "Création commande fournisseur magasin",
+      "Validation interne",
+      "Suivi réception",
+      "Lien avec stock"
+    ],
+    "excludes": [
+      "Commande centrale nationale",
+      "Négociation fournisseur"
+    ],
+    "validations": [
+      "Seuil automatique activé ? Oui sous validation",
+      "Validation centrale obligatoire ? Validé oar le Responsable Magasin",
+      "Budget magasin contrôlé ?",
+      "Fournisseurs autorisés ? A créer et valider par les Achats selon processus achat"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "(tous ces points sont sous différents KPI suivi par le controle de gestion et",
+      "RM pour les primes magasins Days on Hand, fill rate, zero movers…)",
+      "Surstock",
+      "Commande hors budget",
+      "Mauvaise rotation"
+    ],
+    "scenarios": [
+      "Mettre un planning commande par magasin et par fournisseur à appliquer sur nos l’ensemble",
+      "des magasins"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Identification besoin",
+          "meta": "Analyse stock disponible | Vérification seuil minimum | Analyse ventes récentes",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Création commande dans D365",
+          "meta": "Sélection fournisseur | Sélection articles | Quantités",
+          "actor": "Responsable rayon"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Envoi commande",
+          "meta": "Transmission au fournisseur.",
+          "actor": "Responsable rayon"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 4",
+          "title": "Suivi livraison",
+          "meta": "À réception → Process A1/A3.",
+          "actor": "Responsable rayon"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "C2",
+    "code": "C2",
+    "title": "Commande magasin vers plateforme",
+    "world": "Retail",
+    "domain": "Commande Magasin",
+    "stage": "Exécution",
+    "owner": "Responsable magasin",
+    "actors": [
+      "Responsable magasin",
+      "Système D365",
+      "Plateforme"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre au magasin de se réapprovisionner depuis la plateforme centrale.",
+    "objective": "Permettre au magasin de se réapprovisionner depuis la plateforme centrale.",
+    "trigger": "Seuil minimum atteint Plan de réassort automatique Prévision promotion",
+    "includes": [
+      "Génération demande",
+      "Calcul réassort automatique",
+      "Validation",
+      "Suivi transfert"
+    ],
+    "excludes": [],
+    "validations": [
+      "Réassort automatique activé ? Oui",
+      "Paramétrage Min/Max article ? Oui",
+      "Prise en compte ventes futures ? Promo et saisonnalité à gérer par le DP",
+      "Délai livraison plateforme ? à valider par la plateforme et le Dir Exploitation"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Rupture",
+      "Surstock",
+      "Mauvais calcul Min/Max"
+    ],
+    "scenarios": [
+      "Commande auto Min/Max",
+      "Commande manuelle",
+      "Commande promo",
+      "Commande multi-articles"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Calcul besoin",
+          "meta": "Méthodes possibles : | Min/Max | Basé sur ventes historiques",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Génération commande interne",
+          "meta": "Création document transfert.",
+          "actor": "Système D365"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Validation",
+          "meta": "Validation responsable si seuil dépassé.",
+          "actor": "Plateforme"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 4",
+          "title": "Suivi livraison",
+          "meta": "Réception via Process A2.",
+          "actor": "Plateforme"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "C3",
+    "code": "C3",
+    "title": "Gestion rupture",
+    "world": "Retail",
+    "domain": "Commande Magasin",
+    "stage": "Exécution",
+    "owner": "Employé rayon",
+    "actors": [
+      "Employé rayon",
+      "Responsable magasin",
+      "Centrale"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Détecter, traiter et réduire les situations de rupture produit en magasin.",
+    "objective": "Détecter, traiter et réduire les situations de rupture produit en magasin.",
+    "trigger": "Produit absent en rayon Stock système = 0 Alerte seuil minimum",
+    "includes": [
+      "Détection rupture rayon",
+      "Vérification stock réserve",
+      "Déclenchement réassort",
+      "Analyse cause"
+    ],
+    "excludes": [],
+    "validations": [
+      "Seuil rupture paramétré ? Oui",
+      "Alerte automatique ? Oui",
+      "Reporting rupture quotidien ? Oui",
+      "Process correction stock rapide ? Correction uniquement à la centrale au moment de",
+      "l’inventaire (Risque de vol)"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Perte CA",
+      "Client insatisfait",
+      "Surstock en compensation"
+    ],
+    "scenarios": [
+      "Rupture réelle",
+      "Rupture apparente",
+      "Rupture promo",
+      "Ajustement Min/Max"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Détection rupture",
+          "meta": "Cas : | Rupture réelle | Rupture apparente (stock réserve)",
+          "actor": "Employé rayon"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Vérification stock",
+          "meta": "Vérifier réserve | Vérifier stock système | Vérifier erreur inventaire",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Action corrective",
+          "meta": "Selon cas : | Réassort immédiat | Commande fournisseur",
+          "actor": "Centrale"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 4",
+          "title": "Analyse cause",
+          "meta": "Causes possibles : | Mauvais Min/Max | Erreur réception",
+          "actor": "Centrale"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "C4",
+    "code": "C4",
+    "title": "Transfert inter-magasin",
+    "world": "Retail",
+    "domain": "Commande Magasin",
+    "stage": "Exécution",
+    "owner": "Magasin demandeur",
+    "actors": [
+      "Magasin demandeur",
+      "Magasin source",
+      "Responsable magasin",
+      "Supply / exploitation",
+      "D365 / ERP"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre à un magasin de demander et recevoir une partie du stock disponible d’un autre magasin afin de : couvrir une rupture ou un risque de rupture réduire un surstock dans le magasin source améliorer la rotation des stocks éviter une commande fournisseur inutile Ce process pe",
+    "objective": "Permettre à un magasin de demander et recevoir une partie du stock disponible d’un autre magasin afin de : couvrir une rupture ou un risque de rupture réduire un surstock dans le magasin source améliorer la rotation des stocks éviter une commande fournisseur inutile Ce process permet d’optimiser le stock global réseau.",
+    "trigger": "Le process est déclenché lorsqu’un magasin identifie : une rupture ou un risque de rupture sur un article un besoin urgent non couvert par la plateforme l’existence d’un surstock dans un autre magasin un besoin d’écoulem",
+    "includes": [
+      "demande de transfert entre magasins",
+      "validation du magasin source",
+      "préparation de la marchandise",
+      "expédition",
+      "réception dans le magasin destinataire",
+      "mise à jour du stock dans D365"
+    ],
+    "excludes": [
+      "transfert entre plateforme et magasin",
+      "retour fournisseur",
+      "commande fournisseur classique"
+    ],
+    "validations": [],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [],
+    "scenarios": [],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Identification du besoin",
+          "meta": "Le magasin demandeur identifie un besoin sur un article. | Exemples : | stock à zéro",
+          "actor": "Magasin demandeur"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Recherche du magasin source",
+          "meta": "Le système ou l’exploitation identifie un autre magasin disposant : | d’un stock disponible suffisant | d’un surstock",
+          "actor": "Magasin source"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Création de la demande de transfert",
+          "meta": "Le magasin demandeur initie une demande de transfert. | Informations minimales : | magasin demandeur",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 4",
+          "title": "Validation du transfert",
+          "meta": "Le magasin source ou l’exploitation valide : | disponibilité réelle du stock | quantité transférable",
+          "actor": "Supply / exploitation"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 5",
+          "title": "Préparation et expédition",
+          "meta": "Le magasin source prépare les articles à transférer : | prélèvement du stock | contrôle quantités",
+          "actor": "D365 / ERP"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 6",
+          "title": "Sortie de stock du magasin source",
+          "meta": "Le système enregistre la sortie de stock du magasin source. | diminution du stock source | traçabilité du transfert",
+          "actor": "D365 / ERP"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 7",
+          "title": "Réception par le magasin destinataire",
+          "meta": "Le magasin destinataire réceptionne les articles transférés : | contrôle quantités reçues | contrôle état",
+          "actor": "D365 / ERP"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B1",
+    "code": "B1",
+    "title": "Cycle encaissement magasin",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "Caissier",
+    "actors": [
+      "Caissier",
+      "Client",
+      "Responsable caisse (en cas d’override)"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre la réalisation d’une vente en magasin via le POS, en assurant : Enregistrement correct des articles Application correcte des prix et promotions Encaissement conforme Mise à jour stock Génération correcte des impacts comptables",
+    "objective": "Permettre la réalisation d’une vente en magasin via le POS, en assurant : Enregistrement correct des articles Application correcte des prix et promotions Encaissement conforme Mise à jour stock Génération correcte des impacts comptables",
+    "trigger": "Client se présente en caisse avec des articles.",
+    "includes": [
+      "Scan article",
+      "Application prix",
+      "Application promotion",
+      "Application fidélité (earn / burn si activé)",
+      "Encaissement",
+      "Impression ticket"
+    ],
+    "excludes": [
+      "Clôture caisse (process B2)",
+      "Retour client (process distinct)"
+    ],
+    "validations": [],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [],
+    "scenarios": [],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Ouverture transaction",
+          "meta": "Le caissier ouvre une nouvelle vente sur le POS.",
+          "actor": "Caissier"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Scan des articles",
+          "meta": "Pour chaque article : | Scan code-barres | Le POS récupère :",
+          "actor": "Client"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Application promotions",
+          "meta": "Le système : | Vérifie conditions promo | Applique remise automatiquement",
+          "actor": "Responsable caisse (en cas d’override)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 4",
+          "title": "Identification fidélité (si applicable)",
+          "meta": "Scan carte client | Recherche par téléphone | Le système :",
+          "actor": "Responsable caisse (en cas d’override)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 5",
+          "title": "Totalisation panier",
+          "meta": "Le POS affiche : | Total TTC | Total HT",
+          "actor": "Responsable caisse (en cas d’override)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 6",
+          "title": "Encaissement",
+          "meta": "Le client choisit moyen de paiement : | Cash | Carte",
+          "actor": "Responsable caisse (en cas d’override)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 7",
+          "title": "Impression ticket",
+          "meta": "Le ticket affiche : | Détail articles | Remises",
+          "actor": "Responsable caisse (en cas d’override)"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B2",
+    "code": "B2",
+    "title": "Clôture caisse & écarts",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "Caissier",
+    "actors": [
+      "Caissier",
+      "Chef de caisse",
+      "Responsable magasin",
+      "Finance (indirectement)"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Assurer la clôture correcte d’un shift ou d’une journée de caisse en garantissant : Cohérence entre ventes enregistrées et encaissements réels Détection et traitement des écarts Sécurisation du cash Préparation du Retail Statement",
+    "objective": "Assurer la clôture correcte d’un shift ou d’une journée de caisse en garantissant : Cohérence entre ventes enregistrées et encaissements réels Détection et traitement des écarts Sécurisation du cash Préparation du Retail Statement",
+    "trigger": "Fin de shift caissier Fin de journée magasin",
+    "includes": [
+      "Clôture de shift",
+      "Comptage cash",
+      "Vérification paiements carte",
+      "Gestion écarts",
+      "Préparation dépôt"
+    ],
+    "excludes": [
+      "Rapprochement bancaire (Finance)",
+      "Posting comptable final (Retail Statement)"
+    ],
+    "validations": [
+      "Multi-shift par jour ?",
+      "Seuil tolérance écart ?",
+      "Justification écrite obligatoire ?",
+      "Double validation au-delà d’un montant ?",
+      "Blocage si écart non résolu ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Dérive cash",
+      "Fraude interne",
+      "Écart non tracé",
+      "Désalignement POS / GL"
+    ],
+    "scenarios": [
+      "Clôture sans écart",
+      "Clôture avec manque",
+      "Clôture avec surplus",
+      "Multi-shift",
+      "Clôture avec paiement mix"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Fermeture transaction en cours",
+          "meta": "Le caissier s’assure qu’aucune transaction n’est ouverte.",
+          "actor": "Caissier"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Déclaration comptage cash",
+          "meta": "Le caissier : | Compte le cash physique | Saisit le montant réel dans le POS",
+          "actor": "Chef de caisse"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Vérification paiements électroniques",
+          "meta": "Contrôle : | Total carte selon POS | Total carte selon TPE",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Calcul écarts",
+          "meta": "Le système calcule : | Écart = Montant théorique – Montant réel | Équilibre",
+          "actor": "Finance (indirectement)"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 5",
+          "title": "Traitement écarts",
+          "meta": "Si écart sous seuil : | Validation possible | Si écart au-dessus seuil :",
+          "actor": "Finance (indirectement)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 6",
+          "title": "Clôture shift",
+          "meta": "Le shift est fermé. | Plus aucune vente possible sur ce numéro de caisse.",
+          "actor": "Finance (indirectement)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 7",
+          "title": "Préparation dépôt",
+          "meta": "Mise sous enveloppe | Enregistrement dépôt prévu",
+          "actor": "Finance (indirectement)"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B3",
+    "code": "B3",
+    "title": "Retour client & avoir",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "Caissier",
+    "actors": [
+      "Caissier",
+      "Responsable magasin (si validation requise)",
+      "Client"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre le traitement d’un retour client en magasin tout en garantissant : Correction du chiffre d’affaires Correction TVA Ajustement stock Traçabilité anti-fraude",
+    "objective": "Permettre le traitement d’un retour client en magasin tout en garantissant : Correction du chiffre d’affaires Correction TVA Ajustement stock Traçabilité anti-fraude",
+    "trigger": "Client demande le remboursement d’un article déjà acheté.",
+    "includes": [
+      "Retour avec ticket",
+      "Retour partiel",
+      "Retour sans ticket (si autorisé)",
+      "Remboursement cash",
+      "Remboursement carte",
+      "Émission avoir"
+    ],
+    "excludes": [
+      "Litige fournisseur",
+      "Retour inter-magasins"
+    ],
+    "validations": [],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [],
+    "scenarios": [],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Identification de la transaction",
+          "meta": "Cas 1 : Retour avec ticket | Scan ticket | Sélection article à retourner",
+          "actor": "Caissier"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Vérification conditions retour",
+          "meta": "Contrôles : | Délai autorisé | État du produit",
+          "actor": "Responsable magasin (si validation requise)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Enregistrement retour POS",
+          "meta": "Le POS : | Annule la ligne correspondante | Recalcule TVA",
+          "actor": "Client"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 4",
+          "title": "Mode de remboursement",
+          "meta": "1. Remboursement cash | 2. Remboursement carte | 3. Avoir magasin",
+          "actor": "Client"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 5",
+          "title": "Impact COGS",
+          "meta": "Si produit réintégré : | Débit : Inventory | Crédit : COGS",
+          "actor": "Client"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B4",
+    "code": "B4",
+    "title": "Annulation ticket et annulation Ligne",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "Caissier",
+    "actors": [
+      "Caissier",
+      "Responsable caisse (si validation requise)"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre la correction immédiate d’une erreur de saisie en caisse avant finalisation définitive de la transaction, tout en garantissant : Traçabilité Contrôle anti-fraude Cohérence des montants",
+    "objective": "Permettre la correction immédiate d’une erreur de saisie en caisse avant finalisation définitive de la transaction, tout en garantissant : Traçabilité Contrôle anti-fraude Cohérence des montants",
+    "trigger": "Erreur de scan Article non souhaité Mauvais prix détecté avant paiement Transaction annulée par client",
+    "includes": [
+      "Annulation ligne avant paiement",
+      "Annulation ticket complet avant paiement",
+      "Annulation ticket après paiement (void) selon autorisation"
+    ],
+    "excludes": [
+      "Retour client après finalisation (process B3)"
+    ],
+    "validations": [
+      "Annulation ligne libre ou contrôlée ?",
+      "Annulation ticket après paiement autorisée ?",
+      "Seuil validation responsable ?",
+      "Obligation motif ?",
+      "Reporting annulations quotidien ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Fraude interne",
+      "Annulation abusive",
+      "Manipulation chiffre d’affaires",
+      "Écart caisse"
+    ],
+    "scenarios": [
+      "Annulation ligne simple",
+      "Annulation panier complet",
+      "Void ticket après paiement",
+      "Annulation avec promo active",
+      "Annulation avec paiement multi-moyens"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Sélection ligne",
+          "meta": "Le caissier sélectionne la ligne article à annuler.",
+          "actor": "Caissier"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Suppression ligne",
+          "meta": "Le POS : | Retire l’article | Recalcule total panier",
+          "actor": "Responsable caisse (si validation requise)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Annulation transaction",
+          "meta": "Le caissier annule l’intégralité du panier.",
+          "actor": "Caissier"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Fermeture transaction",
+          "meta": "La transaction est supprimée. | Aucun impact stock ni comptable. | C. Annulation ticket après paiement (Void)",
+          "actor": "Responsable caisse (si validation requise)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Sélection ticket",
+          "meta": "Recherche transaction finalisée.",
+          "actor": "Caissier"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 2",
+          "title": "Validation responsable",
+          "meta": "Selon seuil montant : | Validation requise.",
+          "actor": "Responsable caisse (si validation requise)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Annulation complète",
+          "meta": "Stock : | Quantités annulées | Comptable (via statement) :",
+          "actor": "Responsable caisse (si validation requise)"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B5",
+    "code": "B5",
+    "title": "Paiement multi-moyens",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "Caissier",
+    "actors": [
+      "Caissier",
+      "Client",
+      "Responsable caisse (si override)"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre au client de régler une transaction en combinant plusieurs moyens de paiement tout en garantissant : Exactitude des montants Traçabilité des encaissements Cohérence comptable Gestion correcte des remboursements",
+    "objective": "Permettre au client de régler une transaction en combinant plusieurs moyens de paiement tout en garantissant : Exactitude des montants Traçabilité des encaissements Cohérence comptable Gestion correcte des remboursements",
+    "trigger": "Le client souhaite payer en plusieurs moyens.",
+    "includes": [
+      "Cash + carte",
+      "Carte + avoir",
+      "Cash + carte + avoir",
+      "Paiement partiel",
+      "Remboursement monnaie"
+    ],
+    "excludes": [
+      "Fidélité burn (traité séparément)",
+      "Annulation après paiement (B4)"
+    ],
+    "validations": [],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [],
+    "scenarios": [],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Total panier",
+          "meta": "Le POS affiche : | Total TTC | Total remises",
+          "actor": "Caissier"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Saisie premier moyen de paiement",
+          "meta": "Le client choisit un premier mode (ex : carte 50 DH). | Le POS : | Enregistre le montant",
+          "actor": "Client"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Saisie second moyen de paiement",
+          "meta": "Exemple : | Total panier : 120 DH | Carte : 50 DH",
+          "actor": "Responsable caisse (si override)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 4",
+          "title": "Finalisation transaction",
+          "meta": "Une fois le montant total atteint : | Transaction validée | Ticket imprimé",
+          "actor": "Responsable caisse (si override)"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B6",
+    "code": "B6",
+    "title": "Fidélité – Earn",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "Client",
+    "actors": [
+      "Client",
+      "Caissier",
+      "Système fidélité",
+      "Finance (indirectement)"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre au client d’accumuler des avantages (cagnotte, points, cashback) lors d’un achat afin de : Encourager la récurrence Augmenter la fréquence d’achat Collecter des données client",
+    "objective": "Permettre au client d’accumuler des avantages (cagnotte, points, cashback) lors d’un achat afin de : Encourager la récurrence Augmenter la fréquence d’achat Collecter des données client",
+    "trigger": "Client identifié en caisse et transaction validée.",
+    "includes": [
+      "Identification client en caisse",
+      "Calcul montant à créditer",
+      "Enregistrement cagnotte",
+      "Affichage gain sur ticket"
+    ],
+    "excludes": [
+      "Utilisation cagnotte (Burn – B7)",
+      "Programme inter-enseignes complexe"
+    ],
+    "validations": [],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [],
+    "scenarios": [],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Identification client",
+          "meta": "Avant paiement : | Scan carte fidélité ou | Recherche par téléphone",
+          "actor": "Client"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Calcul éligibilité",
+          "meta": "Le système vérifie : | Articles éligibles | Conditions promotionnelles",
+          "actor": "Caissier"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Calcul montant Earn",
+          "meta": "Exemple : | Panier HT éligible : 200 DH | Taux : 5%",
+          "actor": "Système fidélité"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 4",
+          "title": "Validation transaction",
+          "meta": "Une fois la vente payée : | Cagnotte créditée | Historique mis à jour",
+          "actor": "Finance (indirectement)"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B7",
+    "code": "B7",
+    "title": "Fidélité – Burn",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "Client",
+    "actors": [
+      "Client",
+      "Caissier",
+      "Système fidélité",
+      "Finance"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre au client d’utiliser tout ou partie de sa cagnotte fidélité lors d’un achat, en garantissant : Application correcte de la réduction Traçabilité financière Mise à jour correcte du solde fidélité Impact comptable maîtrisé",
+    "objective": "Permettre au client d’utiliser tout ou partie de sa cagnotte fidélité lors d’un achat, en garantissant : Application correcte de la réduction Traçabilité financière Mise à jour correcte du solde fidélité Impact comptable maîtrisé",
+    "trigger": "Client identifié en caisse avec solde cagnotte disponible et souhaitant l’utiliser.",
+    "includes": [
+      "Utilisation partielle cagnotte",
+      "Utilisation totale cagnotte",
+      "Burn avec paiement complémentaire",
+      "Burn multi-moyens"
+    ],
+    "excludes": [
+      "Earn (process B6)",
+      "Compensation inter-enseignes (hors scope V1)"
+    ],
+    "validations": [],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [],
+    "scenarios": [],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Identification client",
+          "meta": "Scan carte fidélité ou identification téléphone. | Le POS affiche : | Solde cagnotte disponible",
+          "actor": "Client"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Choix montant à utiliser",
+          "meta": "Burn total du solde | Burn partiel | Burn plafonné par règle",
+          "actor": "Caissier"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Application réduction",
+          "meta": "Le POS : | Applique réduction panier | Recalcule total TTC",
+          "actor": "Système fidélité"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 4",
+          "title": "Finalisation paiement",
+          "meta": "Client paie le solde par : | Cash | Carte",
+          "actor": "Finance"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B8",
+    "code": "B8",
+    "title": "Gestion promotions en caisse",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "POS",
+    "actors": [
+      "POS",
+      "Caissier",
+      "Client"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Garantir que toute promotion paramétrée soit correctement appliquée au moment du passage en caisse.",
+    "objective": "Garantir que toute promotion paramétrée soit correctement appliquée au moment du passage en caisse.",
+    "trigger": "Scan article ou atteinte condition promo (ex : 2+1).",
+    "includes": [
+      "Détection automatique promo",
+      "Application remise ligne",
+      "Application remise panier",
+      "Gestion conflits promo",
+      "Gestion cumul promo + fidélité"
+    ],
+    "excludes": [
+      "Création promotion",
+      "Activation promotion"
+    ],
+    "validations": [
+      "Ordre priorité promo ?",
+      "Cumul autorisé ?",
+      "Promo + Burn autorisé ?",
+      "Promo + Earn calculé avant ou après remise ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Promo non appliquée",
+      "Double remise",
+      "Mauvais impact marge",
+      "Conflit client"
+    ],
+    "scenarios": [
+      "Promo simple",
+      "2+1",
+      "Promo panier",
+      "Promo + fidélité",
+      "Conflit promo"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Scan article",
+          "meta": "Le POS vérifie : | Promo active | Conditions remplies",
+          "actor": "POS"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Application automatique",
+          "meta": "Exemples : | -10% | 2+1 gratuit",
+          "actor": "Caissier"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 3",
+          "title": "Gestion conflits",
+          "meta": "Si plusieurs promos : | Application priorité définie | Blocage cumul si interdit",
+          "actor": "Client"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 4",
+          "title": "Affichage ticket",
+          "meta": "Le ticket doit afficher : | Promo appliquée | Montant réduction",
+          "actor": "Client"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B9",
+    "code": "B9",
+    "title": "Commande client type Glovo",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "Plateforme (Glovo)",
+    "actors": [
+      "Plateforme (Glovo)",
+      "Magasin",
+      "Préparateur",
+      "Client"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre le traitement des commandes issues d’une plateforme externe (Glovo, etc.) via le POS.",
+    "objective": "Permettre le traitement des commandes issues d’une plateforme externe (Glovo, etc.) via le POS.",
+    "trigger": "Réception commande via plateforme.",
+    "includes": [
+      "Réception commande externe",
+      "Préparation commande",
+      "Validation encaissement",
+      "Sortie stock"
+    ],
+    "excludes": [
+      "Intégration technique API détaillée"
+    ],
+    "validations": [],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [],
+    "scenarios": [],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Réception commande",
+          "meta": "La commande arrive : | Liste articles | Montant",
+          "actor": "Plateforme (Glovo)"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 2",
+          "title": "Préparation",
+          "meta": "Prélèvement articles | Vérification disponibilité | Si rupture :",
+          "actor": "Magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Validation POS",
+          "meta": "Le POS enregistre : | Vente spécifique canal Glovo | Sortie stock",
+          "actor": "Préparateur"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 4",
+          "title": "Remise au livreur",
+          "meta": "Commande validée et clôturée.",
+          "actor": "Client"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "B10",
+    "code": "B10",
+    "title": "Audit prix rayon vs caisse",
+    "world": "Retail",
+    "domain": "POS & Front Office",
+    "stage": "Exécution",
+    "owner": "Responsable magasin",
+    "actors": [
+      "Responsable magasin",
+      "Caissier"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Vérifier en situation réelle que le prix facturé en caisse correspond au prix affiché en rayon.",
+    "objective": "Vérifier en situation réelle que le prix facturé en caisse correspond au prix affiché en rayon.",
+    "trigger": "Contrôle quotidien Réclamation client",
+    "includes": [
+      "Scan test articles",
+      "Contrôle produits promo",
+      "Vérification synchronisation POS"
+    ],
+    "excludes": [],
+    "validations": [],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Non conformité",
+      "Perte marge",
+      "Amende"
+    ],
+    "scenarios": [],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P1",
+    "code": "P1",
+    "title": "Création / modification prix de vente",
+    "world": "Retail",
+    "domain": "Prix, Promo & Balisage",
+    "stage": "Prix & Promo",
+    "owner": "Centrale achat",
+    "actors": [
+      "Centrale achat",
+      "Pricing",
+      "Finance / contrôle gestion",
+      "IT / Master Data"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Définir ou modifier le prix de vente d’un article afin d’assurer : Cohérence avec la stratégie commerciale Respect marge cible Conformité TVA Alignement multi-magasins",
+    "objective": "Définir ou modifier le prix de vente d’un article afin d’assurer : Cohérence avec la stratégie commerciale Respect marge cible Conformité TVA Alignement multi-magasins",
+    "trigger": "Négociation fournisseur Ajustement marge Stratégie commerciale Variation coût",
+    "includes": [
+      "Création nouveau prix",
+      "Modification prix existant",
+      "Prix permanent",
+      "Date d’effet"
+    ],
+    "excludes": [
+      "Promotion temporaire (process séparé)"
+    ],
+    "validations": [
+      "Qui a droit de modifier prix ?",
+      "Validation marge minimum ?",
+      "Date activation immédiate ou différée ?",
+      "Gestion prix par magasin ou global ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Prix faux en caisse",
+      "Marge négative",
+      "Conflit client",
+      "Erreur TVA"
+    ],
+    "scenarios": [
+      "Création nouveau prix",
+      "Modification prix",
+      "Activation différée",
+      "Vérification caisse"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "system",
+          "step": "Étape 1",
+          "title": "Proposition nouveau prix",
+          "meta": "Analyse : | Coût actuel | Marge cible",
+          "actor": "Centrale achat"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Validation interne",
+          "meta": "Validation selon workflow : | Pricing | Finance si impact marge",
+          "actor": "Pricing"
+        },
+        {
+          "type": "system",
+          "step": "Étape 3",
+          "title": "Paramétrage dans D365",
+          "meta": "Création ou mise à jour : | Prix TTC | Date de début",
+          "actor": "Finance / contrôle gestion"
+        },
+        {
+          "type": "system",
+          "step": "Étape 4",
+          "title": "Synchronisation magasins",
+          "meta": "Propagation prix vers POS. | Vérifier date d’activation.",
+          "actor": "IT / Master Data"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P2",
+    "code": "P2",
+    "title": "Mise à jour prix magasin (déploiement)",
+    "world": "Retail",
+    "domain": "Prix, Promo & Balisage",
+    "stage": "Prix & Promo",
+    "owner": "Centrale pricing",
+    "actors": [
+      "Centrale pricing",
+      "IT / Master Data",
+      "Responsable magasin",
+      "Employés rayon"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Assurer que tout changement de prix paramétré dans D365 soit : Correctement synchronisé vers le POS Correctement affiché en rayon Cohérent entre caisse et étiquette Garantir la conformité réglementaire et éviter les litiges clients.",
+    "objective": "Assurer que tout changement de prix paramétré dans D365 soit : Correctement synchronisé vers le POS Correctement affiché en rayon Cohérent entre caisse et étiquette Garantir la conformité réglementaire et éviter les litiges clients.",
+    "trigger": "Activation d’un nouveau prix ou modification prix existant.",
+    "includes": [
+      "Synchronisation prix vers magasin",
+      "Impression étiquettes prix",
+      "Remplacement balisage en rayon",
+      "Vérification cohérence POS vs rayon"
+    ],
+    "excludes": [
+      "Création prix (process P1)",
+      "Gestion promotion (process séparé)"
+    ],
+    "validations": [
+      "Impression étiquettes centralisée ou magasin ?",
+      "Fréquence mise à jour prix ?",
+      "Procédure si POS non synchronisé ?",
+      "Contrôle quotidien prix ?",
+      "Traçabilité et modification prix ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Prix différent caisse vs rayon",
+      "Réclamation client",
+      "Sanction réglementaire",
+      "Perte marge"
+    ],
+    "scenarios": [
+      "Modification prix simple",
+      "Activation prix différée",
+      "Synchronisation POS",
+      "Test scan en caisse",
+      "Cas POS non synchronisé"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "system",
+          "step": "Étape 1",
+          "title": "Synchronisation prix vers POS",
+          "meta": "Après validation prix dans D365 : | Publication vers magasins | Synchronisation POS",
+          "actor": "Centrale pricing"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Génération étiquettes prix",
+          "meta": "Dans D365 ou outil associé : | Extraction liste articles modifiés | Impression étiquettes",
+          "actor": "IT / Master Data"
+        },
+        {
+          "type": "system",
+          "step": "Étape 3",
+          "title": "Remplacement balisage en rayon",
+          "meta": "En magasin : | Retrait ancienne étiquette | Pose nouvelle étiquette",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 4",
+          "title": "Contrôle cohérence",
+          "meta": "Contrôle ponctuel : | Scan produit en caisse test | Vérification prix affiché vs système",
+          "actor": "Employés rayon"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P3",
+    "code": "P3",
+    "title": "Balisage rayon (étiquette prix)",
+    "world": "Retail",
+    "domain": "Prix, Promo & Balisage",
+    "stage": "Prix & Promo",
+    "owner": "Responsable magasin",
+    "actors": [
+      "Responsable magasin",
+      "Employé rayon",
+      "Pricing / centrale"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Assurer l’affichage clair, correct et conforme du prix en rayon pour chaque article, en cohérence avec le système D365.",
+    "objective": "Assurer l’affichage clair, correct et conforme du prix en rayon pour chaque article, en cohérence avec le système D365.",
+    "trigger": "Modification prix Nouvelle référence Lancement promotion Correction erreur",
+    "includes": [
+      "Impression étiquettes prix",
+      "Remplacement anciennes étiquettes",
+      "Balisage produits permanents",
+      "Balisage produits promotionnels",
+      "Balisage spécifique (prix au kilo, au litre)"
+    ],
+    "excludes": [
+      "Paramétrage prix (P1)",
+      "Audit prix (P4)"
+    ],
+    "validations": [
+      "Étiquette électronique ou papier ?",
+      "Impression centralisée ou magasin ?",
+      "Procédure changement massif prix ?",
+      "Double contrôle obligatoire ?",
+      "Archivage anciennes étiquettes ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Prix faux affiché",
+      "Amende réglementaire",
+      "Conflit client",
+      "Perte marge"
+    ],
+    "scenarios": [
+      "Impression nouvelle étiquette",
+      "Changement massif prix",
+      "Étiquette promotionnelle",
+      "Erreur étiquette"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "system",
+          "step": "Étape 1",
+          "title": "Génération liste étiquettes",
+          "meta": "Suite à modification prix : | Extraction articles concernés | Génération étiquettes via système",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Impression étiquettes",
+          "meta": "Les étiquettes doivent contenir : | Libellé article | Prix TTC",
+          "actor": "Employé rayon"
+        },
+        {
+          "type": "system",
+          "step": "Étape 3",
+          "title": "Remplacement en rayon",
+          "meta": "Retrait ancienne étiquette | Pose nouvelle étiquette | Vérification cohérence visuelle",
+          "actor": "Pricing / centrale"
+        },
+        {
+          "type": "system",
+          "step": "Étape 4",
+          "title": "Contrôle visuel",
+          "meta": "Vérification correspondance produit / étiquette | Vérification lisibilité | Vérification emplacement correct",
+          "actor": "Pricing / centrale"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P4",
+    "code": "P4",
+    "title": "Audit prix rayon vs caisse",
+    "world": "Retail",
+    "domain": "Prix, Promo & Balisage",
+    "stage": "Prix & Promo",
+    "owner": "Responsable magasin",
+    "actors": [
+      "Responsable magasin",
+      "Responsable rayon",
+      "Équipe exploitation",
+      "Direction exploitation (si audit centralisé)"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Vérifier de manière régulière que le prix affiché en rayon correspond exactement au prix enregistré dans le POS afin de : Garantir la conformité réglementaire Éviter les litiges clients Protéger la marge Maintenir la fiabilité opérationnelle",
+    "objective": "Vérifier de manière régulière que le prix affiché en rayon correspond exactement au prix enregistré dans le POS afin de : Garantir la conformité réglementaire Éviter les litiges clients Protéger la marge Maintenir la fiabilité opérationnelle",
+    "trigger": "Contrôle planifié (quotidien / hebdomadaire) Suite à modification prix Suite à réclamation client Audit interne",
+    "includes": [
+      "Articles permanents",
+      "Articles récemment modifiés",
+      "Articles en promotion",
+      "Articles à forte rotation"
+    ],
+    "excludes": [
+      "Paramétrage prix (P1)",
+      "Balisage (P3)"
+    ],
+    "validations": [
+      "Fréquence audit obligatoire ?",
+      "Taux échantillonnage minimum ?",
+      "Politique en cas d’écart constaté par client ?",
+      "Responsabilité magasin vs centrale ?",
+      "Reporting centralisé ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Réclamations",
+      "Amendes",
+      "Perte marge",
+      "Détérioration image"
+    ],
+    "scenarios": [
+      "Prix conforme",
+      "Prix différent (rayon > caisse)",
+      "Prix différent (caisse > rayon)",
+      "Article en promotion",
+      "POS non synchronisé"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "system",
+          "step": "Étape 1",
+          "title": "Sélection des articles à contrôler(méthodes)",
+          "meta": "Échantillonnage aléatoire | Articles modifiés récemment | Articles en promotion",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Relevé prix en rayon",
+          "meta": "Vérification du prix affiché | Vérification prix unité (kg, litre…) | Vérification mention promo si applicable",
+          "actor": "Responsable rayon"
+        },
+        {
+          "type": "system",
+          "step": "Étape 3",
+          "title": "Vérification prix en caisse",
+          "meta": "Scan article sur POS test | Comparaison prix affiché vs prix système",
+          "actor": "Équipe exploitation"
+        },
+        {
+          "type": "system",
+          "step": "Étape 4",
+          "title": "Gestion des écarts",
+          "meta": "Si écart constaté : | Priorité au prix le plus bas selon réglementation locale (si applicable) | Correction immédiate en rayon ou système",
+          "actor": "Direction exploitation (si audit centralisé)"
+        },
+        {
+          "type": "system",
+          "step": "Étape 5",
+          "title": "Traçabilité et reporting",
+          "meta": "Enregistrement de l’écart | Mise en place action corrective | Suivi taux conformité prix",
+          "actor": "Direction exploitation (si audit centralisé)"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P5",
+    "code": "P5",
+    "title": "Gestion promotions",
+    "world": "Retail",
+    "domain": "Prix, Promo & Balisage",
+    "stage": "Prix & Promo",
+    "owner": "Centrale marketing / achat",
+    "actors": [
+      "Centrale marketing / achat",
+      "Pricing",
+      "IT / Master Data",
+      "Responsable magasin"
+    ],
+    "priority": "High",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre la création, l’activation et la gestion des promotions afin de : Stimuler les ventes Augmenter le panier moyen Écouler des stocks Attirer du trafic Tout en garantissant la cohérence entre système, rayon et caisse.",
+    "objective": "Permettre la création, l’activation et la gestion des promotions afin de : Stimuler les ventes Augmenter le panier moyen Écouler des stocks Attirer du trafic Tout en garantissant la cohérence entre système, rayon et caisse.",
+    "trigger": "Campagne commerciale Opération fournisseur Liquidation stock Promotion locale magasin",
+    "includes": [
+      "Remise immédiate",
+      "Offre type 2+1",
+      "Offre %",
+      "Offre montant fixe",
+      "Promotion limitée dans le temps",
+      "Promotion magasin spécifique"
+    ],
+    "excludes": [
+      "Fidélité (earn/burn)",
+      "Modification prix permanent (P1)"
+    ],
+    "validations": [
+      "Promo centralisée ou magasin autorisé ?",
+      "Cumul promo autorisé ?",
+      "Priorité entre plusieurs promos ?",
+      "Participation fournisseur tracée ?",
+      "Contrôle marge minimum ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Promo non appliquée",
+      "Double promo",
+      "Marge négative",
+      "Conflit client",
+      "Mauvaise date activation"
+    ],
+    "scenarios": [
+      "Promo % simple",
+      "Promo 2+1",
+      "Promo multi-articles",
+      "Promo avec date future",
+      "Fin promo automatique",
+      "Conflit promo"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "system",
+          "step": "Étape 1",
+          "title": "Définition mécanique promotionnelle",
+          "meta": "Détermination : | Articles concernés | Type promotion",
+          "actor": "Centrale marketing / achat"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Paramétrage dans D365",
+          "meta": "Création promotion : | Type remise | Groupe article",
+          "actor": "Pricing"
+        },
+        {
+          "type": "system",
+          "step": "Étape 3",
+          "title": "Validation interne",
+          "meta": "Validation : | Marge cible | Participation fournisseur",
+          "actor": "IT / Master Data"
+        },
+        {
+          "type": "system",
+          "step": "Étape 4",
+          "title": "Synchronisation vers POS",
+          "meta": "Publication vers magasins | Synchronisation caisses | Vérification activation date exacte",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 5",
+          "title": "Balisage promotionnel",
+          "meta": "Impression étiquettes promo | Mise en avant en rayon | Signalétique spécifique",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 6",
+          "title": "Application automatique en caisse",
+          "meta": "Au scan article : | Détection condition promo | Calcul remise automatique",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 7",
+          "title": "Fin promotion",
+          "meta": "Désactivation automatique à date fin | Retrait balisage | Vérification prix retour normal",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P7",
+    "code": "P7",
+    "title": "Gestion erreurs de prix",
+    "world": "Retail",
+    "domain": "Prix, Promo & Balisage",
+    "stage": "Prix & Promo",
+    "owner": "Caissier",
+    "actors": [
+      "Caissier",
+      "Responsable magasin",
+      "Pricing",
+      "IT / Master Data"
+    ],
+    "priority": "Medium",
+    "status": "Base retail",
+    "statusColor": "teal",
+    "description": "Permettre la gestion rapide et sécurisée des erreurs de prix afin de : Corriger l’erreur Protéger la marge Respecter réglementation Préserver relation client",
+    "objective": "Permettre la gestion rapide et sécurisée des erreurs de prix afin de : Corriger l’erreur Protéger la marge Respecter réglementation Préserver relation client",
+    "trigger": "Réclamation client Audit interne Contrôle magasin Erreur détectée en caisse",
+    "includes": [
+      "Erreur prix en caisse",
+      "Erreur prix en rayon",
+      "Erreur paramétrage",
+      "Erreur promotion"
+    ],
+    "excludes": [
+      "Litige fournisseur"
+    ],
+    "validations": [
+      "Politique officielle en cas d’erreur ?",
+      "Seuil geste commercial ?",
+      "Qui peut corriger prix en urgence ?",
+      "Traçabilité obligatoire ?"
+    ],
+    "metrics": [
+      "Taux conformité process",
+      "Délai de traitement",
+      "Exactitude stock / prix"
+    ],
+    "risks": [
+      "Perte financière",
+      "Conflit client",
+      "Sanction réglementaire",
+      "Erreur répétée"
+    ],
+    "scenarios": [
+      "Erreur prix caisse > rayon",
+      "Erreur promo non appliquée",
+      "Mauvaise date activation",
+      "Correction urgente"
+    ],
+    "systemImpact": "Mise à jour D365 / POS selon le process. Traçabilité opérationnelle et synchronisation magasin requises.",
+    "accountingImpact": "Impact comptable selon la nature du flux: stock, chiffre d'affaires, TVA, écarts caisse ou démarque.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "system",
+          "step": "Étape 1",
+          "title": "Détection erreur",
+          "meta": "Types : | Prix caisse ≠ rayon | Promo non appliquée",
+          "actor": "Caissier"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Décision immédiate client",
+          "meta": "Selon réglementation : | Appliquer prix le plus bas si applicable | Geste commercial",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 3",
+          "title": "Correction système",
+          "meta": "Analyse cause : | Mauvaise synchronisation | Mauvais paramétrage",
+          "actor": "Pricing"
+        },
+        {
+          "type": "system",
+          "step": "Étape 4",
+          "title": "Vérification globale",
+          "meta": "Vérifier si erreur isolée | Vérifier autres magasins | Vérifier promo associée",
+          "actor": "IT / Master Data"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  }
+];
+const financeProcesses = [];
+
+const datasets = {
+  achats: {
+    label: 'Achats',
+    short: 'Achat',
+    subtitle: "Référentiel validé — centrale d'achat",
+    description: "Univers centré sur le cycle achat, le référencement, les validations, les impacts D365 et les contrôles de séparation des rôles. Les flowcharts achats sont conservés tels qu'ils ont été validés.",
+    logo: 'AC',
+    version: 'vAchats validée',
+    nodeLegend: [
+      ['rgba(61,79,160,0.45)', 'Catman / Offre'],
+      ['rgba(210,153,34,0.5)', 'Achats'],
+      ['rgba(45,106,79,0.45)', 'Validation'],
+      ['rgba(181,87,26,0.45)', 'D365 / Système'],
+      ['rgba(155,35,53,0.45)', 'Conformité / Risque'],
+      ['rgba(210,153,34,0.30)', 'Décision']
+    ],
+    rule: 'Séparation des rôles — aucune personne ne cumule négociation, création contrat ERP et validation paiement.',
+    data: purchaseProcesses
+  },
+  retail: {
+    label: 'Retail & POS',
+    short: 'Retail',
+    subtitle: 'Back office magasin, front office POS, prix & balisage',
+    description: 'Univers orienté magasin : stock, réceptions, transferts, encaissement, clôture caisse, fidélité, promotions et cohérence prix rayon / caisse. La navigation est structurée par blocs métier plutôt que par mélange de processus.',
+    logo: 'RT',
+    version: 'vRetail structurée',
+    nodeLegend: [
+      ['rgba(61,79,160,0.45)', 'Opérations / Offre'],
+      ['rgba(210,153,34,0.5)', 'Responsable / Métier'],
+      ['rgba(45,106,79,0.45)', 'Validation'],
+      ['rgba(181,87,26,0.45)', 'POS / D365 / Système'],
+      ['rgba(155,35,53,0.45)', 'Contrôle / Risque'],
+      ['rgba(210,153,34,0.30)', 'Décision']
+    ],
+    rule: 'Aucune transaction PDV ne doit être modifiée a posteriori sans motif, traçabilité et habilitation appropriée.',
+    data: retailProcesses
+  },
+  finance: {
+    label: 'Finance',
+    short: 'Finance',
+    subtitle: 'Espace prêt à recevoir les processus finance',
+    description: "Structure déjà prévue dans la plateforme. Dès que les processus finance sont injectés, ils apparaîtront ici sans impacter les univers Achats et Retail.",
+    logo: 'FI',
+    version: 'En attente',
+    nodeLegend: [
+      ['rgba(45,106,79,0.45)', 'Contrôle'],
+      ['rgba(181,87,26,0.45)', 'Système'],
+      ['rgba(155,35,53,0.45)', 'Risque']
+    ],
+    rule: 'Injecter les processus finance pour activer cet univers.',
+    data: financeProcesses
+  }
+};
+
+const state = { world: null, search: '', processId: null, tab: 'flow' };
+const app = document.getElementById('app');
+const unique = arr => [...new Set(arr)];
+
+function currentSet() { return state.world ? datasets[state.world] : null; }
+function activeProcesses() { return currentSet()?.data || []; }
+function normalize(s) { return (s || '').toString().toLowerCase(); }
+function getFiltered() {
+  const data = activeProcesses();
+  if (!state.search) return data;
+  const q = normalize(state.search);
+  return data.filter(p => normalize([p.code,p.title,p.description,p.objective,p.owner,p.domain,p.stage,...(p.actors||[]),...(p.includes||[])].join(' ')).includes(q));
+}
+function getCurrent(filtered) { return filtered.find(p => p.id === state.processId) || filtered[0] || null; }
+function setWorld(world) { state.world = world; state.search=''; state.tab='flow'; const first=(datasets[world].data||[])[0]; state.processId = first ? first.id : null; render(); }
+function priorityChipClass(p) { if (p === 'Critical') return 'chip chip-critical'; if (p === 'High') return 'chip chip-high'; return 'chip chip-medium'; }
+function statusStyle(color) {
+  const map = {
+    green:'background:var(--emerald-bg);color:var(--emerald);border:1px solid rgba(45,106,79,0.28)',
+    orange:'background:var(--amber-bg);color:var(--amber);border:1px solid rgba(146,97,10,0.28)',
+    red:'background:var(--rouge-bg);color:var(--rouge);border:1px solid rgba(155,35,53,0.28)',
+    purple:'background:var(--indigo-bg);color:var(--indigo);border:1px solid rgba(61,79,160,0.28)',
+    teal:'background:rgba(34,139,134,0.10);color:#156b69;border:1px solid rgba(34,139,134,0.28)'
+  };
+  return map[color] || map.orange;
+}
+function processColor(p) { return p.priority === 'Critical' ? 'var(--rouge)' : p.priority === 'High' ? 'var(--amber)' : 'var(--emerald)'; }
+function groupProcesses(list) {
+  const world = state.world;
+  const bucketKey = p => world === 'retail' ? p.domain : p.domain;
+  const keys = unique(list.map(bucketKey));
+  return keys.map(k => [k, list.filter(p => bucketKey(p) === k)]);
+}
+
+function renderArrow() { return `<div class="flow-arrow"><div class="flow-arrow-line"></div><div class="flow-arrow-head"></div></div>`; }
+function renderFlowNode(node) {
+  if (node.type === 'start') return `<div class="flow-node start">${node.title}</div>`;
+  if (node.type === 'end') return `<div class="flow-node end">${node.title}</div>`;
+  if (node.type === 'decision') {
+    return `
+      <div class="decision-wrapper">
+        <div class="branch-side"><div class="branch-label no">Non</div><div class="branch-line left"></div><div class="branch-node no-node">${node.no || 'Retour / correction'}</div></div>
+        <div class="diamond"><div class="diamond-inner"><div class="diamond-text"><div class="node-title">${node.title}</div>${node.meta ? `<div class="node-meta" style="font-size:11px;margin-top:4px">${node.meta}</div>` : ''}</div></div></div>
+        <div class="branch-side"><div class="branch-label yes">Oui</div><div class="branch-line right"></div><div class="branch-node yes-node">${node.yes || 'Étape suivante'}</div></div>
+      </div>`;
+  }
+  const actorLabels = { catman:'Métier / Offre', buyer:'Responsable', validation:'Validation', system:'Système', risk:'Contrôle / Risque' };
+  return `<div class="flow-node ${node.type}">${node.step ? `<div class="node-step">${node.step}</div>` : ''}<div class="node-title">${node.title}</div>${node.meta ? `<div class="node-meta">${node.meta}</div>` : ''}<span class="actor-tag">${node.actor || actorLabels[node.type] || ''}</span></div>`;
+}
+function renderFlow(p) {
+  const nodes = p.flow?.nodes || [];
+  return `<div class="flow-container"><div class="flow-stage">${nodes.map((n,i)=>renderFlowNode(n)+(i<nodes.length-1?renderArrow():'' )).join('')}</div></div>`;
+}
+function renderOverview(p) {
+  return `
+    <div class="overview-grid">
+      <div>
+        <div class="info-card"><h4><span class="h4-icon" style="background:var(--accent-pale)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span> Objectif</h4><p style="font-size:14px;color:var(--muted);line-height:1.6">${p.objective || '—'}</p></div>
+        <div class="meta-quad" style="margin-top:14px"><div class="meta-box"><div class="mk">Déclencheur</div><div class="mv">${p.trigger || '—'}</div></div><div class="meta-box"><div class="mk">Pilote</div><div class="mv">${p.owner || '—'}</div></div><div class="meta-box" style="grid-column:1/-1"><div class="mk">Acteurs</div><div class="mv" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">${(p.actors||[]).map(a=>`<span class="chip chip-domain" style="font-size:11px">${a}</span>`).join('')}</div></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="info-card"><h4><span class="h4-icon" style="background:var(--emerald-bg)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Inclut</h4><ul class="info-list">${(p.includes||[]).map(i=>`<li>${i}</li>`).join('')}</ul></div>
+        <div class="info-card"><h4><span class="h4-icon" style="background:var(--rouge-bg)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></span> Exclut</h4><ul class="info-list">${(p.excludes||[]).map(i=>`<li>${i}</li>`).join('')}</ul></div>
+        <div class="info-card"><h4><span class="h4-icon" style="background:var(--amber-bg)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span> Validations clés</h4><ul class="info-list">${(p.validations||[]).map(i=>`<li>${i}</li>`).join('')}</ul></div>
+      </div>
+    </div>`;
+}
+function renderRisks(p) {
+  return `
+    <div class="risks-grid">
+      <div><div class="info-card"><h4><span class="h4-icon" style="background:var(--rouge-bg)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> Risques si mal maîtrisé</h4><div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">${(p.risks||[]).map(r=>`<div class="risk-item"><div class="risk-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><span>${r}</span></div>`).join('')}</div></div></div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="info-card"><h4><span class="h4-icon" style="background:var(--emerald-bg)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> KPI de pilotage</h4><div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">${(p.metrics||[]).map(m=>`<div class="kpi-item"><div class="kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><span>${m}</span></div>`).join('')}</div></div>
+        <div class="info-card"><h4><span class="h4-icon" style="background:var(--indigo-bg)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v7l4.5 7.5A2 2 0 0 1 18 21H6a2 2 0 0 1-1.5-3.5L9 10V3z"/><line x1="6" y1="3" x2="18" y2="3"/></svg></span> Scénarios de recette</h4><div class="scenario-list">${(p.scenarios||[]).map((s,i)=>`<div class="scenario-item"><span class="s-num">${i+1}</span><span>${s}</span></div>`).join('')}</div></div>
+      </div>
+    </div>`;
+}
+function renderSystem(p) {
+  return `
+    <div class="impacts-grid">
+      <div style="display:flex;flex-direction:column;gap:14px"><div class="impact-block"><h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Impact système (D365 / POS)</h4><p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px">${p.systemImpact || '—'}</p><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);margin-bottom:8px">Statuts système</div><div class="status-flow">${(p.statusFlow||[]).map((s,i)=>`<span class="status-step">${s}</span>${i < p.statusFlow.length - 1 ? '<span class="status-arrow">→</span>' : ''}`).join('')}</div></div><div class="impact-block"><h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Impact comptable</h4><p style="font-size:13px;color:var(--muted);line-height:1.6">${p.accountingImpact || '—'}</p></div></div>
+      <div class="impact-block"><h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Contrôles clés</h4><div style="margin-top:8px"><ul class="info-list"><li>Données obligatoires et motifs vérifiés</li><li>Validation acteur clé documentée</li><li>Cohérence métier / stock / prix assurée</li><li>Traçabilité des overrides et exceptions</li></ul></div><div style="margin-top:16px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);margin-bottom:8px">Scénarios à tester</div><div class="scenario-list">${(p.scenarios||[]).map((s,i)=>`<div class="scenario-item"><span class="s-num">${i+1}</span><span>${s}</span></div>`).join('')}</div></div></div>
+    </div>`;
+}
+
+function renderTopnav() {
+  const set = currentSet();
+  return `
+    <nav class="topnav">
+      <div class="topnav-left">
+        <div class="logo-mark">${set?.logo || 'PX'}</div>
+        <div>
+          <div class="logo-text">Plateforme Processus</div>
+          <div class="logo-sub">${set ? set.subtitle : "Choisir d'abord un univers de processus"}</div>
+        </div>
+      </div>
+      <div class="nav-meta">
+        <div class="world-switch">
+          <button class="world-btn ${state.world==='achats' ? 'active' : ''}" data-world="achats">Achats</button>
+          <button class="world-btn ${state.world==='retail' ? 'active' : ''}" data-world="retail">Retail & POS</button>
+          <button class="world-btn finance ${state.world==='finance' ? 'active' : ''}" data-world="finance">Finance</button>
+        </div>
+        ${set ? `<div class="world-pill">${set.version}</div>` : ''}
+      </div>
+    </nav>`;
+}
+
+function renderSidebar() {
+  const set = currentSet();
+  if (!set) return `<aside class="sidebar"><div class="sidebar-intro"><h3>Choix de l'univers</h3><p>Sélectionne en haut Achats, Retail & POS ou Finance. Les processus ne se mélangent pas : chaque univers charge uniquement sa propre structure.</p></div></aside>`;
+  const filtered = getFiltered();
+  const groups = groupProcesses(filtered);
+  return `
+    <aside class="sidebar">
+      <div class="sidebar-intro">
+        <h3>${set.label}</h3>
+        <p>${set.description}</p>
+      </div>
+      <div class="sidebar-search"><div class="search-shell"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="searchInput" type="text" placeholder="Rechercher un process..." value="${state.search}" /></div></div>
+      <div class="group-wrap">
+        ${groups.length ? groups.map(([group,items]) => `
+          <div class="group-block">
+            <div class="group-title">${group}</div>
+            <div class="process-nav">
+              ${items.map(p=>`
+                <div class="pnav-item ${p.id===state.processId ? 'active':''}" data-id="${p.id}">
+                  <span class="pnav-code">${p.code}</span>
+                  <span class="pnav-title">${p.title}<span class="pnav-sub">${p.stage || p.owner || ''}</span></span>
+                  <span class="pnav-dot" style="background:${processColor(p)}"></span>
+                </div>`).join('')}
+            </div>
+          </div>`).join('') : `<div class="empty-state" style="min-height:220px;padding:12px"><p>Aucun processus trouvé dans cet univers.</p></div>`}
+      </div>
+      <div class="world-note"><div class="sidebar-block" style="padding:0;border:none"><div class="s-label">Légende nœuds</div><div class="legend-grid">${set.nodeLegend.map(([bg,label],i)=>`<div class="legend-row"><span class="legend-swatch" style="background:${bg};${i===set.nodeLegend.length-1 ? 'border:1px solid rgba(210,153,34,0.5)' : ''}"></span>${label}</div>`).join('')}</div></div><div class="rule-card" style="margin-top:14px"><div class="rule-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="rule-text"><strong>Règle clé :</strong> ${set.rule}</div></div></div>
+    </aside>`;
+}
+
+function renderMain() {
+  const set = currentSet();
+  if (!set) {
+    return `<main class="main"><div class="hero-empty"><div class="hero-card"><div class="ph-code">Architecture multi-univers</div><h1>Une seule plateforme, des univers séparés.</h1><p>Le comportement a été revu pour respecter la logique métier : on ne mélange plus les processus Achats et Retail. L\'utilisateur choisit d\'abord sa catégorie en haut, puis la navigation gauche charge uniquement les processus du bon univers.</p><div class="hero-grid"><div class="hero-metric"><div class="v">Achats</div><div class="k">Flowcharts validés conservés</div></div><div class="hero-metric"><div class="v">Retail</div><div class="k">Navigation structurée par blocs métier</div></div><div class="hero-metric"><div class="v">Finance</div><div class="k">Espace prêt à recevoir tes prochains process</div></div></div></div></div></main>`;
+  }
+  const filtered = getFiltered();
+  const current = getCurrent(filtered);
+  if (!current) {
+    return `<main class="main"><div class="empty-state"><div class="hero-card"><div class="ph-code">${set.label}</div><h1>Aucun process affiché.</h1><p>Essaie une autre recherche ou injecte les processus manquants pour cet univers.</p></div></div></main>`;
+  }
+  return `<main class="main">
+      <div class="process-header">
+        <div class="process-header-left">
+          <div class="ph-code">${current.code}</div>
+          <h2>${current.title}</h2>
+          <p>${current.description || current.objective || ''}</p>
+        </div>
+        <div class="process-header-right">
+          <div class="meta-chips"><span class="chip chip-domain">${current.domain}</span><span class="chip chip-stage">${current.stage}</span><span class="${priorityChipClass(current.priority)}">${current.priority}</span></div>
+          <span class="status-chip" style="${statusStyle(current.statusColor)}">${current.status || 'Base process'}</span>
+        </div>
+      </div>
+      <div class="tabs">
+        <button class="tab ${state.tab==='flow' ? 'active' : ''}" data-tab="flow">Flowchart</button>
+        <button class="tab ${state.tab==='overview' ? 'active' : ''}" data-tab="overview">Vue d'ensemble</button>
+        <button class="tab ${state.tab==='risks' ? 'active' : ''}" data-tab="risks">Risques & KPI</button>
+        <button class="tab ${state.tab==='system' ? 'active' : ''}" data-tab="system">Impacts & contrôles</button>
+      </div>
+      <div class="panel ${state.tab==='flow' ? '' : 'hidden'}">${renderFlow(current)}</div>
+      <div class="panel ${state.tab==='overview' ? '' : 'hidden'}">${renderOverview(current)}</div>
+      <div class="panel ${state.tab==='risks' ? '' : 'hidden'}">${renderRisks(current)}</div>
+      <div class="panel ${state.tab==='system' ? '' : 'hidden'}">${renderSystem(current)}</div>
+    </main>`;
+}
+
+function bindEvents() {
+  document.querySelectorAll('.world-btn').forEach(btn => btn.addEventListener('click', () => setWorld(btn.dataset.world)));
+  document.getElementById('searchInput')?.addEventListener('input', e => { state.search = e.target.value; render(); });
+  document.querySelectorAll('.pnav-item').forEach(el => el.addEventListener('click', () => { state.processId = el.dataset.id; state.tab='flow'; render(); document.querySelector('.main')?.scrollTo(0,0); }));
+  document.querySelectorAll('.tab').forEach(el => el.addEventListener('click', () => { state.tab = el.dataset.tab; render(); }));
+}
+
+function render() { app.innerHTML = `${renderTopnav()}${renderSidebar()}${renderMain()}`; bindEvents(); }
+render();
+</script>
+</body>
+</html>
