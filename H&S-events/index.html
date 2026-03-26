@@ -1189,23 +1189,26 @@ async function addEv(){
 }
 async function delEv(id){
   try{
+    const sid = String(id);
     if(!confirm('Supprimer cet événement ?')) return;
-    await apiWrite('delete-event', {id});
-    await loadEventsFromRepo({silent:true});
+    await apiWrite('delete-event', { id: sid });
+    await loadEventsFromRepo({ silent:true });
     toast('Événement supprimé');
   }catch(err){
     alert(err.message || 'Erreur lors de la suppression');
   }
 }
 function openEdit(id){
-  const ev=EVTS.find(e=>e.id===id); if(!ev) return;
-  editId=id;
-  document.getElementById('m-name').value=ev.n || '';
-  document.getElementById('m-g').value=ev.g || 'H&S Group';
-  document.getElementById('m-bu').value=ev.bu || '';
-  document.getElementById('m-e').value=ev.e || '';
-  document.getElementById('m-mon').value=ev.m;
-  document.getElementById('m-type').value=ev.t;
+  const sid = String(id);
+  const ev = EVTS.find(e => String(e.id) === sid);
+  if(!ev) return;
+  editId = sid;
+  document.getElementById('m-name').value = ev.n || '';
+  document.getElementById('m-g').value = ev.g || 'H&S Group';
+  document.getElementById('m-bu').value = ev.bu || '';
+  document.getElementById('m-e').value = ev.e || '';
+  document.getElementById('m-mon').value = ev.m;
+  document.getElementById('m-type').value = ev.t;
   document.getElementById('modal').classList.add('open');
 }
 function closeModal(){ document.getElementById('modal').classList.remove('open'); editId=null; }
@@ -1215,19 +1218,21 @@ async function deleteCurrentEvent(){
   closeModal();
 }
 async function saveEdit(){
-  const ev=EVTS.find(e=>e.id===editId); if(!ev) return;
+  const ev = EVTS.find(e => String(e.id) === String(editId));
+  if(!ev) return;
+
   try{
     await apiWrite('update-event', {
-      id: ev.id,
+      id: String(ev.id),
       n: document.getElementById('m-name').value.trim() || ev.n,
       g: document.getElementById('m-g').value,
       bu: document.getElementById('m-bu').value.trim(),
       e: document.getElementById('m-e').value.trim(),
-      m: parseInt(document.getElementById('m-mon').value),
+      m: parseInt(document.getElementById('m-mon').value, 10),
       t: document.getElementById('m-type').value
     });
     closeModal();
-    await loadEventsFromRepo({silent:true});
+    await loadEventsFromRepo({ silent:true });
     toast('Événement mis à jour');
   }catch(err){
     alert(err.message || 'Erreur lors de la modification');
