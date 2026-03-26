@@ -1146,8 +1146,6 @@ async function apiWrite(endpoint, payload){
   if(!res.ok) throw new Error(data.error || data.details || `Erreur ${endpoint}`);
   return data;
 }
-</script>
-
 async function loadEventsFromRepo(opts={}){
   const silent = !!opts.silent;
   try{
