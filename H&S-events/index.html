@@ -1133,15 +1133,17 @@ async function ensureAdminKey(){
 async function apiWrite(endpoint, payload){
   const adminKey = await ensureAdminKey();
   const res = await fetch(`/.netlify/functions/${endpoint}`, {
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
       'x-admin-key': adminKey
     },
     body: JSON.stringify(payload)
   });
-  const data = await res.json().catch(()=>({}));
-  if(!res.ok) throw new Error(data.error || data.details || `Erreur ${endpoint}`);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error || data.details || `Erreur ${endpoint}`);
+  }
   return data;
 }
 async function loadEventsFromRepo(opts={}){
