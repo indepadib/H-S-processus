@@ -114,7 +114,7 @@ exports.handler = async (event) => {
       throw new Error("Le fichier events.json est invalide.");
     }
 
-    const idx = content.events.findIndex((item) => Number(item.id) === id);
+    const idx = json.events.findIndex(e => String(e.id) === String(payload.id));
     if (idx === -1) {
       return jsonResponse(404, { ok: false, error: "Événement introuvable." });
     }
