@@ -1233,13 +1233,6 @@ async function saveEdit(){
     alert(err.message || 'Erreur lors de la modification');
   }
 }
-    closeModal();
-    await loadEventsFromRepo({silent:true});
-    toast('Événement mis à jour');
-  }catch(err){
-    alert(err.message || 'Erreur lors de la modification');
-  }
-}
 
 // ── TABS & CHIPS ─────────────────────────────────
 function initTabs(){
