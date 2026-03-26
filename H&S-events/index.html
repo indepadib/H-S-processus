@@ -1130,8 +1130,6 @@ async function ensureAdminKey(){
   sessionStorage.setItem('hs_admin_key', key);
   return key;
 }
-
-<script>
 async function apiWrite(endpoint, payload){
   const adminKey = await ensureAdminKey();
   const res = await fetch(`/.netlify/functions/${endpoint}`, {
