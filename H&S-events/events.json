@@ -2880,10 +2880,19 @@
       "n": "Ftour BFY",
       "m": 3,
       "t": "Événement"
+    },
+    {
+      "id": 2,
+      "g": "H&S Group",
+      "bu": "",
+      "e": "",
+      "n": "Lancement nouveau site web",
+      "m": 2,
+      "t": "Lancement"
     }
   ],
-  "nxtId": 2,
+  "nxtId": 3,
   "meta": {
-    "updated_at": "2026-03-26T11:30:46.999Z"
+    "updated_at": "2026-03-26T11:41:55.602Z"
   }
 }
