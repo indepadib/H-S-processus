@@ -2889,10 +2889,19 @@
       "n": "Lancement nouveau site web",
       "m": 2,
       "t": "Lancement"
+    },
+    {
+      "id": 3,
+      "g": "H&S Group",
+      "bu": "",
+      "e": "",
+      "n": "test adib",
+      "m": 11,
+      "t": "Congrès"
     }
   ],
-  "nxtId": 3,
+  "nxtId": 4,
   "meta": {
-    "updated_at": "2026-03-26T11:41:55.602Z"
+    "updated_at": "2026-03-27T10:12:21.059Z"
   }
 }
