@@ -947,10 +947,10 @@ let nxtId = 400;
 // ── STATE ─────────────────────────────────────────
 const TABS = [
   {id:'all',    lbl:'Tout',       icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M1 6.5h11M6.5 1a8 8 0 010 11M6.5 1a8 8 0 000 11"/></svg>`},
+    {id:'type',   lbl:'Type',       icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="2"/><path d="M6.5 1v1.5M6.5 10v1.5M1 6.5h1.5M10 6.5h1.5M2.8 2.8l1 1M9.2 9.2l1 1M2.8 10.2l1-1M9.2 3.8l1-1"/></svg>`, opts:()=>Object.keys(TC)},
   {id:'groupe', lbl:'Groupe',     icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="11" height="7" rx="1"/><path d="M4 5V3.5A2.5 2.5 0 019 3.5V5"/><path d="M6.5 8v1"/></svg>`, opts:()=>Object.keys(GC)},
   {id:'bu',     lbl:'BU',         icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 10.5V4l5-3 5 3v6.5"/><path d="M4.5 10.5V8h4v2.5"/></svg>`, opts:()=>[...new Set(EVTS.map(e=>e.bu).filter(Boolean))].sort()},
   {id:'entite', lbl:'Entité',     icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="4" r="2.5"/><path d="M1.5 11.5c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>`, opts:()=>[...new Set(EVTS.map(e=>e.e).filter(Boolean))].sort()},
-  {id:'type',   lbl:'Type',       icon:`<svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="2"/><path d="M6.5 1v1.5M6.5 10v1.5M1 6.5h1.5M10 6.5h1.5M2.8 2.8l1 1M9.2 9.2l1 1M2.8 10.2l1-1M9.2 3.8l1-1"/></svg>`, opts:()=>Object.keys(TC)},
 ];
 let activeTab = 'all';
 let selected  = new Set();
@@ -1211,6 +1211,7 @@ function openEdit(id){
   document.getElementById('m-type').value = ev.t;
   document.getElementById('modal').classList.add('open');
 }
+
 function closeModal(){ document.getElementById('modal').classList.remove('open'); editId=null; }
 async function deleteCurrentEvent(){
   if(editId==null) return;
@@ -1220,14 +1221,13 @@ async function deleteCurrentEvent(){
 async function saveEdit(){
   const ev = EVTS.find(e => String(e.id) === String(editId));
   if(!ev) return;
-
   try{
     await apiWrite('update-event', {
       id: String(ev.id),
-      n: document.getElementById('m-name').value.trim() || ev.n,
       g: document.getElementById('m-g').value,
       bu: document.getElementById('m-bu').value.trim(),
       e: document.getElementById('m-e').value.trim(),
+      n: document.getElementById('m-name').value.trim() || ev.n,
       m: parseInt(document.getElementById('m-mon').value, 10),
       t: document.getElementById('m-type').value
     });
@@ -1238,7 +1238,6 @@ async function saveEdit(){
     alert(err.message || 'Erreur lors de la modification');
   }
 }
-
 // ── TABS & CHIPS ─────────────────────────────────
 function initTabs(){
   const bar=document.getElementById('fbar');
@@ -1470,40 +1469,76 @@ function importXLSX(input) {
           mOffset = i; break;
         }
       }
+const STOP_WORDS = [
+  'congrès',
+  'congres',
+  'table ronde',
+  'affichage',
+  'campagne',
+  'lancement',
+  'tr:',
+  'ev: evenements',
+  'offres',
+  'offre',
+  'post prévu',
+  'activations',
+  'activation',
+  'légende',
+  'legend'
+];
 
-      const STOP_WORDS = ['congrès','affichage','campagne','lancement','tr:','ev: evenements',
-                          'offres','post prévu','activations','légende','legend'];
+function getType(name) {
+  const n = name.trim();
+  const low = n.toLowerCase();
 
-      function getType(name) {
-        const n = name.trim();
-        const low = n.toLowerCase();
-        if (low.startsWith('ev:') || ['inauguration','roadshow','spectacle','jazzablanca',
-            'nostalgia','golf','padel','icebike','caftan','trophee','semaine du cheval',
-            'pop up','soirée lancement','ouverture','bollywood','btob','rose royal',
-            'sherlock','belle et','capone','satanas','7 cup','iscae','porteur',
-            "j'aimerais",'andalussyat','santa','carmen','8m2','atelier b2c','rassemblement',
-            'remise de diplome','remise diplome'].some(k => low.includes(k))) return 'Événement';
-        if (['congrès','congres','workshop','forum','journée','journee','logis med','logiterre',
-             'gitex','whx','cphi','officine pharma','medica trade','pharmexpo',
-             'smnc','smacot','wca2026','ambm','smalmi','ambrg','smamm','smb ','jpfsa',
-             'seenergy','grain & milling','alhokama','smo','amcar','amoc','cardio sud',
-             'afomek','fon ','apei','smc','amicale','amu','codepca','para expo',
-             'jdm','adepra','smd ','beauty plus','acor','acop','aopr','smorl','srmgo',
-             'agp','agsmf','afmapath','al amal','jiop','agon','amef','jpit','acp ',
-             'asmpr','smedian','smsl','smcc','antlm','génétique','pathologie digitale',
-             'fertilité','hémato','apa ','sigma','heart','ammf','aes','samir-ophta',
-             'kebbaj','somachir','somipev','reso ','assed','ehealth','salons btob',
-             'maroc hotel'].some(k => low.includes(k))) return 'Congrès';
-        if (low.startsWith('tr:') || low.startsWith('tr :')) return 'Événement';
-        if (low.startsWith('post') && low.length < 80) return 'Activation';
-        if (low.startsWith('campagne') || low.includes('campagne ')) return 'Campagne';
-        if (low.startsWith('lancement') || low.includes('lancement ')) return 'Lancement';
-        if (low.startsWith('affichage')) return 'Affichage';
-        if (low.startsWith('offre') || low.includes('offre ')) return 'Offre';
-        if (low.startsWith('activation')) return 'Activation';
-        return 'Autre';
-      }
+  if (
+    low.startsWith('ev:') ||
+    [
+      'inauguration','roadshow','spectacle','jazzablanca',
+      'nostalgia','golf','padel','icebike','caftan','trophee','semaine du cheval',
+      'pop up','soirée lancement','ouverture','bollywood','btob','rose royal',
+      'sherlock','belle et','capone','satanas','7 cup','iscae','porteur',
+      "j'aimerais",'andalussyat','santa','carmen','8m2','atelier b2c','rassemblement',
+      'remise de diplome','remise diplome'
+    ].some(k => low.includes(k))
+  ) return 'Événement corpo/Spectacle/Sport';
 
+  if (
+    low.startsWith('tr:') ||
+    low.startsWith('tr :') ||
+    [
+      'congrès','congres','workshop','forum','journée','journee','logis med','logiterre',
+      'gitex','whx','cphi','officine pharma','medica trade','pharmexpo',
+      'smnc','smacot','wca2026','ambm','smalmi','ambrg','smamm','smb ','jpfsa',
+      'seenergy','grain & milling','alhokama','smo','amcar','amoc','cardio sud',
+      'afomek','fon ','apei','smc','amicale','amu','codepca','para expo',
+      'jdm','adepra','smd ','beauty plus','acor','acop','aopr','smorl','srmgo',
+      'agp','agsmf','afmapath','al amal','jiop','agon','amef','jpit','acp ',
+      'asmpr','smedian','smsl','smcc','antlm','génétique','pathologie digitale',
+      'fertilité','hémato','apa ','sigma','heart','ammf','aes','samir-ophta',
+      'kebbaj','somachir','somipev','reso ','assed','ehealth','salons btob',
+      'maroc hotel','table ronde'
+    ].some(k => low.includes(k))
+  ) return 'Congrès/Table ronde';
+
+  if (low.startsWith('post') && low.length < 80) return 'Activation-Offre One Retail';
+  if (low.startsWith('offre') || low.includes('offre ')) return 'Activation-Offre One Retail';
+  if (low.startsWith('activation')) return 'Activation-Offre One Retail';
+
+  if (low.startsWith('campagne') || low.includes('campagne ')) return 'Campagne';
+  if (low.startsWith('lancement') || low.includes('lancement ')) return 'Lancement';
+  if (low.startsWith('affichage')) return 'Affichage';
+
+  return 'Autre';
+}
+
+function cleanName(name) {
+  return name.trim()
+    .replace(/^(EV:|ev:|TR:|tr:|congrès\s*:|congrès\s|congres\s*:|congres\s)/i, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 85);
+}
       function cleanName(name) {
         return name.trim()
           .replace(/^(EV:|ev:|congrès\s*:|congrès\s|congres\s*:)/i, '')
