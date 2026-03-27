@@ -1,95 +1,136 @@
-const fetch = globalThis.fetch;
+const GITHUB_API = "https://api.github.com";
 
-function jsonResponse(statusCode, body) {
+exports.handler = async (event) => {
+  try {
+    if (event.httpMethod !== "POST") {
+      return response(405, { error: "Method not allowed" });
+    }
+
+    const {
+      GITHUB_TOKEN,
+      GITHUB_OWNER,
+      GITHUB_REPO,
+      GITHUB_BRANCH = "main",
+      GITHUB_FILE_PATH = "H&S-events/events.json",
+      ADMIN_KEY
+    } = process.env;
+
+    const sentKey =
+      event.headers["x-admin-key"] ||
+      event.headers["X-Admin-Key"] ||
+      "";
+
+    if (!ADMIN_KEY || sentKey !== ADMIN_KEY) {
+      return response(401, { error: "Clé admin invalide." });
+    }
+
+    if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
+      return response(500, { error: "Variables GitHub manquantes." });
+    }
+
+    const payload = JSON.parse(event.body || "{}");
+    if (!payload.id) {
+      return response(400, { error: "id requis." });
+    }
+
+    const file = await getFile({
+      token: GITHUB_TOKEN,
+      owner: GITHUB_OWNER,
+      repo: GITHUB_REPO,
+      path: GITHUB_FILE_PATH,
+      branch: GITHUB_BRANCH
+    });
+
+    const raw = Buffer.from(file.content, "base64").toString("utf8");
+    const data = JSON.parse(raw);
+
+    if (!Array.isArray(data.events)) {
+      return response(500, { error: "events.json invalide." });
+    }
+
+    const before = data.events.length;
+    data.events = data.events.filter(
+      (e) => String(e.id) !== String(payload.id)
+    );
+
+    if (data.events.length === before) {
+      return response(404, { error: "Événement introuvable." });
+    }
+
+    data.updated_at = new Date().toISOString();
+
+    await putFile({
+      token: GITHUB_TOKEN,
+      owner: GITHUB_OWNER,
+      repo: GITHUB_REPO,
+      path: GITHUB_FILE_PATH,
+      branch: GITHUB_BRANCH,
+      sha: file.sha,
+      message: `delete event ${payload.id}`,
+      content: JSON.stringify(data, null, 2)
+    });
+
+    return response(200, {
+      success: true,
+      deletedId: payload.id
+    });
+  } catch (err) {
+    return response(500, {
+      error: err.message || "Erreur delete-event"
+    });
+  }
+};
+
+async function getFile({ token, owner, repo, path, branch }) {
+  const res = await fetch(
+    `${GITHUB_API}/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}?ref=${branch}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json"
+      }
+    }
+  );
+
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`Lecture GitHub impossible: ${res.status} ${txt}`);
+  }
+
+  return await res.json();
+}
+
+async function putFile({ token, owner, repo, path, branch, sha, message, content }) {
+  const res = await fetch(
+    `${GITHUB_API}/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message,
+        sha,
+        branch,
+        content: Buffer.from(content, "utf8").toString("base64")
+      })
+    }
+  );
+
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`Écriture GitHub impossible: ${res.status} ${txt}`);
+  }
+
+  return await res.json();
+}
+
+function response(statusCode, body) {
   return {
     statusCode,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Content-Type, x-admin-key",
-      "Access-Control-Allow-Methods": "OPTIONS, POST"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body)
   };
 }
-
-function getConfig() {
-  return {
-    token: process.env.GITHUB_TOKEN,
-    owner: process.env.GITHUB_OWNER,
-    repo: process.env.GITHUB_REPO,
-    branch: process.env.GITHUB_BRANCH,
-    filePath: process.env.GITHUB_FILE_PATH,
-    adminKey: process.env.ADMIN_KEY
-  };
-}
-
-async function getGithubFile(config) {
-  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.filePath}?ref=${config.branch}`;
-  const res = await fetch(url, {
-    headers: {
-      "Authorization": `Bearer ${config.token}`,
-      "Accept": "application/vnd.github+json",
-      "User-Agent": "netlify-function"
-    }
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data?.message || "Lecture GitHub impossible.");
-  return {
-    sha: data.sha,
-    content: JSON.parse(Buffer.from(data.content, "base64").toString("utf8"))
-  };
-}
-
-async function updateGithubFile(config, nextContent, sha, message) {
-  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.filePath}`;
-  const res = await fetch(url, {
-    method: "PUT",
-    headers: {
-      "Authorization": `Bearer ${config.token}`,
-      "Accept": "application/vnd.github+json",
-      "User-Agent": "netlify-function",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message,
-      content: Buffer.from(JSON.stringify(nextContent, null, 2), "utf8").toString("base64"),
-      sha,
-      branch: config.branch
-    })
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data?.message || "Écriture GitHub impossible.");
-  return data;
-}
-
-exports.handler = async (event) => {
-  if (event.httpMethod === "OPTIONS") return jsonResponse(200, { ok: true });
-  if (event.httpMethod !== "POST") return jsonResponse(405, { ok: false, error: "Méthode non autorisée." });
-
-  try {
-    const config = getConfig();
-    const sentKey = event.headers["x-admin-key"] || event.headers["X-Admin-Key"];
-    if (sentKey !== config.adminKey) return jsonResponse(401, { ok: false, error: "Clé admin invalide." });
-
-    const payload = JSON.parse(event.body || "{}");
-    const id = Number(payload.id);
-    if (!id) return Response(400, { ok: false, error: "ID événement manquant." });
-
-    const { sha, content } = await getGithubFile(config);
-    const before = content.events.length;
-    json.events = json.events.filter(e => String(e.id) !== String(payload.id));
-
-    if (content.events.length === before) {
-      return jsonResponse(404, { ok: false, error: "Événement introuvable." });
-    }
-
-    content.meta = content.meta || {};
-    content.meta.updated_at = new Date().toISOString();
-
-    await updateGithubFile(config, content, sha, `delete event ${id}`);
-    return jsonResponse(200, { ok: true, deletedId: id });
-  } catch (error) {
-    return jsonResponse(500, { ok: false, error: error.message || "Erreur serveur." });
-  }
-};
