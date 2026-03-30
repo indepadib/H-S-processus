@@ -2898,10 +2898,19 @@
       "n": "test adib",
       "m": 11,
       "t": "Congrès"
+    },
+    {
+      "id": 4,
+      "g": "H&S Group",
+      "bu": "",
+      "e": "",
+      "n": "test adib",
+      "m": 4,
+      "t": "Événement corpo/spectacle/Sport"
     }
   ],
-  "nxtId": 4,
+  "nxtId": 5,
   "meta": {
-    "updated_at": "2026-03-27T10:12:21.059Z"
+    "updated_at": "2026-03-30T21:24:16.184Z"
   }
 }
