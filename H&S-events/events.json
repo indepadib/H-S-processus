@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-27T16:42:38.049Z",
+  "updated_at": "2026-03-30T21:24:34.606Z",
   "events": [
     {
       "id": 2,
@@ -9,15 +9,6 @@
       "n": "EV: Bollywood Roadshow Rabat + Casa",
       "m": 1,
       "t": "Événement"
-    },
-    {
-      "id": 3,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "Campagne ISO",
-      "m": 2,
-      "t": "Campagne"
     },
     {
       "id": 4,
@@ -2889,15 +2880,6 @@
       "n": "Lancement nouveau site web",
       "m": 2,
       "t": "Lancement"
-    },
-    {
-      "id": 3,
-      "g": "H&S Group",
-      "bu": "",
-      "e": "",
-      "n": "test adib",
-      "m": 11,
-      "t": "Congrès"
     },
     {
       "id": 4,
