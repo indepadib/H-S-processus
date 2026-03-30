@@ -1469,7 +1469,77 @@ function importXLSX(input) {
           mOffset = i; break;
         }
       }
-const STOP_WORDS = [
+      const STOP_WORDS = [
+  'congrès',
+  'congres',
+  'table ronde',
+  'affichage',
+  'campagne',
+  'lancement',
+  'tr:',
+  'ev: evenements',
+  'offres',
+  'offre',
+  'post prévu',
+  'activations',
+  'activation',
+  'légende',
+  'legend'
+];
+
+function getType(name) {
+  const n = name.trim();
+  const low = n.toLowerCase();
+
+  if (
+    low.startsWith('ev:') ||
+    [
+      'inauguration','roadshow','spectacle','jazzablanca',
+      'nostalgia','golf','padel','icebike','caftan','trophee','semaine du cheval',
+      'pop up','soirée lancement','ouverture','bollywood','btob','rose royal',
+      'sherlock','belle et','capone','satanas','7 cup','iscae','porteur',
+      "j'aimerais",'andalussyat','santa','carmen','8m2','atelier b2c','rassemblement',
+      'remise de diplome','remise diplome'
+    ].some(k => low.includes(k))
+  ) return 'Événement corpo/Spectacle/Sport';
+
+  if (
+    low.startsWith('tr:') ||
+    low.startsWith('tr :') ||
+    [
+      'congrès','congres','workshop','forum','journée','journee','logis med','logiterre',
+      'gitex','whx','cphi','officine pharma','medica trade','pharmexpo',
+      'smnc','smacot','wca2026','ambm','smalmi','ambrg','smamm','smb ','jpfsa',
+      'seenergy','grain & milling','alhokama','smo','amcar','amoc','cardio sud',
+      'afomek','fon ','apei','smc','amicale','amu','codepca','para expo',
+      'jdm','adepra','smd ','beauty plus','acor','acop','aopr','smorl','srmgo',
+      'agp','agsmf','afmapath','al amal','jiop','agon','amef','jpit','acp ',
+      'asmpr','smedian','smsl','smcc','antlm','génétique','pathologie digitale',
+      'fertilité','hémato','apa ','sigma','heart','ammf','aes','samir-ophta',
+      'kebbaj','somachir','somipev','reso ','assed','ehealth','salons btob',
+      'maroc hotel','table ronde'
+    ].some(k => low.includes(k))
+  ) return 'Congrès/Table ronde';
+
+  if (low.startsWith('post') && low.length < 80) return 'Activation-Offre One Retail';
+  if (low.startsWith('offre') || low.includes('offre ')) return 'Activation-Offre One Retail';
+  if (low.startsWith('activation')) return 'Activation-Offre One Retail';
+
+  if (low.startsWith('campagne') || low.includes('campagne ')) return 'Campagne';
+  if (low.startsWith('lancement') || low.includes('lancement ')) return 'Lancement';
+  if (low.startsWith('affichage')) return 'Affichage';
+
+  return 'Autre';
+}
+
+function cleanName(name) {
+  return name.trim()
+    .replace(/^(EV:|ev:|TR:|tr:|congrès\s*:|congrès\s|congres\s*:|congres\s)/i, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 85);
+}
+/*const STOP_WORDS = [
   'congrès',
   'congres',
   'table ronde',
@@ -1543,7 +1613,7 @@ function cleanName(name) {
         return name.trim()
           .replace(/^(EV:|ev:|congrès\s*:|congrès\s|congres\s*:)/i, '')
           .replace(/\s+/g, ' ').trim().slice(0, 85);
-      }
+      }*/
 
       const newEvents = [];
       let newId = 1;
