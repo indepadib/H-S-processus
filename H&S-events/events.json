@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-30T21:24:34.606Z",
+  "updated_at": "2026-03-30T21:24:41.559Z",
   "events": [
     {
       "id": 2,
@@ -8,15 +8,6 @@
       "e": "",
       "n": "EV: Bollywood Roadshow Rabat + Casa",
       "m": 1,
-      "t": "Événement"
-    },
-    {
-      "id": 4,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "EV: Spectable Ramadan Casa",
-      "m": 3,
       "t": "Événement"
     },
     {
@@ -2880,15 +2871,6 @@
       "n": "Lancement nouveau site web",
       "m": 2,
       "t": "Lancement"
-    },
-    {
-      "id": 4,
-      "g": "H&S Group",
-      "bu": "",
-      "e": "",
-      "n": "test adib",
-      "m": 4,
-      "t": "Événement corpo/spectacle/Sport"
     }
   ],
   "nxtId": 5,
