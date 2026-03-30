@@ -532,18 +532,23 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
                 <option value="11">Novembre</option><option value="12">Décembre</option>
               </select>
             </div>
-            <select id="ev-f-type" class="fs" onchange="buildList()" style="font-size:10.5px">
-              <option value="">Tous les types</option>
-              <option>Congrès</option><option>Événement</option><option>Campagne</option>
-              <option>Lancement</option><option>Affichage</option><option>Offre</option><option>Activation</option>
-            </select>
+          <select id="ev-f-type" class="fs" onchange="buildList()" style="font-size:10.5px">
+              <select id="filter-type" onchange="setFilterType(this.value)">
+               <option value="">Tous les types</option>
+              <option value="Congrès/TR">Congrès/TR</option>
+              <option value="Activation-offre One retail">Activation-offre One retail</option>
+              <option value="Événement corpo/spectacle/Sport">Événement corpo/spectacle/Sport</option>
+              <option value="Campagne">Campagne</option>
+              <option value="Lancement">Lancement</option>
+              <option value="Affichage">Affichage</option>
+              <option value="Autre">Autre</option>
+                    </select>
           </div>
-          <div id="ev-list"></div>
-        </div>
-
-      </div>
-    </div>
+          <div>
+    <button type="button" onclick="resetFilters()">Réinitialiser</button>
   </div>
+</div>
+
 
   <!-- ROADMAP -->
   <div class="rmap-area">
@@ -958,9 +963,11 @@ let zoomedM   = null;
 let hidden    = new Set();
 let sideOpen  = false;
 let editId    = null;
+let filterBU = '';
+let filterType = '';
 
 // ── UTILS ─────────────────────────────────────────
-function filtered(){
+/*function filtered(){
   const tab = TABS.find(t=>t.id===activeTab);
   return EVTS.filter(d=>{
     if(hidden.has(d.g)) return false;
@@ -971,7 +978,38 @@ function filtered(){
     if(tab.id==='type')   return selected.has(d.t);
     return true;
   });
+}*/
+
+  function filtered(){
+  let list = [...EVTS];
+  if (typeof activeTab !== 'undefined' && activeTab && activeTab !== 'all') {
+    if (activeTab === 'group' && typeof selected !== 'undefined' && selected) {
+      list = list.filter(e => (e.g || '') === selected);
+    }
+    if (activeTab === 'bu' && typeof selected !== 'undefined' && selected) {
+      list = list.filter(e => (e.bu || '') === selected);
+    }
+    if (activeTab === 'entity' && typeof selected !== 'undefined' && selected) {
+      list = list.filter(e => (e.e || '') === selected);
+    }
+    if (activeTab === 'type' && typeof selected !== 'undefined' && selected) {
+      list = list.filter(e => (e.t || '') === selected);
+    }
+    if (activeTab === 'month' && typeof selected !== 'undefined' && selected !== null && selected !== '') {
+      list = list.filter(e => String(e.m) === String(selected));
+    }
+  }
+  // nouveaux filtres combinés
+  if (filterBU) {
+    list = list.filter(e => (e.bu || '') === filterBU);
+  }
+  if (filterType) {
+    list = list.filter(e => (e.t || '') === filterType);
+  }
+  return list;
 }
+
+  
 function optColor(tid,opt){
   if(tid==='groupe') return GC[opt]||'#888';
   if(tid==='type')   return TC[opt]?.c||'#888';
@@ -1150,7 +1188,10 @@ async function loadEventsFromRepo(opts={}){
     const res = await fetch(`./events.json?t=${Date.now()}`, {cache:'no-store'});
     if(!res.ok) throw new Error('events.json introuvable');
     const data = await res.json();
-    EVTS = Array.isArray(data.events) ? data.events : [];
+    EVTS = (Array.isArray(data.events) ? data.events : []).map(e => ({
+  ...e,
+  t: getType(e.n) //recalcul forcé
+}));
     nxtId = EVTS.reduce((mx,e)=>Math.max(mx, Number(e.id)||0), 0) + 1;
     if(sideOpen){
       const el=document.getElementById('ev-list');
@@ -1237,6 +1278,25 @@ async function saveEdit(){
   }catch(err){
     alert(err.message || 'Erreur lors de la modification');
   }
+}
+
+  
+function setFilterBU(v){
+  filterBU = v;
+  render();
+}
+function setFilterType(v){
+  filterType = v;
+  render();
+}
+function resetFilters(){
+  filterBU = '';
+  filterType = '';
+  const buSel = document.getElementById('filter-bu');
+  const typeSel = document.getElementById('filter-type');
+  if (buSel) buSel.value = '';
+  if (typeSel) typeSel.value = '';
+  render();
 }
 // ── TABS & CHIPS ─────────────────────────────────
 function initTabs(){
