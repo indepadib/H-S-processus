@@ -112,6 +112,16 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
   padding:7px 24px;min-height:44px;
   display:flex;gap:6px;align-items:center;flex-wrap:wrap;flex-shrink:0;
 }
+.cbar-tools{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cbar-select{
+  min-width:150px;padding:4px 10px;border:1px solid var(--b1);border-radius:18px;
+  background:var(--white);font-family:'Inter',sans-serif;font-size:11px;color:var(--text);outline:none;
+}
+.cbar-reset{
+  padding:4px 10px;border:1px solid var(--b1);border-radius:18px;background:var(--white);
+  font-family:'Inter',sans-serif;font-size:11px;color:var(--sub);cursor:pointer;transition:all .14s;
+}
+.cbar-reset:hover,.cbar-select:hover{border-color:var(--b2);background:#f8fafc}
 .cbar-hint{font-size:11px;color:var(--sub);font-style:italic}
 .chip{
   padding:4px 12px;border-radius:20px;font-size:11px;font-weight:500;
@@ -338,6 +348,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
   /* ── CHIP BAR ── */
   .cbar { padding:6px 10px; }
   .chip { padding:3px 9px; font-size:10px; }
+  .cbar-tools{width:100%;margin-left:0;gap:6px}
+  .cbar-select,.cbar-reset{width:100%;min-width:unset}
 
   /* ── LAYOUT: sidebar devient drawer par-dessus ── */
   .body { display:block; overflow:visible; }
@@ -465,6 +477,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
         <div class="sb-sec">
           <div class="sb-sec-t">Ajouter un événement</div>
           <div class="fl"><label>Nom</label><input id="f-name" class="fi" placeholder="Ex: Congrès SMPR"></div>
+          <div class="fl"><label>Type</label>
+            <select id="f-t" class="fs">
+              <option>Congrès/TR</option>
+              <option>Événement corpo/spectacle/Sport</option>
+              <option>Campagne</option>
+              <option>Lancement</option>
+              <option>Affichage</option>
+              <option>Activation-offre One retail</option>
+              <option>Autre</option>
+            </select>
+          </div>
           <div class="fl"><label>Groupe</label>
             <select id="f-g" class="fs">
               <option>H&S Group</option><option>Dislog Group</option><option>LVE Group</option><option>One Retail</option>
@@ -478,12 +501,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
               <option value="4">Avril</option><option value="5">Mai</option><option value="6">Juin</option>
               <option value="7">Juillet</option><option value="8">Août</option><option value="9">Septembre</option>
               <option value="10">Octobre</option><option value="11">Novembre</option><option value="12">Décembre</option>
-            </select>
-          </div>
-          <div class="fl"><label>Type</label>
-            <select id="f-t" class="fs">
-              <option>Congrès</option><option>Événement</option><option>Campagne</option>
-              <option>Lancement</option><option>Affichage</option><option>Offre</option><option>Activation</option>
             </select>
           </div>
           <button class="fb" onclick="addEv()">+ Ajouter à la roadmap</button>
@@ -533,8 +550,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
               </select>
             </div>
           <select id="ev-f-type" class="fs" onchange="buildList()" style="font-size:10.5px">
-              <select id="filter-type" onchange="setFilterType(this.value)">
-               <option value="">Tous les types</option>
+              <option value="">Tous les types</option>
               <option value="Congrès/TR">Congrès/TR</option>
               <option value="Activation-offre One retail">Activation-offre One retail</option>
               <option value="Événement corpo/spectacle/Sport">Événement corpo/spectacle/Sport</option>
@@ -542,13 +558,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
               <option value="Lancement">Lancement</option>
               <option value="Affichage">Affichage</option>
               <option value="Autre">Autre</option>
-                    </select>
+            </select>
           </div>
-          <div>
-    <button type="button" onclick="resetFilters()">Réinitialiser</button>
+          <div id="ev-list"></div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-
 
   <!-- ROADMAP -->
   <div class="rmap-area">
@@ -571,6 +587,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
   <div class="modal">
     <div class="modal-t">Modifier l'événement</div>
     <div class="fl"><label>Nom</label><input id="m-name" class="fi"></div>
+    <div class="fl"><label>Type</label>
+      <select id="m-type" class="fs">
+        <option>Congrès/TR</option>
+        <option>Événement corpo/spectacle/Sport</option>
+        <option>Campagne</option>
+        <option>Lancement</option>
+        <option>Affichage</option>
+        <option>Activation-offre One retail</option>
+        <option>Autre</option>
+      </select>
+    </div>
     <div class="fl"><label>Groupe</label>
       <select id="m-g" class="fs">
         <option>H&S Group</option><option>Dislog Group</option><option>LVE Group</option><option>One Retail</option>
@@ -584,12 +611,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
         <option value="4">Avril</option><option value="5">Mai</option><option value="6">Juin</option>
         <option value="7">Juillet</option><option value="8">Août</option><option value="9">Septembre</option>
         <option value="10">Octobre</option><option value="11">Novembre</option><option value="12">Décembre</option>
-      </select>
-    </div>
-    <div class="fl"><label>Type</label>
-      <select id="m-type" class="fs">
-        <option>Congrès</option><option>Événement</option><option>Campagne</option>
-        <option>Lancement</option><option>Affichage</option><option>Offre</option><option>Activation</option>
       </select>
     </div>
     <div class="modal-actions">
@@ -623,13 +644,13 @@ const NOW = 3;
 // ── COLORS (mutable) ──────────────────────────────
 const GC = {'H&S Group':'#2a5298','Dislog Group':'#1e7fc4','LVE Group':'#0f9e7b','One Retail':'#c8860a'};
 const TC = {
-  'Congrès':   {c:'#2a5298',bg:'#eef4fc',tx:'#1a3a7a',cs:'congres'},
-  'Événement': {c:'#b8780a',bg:'#fef8ed',tx:'#7a4a00',cs:'evenement'},
-  'Campagne':  {c:'#0f9e7b',bg:'#edfaf4',tx:'#0a5a40',cs:'campagne'},
+  'Congrès/TR': {c:'#2a5298',bg:'#eef4fc',tx:'#1a3a7a',cs:'congres'},
+  'Événement corpo/spectacle/Sport': {c:'#b8780a',bg:'#fef8ed',tx:'#7a4a00',cs:'evenement'},
+  'Campagne': {c:'#0f9e7b',bg:'#edfaf4',tx:'#0a5a40',cs:'campagne'},
   'Lancement': {c:'#6b48c8',bg:'#f3f0fd',tx:'#3a2080',cs:'lancement'},
   'Affichage': {c:'#c84848',bg:'#fdeaea',tx:'#7a1010',cs:'affichage'},
-  'Offre':     {c:'#0e90a8',bg:'#edf8fb',tx:'#064a58',cs:'offre'},
-  'Activation':{c:'#c86420',bg:'#fdf2ea',tx:'#7a3010',cs:'activation'},
+  'Activation-offre One retail': {c:'#0e90a8',bg:'#edf8fb',tx:'#064a58',cs:'activation-offre'},
+  'Autre': {c:'#7b8794',bg:'#f3f5f7',tx:'#475467',cs:'autre'},
 };
 
 // ── DATASET ───────────────────────────────────────
@@ -947,6 +968,7 @@ let EVTS = [
   {id:311,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'EV: Atelier B2C',m:11,t:'Événement'},
   {id:312,g:'One Retail',bu:'Bricolage',e:'Mr.Bricolage',n:'Campagne Festival du Bricolage',m:12,t:'Campagne'}
 ];
+EVTS = EVTS.map(e => ({...e, id: String(e.id), t: getType(e.n || '')}));
 let nxtId = 400;
 
 // ── STATE ─────────────────────────────────────────
@@ -966,46 +988,80 @@ let editId    = null;
 let filterBU = '';
 let filterType = '';
 
-// ── UTILS ─────────────────────────────────────────
-/*function filtered(){
-  const tab = TABS.find(t=>t.id===activeTab);
-  return EVTS.filter(d=>{
-    if(hidden.has(d.g)) return false;
-    if(!tab.opts || selected.size===0) return true;
-    if(tab.id==='groupe') return selected.has(d.g);
-    if(tab.id==='bu')     return selected.has(d.bu);
-    if(tab.id==='entite') return selected.has(d.e);
-    if(tab.id==='type')   return selected.has(d.t);
-    return true;
-  });
-}*/
+const STOP_WORDS = [
+  'congrès','congres','table ronde','affichage','campagne','lancement','tr:','ev: evenements',
+  'offres','offre','post prévu','activations','activation','légende','legend'
+];
 
-  function filtered(){
-  let list = [...EVTS];
-  if (typeof activeTab !== 'undefined' && activeTab && activeTab !== 'all') {
-    if (activeTab === 'group' && typeof selected !== 'undefined' && selected) {
-      list = list.filter(e => (e.g || '') === selected);
-    }
-    if (activeTab === 'bu' && typeof selected !== 'undefined' && selected) {
-      list = list.filter(e => (e.bu || '') === selected);
-    }
-    if (activeTab === 'entity' && typeof selected !== 'undefined' && selected) {
-      list = list.filter(e => (e.e || '') === selected);
-    }
-    if (activeTab === 'type' && typeof selected !== 'undefined' && selected) {
-      list = list.filter(e => (e.t || '') === selected);
-    }
-    if (activeTab === 'month' && typeof selected !== 'undefined' && selected !== null && selected !== '') {
-      list = list.filter(e => String(e.m) === String(selected));
-    }
+function getType(name = '') {
+  const low = String(name).trim().toLowerCase();
+
+  if (
+    low.startsWith('ev:') ||
+    [
+      'inauguration','roadshow','spectacle','jazzablanca','nostalgia','golf','padel','icebike',
+      'caftan','trophee','semaine du cheval','pop up','soirée lancement','ouverture','bollywood',
+      'btob','rose royal','sherlock','belle et','capone','satanas','7 cup','iscae','porteur',
+      "j'aimerais",'andalussyat','santa','carmen','8m2','atelier b2c','rassemblement',
+      'remise de diplome','remise diplome'
+    ].some(k => low.includes(k))
+  ) return 'Événement corpo/spectacle/Sport';
+
+  if (
+    low.startsWith('tr:') || low.startsWith('tr :') ||
+    [
+      'congrès','congres','workshop','forum','journée','journee','logis med','logiterre','gitex',
+      'whx','cphi','officine pharma','medica trade','pharmexpo','smnc','smacot','wca2026',
+      'ambm','smalmi','ambrg','smamm','smb ','jpfsa','seenergy','grain & milling','alhokama',
+      'smo','amcar','amoc','cardio sud','afomek','fon ','apei','smc','amicale','amu',
+      'codepca','para expo','jdm','adepra','smd ','beauty plus','acor','acop','aopr','smorl',
+      'srmgo','agp','agsmf','afmapath','al amal','jiop','agon','amef','jpit','acp ','asmpr',
+      'smedian','smsl','smcc','antlm','génétique','pathologie digitale','fertilité','hémato',
+      'apa ','sigma','heart','ammf','aes','samir-ophta','kebbaj','somachir','somipev','reso ',
+      'assed','ehealth','salons btob','maroc hotel','table ronde'
+    ].some(k => low.includes(k))
+  ) return 'Congrès/TR';
+
+  if (
+    (low.startsWith('post') && low.length < 80) ||
+    low.startsWith('offre') || low.includes('offre ') ||
+    low.startsWith('activation')
+  ) return 'Activation-offre One retail';
+
+  if (low.startsWith('campagne') || low.includes('campagne ')) return 'Campagne';
+  if (low.startsWith('lancement') || low.includes('lancement ')) return 'Lancement';
+  if (low.startsWith('affichage')) return 'Affichage';
+  return 'Autre';
+}
+
+function cleanName(name = '') {
+  return String(name).trim()
+    .replace(/^(EV:|ev:|TR:|tr:|congrès\s*:|congrès\s|congres\s*:|congres\s)/i, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 85);
+}
+
+// ── UTILS ─────────────────────────────────────────
+function filtered(){
+  const tab = TABS.find(t => t.id === activeTab);
+
+  let list = EVTS.filter(d => !hidden.has(d.g));
+
+  if (tab && tab.opts && selected.size > 0) {
+    if (tab.id === 'groupe') list = list.filter(d => selected.has(d.g));
+    if (tab.id === 'bu')     list = list.filter(d => selected.has(d.bu));
+    if (tab.id === 'entite') list = list.filter(d => selected.has(d.e));
+    if (tab.id === 'type')   list = list.filter(d => selected.has(d.t));
   }
-  // nouveaux filtres combinés
+
   if (filterBU) {
-    list = list.filter(e => (e.bu || '') === filterBU);
+    list = list.filter(d => (d.bu || '') === filterBU);
   }
   if (filterType) {
-    list = list.filter(e => (e.t || '') === filterType);
+    list = list.filter(d => (d.t || '') === filterType);
   }
+
   return list;
 }
 
@@ -1111,7 +1167,7 @@ function buildList(){
   }
 
   shown.forEach(ev=>{
-    const tc = TC[ev.t]||TC['Congrès'];
+    const tc = TC[ev.t]||TC['Congrès/TR'];
     const gc = GC[ev.g]||'#888';
     const item = document.createElement('div');
     item.className='eli';
@@ -1190,7 +1246,8 @@ async function loadEventsFromRepo(opts={}){
     const data = await res.json();
     EVTS = (Array.isArray(data.events) ? data.events : []).map(e => ({
   ...e,
-  t: getType(e.n) //recalcul forcé
+  id: String(e.id),
+  t: getType(e.n || '')
 }));
     nxtId = EVTS.reduce((mx,e)=>Math.max(mx, Number(e.id)||0), 0) + 1;
     if(sideOpen){
@@ -1296,6 +1353,7 @@ function resetFilters(){
   const typeSel = document.getElementById('filter-type');
   if (buSel) buSel.value = '';
   if (typeSel) typeSel.value = '';
+  renderChips();
   render();
 }
 // ── TABS & CHIPS ─────────────────────────────────
@@ -1315,37 +1373,75 @@ function initTabs(){
   });
 }
 function renderChips(){
-  const bar=document.getElementById('cbar'); bar.innerHTML='';
+  const bar=document.getElementById('cbar');
+  bar.innerHTML='';
   const tab=TABS.find(t=>t.id===activeTab);
-  if(!tab.opts){bar.innerHTML='<span class="cbar-hint">Toutes les activités du groupe H&S</span>';return;}
-  const opts=tab.opts();
-  if(!opts.length){bar.innerHTML='<span class="cbar-hint">Aucun élément</span>';return;}
 
-  // For entite: add a small search input first
-  if(tab.id==='entite'){
-    const wrap = document.createElement('div');
-    wrap.style.cssText='display:flex;align-items:center;gap:8px;width:100%;flex-wrap:wrap;';
-    const inp = document.createElement('input');
-    inp.id='chip-search';
-    inp.placeholder='Rechercher une entité…';
-    inp.style.cssText='padding:3px 9px;border:1px solid var(--b1);border-radius:6px;font-family:Inter,sans-serif;font-size:11px;outline:none;background:var(--white);color:var(--text);width:170px;';
-    inp.oninput=()=>renderChips();
-    wrap.appendChild(inp);
-    bar.appendChild(wrap);
+  const chipsWrap=document.createElement('div');
+  chipsWrap.style.cssText='display:flex;align-items:center;gap:6px;flex-wrap:wrap;';
+
+  if(!tab.opts){
+    chipsWrap.innerHTML='<span class="cbar-hint">Toutes les activités du groupe H&S</span>';
+  }else{
+    const opts=tab.opts();
+    if(!opts.length){
+      chipsWrap.innerHTML='<span class="cbar-hint">Aucun élément</span>';
+    }else{
+      if(tab.id==='entite'){
+        const inp = document.createElement('input');
+        inp.id='chip-search';
+        inp.placeholder='Rechercher une entité…';
+        inp.style.cssText='padding:3px 9px;border:1px solid var(--b1);border-radius:16px;font-family:Inter,sans-serif;font-size:11px;outline:none;background:var(--white);color:var(--text);width:170px;';
+        inp.oninput=()=>renderChips();
+        chipsWrap.appendChild(inp);
+      }
+
+      const search = document.getElementById('chip-search')?.value?.toLowerCase()||'';
+      const filteredOpts = search ? opts.filter(o=>o.toLowerCase().includes(search)) : opts;
+
+      filteredOpts.forEach(opt=>{
+        const c=optColor(tab.id,opt);
+        const chip=document.createElement('div');
+        chip.className='chip '+(selected.has(opt)?'on':'off');
+        chip.textContent=opt;
+        chip.style.cssText=`color:${c};border-color:${c};background:${c}11;`;
+        chip.onclick=()=>{selected.has(opt)?selected.delete(opt):selected.add(opt);renderChips();render();};
+        chipsWrap.appendChild(chip);
+      });
+    }
   }
 
-  const search = document.getElementById('chip-search')?.value?.toLowerCase()||'';
-  const filtered_opts = search ? opts.filter(o=>o.toLowerCase().includes(search)) : opts;
+  bar.appendChild(chipsWrap);
 
-  filtered_opts.forEach(opt=>{
-    const c=optColor(tab.id,opt);
-    const chip=document.createElement('div');
-    chip.className='chip '+(selected.has(opt)?'on':'off');
-    chip.textContent=opt;
-    chip.style.cssText=`color:${c};border-color:${c};background:${c}11;`;
-    chip.onclick=()=>{selected.has(opt)?selected.delete(opt):selected.add(opt);renderChips();render();};
-    bar.appendChild(chip);
-  });
+  const tools=document.createElement('div');
+  tools.className='cbar-tools';
+
+  const buSel=document.createElement('select');
+  buSel.id='filter-bu';
+  buSel.className='cbar-select';
+  const buOptions=['', ...new Set(EVTS.map(e=>e.bu).filter(Boolean))];
+  buSel.innerHTML=buOptions.map(v=>`<option value="${v}">${v||'Toutes les BU'}</option>`).join('');
+  buSel.value=filterBU;
+  buSel.onchange=()=>setFilterBU(buSel.value);
+  tools.appendChild(buSel);
+
+  const typeSel=document.createElement('select');
+  typeSel.id='filter-type';
+  typeSel.className='cbar-select';
+  const typeOptions=['', ...Object.keys(TC)];
+  typeSel.innerHTML=typeOptions.map(v=>`<option value="${v}">${v||'Tous les types'}</option>`).join('');
+  typeSel.value=filterType;
+  typeSel.onchange=()=>setFilterType(typeSel.value);
+  tools.appendChild(typeSel);
+
+  const btn=document.createElement('button');
+  btn.type='button';
+  btn.className='cbar-reset';
+  btn.textContent='Réinitialiser';
+  btn.onclick=resetFilters;
+  tools.appendChild(btn);
+
+  bar.appendChild(tools);
 }
 
 // ── RENDER ───────────────────────────────────────
@@ -1413,7 +1509,7 @@ function renderEvents(data){
     col.className='mc'+(isN?' now':'')+(isZ?' zoom':'');
     col.onclick=()=>toggleZoom(m);
     evts.slice(0,CAP).forEach((ev,idx)=>{
-      const tc=TC[ev.t]||TC['Congrès'], gc=GC[ev.g]||'#888';
+      const tc=TC[ev.t]||TC['Congrès/TR'], gc=GC[ev.g]||'#888';
       const pill=document.createElement('div');
       pill.className='ep';
       pill.style.cssText=`background:${tc.bg};border-color:${tc.c};color:${tc.tx};animation-delay:${idx*.03}s`;
@@ -1445,7 +1541,7 @@ function renderZoom(data,m){
   </div><div class="zgrid" id="zg"></div>`;
   const grid=document.getElementById('zg');
   evts.forEach((ev,idx)=>{
-    const tc=TC[ev.t]||TC['Congrès'], gc=GC[ev.g]||'#888';
+    const tc=TC[ev.t]||TC['Congrès/TR'], gc=GC[ev.g]||'#888';
     const card=document.createElement('div');
     card.className='zc'; card.style.cssText=`border-top-color:${tc.c};animation-delay:${idx*.02}s`;
     card.innerHTML=`<div class="zc-n">${ev.n}</div>
@@ -1469,7 +1565,7 @@ function renderLegend(){
 // ── TOOLTIP ──────────────────────────────────────
 const tip=document.getElementById('tip');
 function showTip(e,ev){
-  const gc=GC[ev.g]||'#888', tc=TC[ev.t]||TC['Congrès'];
+  const gc=GC[ev.g]||'#888', tc=TC[ev.t]||TC['Congrès/TR'];
   tip.innerHTML=`<div class="tn">${ev.n}</div>
     <div class="tr">Groupe <span style="color:${gc}">${ev.g}</span></div>
     ${ev.bu?`<div class="tr">BU <span>${ev.bu}</span></div>`:''}
@@ -1529,151 +1625,7 @@ function importXLSX(input) {
           mOffset = i; break;
         }
       }
-      const STOP_WORDS = [
-  'congrès',
-  'congres',
-  'table ronde',
-  'affichage',
-  'campagne',
-  'lancement',
-  'tr:',
-  'ev: evenements',
-  'offres',
-  'offre',
-  'post prévu',
-  'activations',
-  'activation',
-  'légende',
-  'legend'
-];
-
-function getType(name) {
-  const n = name.trim();
-  const low = n.toLowerCase();
-
-  if (
-    low.startsWith('ev:') ||
-    [
-      'inauguration','roadshow','spectacle','jazzablanca',
-      'nostalgia','golf','padel','icebike','caftan','trophee','semaine du cheval',
-      'pop up','soirée lancement','ouverture','bollywood','btob','rose royal',
-      'sherlock','belle et','capone','satanas','7 cup','iscae','porteur',
-      "j'aimerais",'andalussyat','santa','carmen','8m2','atelier b2c','rassemblement',
-      'remise de diplome','remise diplome'
-    ].some(k => low.includes(k))
-  ) return 'Événement corpo/Spectacle/Sport';
-
-  if (
-    low.startsWith('tr:') ||
-    low.startsWith('tr :') ||
-    [
-      'congrès','congres','workshop','forum','journée','journee','logis med','logiterre',
-      'gitex','whx','cphi','officine pharma','medica trade','pharmexpo',
-      'smnc','smacot','wca2026','ambm','smalmi','ambrg','smamm','smb ','jpfsa',
-      'seenergy','grain & milling','alhokama','smo','amcar','amoc','cardio sud',
-      'afomek','fon ','apei','smc','amicale','amu','codepca','para expo',
-      'jdm','adepra','smd ','beauty plus','acor','acop','aopr','smorl','srmgo',
-      'agp','agsmf','afmapath','al amal','jiop','agon','amef','jpit','acp ',
-      'asmpr','smedian','smsl','smcc','antlm','génétique','pathologie digitale',
-      'fertilité','hémato','apa ','sigma','heart','ammf','aes','samir-ophta',
-      'kebbaj','somachir','somipev','reso ','assed','ehealth','salons btob',
-      'maroc hotel','table ronde'
-    ].some(k => low.includes(k))
-  ) return 'Congrès/Table ronde';
-
-  if (low.startsWith('post') && low.length < 80) return 'Activation-Offre One Retail';
-  if (low.startsWith('offre') || low.includes('offre ')) return 'Activation-Offre One Retail';
-  if (low.startsWith('activation')) return 'Activation-Offre One Retail';
-
-  if (low.startsWith('campagne') || low.includes('campagne ')) return 'Campagne';
-  if (low.startsWith('lancement') || low.includes('lancement ')) return 'Lancement';
-  if (low.startsWith('affichage')) return 'Affichage';
-
-  return 'Autre';
-}
-
-function cleanName(name) {
-  return name.trim()
-    .replace(/^(EV:|ev:|TR:|tr:|congrès\s*:|congrès\s|congres\s*:|congres\s)/i, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 85);
-}
-/*const STOP_WORDS = [
-  'congrès',
-  'congres',
-  'table ronde',
-  'affichage',
-  'campagne',
-  'lancement',
-  'tr:',
-  'ev: evenements',
-  'offres',
-  'offre',
-  'post prévu',
-  'activations',
-  'activation',
-  'légende',
-  'legend'
-];
-
-function getType(name) {
-  const n = name.trim();
-  const low = n.toLowerCase();
-
-  if (
-    low.startsWith('ev:') ||
-    [
-      'inauguration','roadshow','spectacle','jazzablanca',
-      'nostalgia','golf','padel','icebike','caftan','trophee','semaine du cheval',
-      'pop up','soirée lancement','ouverture','bollywood','btob','rose royal',
-      'sherlock','belle et','capone','satanas','7 cup','iscae','porteur',
-      "j'aimerais",'andalussyat','santa','carmen','8m2','atelier b2c','rassemblement',
-      'remise de diplome','remise diplome'
-    ].some(k => low.includes(k))
-  ) return 'Événement corpo/Spectacle/Sport';
-
-  if (
-    low.startsWith('tr:') ||
-    low.startsWith('tr :') ||
-    [
-      'congrès','congres','workshop','forum','journée','journee','logis med','logiterre',
-      'gitex','whx','cphi','officine pharma','medica trade','pharmexpo',
-      'smnc','smacot','wca2026','ambm','smalmi','ambrg','smamm','smb ','jpfsa',
-      'seenergy','grain & milling','alhokama','smo','amcar','amoc','cardio sud',
-      'afomek','fon ','apei','smc','amicale','amu','codepca','para expo',
-      'jdm','adepra','smd ','beauty plus','acor','acop','aopr','smorl','srmgo',
-      'agp','agsmf','afmapath','al amal','jiop','agon','amef','jpit','acp ',
-      'asmpr','smedian','smsl','smcc','antlm','génétique','pathologie digitale',
-      'fertilité','hémato','apa ','sigma','heart','ammf','aes','samir-ophta',
-      'kebbaj','somachir','somipev','reso ','assed','ehealth','salons btob',
-      'maroc hotel','table ronde'
-    ].some(k => low.includes(k))
-  ) return 'Congrès/Table ronde';
-
-  if (low.startsWith('post') && low.length < 80) return 'Activation-Offre One Retail';
-  if (low.startsWith('offre') || low.includes('offre ')) return 'Activation-Offre One Retail';
-  if (low.startsWith('activation')) return 'Activation-Offre One Retail';
-
-  if (low.startsWith('campagne') || low.includes('campagne ')) return 'Campagne';
-  if (low.startsWith('lancement') || low.includes('lancement ')) return 'Lancement';
-  if (low.startsWith('affichage')) return 'Affichage';
-
-  return 'Autre';
-}
-
-function cleanName(name) {
-  return name.trim()
-    .replace(/^(EV:|ev:|TR:|tr:|congrès\s*:|congrès\s|congres\s*:|congres\s)/i, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 85);
-}
-      function cleanName(name) {
-        return name.trim()
-          .replace(/^(EV:|ev:|congrès\s*:|congrès\s|congres\s*:)/i, '')
-          .replace(/\s+/g, ' ').trim().slice(0, 85);
-      }*/
+      // Utilise les fonctions globales getType() et cleanName()
 
       const newEvents = [];
       let newId = 1;
