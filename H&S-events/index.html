@@ -1270,16 +1270,38 @@ async function apiWrite(endpoint, payload){
   if(!res.ok) throw new Error(data.error || data.details || `Erreur ${endpoint}`);
   return data;
 }
+  function normalizeType(existingType, name='') {
+  const t = (existingType || '').trim();
+
+  // nouveaux types déjà OK
+  if (
+    t === 'Congrès/TR' ||
+    t === 'Événement corpo/Spectacle/Sport' ||
+    t === 'Campagne' ||
+    t === 'Lancement' ||
+    t === 'Affichage' ||
+    t === 'Activation-offre One retail'
+  ) return t;
+
+  // anciens types -> nouveaux types
+  if (t === 'Congrès') return 'Congrès/TR';
+  if (t === 'Événement') return 'Événement corpo/Spectacle/Sport';
+  if (t === 'Offre') return 'Activation-offre One retail';
+  if (t === 'Activation') return 'Activation-offre One retail';
+
+  // si vide ou douteux, on re-déduit depuis le nom
+  return getType(name || '');
+}
 async function loadEventsFromRepo(opts={}){
   const silent = !!opts.silent;
   try{
     const res = await fetch(`./events.json?t=${Date.now()}`, {cache:'no-store'});
     if(!res.ok) throw new Error('events.json introuvable');
     const data = await res.json();
-    EVTS = (Array.isArray(data.events) ? data.events : []).map(e => ({
+  EVTS = (Array.isArray(data.events) ? data.events : []).map(e => ({
   ...e,
   id: String(e.id),
-  t: getType(e.n || '')
+  t: normalizeType(e.t, e.n)
 }));
     nxtId = EVTS.reduce((mx,e)=>Math.max(mx, Number(e.id)||0), 0) + 1;
     if(sideOpen){
