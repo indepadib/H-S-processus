@@ -485,7 +485,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
               <option>Lancement</option>
               <option>Affichage</option>
               <option>Activation-offre One retail</option>
-              <option>Autre</option>
             </select>
           </div>
           <div class="fl"><label>Groupe</label>
@@ -557,7 +556,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
               <option value="Campagne">Campagne</option>
               <option value="Lancement">Lancement</option>
               <option value="Affichage">Affichage</option>
-              <option value="Autre">Autre</option>
             </select>
           </div>
           <div id="ev-list"></div>
@@ -595,7 +593,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
         <option>Lancement</option>
         <option>Affichage</option>
         <option>Activation-offre One retail</option>
-        <option>Autre</option>
       </select>
     </div>
     <div class="fl"><label>Groupe</label>
@@ -650,7 +647,6 @@ const TC = {
   'Lancement': {c:'#6b48c8',bg:'#f3f0fd',tx:'#3a2080',cs:'lancement'},
   'Affichage': {c:'#c84848',bg:'#fdeaea',tx:'#7a1010',cs:'affichage'},
   'Activation-offre One retail': {c:'#0e90a8',bg:'#edf8fb',tx:'#064a58',cs:'activation-offre'},
-  'Autre': {c:'#7b8794',bg:'#f3f5f7',tx:'#475467',cs:'autre'},
 };
 
 // ── DATASET ───────────────────────────────────────
@@ -661,7 +657,7 @@ let EVTS = [
   {id:4,g:'Dislog Group',bu:'',e:'',n:'EV: Spectable Ramadan Casa',m:3,t:'Événement'},
   {id:5,g:'Dislog Group',bu:'',e:'',n:'EV: Le porteur d\'histoire Casa + Rabat',m:4,t:'Événement'},
   {id:6,g:'Dislog Group',bu:'',e:'',n:'EV: Remise de diplome ISCAE',m:5,t:'Événement'},
-  {id:7,g:'Dislog Group',bu:'',e:'',n:'IPO Dislog Affichage',m:6,t:'Autre'},
+  {id:7,g:'Dislog Group',bu:'',e:'',n:'IPO Dislog Affichage',m:6,t:'Affichage'},
   {id:8,g:'Dislog Group',bu:'',e:'',n:'EV: Rose Royal rabat + Casa',m:9,t:'Événement'},
   {id:9,g:'Dislog Group',bu:'',e:'',n:'EV: J\'aimerais arrêté Casa + RABAT',m:10,t:'Événement'},
   {id:10,g:'Dislog Group',bu:'',e:'',n:'EV: Sherlock Holmes CASA + RABAT',m:11,t:'Événement'},
@@ -807,8 +803,8 @@ let EVTS = [
   {id:150,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne CAPLOR',m:5,t:'Campagne'},
   {id:151,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne CAPLOR',m:6,t:'Campagne'},
   {id:152,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Siccaprotect',m:9,t:'Campagne'},
-  {id:153,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Camapagne Timo-comod',m:10,t:'Autre'},
-  {id:154,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Camapagne Timo-comod',m:11,t:'Autre'},
+  {id:153,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Camapagne Timo-comod',m:10,t:'Campagne'},
+  {id:154,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Camapagne Timo-comod',m:11,t:'Campagne'},
   {id:155,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'SOMIPEV',m:12,t:'Autre'},
   {id:156,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'APA Congrès',m:1,t:'Congrès'},
   {id:157,g:'Dislog Group',bu:'Healthcare',e:'Steripharma',n:'Campagne Bactrim/ Tiberal',m:4,t:'Campagne'},
