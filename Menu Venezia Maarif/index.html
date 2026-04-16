@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Venezia — Menu Digital Premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#130f0c;
+  --bg-2:#19130f;
+  --panel:#1f1813;
+  --panel-2:#261d17;
+  --line:rgba(255,255,255,.09);
+  --line-soft:rgba(255,255,255,.05);
+  --text:#fff7ef;
+  --muted:#cfbea9;
+  --muted-2:#a3907b;
+  --accent:#d7a967;
+  --accent-2:#b7742f;
+  --accent-3:#f3cc95;
+  --success:#92c79d;
+  --danger:#ff8e8e;
+  --radius-xl:34px;
+  --radius-lg:26px;
+  --radius-md:20px;
+  --shadow:0 28px 70px rgba(0,0,0,.36);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--text);
+  font-family:'Inter',system-ui,sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(215,169,103,.12), transparent 30%),
+    radial-gradient(circle at 90% 10%, rgba(255,255,255,.05), transparent 18%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+  min-height:100vh;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27320%27%20viewBox%3D%270%200%20320%20320%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27320%27%20fill%3D%27none%27/%3E%0A%20%20%3Cg%20stroke%3D%27rgba%28215%2C169%2C103%2C0.10%29%27%20stroke-width%3D%271.2%27%20fill%3D%27none%27%3E%0A%20%20%20%20%3Cpath%20d%3D%27M40%2040c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M-20%20100c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%2070%2020%20100%200%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M40%20160c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M-20%20220c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%2070%2020%20100%200%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M40%20280c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%27/%3E%0A%20%20%3C/g%3E%0A%20%20%3Cg%20fill%3D%27rgba%28255%2C245%2C232%2C0.05%29%27%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2744%27%20cy%3D%2746%27%20r%3D%273%27/%3E%3Ccircle%20cx%3D%27146%27%20cy%3D%27160%27%20r%3D%272.5%27/%3E%3Ccircle%20cx%3D%27248%27%20cy%3D%2746%27%20r%3D%273%27/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2788%27%20cy%3D%27282%27%20r%3D%273%27/%3E%3Ccircle%20cx%3D%27286%27%20cy%3D%27226%27%20r%3D%272.5%27/%3E%0A%20%20%3C/g%3E%0A%3C/svg%3E");
+  background-size:320px 320px;
+  opacity:.7; pointer-events:none;
+  mask-image:linear-gradient(180deg, black, rgba(0,0,0,.5));
+}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+img{display:block;max-width:100%}
+
+.shell{max-width:1440px;margin:0 auto;padding:20px 20px 110px}
+.topbar{
+  position:sticky; top:12px; z-index:60;
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  margin-bottom:18px; padding:14px 16px;
+  background:rgba(18,14,11,.72);
+  border:1px solid var(--line);
+  backdrop-filter:blur(20px);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+}
+.brand-wrap{display:flex; align-items:center; gap:14px; min-width:0; user-select:none}
+.brand-logo-trigger{border:none;background:none;padding:0;margin:0;cursor:pointer}
+.brand-logo{
+  width:152px; height:auto; border-radius:20px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.28));
+}
+.brand-copy small{display:block; color:var(--muted-2); text-transform:uppercase; letter-spacing:.26em; font-size:10px; margin-bottom:4px}
+.brand-copy strong{display:block; font-size:18px; letter-spacing:.01em}
+.brand-copy span{display:block; color:var(--muted); font-size:13px; margin-top:4px}
+.top-actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+.btn,.ghost,.icon-btn{
+  border:none; cursor:pointer; transition:.22s ease; border-radius:999px;
+}
+.btn{
+  padding:13px 18px; color:#2a1908; font-weight:800;
+  background:linear-gradient(135deg,var(--accent-3),var(--accent),var(--accent-2));
+  box-shadow:0 18px 38px rgba(183,116,47,.24);
+}
+.btn:hover{transform:translateY(-2px)}
+.ghost{
+  padding:12px 18px; color:var(--text); background:#221a15; border:1px solid var(--line);
+}
+.ghost:hover{background:#2b211b}
+.icon-btn{
+  width:44px;height:44px; display:grid; place-items:center; background:#221a15; color:var(--text); border:1px solid var(--line);
+}
+
+.hero{
+  display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:stretch;
+}
+.hero-main{
+  position:relative; overflow:hidden; min-height:530px;
+  border-radius:38px; border:1px solid var(--line); box-shadow:var(--shadow);
+  background:
+   linear-gradient(180deg, rgba(13,10,8,.15), rgba(13,10,8,.86)),
+   linear-gradient(120deg, rgba(215,169,103,.13), transparent 35%),
+   url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1800&q=80') center/cover;
+  display:flex; align-items:flex-end; padding:34px;
+}
+.hero-main::before{
+  content:""; position:absolute; inset:0;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27320%27%20viewBox%3D%270%200%20320%20320%27%3E%0A%20%20%3Crect%20width%3D%27320%27%20height%3D%27320%27%20fill%3D%27none%27/%3E%0A%20%20%3Cg%20stroke%3D%27rgba%28215%2C169%2C103%2C0.10%29%27%20stroke-width%3D%271.2%27%20fill%3D%27none%27%3E%0A%20%20%20%20%3Cpath%20d%3D%27M40%2040c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M-20%20100c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%2070%2020%20100%200%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M40%20160c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M-20%20220c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%2070%2020%20100%200%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M40%20280c30-20%2070-20%20100%200s70%2020%20100%200%2070-20%20100%200%27/%3E%0A%20%20%3C/g%3E%0A%20%20%3Cg%20fill%3D%27rgba%28255%2C245%2C232%2C0.05%29%27%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2744%27%20cy%3D%2746%27%20r%3D%273%27/%3E%3Ccircle%20cx%3D%27146%27%20cy%3D%27160%27%20r%3D%272.5%27/%3E%3Ccircle%20cx%3D%27248%27%20cy%3D%2746%27%20r%3D%273%27/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2788%27%20cy%3D%27282%27%20r%3D%273%27/%3E%3Ccircle%20cx%3D%27286%27%20cy%3D%27226%27%20r%3D%272.5%27/%3E%0A%20%20%3C/g%3E%0A%3C/svg%3E");
+  background-size:420px 420px;
+  opacity:.2;
+}
+.hero-text{position:relative; max-width:700px}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:9px 12px; border-radius:999px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12);
+  color:#f6e8d5; font-size:12px; letter-spacing:.06em;
+}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(52px, 7vw, 90px);
+  line-height:.92; letter-spacing:-.04em; margin:16px 0 14px;
+}
+.hero p{max-width:620px; color:#f0dfcf; line-height:1.72; font-size:16px; margin:0}
+.hero-kpis{display:flex; gap:14px; flex-wrap:wrap; margin-top:22px}
+.kpi{min-width:126px;padding:15px 16px;border-radius:20px;background:rgba(14,11,9,.48);border:1px solid rgba(255,255,255,.08)}
+.kpi strong{display:block;font-size:22px;margin-bottom:4px}
+.kpi span{color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+
+.hero-side{display:grid;grid-template-rows:1fr 1fr; gap:18px}
+.side-card{position:relative;overflow:hidden;border-radius:30px;border:1px solid var(--line);box-shadow:var(--shadow); background:linear-gradient(180deg,#1d1612,#17120e)}
+.side-card.media{min-height:250px}
+.side-card.media .image{position:absolute;inset:0;background:center/cover}
+.side-card.media .overlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(17,13,10,.18), rgba(17,13,10,.88))}
+.side-card .copy{position:relative; padding:24px}
+.side-card h3{margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:30px}
+.side-card p{margin:0;color:var(--muted);line-height:1.68}
+.swatch-row{display:flex; gap:10px; margin-top:18px; flex-wrap:wrap}
+.swatch{height:42px; min-width:120px; padding:0 16px; border-radius:999px; display:flex; align-items:center; justify-content:center; font-size:12px; letter-spacing:.14em; text-transform:uppercase; border:1px solid var(--line)}
+.swatch.accent{background:linear-gradient(135deg,var(--accent-3),var(--accent)); color:#281709}
+.swatch.soft{background:#241c16; color:#f0e2d2}
+.swatch.outline{background:transparent; color:var(--muted)}
+
+.toolbar{
+  display:grid; grid-template-columns:1.15fr .85fr auto; gap:14px;
+  margin:24px 0 18px;
+}
+.search,.select-wrap,.toolbar-link{
+  height:60px; display:flex; align-items:center; border-radius:22px;
+  background:rgba(29,22,17,.88); border:1px solid var(--line); padding:0 18px;
+}
+.search input,.select-wrap select{width:100%; border:none; outline:none; background:transparent; color:var(--text); font-size:15px}
+.toolbar-link{justify-content:center;font-weight:700}
+.toolbar-link:hover{background:#2a2019}
+
+.featured{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-bottom:24px}
+.featured-card{position:relative; min-height:280px; overflow:hidden; border-radius:28px; border:1px solid var(--line); box-shadow:var(--shadow); background:#1f1712}
+.featured-card img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.featured-card::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(14,11,9,.08), rgba(14,11,9,.9))}
+.featured-copy{position:absolute; inset:auto 16px 16px 16px; z-index:1}
+.tag{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14); font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:#f8ebdd}
+.featured-copy h3{margin:10px 0 6px; font-family:'Cormorant Garamond',serif; font-size:28px}
+.featured-copy p{margin:0 0 12px; color:#e8d9c8; font-size:14px}
+.price-line{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.price{font-size:20px; font-weight:800; color:#ffd8ab}
+.mini-btn{padding:10px 14px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); color:var(--text)}
+
+.section-nav{display:flex; gap:10px; overflow:auto; padding:4px 0 10px; margin-bottom:18px; scrollbar-width:none}
+.section-nav::-webkit-scrollbar{display:none}
+.nav-chip{padding:12px 16px; border-radius:999px; border:1px solid var(--line); background:#211913; color:var(--muted); cursor:pointer; white-space:nowrap; transition:.2s}
+.nav-chip.active,.nav-chip:hover{background:linear-gradient(135deg,var(--accent-3),var(--accent)); color:#241406; border-color:transparent}
+
+.layout{display:grid; grid-template-columns:300px minmax(0,1fr); gap:22px}
+.sidebar{position:sticky; top:94px; align-self:start; padding:20px; border-radius:30px; border:1px solid var(--line); background:linear-gradient(180deg, rgba(27,20,16,.96), rgba(21,16,13,.98)); box-shadow:var(--shadow)}
+.sidebar h3{margin:0 0 4px; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted-2)}
+.sidebar p{margin:0 0 16px; font-size:28px; font-family:'Cormorant Garamond',serif}
+.category-list{display:flex; flex-direction:column; gap:10px}
+.category-btn{display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; text-align:left; padding:14px 15px; border-radius:18px; border:1px solid transparent; background:#221a15; color:var(--text); cursor:pointer}
+.category-btn small{color:var(--muted-2)}
+.category-btn.active,.category-btn:hover{background:#2a2019; border-color:rgba(215,169,103,.25)}
+
+.sections{display:flex; flex-direction:column; gap:22px}
+.menu-section{border-radius:34px; overflow:hidden; border:1px solid var(--line); background:linear-gradient(180deg,#1f1813,#17120e); box-shadow:var(--shadow)}
+.section-cover{display:grid; grid-template-columns:1fr 360px; min-height:250px}
+.section-copy{padding:32px 32px 28px}
+.section-copy span{font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted-2)}
+.section-copy h2{margin:12px 0 10px; font-family:'Cormorant Garamond',serif; font-size:56px; line-height:.94}
+.section-copy p{margin:0; max-width:720px; color:#ddcdbd; line-height:1.7}
+.section-cover .image{background:center/cover}
+.categories-grid{display:grid; gap:18px; padding:0 18px 18px}
+.category-card{border-radius:28px; overflow:hidden; border:1px solid var(--line); background:#1e1712}
+.category-head{display:grid; grid-template-columns:260px 1fr; min-height:208px}
+.category-media{background:center/cover}
+.category-copy{padding:22px; display:flex; flex-direction:column; justify-content:flex-end}
+.category-copy span{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted-2)}
+.category-copy h3{margin:10px 0 6px; font-family:'Cormorant Garamond',serif; font-size:36px}
+.category-copy p{margin:0; color:#d9c7b6; line-height:1.66}
+
+.items-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; padding:0 14px 14px}
+.item-card{display:grid; grid-template-columns:116px 1fr; gap:14px; padding:14px; border-radius:22px; border:1px solid var(--line-soft); background:#17120e; position:relative; transition:.2s}
+.item-card:hover{transform:translateY(-2px); border-color:rgba(215,169,103,.22)}
+.item-thumb{width:116px; height:116px; border-radius:18px; object-fit:cover; background:#2a211a}
+.item-head{display:flex; justify-content:space-between; gap:10px; align-items:flex-start}
+.item-head h4{margin:0; font-size:18px; line-height:1.25}
+.item-body p{margin:8px 0 0; color:var(--muted); font-size:14px; line-height:1.58}
+.item-meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+.pill{display:inline-flex; padding:7px 10px; border-radius:999px; background:#231b15; border:1px solid var(--line); color:#decab5; font-size:11px}
+.item-actions{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
+.link-action{padding:10px 12px; border-radius:999px; border:1px solid var(--line); background:#201812; color:var(--text); cursor:pointer}
+.link-action:hover{background:#2b211a}
+
+.detail-modal,.admin-lock{
+  position:fixed; inset:0; z-index:95; display:none; place-items:center;
+  background:rgba(9,7,6,.62); backdrop-filter:blur(12px);
+}
+.detail-modal.open,.admin-lock.open{display:grid}
+.modal-card,.lock-card{
+  width:min(920px, calc(100vw - 24px)); max-height:min(88vh,900px);
+  overflow:auto; border-radius:30px; border:1px solid var(--line);
+  background:linear-gradient(180deg,#1f1813,#15110e); box-shadow:var(--shadow);
+}
+.modal-card{display:grid; grid-template-columns:1fr 1fr}
+.modal-media{min-height:320px; background:center/cover}
+.modal-copy{padding:26px}
+.modal-copy h3{margin:8px 0 8px; font-family:'Cormorant Garamond',serif; font-size:46px; line-height:.95}
+.modal-copy p{color:var(--muted); line-height:1.75}
+.fact-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:18px}
+.fact{
+  padding:16px; border-radius:20px; background:#201812; border:1px solid var(--line);
+}
+.fact span{display:block; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted-2); margin-bottom:8px}
+.fact strong{display:block; font-size:16px; line-height:1.55}
+.modal-actions{display:flex; gap:10px; margin-top:18px; flex-wrap:wrap}
+
+.lock-card{width:min(420px, calc(100vw - 24px)); padding:24px}
+.lock-card h3{margin:6px 0 10px; font-family:'Cormorant Garamond',serif; font-size:34px}
+.lock-card p{margin:0 0 14px; color:var(--muted); line-height:1.7}
+.lock-card input{width:100%; height:56px; border-radius:18px; border:1px solid var(--line); background:#17120e; color:var(--text); padding:0 16px}
+.lock-meta{margin-top:10px; color:var(--muted-2); font-size:12px}
+
+.admin-panel{
+  position:fixed; top:16px; right:16px; bottom:16px; width:min(560px, calc(100vw - 24px));
+  z-index:96; display:none; flex-direction:column; overflow:hidden;
+  border-radius:30px; border:1px solid var(--line); background:rgba(18,14,11,.98); box-shadow:var(--shadow);
+}
+.admin-panel.open{display:flex}
+.admin-header{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:22px 22px 18px; border-bottom:1px solid var(--line)}
+.admin-header h3{margin:4px 0 0; font-family:'Cormorant Garamond',serif; font-size:30px}
+.admin-body{padding:18px 22px 26px; overflow:auto}
+.admin-grid{display:grid; gap:14px}
+.admin-card{padding:18px; border-radius:24px; border:1px solid var(--line); background:#201812}
+.admin-card h4{margin:0 0 12px; font-size:18px}
+.admin-card label{display:block; font-size:13px; color:#d8c6b5; margin-bottom:7px}
+.admin-card input,.admin-card textarea,.admin-card select{
+  width:100%; border-radius:16px; border:1px solid var(--line); background:#17120e; color:var(--text); outline:none; padding:13px 14px;
+}
+.admin-card textarea{min-height:90px; resize:vertical}
+.row-2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.admin-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+.secondary{background:#261d17; color:var(--text); border:1px solid var(--line)}
+.danger{background:#2b1717; color:#ffd0d0; border:1px solid rgba(255,142,142,.18)}
+.catalog-table{display:grid; gap:10px; margin-top:10px}
+.catalog-row{display:grid; grid-template-columns:64px 1fr auto; gap:12px; align-items:center; padding:10px; border-radius:18px; background:#17120e; border:1px solid var(--line)}
+.catalog-row img{width:64px;height:64px;border-radius:14px;object-fit:cover}
+.catalog-row strong{display:block;margin-bottom:3px}
+.catalog-row small{display:block;color:var(--muted)}
+
+.mobile-dock{
+  position:fixed; left:12px; right:12px; bottom:12px; z-index:70;
+  display:none; gap:10px; padding:10px;
+  border-radius:22px; border:1px solid var(--line); background:rgba(20,15,12,.84); backdrop-filter:blur(18px);
+}
+.mobile-dock a,.mobile-dock button{flex:1; height:46px; border-radius:14px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line); background:#211913; color:var(--text); cursor:pointer}
+
+.site-footer{margin-top:26px; display:flex; align-items:center; justify-content:space-between; gap:14px; color:var(--muted-2); font-size:12px}
+.hidden-trigger{opacity:.55; cursor:pointer}
+
+.empty-state{padding:22px; border-radius:22px; border:1px dashed rgba(255,255,255,.12); color:var(--muted); background:#1b1511; text-align:center}
+
+@media (max-width:1220px){
+  .hero{grid-template-columns:1fr}
+  .featured{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:relative; top:0}
+}
+@media (max-width:920px){
+  .shell{padding:14px 14px 100px}
+  .topbar{top:8px; padding:12px; border-radius:20px}
+  .brand-logo{width:126px}
+  .top-actions .ghost:not(.keep-mobile){display:none}
+  .hero-main{min-height:460px; padding:24px}
+  .hero h1{font-size:clamp(42px, 14vw, 72px)}
+  .toolbar{grid-template-columns:1fr}
+  .featured{grid-template-columns:1fr}
+  .section-cover,.category-head,.items-grid,.item-card,.modal-card{grid-template-columns:1fr}
+  .section-cover .image{min-height:220px}
+  .section-copy h2{font-size:42px}
+  .category-copy h3{font-size:30px}
+  .item-thumb{width:100%; height:220px}
+  .fact-grid{grid-template-columns:1fr}
+  .mobile-dock{display:flex}
+}
+@media (max-width:640px){
+  .shell{padding-bottom:110px}
+  .topbar{align-items:flex-start}
+  .brand-wrap{align-items:flex-start}
+  .brand-copy span{max-width:180px}
+  .hero-main{min-height:400px}
+  .hero-side{grid-template-rows:auto auto}
+  .side-card .copy{padding:20px}
+  .sidebar{padding:16px; border-radius:24px}
+  .section-copy{padding:24px 22px 22px}
+  .categories-grid{padding:0 12px 12px}
+  .modal-copy{padding:20px}
+  .modal-copy h3{font-size:36px}
+  .admin-panel{top:8px; right:8px; bottom:8px; width:calc(100vw - 16px)}
+  .row-2{grid-template-columns:1fr}
+  .site-footer{padding-bottom:56px; flex-direction:column; align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <button id="brandSecretTrigger" class="brand-logo-trigger" type="button" aria-label="Venezia">
+        <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20240%2078%27%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23f3c98e%27/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23bf7a2f%27/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20x%3D%271.5%27%20y%3D%271.5%27%20width%3D%27237%27%20height%3D%2775%27%20rx%3D%2722%27%20fill%3D%27rgba%28255%2C255%2C255%2C0.02%29%27%20stroke%3D%27rgba%28255%2C255%2C255%2C0.14%29%27/%3E%0A%20%20%3Ctext%20x%3D%2726%27%20y%3D%2748%27%20font-size%3D%2738%27%20font-family%3D%27Georgia%2C%20serif%27%20font-style%3D%27italic%27%20fill%3D%27url%28%23g%29%27%3EVenezia%3C/text%3E%0A%20%20%3Ctext%20x%3D%27168%27%20y%3D%2752%27%20font-size%3D%2712%27%20letter-spacing%3D%273%27%20font-family%3D%27Arial%2C%20sans-serif%27%20fill%3D%27rgba%28255%2C244%2C230%2C0.72%29%27%3ESINCE%3C/text%3E%0A%20%20%3Ctext%20x%3D%27168%27%20y%3D%2766%27%20font-size%3D%2712%27%20letter-spacing%3D%273%27%20font-family%3D%27Arial%2C%20sans-serif%27%20fill%3D%27rgba%28255%2C244%2C230%2C0.72%29%27%3EITALY%3C/text%3E%0A%3C/svg%3E" alt="Venezia" class="brand-logo">
+      </button>
+      <div class="brand-copy">
+        <small>Digital menu</small>
+        <strong>Venezia Signature Menu</strong>
+        <span>Carte premium, plus gourmande, plus lisible, pensée d’abord pour mobile.</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <a class="ghost keep-mobile" href="#menu-root">Voir le menu</a>
+      <button class="btn" type="button" id="scrollFeatured">Suggestions</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <article class="hero-main">
+      <div class="hero-text">
+        <div class="eyebrow">Nouveau look · Tons Venezia · UX mobile-first · Détails techniques intégrés</div>
+        <h1>Un menu plus désirable, plus premium, plus vivant.</h1>
+        <p>Le design a été recentré sur une expérience food haut de gamme, avec un fond texturé plus élégant, une palette Venezia plus cohérente, des images retravaillées et un backoffice caché protégé par code.</p>
+        <div class="hero-kpis">
+          <div class="kpi"><strong id="kpiProducts">0</strong><span>Articles</span></div>
+          <div class="kpi"><strong id="kpiCats">0</strong><span>Catégories</span></div>
+          <div class="kpi"><strong id="kpiSections">0</strong><span>Univers</span></div>
+        </div>
+      </div>
+    </article>
+
+    <div class="hero-side">
+      <article class="side-card media">
+        <div class="image" style="background-image:url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80')"></div>
+        <div class="overlay"></div>
+        <div class="copy">
+          <h3>Plus de désir, moins d’interface.</h3>
+          <p>Le produit prend la place qu’il mérite. Les visuels sont plus cohérents, la lecture est plus respirante, les call-to-action sont plus subtils et tout a été densifié côté mobile.</p>
+        </div>
+      </article>
+
+      <article class="side-card">
+        <div class="copy">
+          <h3>Ce qui change dans cette version</h3>
+          <p>Backoffice caché, code d’accès, fiches techniques par article, composition, allergènes, couleurs plus cohérentes avec l’univers Venezia et fond plus graphique sans perdre la sobriété.</p>
+          <div class="swatch-row">
+            <div class="swatch accent">Venezia Gold</div>
+            <div class="swatch soft">Warm Cocoa</div>
+            <div class="swatch outline">Mobile First</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="toolbar">
+    <div class="search"><input id="searchInput" type="search" placeholder="Rechercher un article, une catégorie ou un univers…" /></div>
+    <div class="select-wrap"><select id="sectionSelect"></select></div>
+    <a class="toolbar-link" href="#featured-root">Top sélections</a>
+  </section>
+
+  <section id="featured-root" class="featured"></section>
+  <div id="sectionNav" class="section-nav"></div>
+
+  <div id="menu-root" class="layout">
+    <aside class="sidebar">
+      <h3>Navigation rapide</h3>
+      <p id="sidebarTitle">Univers</p>
+      <div id="categoryList" class="category-list"></div>
+    </aside>
+    <main id="sectionsRoot" class="sections"></main>
+  </div>
+
+  <footer class="site-footer">
+    <div>Venezia digital menu · design premium · prêt à intégrer sur ton site</div>
+    <div id="footerSecret" class="hidden-trigger">v.3</div>
+  </footer>
+</div>
+
+<nav class="mobile-dock">
+  <a href="#menu-root">Menu</a>
+  <a href="#featured-root">Sélections</a>
+  <button id="mobileToTop" type="button">Haut</button>
+</nav>
+
+<div id="detailModal" class="detail-modal" aria-hidden="true">
+  <div class="modal-card">
+    <div id="detailImage" class="modal-media"></div>
+    <div class="modal-copy">
+      <div class="eyebrow" id="detailBadge">Signature</div>
+      <h3 id="detailTitle">Article</h3>
+      <div class="price" id="detailPrice">0 MAD</div>
+      <p id="detailDesc"></p>
+      <div class="fact-grid">
+        <div class="fact"><span>Composition</span><strong id="detailComposition">À compléter dans le backoffice.</strong></div>
+        <div class="fact"><span>Contient</span><strong id="detailContains">À compléter dans le backoffice.</strong></div>
+        <div class="fact"><span>Allergènes</span><strong id="detailAllergens">À compléter dans le backoffice.</strong></div>
+        <div class="fact"><span>Fiche technique</span><strong id="detailNotes">À compléter dans le backoffice.</strong></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" type="button" id="closeDetailPrimary">Fermer</button>
+        <button class="ghost" type="button" id="openAdminFromDetail">Modifier dans le backoffice</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="adminLock" class="admin-lock" aria-hidden="true">
+  <div class="lock-card">
+    <div class="eyebrow">Accès protégé</div>
+    <h3>Backoffice caché</h3>
+    <p>Entrez le code pour accéder à la gestion du menu. L’accès est volontairement non visible dans l’interface publique.</p>
+    <input id="adminCodeInput" type="password" placeholder="Code d'accès" autocomplete="off" />
+    <div class="admin-actions">
+      <button class="btn" type="button" id="unlockAdmin">Déverrouiller</button>
+      <button class="ghost" type="button" id="cancelAdminLock">Annuler</button>
+    </div>
+    <div class="lock-meta">Déclenchement caché via logo ou zone discrète. Cette protection reste côté client tant que le projet est 100% statique.</div>
+  </div>
+</div>
+
+<aside id="adminPanel" class="admin-panel" aria-hidden="true">
+  <div class="admin-header">
+    <div>
+      <div class="eyebrow">Gestion catalogue</div>
+      <h3>Backoffice Venezia</h3>
+    </div>
+    <button class="ghost" type="button" id="closeAdmin">Fermer</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-grid">
+      <section class="admin-card">
+        <h4>Ajouter ou modifier un article</h4>
+        <div class="row-2">
+          <div><label>Univers</label><select id="adminSection"></select></div>
+          <div><label>Catégorie</label><select id="adminCategory"></select></div>
+        </div>
+        <div class="row-2" style="margin-top:12px">
+          <div><label>Nom de l'article</label><input id="itemName" type="text" placeholder="Ex. Burger Gourmet" /></div>
+          <div><label>Prix</label><input id="itemPrice" type="number" min="0" step="1" placeholder="89" /></div>
+        </div>
+        <div style="margin-top:12px"><label>Description visible</label><textarea id="itemDescription" placeholder="Phrase courte qui donne envie..."></textarea></div>
+        <div class="row-2" style="margin-top:12px">
+          <div><label>Image</label><input id="itemImage" type="url" placeholder="https://..." /></div>
+          <div><label>Badge</label><input id="itemBadge" type="text" placeholder="Signature / New / Best Seller" /></div>
+        </div>
+        <div style="margin-top:12px"><label>Composition</label><textarea id="itemComposition" placeholder="Ex. pain brioché, steak, cheddar, salade, sauce maison"></textarea></div>
+        <div class="row-2" style="margin-top:12px">
+          <div><label>Contient</label><input id="itemContains" type="text" placeholder="Ex. viande, lait, œufs" /></div>
+          <div><label>Allergènes</label><input id="itemAllergens" type="text" placeholder="Ex. gluten, lactose, fruits à coque" /></div>
+        </div>
+        <div style="margin-top:12px"><label>Fiche technique / notes internes</label><textarea id="itemNotes" placeholder="Infos de préparation, grammage, cuisson, dressage..."></textarea></div>
+        <div class="admin-actions">
+          <button class="btn" type="button" id="saveItem">Enregistrer</button>
+          <button class="ghost secondary" type="button" id="newItem">Nouveau</button>
+          <button class="ghost danger" type="button" id="deleteItem">Supprimer</button>
+        </div>
+      </section>
+
+      <section class="admin-card">
+        <h4>Ajouter une catégorie</h4>
+        <div class="row-2">
+          <div><label>Univers parent</label><select id="newCategorySection"></select></div>
+          <div><label>Nom de la catégorie</label><input id="newCategoryName" type="text" placeholder="Ex. Salades" /></div>
+        </div>
+        <div style="margin-top:12px"><label>Image de catégorie</label><input id="newCategoryImage" type="url" placeholder="https://..." /></div>
+        <div class="admin-actions"><button class="ghost secondary" type="button" id="createCategory">Créer la catégorie</button></div>
+      </section>
+
+      <section class="admin-card">
+        <h4>Ajouter un univers</h4>
+        <div class="row-2">
+          <div><label>Nom</label><input id="newSectionName" type="text" placeholder="Ex. Pasta & Pizzas" /></div>
+          <div><label>Sous-titre</label><input id="newSectionSubtitle" type="text" placeholder="Quelques mots..." /></div>
+        </div>
+        <div style="margin-top:12px"><label>Image de couverture</label><input id="newSectionImage" type="url" placeholder="https://..." /></div>
+        <div class="admin-actions"><button class="ghost secondary" type="button" id="createSection">Créer l'univers</button></div>
+      </section>
+
+      <section class="admin-card">
+        <h4>Paramètres backoffice</h4>
+        <div class="row-2">
+          <div><label>Nouveau code d'accès</label><input id="newAdminCode" type="password" placeholder="Changer le code" /></div>
+          <div><label>Confirmation</label><input id="confirmAdminCode" type="password" placeholder="Confirmer" /></div>
+        </div>
+        <div class="admin-actions"><button class="ghost secondary" type="button" id="changeAdminCode">Modifier le code</button></div>
+      </section>
+
+      <section class="admin-card">
+        <h4>Catalogue actuel</h4>
+        <div class="admin-actions" style="margin-top:0">
+          <button class="ghost secondary" type="button" id="exportJson">Exporter JSON</button>
+          <button class="ghost secondary" type="button" id="resetCatalog">Réinitialiser</button>
+        </div>
+        <div style="margin-top:12px"><label>Importer / Coller un JSON</label><textarea id="jsonArea" placeholder='{"sections":[...]}'></textarea></div>
+        <div class="admin-actions"><button class="btn" type="button" id="importJson">Importer le JSON</button></div>
+        <div id="catalogTable" class="catalog-table"></div>
+      </section>
+    </div>
+  </div>
+</aside>
+
+<script>
+const INITIAL_DATA = {"brand": "Venezia", "currency": "MAD", "updated": "2026-04-16", "sections": [{"id": "petit-dejeuner", "name": "Petit Déjeuner", "subtitle": "Formules généreuses, brunchs et assiettes du matin", "image": "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1600&q=80", "categories": [{"id": "petit-dejeuner-brunch", "name": "Brunch", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "petit-dejeuner-brunch-brunch-bien-etre", "name": "Brunch Bien etre", "price": 119, "description": "", "barcode": "F02S0300000000659", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-brunch-le-brunch-signature", "name": "Le Brunch Signature", "price": 159, "description": "", "barcode": "F02S0300000000526", "badge": "Signature", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "petit-dejeuner-extra", "name": "Extra", "image": "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "petit-dejeuner-extra-extra-salade-de-fruit", "name": "Extra salade de fruit", "price": 10, "description": "", "barcode": "F02S03CP04000000663", "badge": "", "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-extra-extra-assortiment-marocain", "name": "Extra Assortiment marocain", "price": 25, "description": "", "barcode": "F02S03CP04000000661", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-extra-extra-omelette-nature", "name": "Extra Omelette nature", "price": 25, "description": "", "barcode": "F02S03CP04000000662", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "petit-dejeuner-formules", "name": "Formules", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "petit-dejeuner-formules-lexpress", "name": "Lexpress", "price": 39, "description": "", "barcode": "F02S03CP01000000528", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-formules-petit-dej-venezia-kids", "name": "Petit Dej Venezia Kids", "price": 45, "description": "", "barcode": "F02S03CP01000000738", "badge": "Signature", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-formules-le-francais", "name": "Le Francais", "price": 59, "description": "", "barcode": "F02S03CP01000000658", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-formules-le-gourmand", "name": "Le Gourmand", "price": 79, "description": "", "barcode": "F02S03CP01000000535", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-formules-le-beldi", "name": "Le Beldi", "price": 89, "description": "", "barcode": "F02S03CP01000000529", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "petit-dejeuner-oeufs-and-omelettes", "name": "Oeufs & Omelettes", "image": "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "petit-dejeuner-oeufs-and-omelettes-oeufs-au-plat", "name": "Oeufs au plat", "price": 28, "description": "", "barcode": "F02S03CP04CSP020000743", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-oeufs-and-omelettes-oeufs-bouilles", "name": "Oeufs Bouilles", "price": 28, "description": "", "barcode": "F02S03CP04CSP020000742", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-oeufs-and-omelettes-omelette-nature", "name": "Omelette nature", "price": 28, "description": "", "barcode": "F02S03CP04CSP020000741", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-oeufs-and-omelettes-omelette-au-khlie", "name": "Omelette au khlie", "price": 40, "description": "", "barcode": "F02S03CP04CSP020000502", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-oeufs-and-omelettes-omelette-champignons", "name": "Omelette Champignons", "price": 40, "description": "", "barcode": "F02S03CP04CSP020000499", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-oeufs-and-omelettes-omelette-fromage", "name": "Omelette Fromage", "price": 40, "description": "", "barcode": "F02S03CP04CSP020000500", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-oeufs-and-omelettes-omelette-western", "name": "Omelette Western", "price": 40, "description": "", "barcode": "F02S03CP04CSP020000501", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "petit-dejeuner-a-la-carte", "name": "À la carte", "image": "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "petit-dejeuner-a-la-carte-chia-pudding", "name": "chia pudding", "price": 35, "description": "", "barcode": "F02S03CP04000000664", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-a-la-carte-pancake-au-chocolat", "name": "Pancake au Chocolat", "price": 35, "description": "", "barcode": "F02S03CP04000000665", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-a-la-carte-pancake-au-framboise", "name": "Pancake au Framboise", "price": 35, "description": "", "barcode": "F02S03CP040000GP530665", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "petit-dejeuner-a-la-carte-croissant-sale-gourmand", "name": "Croissant sale gourmand", "price": 40, "description": "", "barcode": "F02S03CP04000000666", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}]}, {"id": "menu-midi", "name": "Menu midi", "subtitle": "Burgers, pizzas, pastas et plats du jour", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80", "categories": [{"id": "menu-midi-burger", "name": "Burger", "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "menu-midi-burger-moroccan-burger", "name": "Moroccan Burger", "price": 80, "description": "", "barcode": "F0200CM03CSM070000449", "badge": "", "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-burger-burger-gourmet-classique", "name": "Burger Gourmet Classique", "price": 89, "description": "", "barcode": "F0200CM03CSM0700T0700448", "badge": "", "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "menu-midi-croque-monsieur", "name": "Croque Monsieur", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "menu-midi-croque-monsieur-croque-monsieur", "name": "Croque Monsieur", "price": 69, "description": "", "barcode": "F0200CM03CSM060000456", "badge": "", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "menu-midi-entrees", "name": "Entrées", "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "menu-midi-entrees-salade-nicoise", "name": "Salade Nicoise", "price": 69, "description": "", "barcode": "F0200CM03CSM03GG0700402", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-entrees-salade-cesar", "name": "Salade Cesar", "price": 79, "description": "", "barcode": "F0200CM03CSM03GG0700394", "badge": "", "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-entrees-fraicheur-aux-gambas", "name": "Fraicheur aux gambas", "price": 85, "description": "", "barcode": "F0200CM03CSM03GG0700396", "badge": "", "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-entrees-salade-quinoa", "name": "Salade Quinoa", "price": 89, "description": "", "barcode": "F0200CM03CSM03GG0700730", "badge": "", "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "menu-midi-kids", "name": "Kids", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "menu-midi-kids-venezia-kids-spaghetti", "name": "Venezia Kids Spaghetti", "price": 45, "description": "", "barcode": "F0200CB02CSM040000744", "badge": "Signature", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-kids-kids-venezia-kids-burger", "name": "Kids Venezia Kids Burger", "price": 65, "description": "", "barcode": "F0200CB02CSM040000430", "badge": "Signature", "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-kids-kids-venezia-kids-pizza", "name": "Kids Venezia Kids Pizza", "price": 65, "description": "", "barcode": "F0200CB02CSM040000431", "badge": "Signature", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "menu-midi-panini", "name": "Panini", "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "menu-midi-panini-panini-thon", "name": "Panini Thon", "price": 69, "description": "", "barcode": "F0200CM03CSM080000461", "badge": "", "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "menu-midi-pastas", "name": "Pastas", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "menu-midi-pastas-linguine-bolognaise", "name": "Linguine Bolognaise", "price": 75, "description": "", "barcode": "F0200CM02CSM02GG0400355", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pastas-penne-bolognaise", "name": "Penne Bolognaise", "price": 75, "description": "", "barcode": "F0200CM02CSM02GG0500363", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pastas-spaghetti-bolognaise", "name": "Spaghetti Bolognaise", "price": 75, "description": "", "barcode": "F0200CM02CSM02GG0600371", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pastas-linguine-alfredo", "name": "Linguine Alfredo", "price": 80, "description": "", "barcode": "F0200CM02CSM02GG0400731", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pastas-penne-alfredo", "name": "Penne Alfredo", "price": 80, "description": "", "barcode": "F0200CM02CSM02GG0500732", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pastas-spaghetti-alfredo", "name": "Spaghetti Alfredo", "price": 80, "description": "", "barcode": "F0200CM02CSM02GG0600733", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pastas-linguine-frutti-di-mare", "name": "Linguine Frutti di Mare", "price": 85, "description": "", "barcode": "F0200CM02CSM02GG0400357", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pastas-penne-frutti-di-mare", "name": "Penne Frutti di Mare", "price": 85, "description": "", "barcode": "F0200CM02CSM02GG0500365", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pastas-spaghetti-frutti-di-mare", "name": "Spaghetti Frutti di Mare", "price": 85, "description": "", "barcode": "F0200CM02CSM02GG0600373", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "menu-midi-pizzas", "name": "Pizzas", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "menu-midi-pizzas-pizzas-margherita", "name": "Pizzas Margherita", "price": 55, "description": "", "barcode": "F0200CM02CSM010000385", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pizzas-pizza-italienne", "name": "Pizza Italienne", "price": 70, "description": "", "barcode": "F0200CM02CSM010000734", "badge": "", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pizzas-pizzas-al-tonno", "name": "Pizzas Al Tonno", "price": 70, "description": "", "barcode": "F0200CM02CSM010000379", "badge": "", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pizzas-pizzas-bismarck", "name": "Pizzas Bismarck", "price": 80, "description": "", "barcode": "F0200CM02CSM010000380", "badge": "", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pizzas-pizzas-poulet", "name": "Pizzas Poulet", "price": 80, "description": "", "barcode": "F0200CM02CSM010000745", "badge": "", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pizzas-pizzas-quatro-fromaggi", "name": "Pizzas Quatro Fromaggi", "price": 89, "description": "", "barcode": "F0200CM02CSM010000387", "badge": "", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-pizzas-pizzas-frutti-di-mare", "name": "Pizzas Frutti di Mare", "price": 99, "description": "", "barcode": "F0200CM02CSM010000384", "badge": "", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "menu-midi-plats-du-jour", "name": "Plats du Jour", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "menu-midi-plats-du-jour-couscous-poulet", "name": "Couscous Poulet", "price": 85, "description": "", "barcode": "F0200CM05CSM120000405", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-plats-du-jour-couscous-viande", "name": "Couscous Viande", "price": 85, "description": "", "barcode": "F0200CM05CSM120000406", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-plats-du-jour-rfissa-du-mercredi", "name": "Rfissa du Mercredi", "price": 85, "description": "", "barcode": "F0200CM05CSM120000735", "badge": "", "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "menu-midi-sandwich", "name": "Sandwich", "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "menu-midi-sandwich-sandwich-campagnard", "name": "Sandwich Campagnard", "price": 69, "description": "", "barcode": "F0200CM03CSM050000464", "badge": "", "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-sandwich-sandwich-kefta", "name": "Sandwich Kefta", "price": 69, "description": "", "barcode": "F0200CM03CSM050000468", "badge": "", "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "menu-midi-sandwich-sandwich-poulet", "name": "Sandwich Poulet", "price": 69, "description": "", "barcode": "F0200CM03CSM050000472", "badge": "", "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}]}, {"id": "snacking", "name": "Snacking", "subtitle": "Crêpes salées et sucrées à partager sans modération", "image": "https://images.unsplash.com/photo-1515467837915-15c4777ba46d?auto=format&fit=crop&w=1200&q=80", "categories": [{"id": "snacking-crepe-salee", "name": "Crêpe Salée", "image": "https://images.unsplash.com/photo-1515467837915-15c4777ba46d?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "snacking-crepe-salee-crepe-salee-parisienne", "name": "Crepe Salee Parisienne", "price": 59, "description": "", "barcode": "F02S04CS02CSC010000573", "badge": "", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "snacking-crepe-salee-crepe-salee-forestiere", "name": "Crepe salee Forestiere", "price": 69, "description": "", "barcode": "F02S04CS02CSC010000673", "badge": "", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "snacking-crepe-salee-crepe-salee-scandinave", "name": "Crepe salee Scandinave", "price": 79, "description": "", "barcode": "F02S04CS02CSC010000674", "badge": "", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "snacking-crepes-sucre", "name": "Crêpes Sucré", "image": "https://images.unsplash.com/photo-1515467837915-15c4777ba46d?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "snacking-crepes-sucre-crepe-sucre", "name": "Crepe Sucre", "price": 39, "description": "", "barcode": "F02S04CS02CSC020000672", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "snacking-crepes-sucre-crepe-confiture", "name": "Crepe Confiture", "price": 49, "description": "", "barcode": "F02S04CS02CSC0200GP830578", "badge": "", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "snacking-crepes-sucre-crepe-nutella", "name": "Crepe Nutella", "price": 49, "description": "", "barcode": "F02S04CS02CSC0200GP850582", "badge": "", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "snacking-crepes-sucre-crepe-caramelo", "name": "Crepe Caramelo", "price": 59, "description": "", "barcode": "F02S04CS02CSC020000669", "badge": "", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "snacking-crepes-sucre-crepe-citron", "name": "Crepe Citron", "price": 59, "description": "", "barcode": "F02S04CS02CSC0200GP490667", "badge": "", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "snacking-crepes-sucre-crepe-ferrero", "name": "Crepe Ferrero", "price": 69, "description": "", "barcode": "F02S04CS02CSC0200GP460668", "badge": "", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "snacking-crepes-sucre-crepe-pistachio", "name": "Crepe Pistachio", "price": 69, "description": "", "barcode": "F02S04CS02CSC020000670", "badge": "", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "snacking-crepes-sucre-crepe-venezia", "name": "Crepe Venezia", "price": 69, "description": "", "barcode": "F02S04CS02CSC020000671", "badge": "Signature", "image": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}]}, {"id": "glaces", "name": "Glaces", "subtitle": "Coupes signature, boules et parfums iconiques", "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1600&q=80", "categories": [{"id": "glaces-coupes-signature", "name": "Coupes signature", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "glaces-coupes-signature-coupe-au-choix", "name": "Coupe au choix", "price": 45, "description": "", "barcode": "F02S06CG02000000696", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-coupes-signature-coupe-bambino", "name": "Coupe Bambino", "price": 45, "description": "", "barcode": "F02S06CG02000000695", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-coupes-signature-coupe-capri", "name": "Coupe Capri", "price": 75, "description": "", "barcode": "F02S06CG02000000694", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-coupes-signature-coupe-florence", "name": "Coupe Florence", "price": 75, "description": "", "barcode": "F02S06CG02000000689", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-coupes-signature-coupe-milano", "name": "Coupe Milano", "price": 75, "description": "", "barcode": "F02S06CG02000000693", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-coupes-signature-coupe-portofino", "name": "Coupe Portofino", "price": 75, "description": "", "barcode": "F02S06CG02000000690", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-coupes-signature-coupe-roma", "name": "Coupe Roma", "price": 75, "description": "", "barcode": "F02S06CG02000000692", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-coupes-signature-coupe-gran-venezia", "name": "Coupe Gran venezia", "price": 135, "description": "", "barcode": "F02S06CG02000000691", "badge": "Signature", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "glaces-cremes-glacees", "name": "Crèmes glacées", "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "glaces-cremes-glacees-boule-de-glace-cafe", "name": "Boule de glace Cafe", "price": 25, "description": "", "barcode": "F02S06CG01CSG0100GP38L01232", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-cremes-glacees-boule-de-glace-caramel", "name": "Boule de glace Caramel", "price": 25, "description": "", "barcode": "F02S06CG01CSG0100GP43L01238", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-cremes-glacees-boule-de-glace-chocolat", "name": "Boule de glace Chocolat", "price": 25, "description": "", "barcode": "F02S06CG01CSG0100GP44L01239", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-cremes-glacees-boule-de-glace-noisette", "name": "Boule de glace Noisette", "price": 25, "description": "", "barcode": "F02S06CG01CSG0100GP39L01233", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-cremes-glacees-boule-de-glace-nougat", "name": "Boule de glace Nougat", "price": 25, "description": "", "barcode": "F02S06CG01CSG0100GP23L01234", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-cremes-glacees-boule-de-glace-pistache", "name": "Boule de glace Pistache", "price": 25, "description": "", "barcode": "F02S06CG01CSG0100GP40L01235", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-cremes-glacees-boule-de-glace-vanille", "name": "Boule de glace Vanille", "price": 25, "description": "", "barcode": "F02S06CG01CSG0100GP41L01236", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-cremes-glacees-boule-de-glace-yaourt-nature", "name": "Boule de glace Yaourt Nature", "price": 25, "description": "", "barcode": "F02S06CG01CSG0100GP42L01237", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "glaces-parfums-speciaux", "name": "Parfums Spéciaux", "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "glaces-parfums-speciaux-boule-de-glace-cherry-mania", "name": "Boule de glace Cherry Mania", "price": 25, "description": "", "barcode": "F02S06CG01CSG0200GP45L01240", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-parfums-speciaux-boule-de-glace-cookies", "name": "Boule de glace Cookies", "price": 25, "description": "", "barcode": "F02S06CG01CSG0200GP21L01241", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-parfums-speciaux-boule-de-glace-dolce-latte", "name": "Boule de glace Dolce latte", "price": 25, "description": "", "barcode": "F02S06CG01CSG0200GP22L01246", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-parfums-speciaux-boule-de-glace-ferrero", "name": "Boule de glace Ferrero", "price": 25, "description": "", "barcode": "F02S06CG01CSG0200GP46L01242", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-parfums-speciaux-boule-de-glace-stracciatella", "name": "Boule de glace Stracciatella", "price": 25, "description": "", "barcode": "F02S06CG01CSG0200GP47L01244", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-parfums-speciaux-boule-de-glace-tiramisu", "name": "Boule de glace Tiramisu", "price": 25, "description": "", "barcode": "F02S06CG01CSG0200GP25L01247", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-parfums-speciaux-boule-de-glace-yaourt-fruits-de-la-passion", "name": "Boule de glace Yaourt fruits de la passion", "price": 25, "description": "", "barcode": "F02S06CG01CSG0200GP48L01245", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-parfums-speciaux-boule-de-glace-yaourt-fruits-des-bois", "name": "Boule de glace Yaourt fruits des bois", "price": 25, "description": "", "barcode": "F02S06CG01CSG0200GP06L01243", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "glaces-sorbets", "name": "Sorbets", "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "glaces-sorbets-boule-de-glace-ananas", "name": "Boule de glace Ananas", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP54L01253", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-sorbets-boule-de-glace-chocolat-light", "name": "Boule de glace Chocolat Light", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP44L03257", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-sorbets-boule-de-glace-citron", "name": "Boule de glace Citron", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP49L01248", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-sorbets-boule-de-glace-fraise", "name": "Boule de glace Fraise", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP50L01249", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-sorbets-boule-de-glace-fraise-light", "name": "Boule de glace Fraise Light", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP50L03256", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-sorbets-boule-de-glace-framboise", "name": "Boule de glace Framboise", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP53L01252", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-sorbets-boule-de-glace-fruits-de-la-passion", "name": "Boule de glace Fruits de la passion", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP52L01251", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-sorbets-boule-de-glace-mangue", "name": "Boule de glace Mangue", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP51L01250", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-sorbets-boule-de-glace-mangue-light", "name": "Boule de glace Mangue Light", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP51L03259", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-sorbets-boule-de-glace-vanille-light", "name": "Boule de glace Vanille Light", "price": 25, "description": "", "barcode": "F02S06CG01CSG0300GP41L03258", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "glaces-venezia-junior", "name": "Venezia Junior", "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "glaces-venezia-junior-boule-de-glace-azzuro-bleu-ciel-junior", "name": "Boule de glace Azzuro Bleu Ciel Junior", "price": 25, "description": "", "barcode": "F02S06CG01CSG0400GP55L02254", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "glaces-venezia-junior-boule-de-glace-bubble-kinder-junior", "name": "Boule de glace Bubble Kinder Junior", "price": 25, "description": "", "barcode": "F02S06CG01CSG0400GP56L02255", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}]}, {"id": "gourmandise", "name": "Gourmandise", "subtitle": "Desserts, moelleux et douceurs maison", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "categories": [{"id": "gourmandise-desserts", "name": "Desserts", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "gourmandise-desserts-tiramisu", "name": "Tiramisu", "price": 30, "description": "", "barcode": "F02S05CG01000000297", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-desserts-mousse-chocolat", "name": "Mousse chocolat", "price": 35, "description": "", "barcode": "F02S05CG010000GP440684", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-desserts-panacota", "name": "Panacota", "price": 35, "description": "", "barcode": "F02S05CG01000000274", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-desserts-cookie-gourmet", "name": "Cookie Gourmet", "price": 55, "description": "", "barcode": "F02S05CG010000GP780683", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-desserts-parfait-yaourt-fruit-des-bois", "name": "Parfait Yaourt Fruit des bois", "price": 55, "description": "", "barcode": "F02S05CG01000000685", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "gourmandise-moelleux", "name": "Moelleux", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "gourmandise-moelleux-macaron", "name": "Macaron", "price": 9, "description": "", "barcode": "F02S05CG02CSGS030000352", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-muffin-chocolat", "name": "Muffin Chocolat", "price": 25, "description": "", "barcode": "F02S05CG02CSGS0200GP440347", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-muffin-citron", "name": "Muffin Citron", "price": 25, "description": "", "barcode": "F02S05CG02CSGS0200GP490681", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-muffin-vanille", "name": "Muffin Vanille", "price": 25, "description": "", "barcode": "F02S05CG02CSGS0200GP410349", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-cookie-chocolat", "name": "Cookie Chocolat", "price": 27, "description": "", "barcode": "F02S05CG02CSGS0200GP440342", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-cookie-vanille", "name": "Cookie Vanille", "price": 27, "description": "", "barcode": "F02S05CG02CSGS0200GP410343", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-cookie-chocolat-amande", "name": "Cookie Chocolat Amande", "price": 30, "description": "", "barcode": "F02S05CG02CSGS020000678", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-cookier-chocolat-dark-white", "name": "Cookier Chocolat Dark White", "price": 30, "description": "", "barcode": "F02S05CG02CSGS020000680", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-cookier-triple-chocolat", "name": "Cookier Triple Chocolat", "price": 30, "description": "", "barcode": "F02S05CG02CSGS020000679", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-brownie", "name": "Brownie", "price": 35, "description": "", "barcode": "F02S05CG02CSGS020000341", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-fondant-chocolat", "name": "Fondant Chocolat", "price": 35, "description": "", "barcode": "F02S05CG02CSGS0200GP440344", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-fondant-framboise", "name": "Fondant Framboise", "price": 35, "description": "", "barcode": "F02S05CG02CSGS0200GP530345", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-moelleux-moelleux", "name": "Moelleux", "price": 35, "description": "", "barcode": "F02S05CG02CSGS020000682", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "gourmandise-tarte", "name": "Tarte", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "gourmandise-tarte-tarte-amandes", "name": "Tarte amandes", "price": 30, "description": "", "barcode": "F02S0500CSPI0300GP630323", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-tarte-tarte-caramel-beurre-sale", "name": "Tarte Caramel Beurre Sale", "price": 30, "description": "", "barcode": "F02S0500CSPI0300GP660324", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-tarte-tarte-citron-meringuee", "name": "Tarte Citron Meringuee", "price": 35, "description": "", "barcode": "F02S0500CSPI0300GP680327", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-tarte-tarte-framboise-pistache", "name": "Tarte Framboise pistache", "price": 35, "description": "", "barcode": "F02S0500CSPI0300GP720331", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "gourmandise-tarte-tarte-kunafah", "name": "Tarte Kunafah", "price": 35, "description": "", "barcode": "F02S0500CSPI0300GP700329", "badge": "", "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}]}, {"id": "boissons-chaudes", "name": "Boissons Chaudes", "subtitle": "Cafés, thés et spécialités chaudes", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "categories": [{"id": "boissons-chaudes-cafe", "name": "Cafe", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-chaudes-cafe-cafe-americain", "name": "Cafe americain", "price": 25, "description": "", "barcode": "F01S01CB01CSB010000001", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-cafe-cafe-espresso", "name": "Cafe Espresso", "price": 25, "description": "", "barcode": "F01S01CB01CSB010000006", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-cafe-cafe-cortado", "name": "Cafe Cortado", "price": 28, "description": "", "barcode": "F01S01CB01CSB010000706", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-cafe-cafe-ness-ness", "name": "Cafe Ness Ness", "price": 28, "description": "", "barcode": "F01S01CB01CSB010000707", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-cafe-cafe-cappuccino-italien", "name": "Cafe Cappuccino Italien", "price": 30, "description": "", "barcode": "F01S01CB01CSB010000004", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-cafe-cafe-creme", "name": "Cafe creme", "price": 30, "description": "", "barcode": "F01S01CB01CSB010000003", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-cafe-cafe-moka", "name": "Cafe Moka", "price": 35, "description": "", "barcode": "F01S01CB01CSB010000008", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "boissons-chaudes-lait", "name": "Lait", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-chaudes-lait-lait-chocolat-chaud", "name": "Lait Chocolat chaud", "price": 35, "description": "", "barcode": "F01S01CB01CSB020000009", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "boissons-chaudes-specialites", "name": "Spécialités", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-chaudes-specialites-cafe-aromatise", "name": "Cafe Aromatise", "price": 30, "description": "", "barcode": "F01S01CB02000000710", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-specialites-caramel-macchiato", "name": "Caramel macchiato", "price": 35, "description": "", "barcode": "F01S01CB02000000713", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-specialites-flat-white", "name": "Flat white", "price": 35, "description": "", "barcode": "F01S01CB02000000711", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-specialites-spanish-latte", "name": "Spanish latte", "price": 35, "description": "", "barcode": "F01S01CB02000000712", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-specialites-affogato", "name": "Affogato", "price": 40, "description": "", "barcode": "F01S01CB02000000714", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-specialites-chocolat-chaud-venezia", "name": "Chocolat chaud venezia", "price": 40, "description": "", "barcode": "F01S01CB02000000715", "badge": "Signature", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "boissons-chaudes-the", "name": "The", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-chaudes-the-the-a-la-menthe", "name": "The a la menthe", "price": 25, "description": "", "barcode": "F01S01CB01CSB030000708", "badge": "", "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-chaudes-the-the-infusion", "name": "The Infusion", "price": 30, "description": "", "barcode": "F01S01CB01CSB030000709", "badge": "", "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}]}, {"id": "boissons-fraiches", "name": "Boissons Fraîches", "subtitle": "Jus, cocktails, milkshakes et boissons glacées", "image": "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=80", "categories": [{"id": "boissons-fraiches-cafe-glace", "name": "Café Glacé", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-fraiches-cafe-glace-iced-americano", "name": "Iced americano", "price": 30, "description": "", "barcode": "F01S02CB03000000716", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cafe-glace-iced-latte", "name": "Iced latte", "price": 30, "description": "", "barcode": "F01S02CB03000000717", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cafe-glace-iced-caramel-macchiato", "name": "Iced Caramel macchiato", "price": 35, "description": "", "barcode": "F01S02CB03000000719", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cafe-glace-iced-spanish-latte", "name": "Iced Spanish latte", "price": 35, "description": "", "barcode": "F01S02CB03000000718", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cafe-glace-iced-nutella-latte", "name": "Iced Nutella latte", "price": 40, "description": "", "barcode": "F01S02CB03000000720", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cafe-glace-iced-pistachio-latte", "name": "Iced pistachio latte", "price": 40, "description": "", "barcode": "F01S02CB03000000721", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "boissons-fraiches-cocktail", "name": "Cocktail", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-fraiches-cocktail-cocktail-lenergetique", "name": "Cocktail LEnergetique", "price": 60, "description": "", "barcode": "F01S02CB05000000025", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cocktail-virgin-mojito-fruit-de-la-passion", "name": "Virgin mojito Fruit de la passion", "price": 60, "description": "", "barcode": "F01S02CB05000000726", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cocktail-virgin-mojito-nature", "name": "Virgin mojito Nature", "price": 60, "description": "", "barcode": "F01S02CB050000GP640727", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cocktail-cocktail-pina-colada", "name": "Cocktail Pina Colada", "price": 65, "description": "", "barcode": "F01S02CB05000000028", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cocktail-dolce-vita", "name": "Dolce vita", "price": 65, "description": "", "barcode": "F01S02CB05000000724", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-cocktail-sunrise-tropical", "name": "Sunrise tropical", "price": 65, "description": "", "barcode": "F01S02CB05000000725", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "boissons-fraiches-eau", "name": "Eau", "image": "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-fraiches-eau-eau-gazeuse-50cl", "name": "Eau Gazeuse 50cl", "price": 18, "description": "", "barcode": "F01S02CB08CSB0600T0500035", "badge": "", "image": "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-eau-eau-plate-50cl", "name": "Eau Plate 50cl", "price": 18, "description": "", "barcode": "F01S02CB08CSB0600T0500039", "badge": "", "image": "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "boissons-fraiches-jus-frais", "name": "Jus frais", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-fraiches-jus-frais-jus-carotte-orange", "name": "Jus Carotte Orange", "price": 30, "description": "", "barcode": "F01S0200CSB04GG0200069", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-jus-frais-jus-citron", "name": "Jus Citron", "price": 30, "description": "", "barcode": "F01S0200CSB04GG0200070", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-jus-frais-jus-orange-presse", "name": "Jus Orange Presse", "price": 30, "description": "", "barcode": "F01S0200CSB04GG0200076", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-jus-frais-detox", "name": "Detox", "price": 45, "description": "", "barcode": "F01S0200CSB04GG0100722", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-jus-frais-detox-tonic", "name": "Detox Tonic", "price": 45, "description": "", "barcode": "F01S0200CSB04GG0100064", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-jus-frais-jus-de-fruits", "name": "Jus de fruits", "price": 45, "description": "", "barcode": "F01S0200CSB04GG0200073", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-jus-frais-smoothie", "name": "Smoothie", "price": 60, "description": "", "barcode": "F01S0200CSB040000723", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "boissons-fraiches-milkshake", "name": "Milkshake", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-fraiches-milkshake-milkshake", "name": "Milkshake", "price": 60, "description": "", "barcode": "F01S0200000000079", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-milkshake-orange-shake", "name": "Orange Shake", "price": 60, "description": "", "barcode": "F01S0200000000080", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-milkshake-oreo-shake", "name": "Oreo Shake", "price": 60, "description": "", "barcode": "F01S0200000000081", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-milkshake-milkshake-espresso-shake", "name": "Milkshake Espresso shake", "price": 65, "description": "", "barcode": "F01S0200000000728", "badge": "", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-milkshake-milkshake-pistache-milano", "name": "Milkshake Pistache milano", "price": 65, "description": "", "barcode": "F01S0200000000729", "badge": "", "image": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "boissons-fraiches-soda", "name": "Soda", "image": "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=80", "items": [{"id": "boissons-fraiches-soda-redbull", "name": "Redbull", "price": 0, "description": "", "barcode": "F01S02CB08000000051", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-coca-cola", "name": "Coca cola", "price": 25, "description": "", "barcode": "F01S02CB08000000041", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-coca-cola-light", "name": "Coca cola Light", "price": 25, "description": "", "barcode": "F01S02CB08000000042", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-coca-cola-zero", "name": "Coca cola zero", "price": 25, "description": "", "barcode": "F01S02CB08000000043", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-fanta-citron", "name": "Fanta Citron", "price": 25, "description": "", "barcode": "F01S02CB08000000044", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-fanta-orange", "name": "Fanta Orange", "price": 25, "description": "", "barcode": "F01S02CB08000000045", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-huwai", "name": "Huwai", "price": 25, "description": "", "barcode": "F01S02CB08000000046", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-ice-tea", "name": "Ice Tea", "price": 25, "description": "", "barcode": "F01S02CB08000000047", "badge": "", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-oasis", "name": "Oasis", "price": 25, "description": "", "barcode": "F01S02CB08000000048", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-orangina", "name": "Orangina", "price": 25, "description": "", "barcode": "F01S02CB08000000049", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-poms", "name": "Poms", "price": 25, "description": "", "barcode": "F01S02CB08000000050", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-schweppes-citron", "name": "Schweppes Citron", "price": 25, "description": "", "barcode": "F01S02CB08000000052", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-schweppes-tonic", "name": "Schweppes Tonic", "price": 25, "description": "", "barcode": "F01S02CB08000000053", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "boissons-fraiches-soda-sprite", "name": "Sprite", "price": 25, "description": "", "barcode": "F01S02CB08000000054", "badge": "", "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}]}, {"id": "formules", "name": "Formules", "subtitle": "Combos pensés pour le déjeuner", "image": "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80", "categories": [{"id": "formules-combo-midi", "name": "Combo midi", "image": "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "formules-combo-midi-combo-midi", "name": "Combo midi", "price": 0, "description": "", "barcode": "F03F01OG01000000737", "badge": "", "image": "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}, {"id": "formules-offre-gourmande", "name": "Offre Gourmande", "image": "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "formules-offre-gourmande-pause-gourmande", "name": "Pause gourmande", "price": 55, "description": "", "barcode": "F03F01OG01000000588", "badge": "Signature", "image": "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}]}, {"id": "accompagnements-and-supplements", "name": "Accompagnements & Suppléments", "subtitle": "Les petits plus qui finalisent la commande", "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80", "categories": [{"id": "accompagnements-and-supplements-supplements-in-dish", "name": "Supplements (In Dish)", "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80", "items": [{"id": "accompagnements-and-supplements-supplements-in-dish-amande", "name": "Amande", "price": 10, "description": "", "barcode": "F0200AS02000000739", "badge": "À essayer", "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "accompagnements-and-supplements-supplements-in-dish-banane", "name": "Banane", "price": 10, "description": "", "barcode": "F0200AS02000000595", "badge": "", "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "accompagnements-and-supplements-supplements-in-dish-creme-chantilly", "name": "Creme Chantilly", "price": 10, "description": "", "barcode": "F0200AS02000000592", "badge": "", "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "accompagnements-and-supplements-supplements-in-dish-noisette", "name": "Noisette", "price": 10, "description": "", "barcode": "F0200AS02000000593", "badge": "", "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "accompagnements-and-supplements-supplements-in-dish-noix", "name": "Noix", "price": 10, "description": "", "barcode": "F0200AS02000000740", "badge": "", "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}, {"id": "accompagnements-and-supplements-supplements-in-dish-nutella", "name": "Nutella", "price": 10, "description": "", "barcode": "F0200AS02000000594", "badge": "", "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80", "tech": {"composition": "", "contains": "", "allergens": "", "notes": ""}}]}]}], "featured": [{"section": "Petit Déjeuner", "category": "Brunch", "id": "petit-dejeuner-brunch-le-brunch-signature", "name": "Le Brunch Signature", "price": 159, "description": "", "barcode": "F02S0300000000526", "badge": "Signature", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80"}, {"section": "Petit Déjeuner", "category": "Brunch", "id": "petit-dejeuner-brunch-brunch-bien-etre", "name": "Brunch Bien etre", "price": 119, "description": "", "barcode": "F02S0300000000659", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80"}, {"section": "Petit Déjeuner", "category": "Formules", "id": "petit-dejeuner-formules-le-gourmand", "name": "Le Gourmand", "price": 79, "description": "", "barcode": "F02S03CP01000000535", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80"}, {"section": "Glaces", "category": "Coupes signature", "id": "glaces-coupes-signature-coupe-gran-venezia", "name": "Coupe Gran venezia", "price": 135, "description": "", "barcode": "F02S06CG02000000691", "badge": "Signature", "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80"}, {"section": "Menu midi", "category": "Pizzas", "id": "menu-midi-pizzas-pizzas-frutti-di-mare", "name": "Pizzas Frutti di Mare", "price": 99, "description": "", "barcode": "F0200CM02CSM010000384", "badge": "", "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80"}, {"section": "Petit Déjeuner", "category": "Formules", "id": "petit-dejeuner-formules-le-beldi", "name": "Le Beldi", "price": 89, "description": "", "barcode": "F02S03CP01000000529", "badge": "", "image": "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&w=900&q=80"}, {"section": "Menu midi", "category": "Burger", "id": "menu-midi-burger-burger-gourmet-classique", "name": "Burger Gourmet Classique", "price": 89, "description": "", "barcode": "F0200CM03CSM0700T0700448", "badge": "", "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80"}, {"section": "Menu midi", "category": "Entrées", "id": "menu-midi-entrees-salade-quinoa", "name": "Salade Quinoa", "price": 89, "description": "", "barcode": "F0200CM03CSM03GG0700730", "badge": "", "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80"}]};
+const STORAGE_KEY = "venezia_digital_menu_v3";
+const ADMIN_HASH_KEY = "venezia_admin_hash";
+const DEFAULT_ADMIN_HASH = "5911821feab22e600d56ab46283f078c1dd4f18c432e43447b8697612515c150";
+let state = structuredClone(INITIAL_DATA);
+let filteredText = "";
+let activeSection = state.sections[0]?.id || "";
+let selectedItemId = null;
+let currentAdminHash = localStorage.getItem(ADMIN_HASH_KEY) || DEFAULT_ADMIN_HASH;
+let secretTapCount = 0;
+let secretTapTimer = null;
+
+const sectionNav = document.getElementById("sectionNav");
+const sectionsRoot = document.getElementById("sectionsRoot");
+const featuredRoot = document.getElementById("featured-root");
+const categoryList = document.getElementById("categoryList");
+const sidebarTitle = document.getElementById("sidebarTitle");
+const sectionSelect = document.getElementById("sectionSelect");
+const searchInput = document.getElementById("searchInput");
+const adminPanel = document.getElementById("adminPanel");
+const adminLock = document.getElementById("adminLock");
+const catalogTable = document.getElementById("catalogTable");
+const jsonArea = document.getElementById("jsonArea");
+const detailModal = document.getElementById("detailModal");
+
+function slugify(value) {
+  return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+}
+function fmtPrice(value) {
+  return new Intl.NumberFormat("fr-MA", {maximumFractionDigits:0}).format(Number(value||0)) + " MAD";
+}
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+function loadState() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed?.sections?.length) state = parsed;
+  } catch (err) {
+    console.warn("Local data ignored", err);
+  }
+}
+function getCounts() {
+  const sections = state.sections.length;
+  const categories = state.sections.reduce((acc,s)=>acc+s.categories.length,0);
+  const items = state.sections.reduce((acc,s)=>acc+s.categories.reduce((a,c)=>a+c.items.length,0),0);
+  return {sections, categories, items};
+}
+function getFlatItems() {
+  const rows = [];
+  state.sections.forEach(section => section.categories.forEach(category => category.items.forEach(item => rows.push({section, category, item}))));
+  return rows;
+}
+function matchSearch(section, category, item) {
+  if (!filteredText) return true;
+  const bag = [section.name, section.subtitle, category.name, item.name, item.description, item.tech?.composition, item.tech?.contains, item.tech?.allergens].join(" ").toLowerCase();
+  return bag.includes(filteredText);
+}
+function bySectionId(id) {
+  return state.sections.find(s => s.id === id) || state.sections[0];
+}
+function saveAndRender() {
+  saveState();
+  renderAll();
+}
+function showToast(message) {
+  alert(message);
+}
+function openAdminLock() {
+  adminLock.classList.add("open");
+  adminLock.setAttribute("aria-hidden", "false");
+  document.getElementById("adminCodeInput").value = "";
+  setTimeout(()=>document.getElementById("adminCodeInput").focus(), 30);
+}
+function closeAdminLock() {
+  adminLock.classList.remove("open");
+  adminLock.setAttribute("aria-hidden", "true");
+}
+function openAdmin() {
+  closeAdminLock();
+  adminPanel.classList.add("open");
+  adminPanel.setAttribute("aria-hidden", "false");
+}
+function closeAdmin() {
+  adminPanel.classList.remove("open");
+  adminPanel.setAttribute("aria-hidden", "true");
+}
+function openDetail(itemId) {
+  const entry = getFlatItems().find(x => x.item.id === itemId);
+  if (!entry) return;
+  selectedItemId = itemId;
+  const {section, category, item} = entry;
+  document.getElementById("detailImage").style.backgroundImage = `url('${item.image || category.image || section.image}')`;
+  document.getElementById("detailBadge").textContent = item.badge || category.name;
+  document.getElementById("detailTitle").textContent = item.name;
+  document.getElementById("detailPrice").textContent = fmtPrice(item.price);
+  document.getElementById("detailDesc").textContent = item.description || "Description à compléter dans le backoffice.";
+  document.getElementById("detailComposition").textContent = item.tech?.composition || "À compléter dans le backoffice.";
+  document.getElementById("detailContains").textContent = item.tech?.contains || "À compléter dans le backoffice.";
+  document.getElementById("detailAllergens").textContent = item.tech?.allergens || "À compléter dans le backoffice.";
+  document.getElementById("detailNotes").textContent = item.tech?.notes || "À compléter dans le backoffice.";
+  detailModal.classList.add("open");
+  detailModal.setAttribute("aria-hidden","false");
+}
+function closeDetail() {
+  detailModal.classList.remove("open");
+  detailModal.setAttribute("aria-hidden","true");
+}
+function renderKpis() {
+  const counts = getCounts();
+  document.getElementById("kpiProducts").textContent = counts.items;
+  document.getElementById("kpiCats").textContent = counts.categories;
+  document.getElementById("kpiSections").textContent = counts.sections;
+}
+function renderSectionSelects() {
+  const options = state.sections.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
+  sectionSelect.innerHTML = `<option value="">Tous les univers</option>` + options;
+  document.getElementById("adminSection").innerHTML = options;
+  document.getElementById("newCategorySection").innerHTML = options;
+  document.getElementById("adminSection").value = bySectionId(activeSection)?.id || state.sections[0]?.id || "";
+  refreshAdminCategoryOptions();
+}
+function refreshAdminCategoryOptions() {
+  const sectionId = document.getElementById("adminSection").value || state.sections[0]?.id;
+  const section = bySectionId(sectionId);
+  const html = section.categories.map(c => `<option value="${c.id}">${c.name}</option>`).join("");
+  document.getElementById("adminCategory").innerHTML = html;
+}
+function renderFeatured() {
+  const list = (state.featured?.length ? state.featured : getFlatItems().slice(0,8).map(x => ({...x.item, section:x.section.name, category:x.category.name}))).slice(0,8);
+  featuredRoot.innerHTML = list.map(item => `
+    <article class="featured-card">
+      <img src="${item.image}" alt="${item.name}">
+      <div class="featured-copy">
+        <span class="tag">${item.badge || item.category || item.section || 'Sélection'}</span>
+        <h3>${item.name}</h3>
+        <p>${item.description || item.section || ''}</p>
+        <div class="price-line">
+          <div class="price">${fmtPrice(item.price)}</div>
+          <button class="mini-btn" type="button" data-detail="${item.id}">Voir détails</button>
+        </div>
+      </div>
+    </article>`).join("");
+}
+function renderSectionNav() {
+  sectionNav.innerHTML = state.sections.map(section => `
+    <button class="nav-chip ${activeSection===section.id?'active':''}" data-section-jump="${section.id}">${section.name}</button>
+  `).join("");
+}
+function renderSidebar() {
+  const section = bySectionId(activeSection);
+  if (!section) return;
+  sidebarTitle.textContent = section.name;
+  categoryList.innerHTML = section.categories.map(cat => `
+    <button class="category-btn" data-cat-jump="${cat.id}">
+      <span>${cat.name}</span>
+      <small>${cat.items.length} art.</small>
+    </button>
+  `).join("");
+}
+function renderSections() {
+  const selectedFilter = sectionSelect.value;
+  const visibleSections = selectedFilter ? state.sections.filter(s => s.id === selectedFilter) : state.sections;
+  sectionsRoot.innerHTML = visibleSections.map(section => {
+    const categoryBlocks = section.categories.map(category => {
+      const items = category.items.filter(item => matchSearch(section, category, item));
+      if (!items.length) return "";
+      return `
+      <article class="category-card" id="${category.id}">
+        <div class="category-head">
+          <div class="category-media" style="background-image:url('${category.image || section.image}')"></div>
+          <div class="category-copy">
+            <span>${section.name}</span>
+            <h3>${category.name}</h3>
+            <p>${category.description || "Une sélection pensée pour donner envie, avec des visuels et des détails plus immersifs."}</p>
+          </div>
+        </div>
+        <div class="items-grid">
+          ${items.map(item => `
+            <article class="item-card">
+              <img class="item-thumb" src="${item.image || category.image || section.image}" alt="${item.name}">
+              <div class="item-body">
+                <div class="item-head">
+                  <h4>${item.name}</h4>
+                  <div class="price">${fmtPrice(item.price)}</div>
+                </div>
+                <p>${item.description || "Ajoute une courte description gourmande ou une accroche produit dans le backoffice."}</p>
+                <div class="item-meta">
+                  ${item.badge ? `<span class="pill">${item.badge}</span>` : ""}
+                  ${item.tech?.contains ? `<span class="pill">${item.tech.contains}</span>` : ""}
+                  ${item.tech?.allergens ? `<span class="pill">Allergènes</span>` : ""}
+                </div>
+                <div class="item-actions">
+                  <button class="link-action" type="button" data-detail="${item.id}">Voir la fiche</button>
+                </div>
+              </div>
+            </article>`).join("")}
+        </div>
+      </article>`;
+    }).join("");
+
+    if (!categoryBlocks) return "";
+
+    return `
+      <section class="menu-section" id="${section.id}">
+        <div class="section-cover">
+          <div class="section-copy">
+            <span>Univers</span>
+            <h2>${section.name}</h2>
+            <p>${section.subtitle || "Une expérience plus éditoriale, plus mobile-friendly et plus désirable."}</p>
+          </div>
+          <div class="image" style="background-image:url('${section.image}')"></div>
+        </div>
+        <div class="categories-grid">${categoryBlocks || `<div class="empty-state">Aucun article trouvé pour cette recherche.</div>`}</div>
+      </section>`;
+  }).join("") || `<div class="empty-state">Aucun résultat trouvé.</div>`;
+}
+function renderCatalogTable() {
+  const flat = getFlatItems();
+  catalogTable.innerHTML = flat.slice(0, 50).map(({section, category, item}) => `
+    <div class="catalog-row">
+      <img src="${item.image || category.image || section.image}" alt="${item.name}">
+      <div>
+        <strong>${item.name}</strong>
+        <small>${section.name} · ${category.name} · ${fmtPrice(item.price)}</small>
+      </div>
+      <button class="ghost" type="button" data-edit="${item.id}">Éditer</button>
+    </div>
+  `).join("") + (flat.length > 50 ? `<div class="empty-state">Aperçu limité à 50 lignes dans le backoffice.</div>` : "");
+}
+function renderAll() {
+  renderKpis();
+  renderSectionSelects();
+  renderFeatured();
+  renderSectionNav();
+  renderSidebar();
+  renderSections();
+  renderCatalogTable();
+}
+function fillFormFromItem(itemId) {
+  const entry = getFlatItems().find(x => x.item.id === itemId);
+  if (!entry) return;
+  selectedItemId = itemId;
+  const {section, category, item} = entry;
+  document.getElementById("adminSection").value = section.id;
+  refreshAdminCategoryOptions();
+  document.getElementById("adminCategory").value = category.id;
+  document.getElementById("itemName").value = item.name || "";
+  document.getElementById("itemPrice").value = item.price ?? "";
+  document.getElementById("itemDescription").value = item.description || "";
+  document.getElementById("itemImage").value = item.image || "";
+  document.getElementById("itemBadge").value = item.badge || "";
+  document.getElementById("itemComposition").value = item.tech?.composition || "";
+  document.getElementById("itemContains").value = item.tech?.contains || "";
+  document.getElementById("itemAllergens").value = item.tech?.allergens || "";
+  document.getElementById("itemNotes").value = item.tech?.notes || "";
+}
+function clearForm() {
+  selectedItemId = null;
+  document.getElementById("itemName").value = "";
+  document.getElementById("itemPrice").value = "";
+  document.getElementById("itemDescription").value = "";
+  document.getElementById("itemImage").value = "";
+  document.getElementById("itemBadge").value = "";
+  document.getElementById("itemComposition").value = "";
+  document.getElementById("itemContains").value = "";
+  document.getElementById("itemAllergens").value = "";
+  document.getElementById("itemNotes").value = "";
+}
+function saveItem() {
+  const section = bySectionId(document.getElementById("adminSection").value);
+  const category = section.categories.find(c => c.id === document.getElementById("adminCategory").value);
+  if (!section || !category) return showToast("Choisis un univers et une catégorie.");
+  const payload = {
+    id: selectedItemId || `${category.id}-${slugify(document.getElementById("itemName").value)}-${Date.now().toString(36)}`,
+    name: document.getElementById("itemName").value.trim(),
+    price: Number(document.getElementById("itemPrice").value || 0),
+    description: document.getElementById("itemDescription").value.trim(),
+    image: document.getElementById("itemImage").value.trim() || category.image || section.image,
+    badge: document.getElementById("itemBadge").value.trim(),
+    tech: {
+      composition: document.getElementById("itemComposition").value.trim(),
+      contains: document.getElementById("itemContains").value.trim(),
+      allergens: document.getElementById("itemAllergens").value.trim(),
+      notes: document.getElementById("itemNotes").value.trim(),
+    }
+  };
+  if (!payload.name) return showToast("Le nom de l'article est obligatoire.");
+  const existing = category.items.findIndex(i => i.id === payload.id);
+  if (existing >= 0) category.items[existing] = {...category.items[existing], ...payload};
+  else category.items.unshift(payload);
+  if (!state.featured.some(f => f.id === payload.id)) {
+    state.featured.unshift({...payload, section:section.name, category:category.name});
+    state.featured = state.featured.slice(0,8);
+  }
+  saveAndRender();
+  showToast("Article enregistré.");
+}
+function deleteItem() {
+  if (!selectedItemId) return showToast("Sélectionne d'abord un article.");
+  for (const section of state.sections) {
+    for (const category of section.categories) {
+      const index = category.items.findIndex(i => i.id === selectedItemId);
+      if (index >= 0) {
+        category.items.splice(index,1);
+        state.featured = state.featured.filter(f => f.id !== selectedItemId);
+        clearForm();
+        saveAndRender();
+        return showToast("Article supprimé.");
+      }
+    }
+  }
+}
+function createCategory() {
+  const section = bySectionId(document.getElementById("newCategorySection").value);
+  const name = document.getElementById("newCategoryName").value.trim();
+  const image = document.getElementById("newCategoryImage").value.trim() || section.image;
+  if (!name) return showToast("Nom de catégorie requis.");
+  section.categories.push({id:`${section.id}-${slugify(name)}`, name, image, items:[]});
+  document.getElementById("newCategoryName").value = "";
+  document.getElementById("newCategoryImage").value = "";
+  saveAndRender();
+  showToast("Catégorie créée.");
+}
+function createSection() {
+  const name = document.getElementById("newSectionName").value.trim();
+  const subtitle = document.getElementById("newSectionSubtitle").value.trim();
+  const image = document.getElementById("newSectionImage").value.trim() || "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&q=80";
+  if (!name) return showToast("Nom d'univers requis.");
+  state.sections.push({id:slugify(name), name, subtitle, image, categories:[]});
+  document.getElementById("newSectionName").value = "";
+  document.getElementById("newSectionSubtitle").value = "";
+  document.getElementById("newSectionImage").value = "";
+  saveAndRender();
+  showToast("Univers créé.");
+}
+function exportJson() {
+  jsonArea.value = JSON.stringify(state, null, 2);
+  jsonArea.select();
+}
+function importJson() {
+  try {
+    const parsed = JSON.parse(jsonArea.value);
+    if (!parsed?.sections?.length) throw new Error("JSON invalide");
+    state = parsed;
+    activeSection = state.sections[0]?.id || "";
+    clearForm();
+    saveAndRender();
+    showToast("Catalogue importé.");
+  } catch (err) {
+    showToast("Import impossible: JSON invalide.");
+  }
+}
+async function sha256(text) {
+  const enc = new TextEncoder().encode(text);
+  const hash = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+async function unlockAdmin() {
+  const value = document.getElementById("adminCodeInput").value;
+  const candidate = await sha256(value);
+  if (candidate === currentAdminHash) {
+    openAdmin();
+  } else {
+    showToast("Code incorrect.");
+  }
+}
+async function changeAdminCode() {
+  const a = document.getElementById("newAdminCode").value;
+  const b = document.getElementById("confirmAdminCode").value;
+  if (!a || a.length < 6) return showToast("Choisis un code d'au moins 6 caractères.");
+  if (a !== b) return showToast("La confirmation ne correspond pas.");
+  currentAdminHash = await sha256(a);
+  localStorage.setItem(ADMIN_HASH_KEY, currentAdminHash);
+  document.getElementById("newAdminCode").value = "";
+  document.getElementById("confirmAdminCode").value = "";
+  showToast("Code backoffice modifié.");
+}
+function resetCatalog() {
+  localStorage.removeItem(STORAGE_KEY);
+  state = structuredClone(INITIAL_DATA);
+  activeSection = state.sections[0]?.id || "";
+  clearForm();
+  saveAndRender();
+  showToast("Catalogue réinitialisé.");
+}
+function handleSecretTrigger() {
+  secretTapCount += 1;
+  clearTimeout(secretTapTimer);
+  secretTapTimer = setTimeout(() => secretTapCount = 0, 1200);
+  if (secretTapCount >= 4) {
+    secretTapCount = 0;
+    openAdminLock();
+  }
+}
+
+document.addEventListener("click", (event) => {
+  const jump = event.target.closest("[data-section-jump]");
+  if (jump) {
+    activeSection = jump.dataset.sectionJump;
+    renderSectionNav();
+    renderSidebar();
+    document.getElementById(activeSection)?.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+  const cat = event.target.closest("[data-cat-jump]");
+  if (cat) {
+    document.getElementById(cat.dataset.catJump)?.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+  const detail = event.target.closest("[data-detail]");
+  if (detail) openDetail(detail.dataset.detail);
+  const edit = event.target.closest("[data-edit]");
+  if (edit) {
+    fillFormFromItem(edit.dataset.edit);
+    openAdmin();
+  }
+});
+
+document.getElementById("scrollFeatured").addEventListener("click", () => {
+  document.getElementById("featured-root").scrollIntoView({behavior:"smooth", block:"start"});
+});
+document.getElementById("mobileToTop").addEventListener("click", ()=>window.scrollTo({top:0, behavior:"smooth"}));
+searchInput.addEventListener("input", e => {
+  filteredText = e.target.value.trim().toLowerCase();
+  renderSections();
+});
+sectionSelect.addEventListener("change", renderSections);
+document.getElementById("adminSection").addEventListener("change", refreshAdminCategoryOptions);
+document.getElementById("saveItem").addEventListener("click", saveItem);
+document.getElementById("newItem").addEventListener("click", clearForm);
+document.getElementById("deleteItem").addEventListener("click", deleteItem);
+document.getElementById("createCategory").addEventListener("click", createCategory);
+document.getElementById("createSection").addEventListener("click", createSection);
+document.getElementById("exportJson").addEventListener("click", exportJson);
+document.getElementById("importJson").addEventListener("click", importJson);
+document.getElementById("resetCatalog").addEventListener("click", resetCatalog);
+document.getElementById("changeAdminCode").addEventListener("click", changeAdminCode);
+document.getElementById("brandSecretTrigger").addEventListener("click", handleSecretTrigger);
+document.getElementById("footerSecret").addEventListener("click", handleSecretTrigger);
+document.getElementById("unlockAdmin").addEventListener("click", unlockAdmin);
+document.getElementById("cancelAdminLock").addEventListener("click", closeAdminLock);
+document.getElementById("closeAdmin").addEventListener("click", closeAdmin);
+document.getElementById("closeDetailPrimary").addEventListener("click", closeDetail);
+document.getElementById("openAdminFromDetail").addEventListener("click", () => { closeDetail(); openAdminLock(); });
+detailModal.addEventListener("click", e => { if (e.target === detailModal) closeDetail(); });
+adminLock.addEventListener("click", e => { if (e.target === adminLock) closeAdminLock(); });
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") { closeDetail(); closeAdminLock(); closeAdmin(); }
+  if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "m") openAdminLock();
+  if (e.key === "Enter" && adminLock.classList.contains("open")) unlockAdmin();
+});
+
+loadState();
+renderAll();
+</script>
+</body>
+</html>
