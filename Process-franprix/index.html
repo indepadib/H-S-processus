@@ -1098,6 +1098,38 @@
       .hero-grid{grid-template-columns:1fr;}
       .process-header h2{font-size:30px;}
     }
+
+
+/* ── V6 KNOWLEDGE LAYER: détail étape + pièces jointes ───────────────── */
+.flow-node.clickable{cursor:pointer;position:relative;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
+.flow-node.clickable:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(40,27,10,.10);border-color:rgba(181,87,26,.28);}
+.flow-node.clickable.active-step{outline:3px solid rgba(181,87,26,.18);border-color:rgba(181,87,26,.42);}
+.step-cue{display:inline-flex;gap:6px;align-items:center;margin-top:10px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);}
+.deep-grid{display:grid;grid-template-columns:minmax(260px,.85fr) minmax(0,1.6fr);gap:18px;align-items:start;}
+.step-list{display:flex;flex-direction:column;gap:10px;}
+.step-pill{border:1px solid var(--border);background:rgba(255,255,255,.35);border-radius:18px;padding:12px 12px;cursor:pointer;transition:.16s ease;}
+.step-pill:hover{border-color:rgba(181,87,26,.26);transform:translateY(-1px)}
+.step-pill.active{background:var(--surface);border-color:rgba(181,87,26,.42);box-shadow:0 12px 28px rgba(64,43,18,.08)}
+.step-pill .step-k{font-size:10px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.step-pill .step-t{font-size:13px;font-weight:800;color:var(--ink)}
+.step-detail-card{border:1px solid var(--border-md);border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.48),rgba(255,255,255,.2));padding:22px;box-shadow:0 18px 50px rgba(50,34,14,.06)}
+.step-detail-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:16px}
+.step-detail-head h3{font-family:'Playfair Display',serif;font-size:28px;margin:0;color:var(--ink)}
+.step-detail-head p{font-size:13px;color:var(--muted);line-height:1.55;margin:6px 0 0}
+.mini-tag{display:inline-flex;border:1px solid var(--border);background:rgba(255,255,255,.42);border-radius:999px;padding:6px 9px;font-size:11px;font-weight:800;color:var(--ink-2);white-space:nowrap}
+.step-sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.step-section{border:1px solid var(--border);background:rgba(255,255,255,.28);border-radius:20px;padding:14px;}
+.step-section h4{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 9px;font-weight:900}
+.step-section ul{padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;color:var(--ink-2);font-size:13px;line-height:1.45}
+.screen-placeholder{border:1px dashed rgba(181,87,26,.35);background:rgba(181,87,26,.06);border-radius:22px;padding:18px;display:flex;gap:14px;align-items:center;color:var(--ink-2);}
+.screen-placeholder strong{display:block;font-size:13px;color:var(--ink);margin-bottom:4px}.screen-placeholder span{font-size:12px;color:var(--muted);line-height:1.4}
+.attach-layout{display:grid;grid-template-columns:minmax(280px,.9fr) minmax(0,1.5fr);gap:18px;align-items:start;}
+.attach-drop{border:1px dashed rgba(80,60,30,.25);background:rgba(255,255,255,.34);border-radius:26px;padding:18px;}
+.attach-drop h3{font-family:'Playfair Display',serif;font-size:25px;margin:0 0 8px}.attach-drop p{font-size:13px;color:var(--muted);line-height:1.55;margin:0 0 14px}
+.attach-form{display:grid;gap:10px}.attach-form input,.attach-form select,.attach-form textarea{width:100%;box-sizing:border-box;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.55);padding:10px 11px;font-family:inherit;color:var(--ink);font-size:13px}.attach-form textarea{min-height:76px;resize:vertical}.attach-btn{border:none;border-radius:999px;background:var(--ink);color:var(--surface);padding:11px 14px;font-weight:900;cursor:pointer}.attach-btn.secondary{background:rgba(181,87,26,.11);color:var(--accent);border:1px solid rgba(181,87,26,.22)}
+.attach-list{display:flex;flex-direction:column;gap:10px}.attach-card{border:1px solid var(--border);background:rgba(255,255,255,.36);border-radius:20px;padding:14px;display:grid;grid-template-columns:1fr auto;gap:8px}.attach-card h4{margin:0;font-size:14px}.attach-card p{margin:5px 0 0;color:var(--muted);font-size:12px;line-height:1.45}.attach-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.attach-actions{display:flex;gap:6px;align-items:start}.small-action{border:1px solid var(--border);background:rgba(255,255,255,.5);border-radius:999px;padding:7px 9px;font-size:11px;font-weight:800;cursor:pointer;color:var(--ink-2)}
+@media (max-width: 1050px){.deep-grid,.attach-layout{grid-template-columns:1fr}.step-sections{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -5195,7 +5227,7 @@ const datasets = {
   }
 };
 
-const state = { world: null, search: '', processId: null, tab: 'flow' };
+const state = { world: null, search: '', processId: null, tab: 'flow', stepIndex: 0 };
 const app = document.getElementById('app');
 const unique = arr => [...new Set(arr)];
 
@@ -5209,7 +5241,7 @@ function getFiltered() {
   return data.filter(p => normalize([p.code,p.title,p.description,p.objective,p.owner,p.domain,p.stage,...(p.actors||[]),...(p.includes||[])].join(' ')).includes(q));
 }
 function getCurrent(filtered) { return filtered.find(p => p.id === state.processId) || filtered[0] || null; }
-function setWorld(world) { state.world = world; state.search=''; state.tab='flow'; const first=(datasets[world].data||[])[0]; state.processId = first ? first.id : null; render(); }
+function setWorld(world) { state.world = world; state.search=''; state.tab='flow'; state.stepIndex=0; const first=(datasets[world].data||[])[0]; state.processId = first ? first.id : null; render(); }
 function priorityChipClass(p) { if (p === 'Critical') return 'chip chip-critical'; if (p === 'High') return 'chip chip-high'; return 'chip chip-medium'; }
 function statusStyle(color) {
   const map = {
@@ -5230,24 +5262,135 @@ function groupProcesses(list) {
 }
 
 function renderArrow() { return `<div class="flow-arrow"><div class="flow-arrow-line"></div><div class="flow-arrow-head"></div></div>`; }
-function renderFlowNode(node) {
+function detailNodes(p) { return (p.flow?.nodes || []).filter(n => !['start','end'].includes(n.type)); }
+function stepRefTitle(n, i) { return n.step || (n.type === 'decision' ? 'Décision' : `Étape ${i+1}`); }
+function renderFlowNode(node, stepIdx=null) {
   if (node.type === 'start') return `<div class="flow-node start">${node.title}</div>`;
   if (node.type === 'end') return `<div class="flow-node end">${node.title}</div>`;
+  const clickableAttr = stepIdx !== null ? ` data-step-index="${stepIdx}"` : '';
+  const activeCls = stepIdx === state.stepIndex && state.tab === 'steps' ? ' active-step' : '';
   if (node.type === 'decision') {
     return `
-      <div class="decision-wrapper">
+      <div class="decision-wrapper clickable${activeCls}"${clickableAttr}>
         <div class="branch-side"><div class="branch-label no">Non</div><div class="branch-line left"></div><div class="branch-node no-node">${node.no || 'Retour / correction'}</div></div>
         <div class="diamond"><div class="diamond-inner"><div class="diamond-text"><div class="node-title">${node.title}</div>${node.meta ? `<div class="node-meta" style="font-size:11px;margin-top:4px">${node.meta}</div>` : ''}</div></div></div>
         <div class="branch-side"><div class="branch-label yes">Oui</div><div class="branch-line right"></div><div class="branch-node yes-node">${node.yes || 'Étape suivante'}</div></div>
       </div>`;
   }
   const actorLabels = { catman:'Métier / Offre', buyer:'Responsable', validation:'Validation', system:'Système', risk:'Contrôle / Risque' };
-  return `<div class="flow-node ${node.type}">${node.step ? `<div class="node-step">${node.step}</div>` : ''}<div class="node-title">${node.title}</div>${node.meta ? `<div class="node-meta">${node.meta}</div>` : ''}<span class="actor-tag">${node.actor || actorLabels[node.type] || ''}</span></div>`;
+  return `<div class="flow-node ${node.type} clickable${activeCls}"${clickableAttr}>${node.step ? `<div class="node-step">${node.step}</div>` : ''}<div class="node-title">${node.title}</div>${node.meta ? `<div class="node-meta">${node.meta}</div>` : ''}<span class="actor-tag">${node.actor || actorLabels[node.type] || ''}</span><div class="step-cue">Cliquer pour détailler →</div></div>`;
 }
 function renderFlow(p) {
   const nodes = p.flow?.nodes || [];
-  return `<div class="flow-container"><div class="flow-stage">${nodes.map((n,i)=>renderFlowNode(n)+(i<nodes.length-1?renderArrow():'' )).join('')}</div></div>`;
+  let detailIdx = -1;
+  return `<div class="flow-container"><div class="flow-stage">${nodes.map((n,i)=>{ const isDetail=!['start','end'].includes(n.type); const idx=isDetail ? ++detailIdx : null; return renderFlowNode(n, idx)+(i<nodes.length-1?renderArrow():'' ); }).join('')}</div></div>`;
 }
+
+function inferredStepDetail(p, node, idx) {
+  const code = p.code || 'Process';
+  const title = node.title || `Étape ${idx+1}`;
+  const isDecision = node.type === 'decision';
+  return {
+    ref: stepRefTitle(node, idx),
+    title,
+    actor: node.actor || (isDecision ? 'Responsable de validation' : p.owner || 'Métier'),
+    purpose: node.meta || `Détail opérationnel de l’étape “${title}” dans le processus ${code}.`,
+    actions: isDecision ? [
+      'Analyser les critères de décision et les pièces disponibles.',
+      'Documenter le choix retenu avec le motif de validation ou de rejet.',
+      'Orienter le dossier vers la branche Oui / Non sans perte de traçabilité.'
+    ] : [
+      'Saisir ou contrôler les informations obligatoires liées à cette étape.',
+      'Vérifier la cohérence métier avec les données amont du processus.',
+      'Documenter la décision, le commentaire ou la preuve associée.'
+    ],
+    d365: node.type === 'system' ? [
+      'Écran D365/POS à documenter : menu, chemin d’accès, champs obligatoires, statut système.',
+      'Contrôler que l’action génère bien le statut attendu dans le processus.',
+      'Capturer l’écran cible et l’ajouter dans les pièces jointes du process.'
+    ] : [
+      'Écran ou formulaire à rattacher si l’étape est réalisée dans D365, POS, Excel ou email.',
+      'Préciser plus tard : chemin D365, rôle applicatif, champs obligatoires, contrôle bloquant.'
+    ],
+    controls: [
+      'Responsable identifié et horodatage de l’action.',
+      'Pièce justificative disponible si l’étape engage une décision ou un montant.',
+      'Traçabilité de toute exception, correction ou retour arrière.'
+    ],
+    outputs: isDecision ? [node.yes || 'Branche Oui', node.no || 'Branche Non', 'Commentaire de décision'] : [
+      `Statut ${title} validé`,
+      'Données mises à jour',
+      'Preuve ou commentaire rattaché au dossier'
+    ]
+  };
+}
+function renderStepDetail(p) {
+  const nodes = detailNodes(p);
+  if (!nodes.length) return `<div class="empty-state"><p>Aucune étape détaillable pour ce processus.</p></div>`;
+  const idx = Math.min(state.stepIndex || 0, nodes.length-1);
+  const node = nodes[idx];
+  const d = inferredStepDetail(p,node,idx);
+  return `<div class="deep-grid">
+    <div class="step-list">${nodes.map((n,i)=>`<div class="step-pill ${i===idx?'active':''}" data-step-index="${i}"><div class="step-k">${stepRefTitle(n,i)}</div><div class="step-t">${n.title}</div></div>`).join('')}</div>
+    <div class="step-detail-card">
+      <div class="step-detail-head"><div><span class="mini-tag">${d.ref}</span><h3>${d.title}</h3><p>${d.purpose}</p></div><span class="mini-tag">${d.actor}</span></div>
+      <div class="step-sections">
+        <div class="step-section"><h4>Actions métier</h4><ul>${d.actions.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+        <div class="step-section"><h4>D365 / POS / outil</h4><ul>${d.d365.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+        <div class="step-section"><h4>Contrôles à verrouiller</h4><ul>${d.controls.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+        <div class="step-section"><h4>Sorties attendues</h4><ul>${d.outputs.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      </div>
+      <div class="screen-placeholder" style="margin-top:16px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/><path d="M7 8h10M7 12h6"/></svg><div><strong>Zone screenshot / mode opératoire</strong><span>Ajouter ici plus tard une capture D365/POS : chemin écran, champs à remplir, rôle utilisateur et erreur fréquente.</span></div></div>
+    </div>
+  </div>`;
+}
+function attachmentKey() { return `process_attachments_v6_${state.world || 'none'}_${state.processId || 'none'}`; }
+function getAttachments() { try { return JSON.parse(localStorage.getItem(attachmentKey()) || '[]'); } catch(e) { return []; } }
+function setAttachments(items) { localStorage.setItem(attachmentKey(), JSON.stringify(items)); }
+function addAttachment() {
+  const type = document.getElementById('attachType')?.value || 'Document';
+  const title = document.getElementById('attachTitle')?.value?.trim();
+  const step = document.getElementById('attachStep')?.value || 'Process global';
+  const notes = document.getElementById('attachNotes')?.value?.trim() || '';
+  const file = document.getElementById('attachFile')?.files?.[0];
+  if (!title && !file) return alert('Ajoute au minimum un titre ou un fichier.');
+  const items = getAttachments();
+  items.unshift({ id: String(Date.now()), type, title: title || file.name, step, notes, fileName: file?.name || '', size: file ? Math.round(file.size/1024)+' Ko' : '', date: new Date().toLocaleString('fr-FR') });
+  setAttachments(items); render();
+}
+function removeAttachment(id) { setAttachments(getAttachments().filter(x=>x.id!==id)); render(); }
+function exportAttachments() {
+  const items = getAttachments();
+  const blob = new Blob([JSON.stringify(items,null,2)], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${state.processId || 'process'}_pieces_jointes.json`; a.click(); URL.revokeObjectURL(a.href);
+}
+function renderAttachments(p) {
+  const nodes = detailNodes(p);
+  const items = getAttachments();
+  const templates = [
+    {type:'Screenshot D365', title:'Capture écran du chemin D365 / POS', step:'Étape ciblée', notes:'Menu, champs obligatoires, statut généré.'},
+    {type:'Mode opératoire', title:'SOP / guide utilisateur', step:'Process global', notes:'Procédure validée et versionnée.'},
+    {type:'Contrôle', title:'Preuve de validation / rapprochement', step:'Étape de validation', notes:'Document de contrôle ou export système.'}
+  ];
+  return `<div class="attach-layout">
+    <div class="attach-drop"><h3>Pièces jointes du processus</h3><p>Dans cette version statique, l’ajout sert de référentiel local de suivi. Pour une vraie production, il faudra brancher SharePoint/Drive ou une base documentaire avec URL, propriétaire, version et statut.</p>
+      <div class="attach-form">
+        <select id="attachType"><option>Screenshot D365</option><option>Mode opératoire</option><option>Document métier</option><option>Contrôle / preuve</option><option>Excel / export</option><option>Contrat / facture</option></select>
+        <input id="attachTitle" placeholder="Titre de la pièce jointe" />
+        <select id="attachStep"><option>Process global</option>${nodes.map((n,i)=>`<option>${stepRefTitle(n,i)} – ${n.title}</option>`).join('')}</select>
+        <input id="attachFile" type="file" />
+        <textarea id="attachNotes" placeholder="Notes : écran D365, usage, version, responsable, point d’attention..."></textarea>
+        <button class="attach-btn" id="attachAddBtn">Ajouter au référentiel</button>
+        <button class="attach-btn secondary" id="attachExportBtn">Exporter la liste JSON</button>
+      </div>
+    </div>
+    <div>
+      <div class="info-card" style="margin-bottom:14px"><h4><span class="h4-icon" style="background:var(--amber-bg)"></span> Modèle de pièces attendues</h4><div class="attach-list">${templates.map(t=>`<div class="attach-card"><div><h4>${t.title}</h4><p>${t.notes}</p><div class="attach-meta"><span class="mini-tag">${t.type}</span><span class="mini-tag">${t.step}</span></div></div></div>`).join('')}</div></div>
+      <div class="attach-list">${items.length ? items.map(x=>`<div class="attach-card"><div><h4>${x.title}</h4><p>${x.notes || '—'}</p><div class="attach-meta"><span class="mini-tag">${x.type}</span><span class="mini-tag">${x.step}</span>${x.fileName?`<span class="mini-tag">${x.fileName} ${x.size?`• ${x.size}`:''}</span>`:''}<span class="mini-tag">${x.date}</span></div></div><div class="attach-actions"><button class="small-action" data-remove-attach="${x.id}">Supprimer</button></div></div>`).join('') : `<div class="empty-state" style="min-height:160px"><p>Aucune pièce ajoutée pour ce processus. Ajoute les captures D365, SOP, exports, factures ou contrôles associés.</p></div>`}</div>
+    </div>
+  </div>`;
+}
+
 function renderOverview(p) {
   return `
     <div class="overview-grid">
@@ -5361,19 +5504,28 @@ function renderMain() {
         <button class="tab ${state.tab==='overview' ? 'active' : ''}" data-tab="overview">Vue d'ensemble</button>
         <button class="tab ${state.tab==='risks' ? 'active' : ''}" data-tab="risks">Risques & KPI</button>
         <button class="tab ${state.tab==='system' ? 'active' : ''}" data-tab="system">Impacts & contrôles</button>
+        <button class="tab ${state.tab==='steps' ? 'active' : ''}" data-tab="steps">Détail des étapes</button>
+        <button class="tab ${state.tab==='attachments' ? 'active' : ''}" data-tab="attachments">Pièces jointes</button>
       </div>
       <div class="panel ${state.tab==='flow' ? '' : 'hidden'}">${renderFlow(current)}</div>
       <div class="panel ${state.tab==='overview' ? '' : 'hidden'}">${renderOverview(current)}</div>
       <div class="panel ${state.tab==='risks' ? '' : 'hidden'}">${renderRisks(current)}</div>
       <div class="panel ${state.tab==='system' ? '' : 'hidden'}">${renderSystem(current)}</div>
+      <div class="panel ${state.tab==='steps' ? '' : 'hidden'}">${renderStepDetail(current)}</div>
+      <div class="panel ${state.tab==='attachments' ? '' : 'hidden'}">${renderAttachments(current)}</div>
     </main>`;
 }
 
 function bindEvents() {
   document.querySelectorAll('.world-btn').forEach(btn => btn.addEventListener('click', () => setWorld(btn.dataset.world)));
   document.getElementById('searchInput')?.addEventListener('input', e => { state.search = e.target.value; render(); });
-  document.querySelectorAll('.pnav-item').forEach(el => el.addEventListener('click', () => { state.processId = el.dataset.id; state.tab='flow'; render(); document.querySelector('.main')?.scrollTo(0,0); }));
+  document.querySelectorAll('.pnav-item').forEach(el => el.addEventListener('click', () => { state.processId = el.dataset.id; state.tab='flow'; state.stepIndex=0; render(); document.querySelector('.main')?.scrollTo(0,0); }));
   document.querySelectorAll('.tab').forEach(el => el.addEventListener('click', () => { state.tab = el.dataset.tab; render(); }));
+  document.querySelectorAll('[data-step-index]').forEach(el => el.addEventListener('click', () => { state.stepIndex = Number(el.dataset.stepIndex)||0; state.tab='steps'; render(); }));
+  document.getElementById('attachAddBtn')?.addEventListener('click', addAttachment);
+  document.querySelectorAll('[data-remove-attach]').forEach(el => el.addEventListener('click', () => removeAttachment(el.dataset.removeAttach)));
+  document.getElementById('attachExportBtn')?.addEventListener('click', exportAttachments);
+  document.getElementById('attachFile')?.addEventListener('change', e => { const f=e.target.files?.[0]; if(f && !document.getElementById('attachTitle').value) document.getElementById('attachTitle').value=f.name; });
 }
 
 function render() { app.innerHTML = `${renderTopnav()}${renderSidebar()}${renderMain()}`; bindEvents(); }
