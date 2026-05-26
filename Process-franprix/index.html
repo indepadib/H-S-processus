@@ -5155,6 +5155,1685 @@ const nonMerchantProcesses = [
 ];
 
 
+const procedureProcesses = [
+  {
+    "id": "SOP01",
+    "code": "SOP 01",
+    "title": "Exploitation magasin — ouverture",
+    "world": "Procédures magasin",
+    "domain": "Exploitation magasin",
+    "stage": "Procédure prioritaire",
+    "owner": "Responsable magasin",
+    "actors": [
+      "Responsable magasin",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure d’ouverture magasin : sécuriser la prise de service, l’état du magasin, les caisses, les systèmes et les contrôles de début de journée.",
+    "objective": "Ouvrir le magasin sans rupture opérationnelle : équipe présente, POS prêt, fonds de caisse contrôlé, rayons exploitables, hygiène conforme.",
+    "trigger": "Début de journée, ouverture au public, prise de shift.",
+    "includes": [
+      "Brief équipe",
+      "Contrôle accès et sécurité",
+      "Ouverture POS et caisses",
+      "Contrôle rayons / prix / hygiène",
+      "Validation prêt ouverture"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Validation Responsable magasin avant ouverture public",
+      "Anomalie critique escaladée à Direction opérationnelle / IT / Maintenance"
+    ],
+    "metrics": [
+      "Ouverture à l’heure",
+      "Nombre anomalies ouverture",
+      "Disponibilité POS",
+      "Taux rayons prêts"
+    ],
+    "risks": [
+      "Ouverture avec caisse non prête",
+      "Erreur fonds de caisse",
+      "Rayon sensible non conforme",
+      "Incident IT non escaladé"
+    ],
+    "scenarios": [
+      "Ouverture standard",
+      "POS indisponible",
+      "Collaborateur absent",
+      "Anomalie hygiène avant ouverture"
+    ],
+    "statusFlow": [
+      "Prise de service et accès magasin",
+      "Contrôle systèmes et POS",
+      "Préparation fonds de caisse",
+      "Tour magasin avant ouverture",
+      "Go / No Go ouverture"
+    ],
+    "systemImpact": "POS, TPE, balance, réseau, imprimante et D365 doivent être opérationnels avant ouverture. Les anomalies sont documentées avec preuve ou ticket support.",
+    "accountingImpact": "Pas d’écriture comptable directe, sauf si la procédure génère une transaction stock, caisse, achat, paie ou finance.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Prise de service et accès magasin",
+          "meta": "Vérifier présence équipe, accès, alarmes, clés, sécurité et état général.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Contrôle systèmes et POS",
+          "meta": "Allumer postes, vérifier réseau, imprimantes tickets, TPE, balances, synchronisation prix.",
+          "actor": "Responsable magasin / IT support"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Préparation fonds de caisse",
+          "meta": "Contrôler fonds initial par caisse, attribution caissier, traçabilité du montant.",
+          "actor": "Responsable magasin / Caissier"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Tour magasin avant ouverture",
+          "meta": "Rayons propres, DLC sensibles, balisage prix, ruptures visibles, chambres froides, sécurité.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "decision",
+          "step": "Étape 5",
+          "title": "Go / No Go ouverture",
+          "meta": "Si anomalie bloquante : escalade. Sinon ouverture public.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP02",
+    "code": "SOP 02",
+    "title": "Exploitation magasin — fermeture",
+    "world": "Procédures magasin",
+    "domain": "Exploitation magasin",
+    "stage": "Procédure prioritaire",
+    "owner": "Responsable magasin",
+    "actors": [
+      "Responsable magasin",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure de fermeture magasin : sécuriser la fin de journée, la clôture opérationnelle, les caisses, les dépôts, les locaux et les données.",
+    "objective": "Fermer le magasin avec transactions clôturées, cash sécurisé, anomalies documentées et locaux protégés.",
+    "trigger": "Fin de journée, fermeture au public, fin de shift.",
+    "includes": [
+      "Clôture rayons",
+      "Clôture caisse",
+      "Contrôle cash",
+      "Sécurisation locaux",
+      "Transmission anomalies"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Validation Responsable magasin",
+      "Écarts caisse justifiés avant transmission finance",
+      "Incident sécurité escaladé immédiatement"
+    ],
+    "metrics": [
+      "Fermeture conforme",
+      "Écarts caisse",
+      "Temps clôture",
+      "Incidents sécurité"
+    ],
+    "risks": [
+      "Cash non sécurisé",
+      "Caisse non clôturée",
+      "Écart non justifié",
+      "Alarme ou accès mal géré"
+    ],
+    "scenarios": [
+      "Fermeture sans écart",
+      "Écart cash",
+      "TPE KO en fin de journée",
+      "Incident sécurité"
+    ],
+    "statusFlow": [
+      "Arrêt activité commerciale",
+      "Clôture caisses et Z",
+      "Comptage et sécurisation cash",
+      "Tour de fermeture magasin",
+      "Transmission fin de journée"
+    ],
+    "systemImpact": "Le POS doit refléter le statut clôturé. Les rapports Z et justificatifs d’écart deviennent pièces jointes obligatoires du process.",
+    "accountingImpact": "Prépare F2 clôture caisse et F1 comptabilisation ventes. Les écarts caisse alimentent les comptes dédiés selon règle Finance.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Arrêt activité commerciale",
+          "meta": "Fin encaissement, gestion derniers clients, fermeture portes selon planning.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Clôture caisses et Z",
+          "meta": "Clôture sessions POS, édition Z, contrôle paiements par mode.",
+          "actor": "Caissier / Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Comptage et sécurisation cash",
+          "meta": "Comptage physique, comparaison système, mise coffre / enveloppe / dépôt selon règle.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Tour de fermeture magasin",
+          "meta": "Froid, éclairage, portes, alarmes, zone réserve, produits sensibles, hygiène.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Transmission fin de journée",
+          "meta": "Anomalies, écarts, incidents et pièces envoyés aux fonctions concernées.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP03",
+    "code": "SOP 03",
+    "title": "Gestion caisse POS",
+    "world": "Procédures magasin",
+    "domain": "Front office POS",
+    "stage": "Procédure prioritaire",
+    "owner": "Responsable caisse / Responsable magasin",
+    "actors": [
+      "Responsable caisse / Responsable magasin",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure complète de gestion caisse : ouverture session, encaissement, moyens de paiement, annulations, retours, remises, incidents et clôture caissier.",
+    "objective": "Garantir une caisse fiable, traçable et conforme, sans modification non autorisée ni perte de données.",
+    "trigger": "Ouverture caisse, transaction client, correction, retour, clôture caissier.",
+    "includes": [
+      "Ouverture session caissier",
+      "Encaissement multi-moyens",
+      "Gestion annulation / retour",
+      "Contrôle remises",
+      "Clôture caissier"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Droits POS par profil",
+      "Annulation / retour sous habilitation",
+      "Écart caisse validé Responsable magasin"
+    ],
+    "metrics": [
+      "Écarts caisse",
+      "Annulations par caissier",
+      "Retours tickets",
+      "Temps encaissement",
+      "Incidents TPE"
+    ],
+    "risks": [
+      "Fraude caisse",
+      "Mauvais moyen de paiement",
+      "Retour non justifié",
+      "Remise abusive",
+      "Ticket non traçable"
+    ],
+    "scenarios": [
+      "Vente standard",
+      "Paiement mixte",
+      "Annulation avant paiement",
+      "Retour après paiement",
+      "TPE indisponible"
+    ],
+    "statusFlow": [
+      "Ouverture session POS",
+      "Encaissement client",
+      "Gestion exceptions POS",
+      "Contrôle justificatifs",
+      "Clôture session caissier"
+    ],
+    "systemImpact": "POS doit gérer les droits par profil, les motifs obligatoires, la traçabilité ticket et la remontée vers Retail Statement.",
+    "accountingImpact": "Impact sur encaissements, CA, TVA, retours, remises, écarts caisse et lettrage des paiements.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Ouverture session POS",
+          "meta": "Connexion caissier, affectation caisse, contrôle tiroir et périphériques.",
+          "actor": "Caissier"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Encaissement client",
+          "meta": "Scan articles, contrôle prix/promo, fidélité, choix moyen de paiement.",
+          "actor": "Caissier"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Gestion exceptions POS",
+          "meta": "Annulation ligne, annulation ticket, retour client, avoir, remise manuelle selon droits.",
+          "actor": "Caissier / Responsable"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Contrôle justificatifs",
+          "meta": "Ticket, motif, autorisation manager, pièce client si nécessaire.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Clôture session caissier",
+          "meta": "Comparaison ventes/paiements/cash, signature ou validation numérique.",
+          "actor": "Caissier / Responsable"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP04",
+    "code": "SOP 04",
+    "title": "Réception marchandise magasin",
+    "world": "Procédures magasin",
+    "domain": "Back office stock",
+    "stage": "Procédure prioritaire",
+    "owner": "Responsable réception / Responsable magasin",
+    "actors": [
+      "Responsable réception / Responsable magasin",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure opérationnelle de réception magasin : contrôle physique, documents, qualité, DLC, écarts, validation système et rangement.",
+    "objective": "Réceptionner uniquement ce qui est conforme, protéger le stock et préparer un rapprochement fournisseur fiable.",
+    "trigger": "Arrivée livraison fournisseur ou plateforme au magasin.",
+    "includes": [
+      "Contrôle BL/PO",
+      "Contrôle quantités",
+      "Contrôle qualité/DLC/température",
+      "Saisie réception D365",
+      "Traitement écarts"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Réception sans commande non autorisée sauf dérogation",
+      "Écart documenté le jour même",
+      "Produit sensible contrôlé avant mise en rayon"
+    ],
+    "metrics": [
+      "Taux écart réception",
+      "Délai réception",
+      "Écarts DLC/température",
+      "Stock disponible après réception"
+    ],
+    "risks": [
+      "Stock faux",
+      "Produit non conforme vendu",
+      "Paiement fournisseur incorrect",
+      "DLC courte non détectée"
+    ],
+    "scenarios": [
+      "Réception conforme",
+      "Écart quantité",
+      "Produit abîmé",
+      "DLC non conforme",
+      "Livraison sans PO"
+    ],
+    "statusFlow": [
+      "Accueil livraison et documents",
+      "Contrôle physique",
+      "Saisie réception D365",
+      "Décision sur écarts",
+      "Rangement et disponibilité stock"
+    ],
+    "systemImpact": "D365 doit refléter la quantité réellement reçue. Les écarts, refus et photos doivent être joints au process.",
+    "accountingImpact": "Impact stock, GRNI, facture fournisseur, marge et casse éventuelle.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Accueil livraison et documents",
+          "meta": "Identifier fournisseur, BL, commande, température transport si alimentaire.",
+          "actor": "Réception magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Contrôle physique",
+          "meta": "Quantité, état colis, DLC, lots, température, conformité articles.",
+          "actor": "Réception magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Saisie réception D365",
+          "meta": "Scanner / saisir quantités réellement reçues, bloquer les écarts.",
+          "actor": "Réception magasin"
+        },
+        {
+          "type": "decision",
+          "step": "Étape 4",
+          "title": "Décision sur écarts",
+          "meta": "Accepter partiel, refuser, isoler produit, demander avoir ou correction.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Rangement et disponibilité stock",
+          "meta": "Mise en réserve ou rayon, FIFO, froid, étiquetage interne.",
+          "actor": "Équipe magasin"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP05",
+    "code": "SOP 05",
+    "title": "Comptabilisation ventes POS → GL",
+    "world": "Procédures magasin",
+    "domain": "Finance retail",
+    "stage": "Procédure prioritaire",
+    "owner": "Finance / Comptabilité",
+    "actors": [
+      "Finance / Comptabilité",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure prioritaire de passage des ventes magasin vers la comptabilité : POS, Z, statement, contrôles, posting GL et archivage.",
+    "objective": "Garantir que le CA, la TVA, les encaissements, le COGS et les stocks sont correctement comptabilisés.",
+    "trigger": "Fin de journée ou cycle de posting défini.",
+    "includes": [
+      "Contrôle clôture caisse",
+      "Consolidation statement",
+      "Contrôle paiements",
+      "Posting GL",
+      "Archivage journaux"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Aucune caisse ouverte avant posting",
+      "Écart caisse traité ou isolé",
+      "Posting validé par Finance"
+    ],
+    "metrics": [
+      "Statements postés",
+      "Écarts bloquants",
+      "Délai posting",
+      "Transactions en erreur"
+    ],
+    "risks": [
+      "CA faux",
+      "TVA erronée",
+      "Rapprochement bancaire impossible",
+      "COGS incorrect"
+    ],
+    "scenarios": [
+      "Journée simple",
+      "Retour client",
+      "Promo",
+      "Écart caisse",
+      "Statement bloqué"
+    ],
+    "statusFlow": [
+      "Contrôle clôture magasin",
+      "Génération Retail Statement",
+      "Contrôles pré-posting",
+      "Posting vers GL",
+      "Validation et archivage"
+    ],
+    "systemImpact": "Lien POS → Retail Statement → GL. Les logs d’erreur, journaux et références statement doivent être rattachés.",
+    "accountingImpact": "Débit encaissements, crédit CA/TVA, débit COGS, crédit stock.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Contrôle clôture magasin",
+          "meta": "Vérifier Z, caisses clôturées, paiements par mode et écarts.",
+          "actor": "Finance / Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Génération Retail Statement",
+          "meta": "Consolider ventes, retours, remises, moyens de paiement, TVA, COGS.",
+          "actor": "D365 Retail"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Contrôles pré-posting",
+          "meta": "Ventes = paiements, aucune transaction en erreur, écarts documentés.",
+          "actor": "Finance"
+        },
+        {
+          "type": "system",
+          "step": "Étape 4",
+          "title": "Posting vers GL",
+          "meta": "Générer écritures CA HT, TVA collectée, encaissements, COGS, stock.",
+          "actor": "Finance"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Validation et archivage",
+          "meta": "Contrôle journaux, référence statement, conservation pièces.",
+          "actor": "Finance"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP06",
+    "code": "SOP 06",
+    "title": "Hygiène & Qualité alimentaire",
+    "world": "Procédures magasin",
+    "domain": "Qualité & conformité",
+    "stage": "Procédure prioritaire",
+    "owner": "Responsable qualité / Responsable magasin",
+    "actors": [
+      "Responsable qualité / Responsable magasin",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure hygiène et qualité alimentaire : DLC, chaîne du froid, nettoyage, retrait produit, traçabilité et réaction en cas de non-conformité.",
+    "objective": "Protéger le client, respecter les obligations qualité et éviter tout risque sanitaire ou réputationnel.",
+    "trigger": "Ouverture, réception, contrôle périodique, incident qualité, alerte fournisseur.",
+    "includes": [
+      "Contrôle températures",
+      "Contrôle DLC/FIFO",
+      "Plan nettoyage",
+      "Retrait produit",
+      "Traçabilité incident"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Non-conformité critique = retrait immédiat",
+      "Température hors seuil escaladée",
+      "Registre qualité obligatoire"
+    ],
+    "metrics": [
+      "Taux conformité DLC",
+      "Incidents froid",
+      "Retraits produits",
+      "Contrôles nettoyage réalisés"
+    ],
+    "risks": [
+      "Risque sanitaire",
+      "Produit périmé vendu",
+      "Rupture chaîne du froid",
+      "Absence preuve contrôle"
+    ],
+    "scenarios": [
+      "Contrôle quotidien conforme",
+      "DLC dépassée",
+      "Frigo hors température",
+      "Alerte rappel produit"
+    ],
+    "statusFlow": [
+      "Contrôles quotidiens hygiène",
+      "Contrôle DLC / FIFO",
+      "Traitement non-conformité",
+      "Décision rappel / destruction",
+      "Archivage preuves"
+    ],
+    "systemImpact": "Peut nécessiter rattachement photos, registre températures, fiches retrait, ticket incident et mouvements de casse dans D365.",
+    "accountingImpact": "Impact casse/démarque, retour fournisseur, provision éventuelle et risque conformité.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Contrôles quotidiens hygiène",
+          "meta": "Températures, propreté zones, équipements, rayons sensibles.",
+          "actor": "Équipe magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Contrôle DLC / FIFO",
+          "meta": "Identifier DLC courte, organiser rotation, retirer produits non conformes.",
+          "actor": "Responsable rayon"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Traitement non-conformité",
+          "meta": "Isolement, retrait vente, photo, fiche incident, information hiérarchie.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "decision",
+          "step": "Étape 4",
+          "title": "Décision rappel / destruction",
+          "meta": "Selon gravité : retour fournisseur, casse, destruction, communication client.",
+          "actor": "Qualité / Direction"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Archivage preuves",
+          "meta": "Registre contrôle, photos, température, action corrective.",
+          "actor": "Responsable qualité"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP07",
+    "code": "SOP 07",
+    "title": "Gestion clients omnicanal",
+    "world": "Procédures magasin",
+    "domain": "Clients & omnicanal",
+    "stage": "Procédure prioritaire",
+    "owner": "Service client / Responsable magasin",
+    "actors": [
+      "Service client / Responsable magasin",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "High",
+    "status": "Procédure prioritaire",
+    "statusColor": "orange",
+    "description": "Procédure de prise en charge clients omnicanal : demande magasin, commande externe, réclamation, remboursement, fidélité et suivi dossier.",
+    "objective": "Offrir une réponse cohérente quel que soit le canal, sans perte de traçabilité ni promesse non tenue.",
+    "trigger": "Réclamation client, demande via téléphone/email/réseaux, commande omnicanal, litige paiement ou livraison.",
+    "includes": [
+      "Identification client",
+      "Qualification demande",
+      "Recherche transaction",
+      "Traitement ou escalade",
+      "Clôture dossier"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Remboursement sous habilitation",
+      "Litige sensible escaladé",
+      "Réponse client tracée"
+    ],
+    "metrics": [
+      "Délai réponse",
+      "Taux résolution premier contact",
+      "Litiges ouverts",
+      "Satisfaction client"
+    ],
+    "risks": [
+      "Client non suivi",
+      "Double remboursement",
+      "Réponse incohérente entre canaux",
+      "Litige réputationnel"
+    ],
+    "scenarios": [
+      "Réclamation produit",
+      "Commande non reçue",
+      "Erreur prix",
+      "Demande remboursement",
+      "Litige fidélité"
+    ],
+    "statusFlow": [
+      "Réception demande client",
+      "Recherche transaction et preuves",
+      "Qualification et décision",
+      "Traitement opérationnel",
+      "Clôture et capitalisation"
+    ],
+    "systemImpact": "Besoin d’un référentiel ticket/dossier client et rattachement ticket POS, preuve paiement, échange client et statut de résolution.",
+    "accountingImpact": "Impact possible retours, avoirs, remises, remboursements et image client.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Réception demande client",
+          "meta": "Identifier canal, client, ticket, magasin, date et nature demande.",
+          "actor": "Service client / Magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Recherche transaction et preuves",
+          "meta": "Ticket POS, paiement, commande, photos, échanges, fidélité.",
+          "actor": "Service client"
+        },
+        {
+          "type": "decision",
+          "step": "Étape 3",
+          "title": "Qualification et décision",
+          "meta": "Information, geste commercial, remboursement, avoir, escalade.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Traitement opérationnel",
+          "meta": "Action POS/D365/service client selon cas avec justificatif.",
+          "actor": "Service client / Magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Clôture et capitalisation",
+          "meta": "Réponse client, statut dossier, cause racine si récurrente.",
+          "actor": "Service client"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP08",
+    "code": "SOP 08",
+    "title": "Inventaires magasin",
+    "world": "Procédures magasin",
+    "domain": "Stock & inventaires",
+    "stage": "Procédure prioritaire",
+    "owner": "Responsable magasin / Contrôle stock",
+    "actors": [
+      "Responsable magasin / Contrôle stock",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure d’inventaire magasin : préparation, comptage, gel mouvement, saisie, analyse écarts, validation et correction stock.",
+    "objective": "Fiabiliser le stock système et sécuriser la marge par une procédure de comptage contrôlée.",
+    "trigger": "Inventaire périodique, tournant, annuel ou inventaire ciblé après anomalie.",
+    "includes": [
+      "Préparation périmètre",
+      "Comptage physique",
+      "Saisie inventaire",
+      "Analyse écarts",
+      "Validation ajustements"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Ajustement stock validé",
+      "Écart significatif investigué",
+      "Séparation comptage / validation si possible"
+    ],
+    "metrics": [
+      "Écart stock valeur",
+      "Écart stock quantité",
+      "Temps inventaire",
+      "Taux recomptage"
+    ],
+    "risks": [
+      "Démarque inconnue masquée",
+      "Stock système faux",
+      "Ruptures artificielles",
+      "Ajustement abusif"
+    ],
+    "scenarios": [
+      "Inventaire conforme",
+      "Écart important",
+      "Recomptage",
+      "Produit sensible",
+      "Inventaire après casse"
+    ],
+    "statusFlow": [
+      "Préparation inventaire",
+      "Comptage physique",
+      "Saisie et comparaison système",
+      "Analyse et recomptage",
+      "Validation ajustement stock"
+    ],
+    "systemImpact": "D365 doit gérer journal inventaire, écarts, validation et historique. Les feuilles ou exports doivent être joints.",
+    "accountingImpact": "Impact valorisation stock, COGS, marge, démarque et clôture mensuelle.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Préparation inventaire",
+          "meta": "Périmètre, planning, équipe, gel mouvements si nécessaire.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Comptage physique",
+          "meta": "Scan ou feuille contrôlée, lots/DLC si applicable, zones magasin/réserve.",
+          "actor": "Équipe inventaire"
+        },
+        {
+          "type": "system",
+          "step": "Étape 3",
+          "title": "Saisie et comparaison système",
+          "meta": "Saisie comptage, comparaison stock D365, génération écarts.",
+          "actor": "Contrôle stock"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Analyse et recomptage",
+          "meta": "Écarts significatifs, articles sensibles, suspicion casse/vol/erreur réception.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 5",
+          "title": "Validation ajustement stock",
+          "meta": "Correction D365 après validation et archivage preuves.",
+          "actor": "Direction opérationnelle / Finance"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP09",
+    "code": "SOP 09",
+    "title": "Achats & chaîne fournisseurs",
+    "world": "Procédures magasin",
+    "domain": "Supply chain & fournisseurs",
+    "stage": "Procédure prioritaire",
+    "owner": "Achats / Supply Chain",
+    "actors": [
+      "Achats / Supply Chain",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "High",
+    "status": "Procédure prioritaire",
+    "statusColor": "orange",
+    "description": "Procédure opérationnelle entre magasin, achats et fournisseurs : besoin, réassort, commande, suivi livraison, rupture et litige fournisseur.",
+    "objective": "Assurer la disponibilité produit en magasin avec un flux fournisseur maîtrisé.",
+    "trigger": "Besoin de réassort, rupture, planning livraison, litige ou changement fournisseur.",
+    "includes": [
+      "Besoin magasin",
+      "Commande / réassort",
+      "Suivi livraison",
+      "Traitement rupture",
+      "Litige fournisseur"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Commande selon règles d’approvisionnement",
+      "Rupture critique escaladée",
+      "Litige fournisseur documenté"
+    ],
+    "metrics": [
+      "Taux rupture",
+      "Délai livraison",
+      "Taux service fournisseur",
+      "Litiges fournisseurs"
+    ],
+    "risks": [
+      "Rupture magasin",
+      "Surstock",
+      "Commande hors règle",
+      "Litige non traité"
+    ],
+    "scenarios": [
+      "Réassort standard",
+      "Fournisseur en retard",
+      "Produit substitut",
+      "Rupture critique"
+    ],
+    "statusFlow": [
+      "Identification besoin magasin",
+      "Commande ou proposition réassort",
+      "Suivi confirmation et livraison",
+      "Gestion exception fournisseur",
+      "Mise à jour magasin"
+    ],
+    "systemImpact": "D365 doit porter commandes, confirmations, réceptions, reliquats, litiges et statuts de livraison.",
+    "accountingImpact": "Impact stock, disponibilité, ventes perdues, achats, litiges et AP.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Identification besoin magasin",
+          "meta": "Rupture, stock bas, prévision, promo ou demande exceptionnelle.",
+          "actor": "Magasin / Supply"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Commande ou proposition réassort",
+          "meta": "Selon règles D365, fournisseur, calendrier, minimum commande.",
+          "actor": "Achats / Supply"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Suivi confirmation et livraison",
+          "meta": "Date, quantité confirmée, substitutions éventuelles, retard.",
+          "actor": "Supply Chain"
+        },
+        {
+          "type": "decision",
+          "step": "Étape 4",
+          "title": "Gestion exception fournisseur",
+          "meta": "Rupture, retard, écart prix/quantité, litige qualité.",
+          "actor": "Achats / Supply"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Mise à jour magasin",
+          "meta": "Informer magasin sur ETA, substitution, action corrective.",
+          "actor": "Supply Chain"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP10",
+    "code": "SOP 10",
+    "title": "RH complet magasin",
+    "world": "Procédures magasin",
+    "domain": "RH & planning",
+    "stage": "Procédure prioritaire",
+    "owner": "RH / Responsable magasin",
+    "actors": [
+      "RH / Responsable magasin",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "High",
+    "status": "Procédure prioritaire",
+    "statusColor": "orange",
+    "description": "Procédure RH magasin : planning, présence, absence, intégration, habilitations, formation, disciplinaire et sortie collaborateur.",
+    "objective": "Sécuriser la couverture opérationnelle et les droits des collaborateurs sur toute leur vie en magasin.",
+    "trigger": "Recrutement, arrivée, changement poste, absence, incident RH, départ.",
+    "includes": [
+      "Onboarding",
+      "Planning",
+      "Pointage / absences",
+      "Formation",
+      "Offboarding"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Création profil après validation RH",
+      "Droits POS/D365 alignés au poste",
+      "Départ = suppression accès immédiate"
+    ],
+    "metrics": [
+      "Taux couverture planning",
+      "Absences non planifiées",
+      "Temps création accès",
+      "Formations réalisées"
+    ],
+    "risks": [
+      "Sous-effectif",
+      "Accès actif après départ",
+      "Erreur paie",
+      "Collaborateur non formé"
+    ],
+    "scenarios": [
+      "Nouvel employé",
+      "Absence caissier",
+      "Changement poste",
+      "Départ collaborateur"
+    ],
+    "statusFlow": [
+      "Onboarding collaborateur",
+      "Création planning et affectation",
+      "Formation et habilitations",
+      "Gestion absences / incidents",
+      "Offboarding et retrait accès"
+    ],
+    "systemImpact": "Les profils informatiques et POS doivent suivre le cycle RH : création, modification, suspension, suppression.",
+    "accountingImpact": "Impact paie, productivité, fraude accès et conformité sociale.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Onboarding collaborateur",
+          "meta": "Dossier RH, contrat, poste, magasin, date entrée.",
+          "actor": "RH"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Création planning et affectation",
+          "meta": "Affectation shifts, rôle caisse/rayon/réception, couverture magasin.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Formation et habilitations",
+          "meta": "Procédures caisse, hygiène, sécurité, POS, D365 selon poste.",
+          "actor": "RH / Manager"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Gestion absences / incidents",
+          "meta": "Absence, retard, remplacement, déclaration incident, action corrective.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 5",
+          "title": "Offboarding et retrait accès",
+          "meta": "Fin contrat, restitution matériel, suppression droits IT/POS/D365.",
+          "actor": "RH / IT"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP11",
+    "code": "SOP 11",
+    "title": "Gestion des situations d’urgence",
+    "world": "Procédures magasin",
+    "domain": "Sécurité & urgence",
+    "stage": "Procédure prioritaire",
+    "owner": "Responsable magasin / Direction opérations",
+    "actors": [
+      "Responsable magasin / Direction opérations",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure de réponse aux situations d’urgence : incendie, accident, agression, panne froid, coupure électrique, incident sanitaire ou sécurité client.",
+    "objective": "Protéger les personnes, sécuriser les biens, limiter les pertes et assurer une escalade rapide.",
+    "trigger": "Survenance d’un incident critique en magasin.",
+    "includes": [
+      "Mise en sécurité",
+      "Alerte secours/hiérarchie",
+      "Isolement zone",
+      "Documentation incident",
+      "Reprise ou fermeture"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Sécurité personnes prioritaire",
+      "Incident critique escaladé immédiatement",
+      "Rapport incident obligatoire"
+    ],
+    "metrics": [
+      "Temps escalade",
+      "Incidents clos",
+      "Pertes évitées",
+      "Temps reprise activité"
+    ],
+    "risks": [
+      "Blessure client/employé",
+      "Perte froid massive",
+      "Non déclaration incident",
+      "Mauvaise communication crise"
+    ],
+    "scenarios": [
+      "Accident client",
+      "Panne froid",
+      "Coupure électrique",
+      "Agression",
+      "Incendie"
+    ],
+    "statusFlow": [
+      "Identifier urgence et sécuriser",
+      "Alerter les bons interlocuteurs",
+      "Décider continuité ou fermeture partielle",
+      "Documenter incident",
+      "Retour à la normale"
+    ],
+    "systemImpact": "Prévoir pièces jointes : fiche incident, photos, tickets maintenance/IT, déclaration assurance si nécessaire.",
+    "accountingImpact": "Impact pertes, casse, assurance, responsabilité et continuité activité.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Identifier urgence et sécuriser",
+          "meta": "Stopper danger immédiat, protéger clients/équipe, isoler zone.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Alerter les bons interlocuteurs",
+          "meta": "Secours, direction, sécurité, maintenance, IT, qualité selon incident.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "decision",
+          "step": "Étape 3",
+          "title": "Décider continuité ou fermeture partielle",
+          "meta": "Selon gravité : zone fermée, magasin fermé, poursuite dégradée.",
+          "actor": "Direction opérations"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Documenter incident",
+          "meta": "Photos, heure, personnes, actions, pertes, tickets support.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Retour à la normale",
+          "meta": "Validation reprise, actions correctives, communication interne.",
+          "actor": "Direction opérations"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP12",
+    "code": "SOP 12",
+    "title": "Plan de continuité d’activité",
+    "world": "Procédures magasin",
+    "domain": "Continuité activité",
+    "stage": "Procédure prioritaire",
+    "owner": "Direction opérations / IT / Finance",
+    "actors": [
+      "Direction opérations / IT / Finance",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure PCA magasin : organiser le fonctionnement en mode dégradé en cas d’indisponibilité POS, D365, réseau, énergie, fournisseur clé ou site.",
+    "objective": "Assurer la continuité minimale des ventes et la reprise fiable des données après incident.",
+    "trigger": "Incident majeur empêchant l’exploitation normale.",
+    "includes": [
+      "Mode dégradé caisse",
+      "Escalade IT/opérations",
+      "Traçabilité manuelle",
+      "Reprise données",
+      "Retour normal"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Déclenchement PCA validé Direction",
+      "Transactions manuelles ressaisies et contrôlées",
+      "Clôture de crise documentée"
+    ],
+    "metrics": [
+      "Durée interruption",
+      "Transactions mode dégradé",
+      "Écarts reprise",
+      "Temps retour normal"
+    ],
+    "risks": [
+      "Perte ventes",
+      "Perte données",
+      "Fraude mode manuel",
+      "Double saisie ou oubli transaction"
+    ],
+    "scenarios": [
+      "POS down",
+      "Réseau down",
+      "Coupure courant",
+      "D365 indisponible",
+      "Fermeture forcée"
+    ],
+    "statusFlow": [
+      "Déclenchement PCA",
+      "Passage mode dégradé",
+      "Suivi des opérations manuelles",
+      "Reprise système",
+      "Clôture PCA et rapport"
+    ],
+    "systemImpact": "Doit contenir modèles de journaux manuels, consignes POS offline, contacts escalade et check-list reprise.",
+    "accountingImpact": "Impact encaissements, CA, TVA, stock et rapprochement bancaire selon durée de l’incident.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Déclenchement PCA",
+          "meta": "Qualifier incident : POS, réseau, énergie, site, fournisseur critique.",
+          "actor": "Responsable magasin / Direction"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Passage mode dégradé",
+          "meta": "Procédure encaissement manuel, limitation moyens paiement, communication clients.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Suivi des opérations manuelles",
+          "meta": "Journal manuel, tickets provisoires, contrôle cash/TPE, preuves.",
+          "actor": "Caissier / Responsable"
+        },
+        {
+          "type": "system",
+          "step": "Étape 4",
+          "title": "Reprise système",
+          "meta": "Ressaisie ou rapprochement des transactions, contrôle écarts.",
+          "actor": "IT / Finance / Magasin"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Clôture PCA et rapport",
+          "meta": "Bilan incident, pertes, corrections, actions préventives.",
+          "actor": "Direction opérations"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP13",
+    "code": "SOP 13",
+    "title": "Manuel IT magasin",
+    "world": "Procédures magasin",
+    "domain": "IT & support",
+    "stage": "Procédure prioritaire",
+    "owner": "IT Support / Responsable magasin",
+    "actors": [
+      "IT Support / Responsable magasin",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "High",
+    "status": "Procédure prioritaire",
+    "statusColor": "orange",
+    "description": "Manuel IT opérationnel : équipements magasin, incidents, escalade, droits, procédures de diagnostic et règles d’usage.",
+    "objective": "Réduire les interruptions magasin et standardiser les demandes IT.",
+    "trigger": "Incident IT, installation matériel, changement profil, besoin support.",
+    "includes": [
+      "Inventaire matériel",
+      "Support POS/TPE/réseau",
+      "Tickets incident",
+      "Escalade",
+      "Maintenance préventive"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Ticket obligatoire pour incident non résolu",
+      "Matériel critique suivi",
+      "Changement droits via workflow"
+    ],
+    "metrics": [
+      "Temps résolution",
+      "Incidents récurrents",
+      "Disponibilité POS",
+      "Tickets ouverts/clos"
+    ],
+    "risks": [
+      "Magasin bloqué",
+      "Incident non tracé",
+      "Matériel non suivi",
+      "Droits IT mal attribués"
+    ],
+    "scenarios": [
+      "Imprimante ticket KO",
+      "TPE KO",
+      "Réseau down",
+      "Balance non synchronisée",
+      "Demande nouvel accès"
+    ],
+    "statusFlow": [
+      "Identifier équipement ou service impacté",
+      "Diagnostic niveau 1",
+      "Création ticket support",
+      "Traitement IT et escalade",
+      "Validation résolution"
+    ],
+    "systemImpact": "Prévoir catalogue matériel, contacts support, SLA, procédures niveau 1 et rattachement screenshots d’erreur.",
+    "accountingImpact": "Pas d’impact comptable direct, sauf immobilisation matériel, pertes de vente ou frais maintenance.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Identifier équipement ou service impacté",
+          "meta": "POS, TPE, imprimante, balance, réseau, D365, poste back-office.",
+          "actor": "Magasin"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Diagnostic niveau 1",
+          "meta": "Redémarrage, câbles, réseau, papier, alimentation, message erreur.",
+          "actor": "Responsable magasin"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Création ticket support",
+          "meta": "Description, urgence, capture/photo, impact vente, magasin concerné.",
+          "actor": "Magasin"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Traitement IT et escalade",
+          "meta": "Support niveau 1/2, fournisseur, maintenance, remplacement.",
+          "actor": "IT Support"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Validation résolution",
+          "meta": "Test utilisateur, clôture ticket, cause racine si incident répété.",
+          "actor": "Magasin / IT"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP14",
+    "code": "SOP 14",
+    "title": "Comptabilisation & Reporting Finance 2-4",
+    "world": "Procédures magasin",
+    "domain": "Finance opérationnelle",
+    "stage": "Procédure prioritaire",
+    "owner": "Finance / Contrôle de gestion",
+    "actors": [
+      "Finance / Contrôle de gestion",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "High",
+    "status": "Procédure prioritaire",
+    "statusColor": "orange",
+    "description": "Procédure de reporting finance périodique : consolidation des ventes, marges, stocks, écarts caisse, AP/AR et indicateurs magasin.",
+    "objective": "Donner à la direction une lecture fiable, comparable et exploitable de la performance magasin.",
+    "trigger": "J+1, hebdomadaire, mensuel ou demande de pilotage.",
+    "includes": [
+      "Extraction données",
+      "Contrôle cohérence",
+      "Analyse écarts",
+      "Production reporting",
+      "Diffusion direction"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Données postées avant reporting final",
+      "Écarts majeurs commentés",
+      "Version reporting validée Finance"
+    ],
+    "metrics": [
+      "Délai reporting",
+      "Écarts non expliqués",
+      "Taux données complètes",
+      "Marge par magasin"
+    ],
+    "risks": [
+      "Décision sur chiffres faux",
+      "Marge erronée",
+      "CA non rapproché",
+      "Écarts caisse invisibles"
+    ],
+    "scenarios": [
+      "Reporting quotidien",
+      "Reporting hebdo",
+      "Mois avec écart caisse",
+      "Mois avec stock ajusté"
+    ],
+    "statusFlow": [
+      "Extraction sources",
+      "Contrôles cohérence",
+      "Analyse écarts",
+      "Validation reporting",
+      "Diffusion et actions"
+    ],
+    "systemImpact": "Nécessite exports D365/Power BI, règles de calcul KPI et versioning des rapports.",
+    "accountingImpact": "Pas d’écriture directe, mais dépend de la qualité des écritures POS, stock, AP/AR et banques.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Extraction sources",
+          "meta": "POS, GL, stock, AP, AR, banque, inventaires, budgets.",
+          "actor": "Finance / Data"
+        },
+        {
+          "type": "system",
+          "step": "Étape 2",
+          "title": "Contrôles cohérence",
+          "meta": "CA vs statements, paiements vs banque, stock vs COGS, TVA.",
+          "actor": "Finance"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 3",
+          "title": "Analyse écarts",
+          "meta": "Budget/réalisé, marge, démarque, écarts caisse, frais.",
+          "actor": "Contrôle de gestion"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 4",
+          "title": "Validation reporting",
+          "meta": "Version validée avant diffusion direction.",
+          "actor": "DAF / Finance"
+        },
+        {
+          "type": "catman",
+          "step": "Étape 5",
+          "title": "Diffusion et actions",
+          "meta": "Partage dashboards, commentaires, plan d’action magasin.",
+          "actor": "Direction"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SOP15",
+    "code": "SOP 15",
+    "title": "Création / modification profils informatiques",
+    "world": "Procédures magasin",
+    "domain": "Contrôle des accès",
+    "stage": "Procédure prioritaire",
+    "owner": "IT / RH / Managers métiers",
+    "actors": [
+      "IT / RH / Managers métiers",
+      "Responsable magasin",
+      "Direction opérationnelle",
+      "IT / Finance / RH selon cas"
+    ],
+    "priority": "Critical",
+    "status": "Procédure prioritaire",
+    "statusColor": "red",
+    "description": "Procédure de gestion des accès : création, modification, suspension et suppression des profils POS, D365, messagerie et outils associés.",
+    "objective": "Garantir que chaque utilisateur dispose uniquement des droits nécessaires, au bon moment, avec validation et traçabilité.",
+    "trigger": "Arrivée collaborateur, changement poste, départ, besoin temporaire, audit accès.",
+    "includes": [
+      "Demande accès",
+      "Validation manager/RH",
+      "Création profil",
+      "Modification droits",
+      "Revue et suppression accès"
+    ],
+    "excludes": [
+      "Arbitrages nominaux de validation — à compléter après atelier avec les noms",
+      "Screens D365/POS définitifs — à rattacher dans l’onglet pièces jointes"
+    ],
+    "validations": [
+      "Aucun accès sans demande validée",
+      "Séparation des rôles respectée",
+      "Départ = suppression immédiate",
+      "Droits sensibles revus périodiquement"
+    ],
+    "metrics": [
+      "Délai création accès",
+      "Accès orphelins",
+      "Droits sensibles",
+      "Demandes rejetées"
+    ],
+    "risks": [
+      "Fraude",
+      "Accès après départ",
+      "Cumul de rôles incompatible",
+      "Action système non traçable"
+    ],
+    "scenarios": [
+      "Nouvel employé",
+      "Changement poste",
+      "Accès temporaire",
+      "Départ urgent",
+      "Revue droits"
+    ],
+    "statusFlow": [
+      "Demande d’accès formalisée",
+      "Validation métier et RH",
+      "Création ou modification profil",
+      "Contrôle utilisateur et manager",
+      "Revue périodique / suppression"
+    ],
+    "systemImpact": "La procédure doit être reliée au référentiel rôles D365/POS et aux workflows RH. Les preuves de validation sont obligatoires.",
+    "accountingImpact": "Impact fort sur contrôle interne, fraude, audit et séparation des tâches.",
+    "flow": {
+      "nodes": [
+        {
+          "type": "start",
+          "title": "START"
+        },
+        {
+          "type": "buyer",
+          "step": "Étape 1",
+          "title": "Demande d’accès formalisée",
+          "meta": "Utilisateur, poste, magasin, applications, rôle demandé, durée si temporaire.",
+          "actor": "Manager / RH"
+        },
+        {
+          "type": "validation",
+          "step": "Étape 2",
+          "title": "Validation métier et RH",
+          "meta": "Contrôler besoin, poste, contrat, séparation des rôles.",
+          "actor": "Manager / RH"
+        },
+        {
+          "type": "system",
+          "step": "Étape 3",
+          "title": "Création ou modification profil",
+          "meta": "D365/POS/messagerie/outils. Application du modèle de rôle validé.",
+          "actor": "IT"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 4",
+          "title": "Contrôle utilisateur et manager",
+          "meta": "Test connexion, droits corrects, absence de droits excessifs.",
+          "actor": "Utilisateur / Manager"
+        },
+        {
+          "type": "risk",
+          "step": "Étape 5",
+          "title": "Revue périodique / suppression",
+          "meta": "Revue accès sensibles, suppression départs, traçabilité audit.",
+          "actor": "IT / RH / Audit"
+        },
+        {
+          "type": "end",
+          "title": "END"
+        }
+      ]
+    }
+  }
+];
+
 const datasets = {
   achats: {
     label: 'Achats',
@@ -5191,6 +6870,24 @@ const datasets = {
     ],
     rule: 'Aucune transaction PDV ne doit être modifiée a posteriori sans motif, traçabilité et habilitation appropriée.',
     data: retailProcesses
+  },
+  procedures: {
+    label: 'Procédures prioritaires',
+    short: 'Procédures',
+    subtitle: 'Manuel opérationnel magasin — SOP prioritaires',
+    description: 'Univers dédié aux procédures terrain prioritaires : ouverture, fermeture, caisse, réception, hygiène, urgence, PCA, IT, RH, inventaires et reporting. Ces procédures sont volontairement séparées des process métier pour servir de manuel magasin exploitable.',
+    logo: 'SOP',
+    version: 'vSOP prioritaires',
+    nodeLegend: [
+      ['rgba(210,153,34,0.5)', 'Action magasin'],
+      ['rgba(45,106,79,0.45)', 'Validation'],
+      ['rgba(181,87,26,0.45)', 'Système / POS / D365'],
+      ['rgba(155,35,53,0.45)', 'Contrôle / Risque'],
+      ['rgba(61,79,160,0.45)', 'Pilotage / Support'],
+      ['rgba(210,153,34,0.30)', 'Décision']
+    ],
+    rule: 'Une procédure prioritaire doit être simple à exécuter, documentée par preuves, et reliée aux rôles, habilitations et pièces jointes attendues.',
+    data: procedureProcesses
   },
   finance: {
     label: 'Finance',
@@ -5438,6 +7135,7 @@ function renderTopnav() {
         <div class="world-switch">
           <button class="world-btn ${state.world==='achats' ? 'active' : ''}" data-world="achats">Achats</button>
           <button class="world-btn ${state.world==='retail' ? 'active' : ''}" data-world="retail">Retail & POS</button>
+          <button class="world-btn procedures ${state.world==='procedures' ? 'active' : ''}" data-world="procedures">Procédures prioritaires</button>
           <button class="world-btn finance ${state.world==='finance' ? 'active' : ''}" data-world="finance">Finance</button>
           <button class="world-btn nonmerchant ${state.world==='nonmerchant' ? 'active' : ''}" data-world="nonmerchant">Achats non marchands</button>
         </div>
@@ -5448,7 +7146,7 @@ function renderTopnav() {
 
 function renderSidebar() {
   const set = currentSet();
-  if (!set) return `<aside class="sidebar"><div class="sidebar-intro"><h3>Choix de l'univers</h3><p>Sélectionne en haut Achats, Retail & POS, Finance ou Achats non marchands. Les processus ne se mélangent pas : chaque univers charge uniquement sa propre structure.</p></div></aside>`;
+  if (!set) return `<aside class="sidebar"><div class="sidebar-intro"><h3>Choix de l'univers</h3><p>Sélectionne en haut Achats, Retail & POS, Procédures prioritaires, Finance ou Achats non marchands. Les processus ne se mélangent pas : chaque univers charge uniquement sa propre structure.</p></div></aside>`;
   const filtered = getFiltered();
   const groups = groupProcesses(filtered);
   return `
@@ -5480,7 +7178,7 @@ function renderSidebar() {
 function renderMain() {
   const set = currentSet();
   if (!set) {
-    return `<main class="main"><div class="hero-empty"><div class="hero-card"><div class="ph-code">Architecture multi-univers</div><h1>Une seule plateforme, des univers séparés.</h1><p>La plateforme reste organisée par univers autonomes : on choisit d’abord sa catégorie en haut, puis la navigation gauche ne charge que les processus du bon domaine. Les achats non marchands ont été ajoutés comme un univers séparé pour préserver la logique métier.</p><div class="hero-grid"><div class="hero-metric"><div class="v">Achats</div><div class="k">Cycle marchand et flowcharts validés</div></div><div class="hero-metric"><div class="v">Retail</div><div class="k">Stocks, POS et opérations magasin</div></div><div class="hero-metric"><div class="v">Finance</div><div class="k">Comptabilité, clôture, TVA, AP/AR</div></div><div class="hero-metric"><div class="v">Achats NM</div><div class="k">Services, contrats, dépenses indirectes</div></div></div></div></div></main>`;
+    return `<main class="main"><div class="hero-empty"><div class="hero-card"><div class="ph-code">Architecture multi-univers</div><h1>Une seule plateforme, des univers séparés.</h1><p>La plateforme reste organisée par univers autonomes : on choisit d’abord sa catégorie en haut, puis la navigation gauche ne charge que les processus du bon domaine. Les achats non marchands et les procédures prioritaires magasin sont séparés pour préserver la logique métier et opérationnelle.</p><div class="hero-grid"><div class="hero-metric"><div class="v">Achats</div><div class="k">Cycle marchand et flowcharts validés</div></div><div class="hero-metric"><div class="v">Retail</div><div class="k">Stocks, POS et opérations magasin</div></div><div class="hero-metric"><div class="v">Procédures</div><div class="k">Ouverture, caisse, hygiène, urgence, IT</div></div><div class="hero-metric"><div class="v">Finance</div><div class="k">Comptabilité, clôture, TVA, AP/AR</div></div><div class="hero-metric"><div class="v">Achats NM</div><div class="k">Services, contrats, dépenses indirectes</div></div></div></div></div></main>`;
   }
   const filtered = getFiltered();
   const current = getCurrent(filtered);
