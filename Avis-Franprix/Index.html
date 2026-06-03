@@ -332,7 +332,11 @@
       <p>Quelques secondes suffisent. Votre retour nous aide à améliorer l’accueil, les produits, les prix, la caisse et l’expérience Franprix Connect.</p>
     </section>
 
-    <form class="card" id="feedbackForm">
+    <form class="card" id="feedbackForm" name="avis-franprix" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="avis-franprix" />
+      <p style="display:none">
+        <label>Ne pas remplir : <input name="bot-field" /></label>
+      </p>
       <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 
       <section class="step active" data-step="0">
@@ -344,8 +348,8 @@
             <label for="store">Magasin <span class="required">*</span></label>
             <select id="store" name="store" required>
               <option value="">Sélectionnez</option>
-              <option>Franprix — Magasin 1</option>
-              <option>Franprix — Magasin 2</option>
+              <option>Franprix Val-Fleuri</option>
+              <option>Franprix Trèfles</option>
               <option>Franprix — Autre</option>
             </select>
           </div>
@@ -421,6 +425,13 @@
         <div class="field">
           <label for="ticket">N° ticket de caisse</label>
           <input id="ticket" name="ticket" type="text" placeholder="Optionnel" />
+        </div>
+
+        <div class="field">
+          <label class="chip">
+            <input type="checkbox" name="contactConsent" value="oui">
+            <span>J’accepte d’être recontacté concernant mon avis</span>
+          </label>
         </div>
       </section>
 
@@ -499,6 +510,7 @@
         phone: data.get('phone') || '-',
         email: data.get('email') || '-',
         ticket: data.get('ticket') || '-',
+        contactConsent: data.get('contactConsent') || 'non',
         submittedAt: new Date().toISOString()
       };
     }
@@ -512,7 +524,8 @@
           <b>Satisfaction :</b> ${escapeHtml(d.rating)} / 5<br>
           <b>Sujets :</b> ${escapeHtml(d.topics)}<br>
           <b>Recommandation :</b> ${escapeHtml(d.nps)} / 10<br>
-          <b>Commentaire :</b> ${escapeHtml(d.comment)}
+          <b>Commentaire :</b> ${escapeHtml(d.comment)}<br>
+          <b>Consentement contact :</b> ${escapeHtml(d.contactConsent)}
         </div>
       `;
     }
@@ -536,22 +549,36 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const payload = getFormData();
 
-      /*
-        CONNEXION BACKEND — À ACTIVER PLUS TARD
-        Exemple Supabase / API / Google Apps Script :
-        await fetch("VOTRE_ENDPOINT_ICI", {
+      const formData = new FormData(form);
+
+      // Champs calculés côté front pour faciliter l’analyse dans Netlify / CSV
+      const topics = formData.getAll('topics').join(', ');
+      formData.set('topics_summary', topics || '-');
+      formData.set('submittedAt', new Date().toISOString());
+
+      try {
+        const response = await fetch("/", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(formData).toString()
         });
-      */
 
-      console.log("Feedback Franprix:", payload);
-      successMessage.classList.add('show');
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Avis envoyé";
+        if (!response.ok) {
+          throw new Error("Erreur d’envoi du formulaire");
+        }
+
+        successMessage.textContent = "Merci ! Votre avis a bien été envoyé.";
+        successMessage.classList.add('show');
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Avis envoyé";
+      } catch (error) {
+        successMessage.textContent = "Une erreur est survenue. Merci de réessayer dans quelques instants.";
+        successMessage.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Réessayer";
+        console.error(error);
+      }
     });
 
     updateUI();
