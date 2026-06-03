@@ -337,14 +337,6 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);min-
     <div class="sh" style="margin-bottom:0;border:none;padding:0;"><div class="sh-code" style="font-size:28px">&#9672;</div><div class="sh-info"><div class="sh-label">Tableau de bord</div><div class="sh-desc">Toutes les fiches enregistrees</div></div></div>
     <div><button class="btn-export" id="btn-csv">CSV &#8595;</button><button class="btn-export" id="btn-json" style="border-color:var(--rose-l);color:var(--rose-d)">JSON &#8595;</button></div>
   </div>
-
-  <div class="sheets-bar">
-    <label>Google Sheets URL</label>
-    <input class="sheets-input" id="sheets-url" type="url" placeholder="https://script.google.com/macros/s/XXXXXXXX/exec">
-    <button class="btn-sm" id="btn-save-url">Enregistrer</button>
-    <span class="sheets-status" id="sheets-status"></span>
-  </div>
-
   <div class="stats">
     <div class="stat"><div class="stat-n" id="s-total">0</div><div class="stat-l">Fiches totales</div></div>
     <div class="stat"><div class="stat-n" id="s-accord">0</div><div class="stat-l">Accord de principe</div></div>
@@ -372,9 +364,9 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);min-
 
 <script>
 var SK = 'vz_popsa_v2';
-var UK = 'vz_sheets_url';
+var SHEETS_URL = 'https://script.google.com/a/macros/oneretail.ma/s/AKfycbwabHnjpfelOUjFWkaTRE7lW9d5SmZm7VrS5Qt1STSxbLetcIg3VuKJvFeZlUsxgXdSiQ/exec';
 
-function getUrl() { return localStorage.getItem(UK) || ''; }
+function getUrl() { return SHEETS_URL; }
 function getRecs() { try { return JSON.parse(localStorage.getItem(SK) || '[]'); } catch(e) { return []; } }
 function saveRecs(r) { localStorage.setItem(SK, JSON.stringify(r)); }
 function fv(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
@@ -497,14 +489,7 @@ function renderDash() {
   document.getElementById('s-incert').textContent  = incert;
   document.getElementById('s-rupture').textContent = rupture;
 
-  var url = getUrl();
-  var si = document.getElementById('sheets-url');
-  var ss = document.getElementById('sheets-status');
-  if (url) {
-    si.value = url;
-    ss.textContent = 'URL configuree';
-    ss.className = 'sheets-status ok';
-  }
+
 
   var tbody = document.getElementById('records-body');
   if (!recs.length) {
@@ -545,17 +530,6 @@ function posC(p) {
 }
 
 // Google Sheets URL
-document.getElementById('btn-save-url').addEventListener('click', function() {
-  var url = document.getElementById('sheets-url').value.trim();
-  var ss = document.getElementById('sheets-status');
-  if (!url) { ss.textContent = 'URL vide'; ss.className = 'sheets-status err'; return; }
-  if (url.indexOf('script.google.com') < 0) { ss.textContent = 'URL invalide'; ss.className = 'sheets-status err'; return; }
-  localStorage.setItem(UK, url);
-  ss.textContent = 'URL enregistree';
-  ss.className = 'sheets-status ok';
-  toast('URL Google Sheets enregistree', 'ok');
-});
-
 document.getElementById('btn-csv').addEventListener('click', exportCSV);
 document.getElementById('btn-json').addEventListener('click', exportJSON);
 
