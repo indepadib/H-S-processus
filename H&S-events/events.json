@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-30T21:24:41.559Z",
+  "updated_at": "2026-09-17T16:11:45.354Z",
   "events": [
     {
       "id": 2,
@@ -13,11 +13,11 @@
     {
       "id": 5,
       "g": "Dislog Group",
-      "bu": "",
+      "bu": "aa",
       "e": "",
       "n": "EV: Le porteur d'histoire Casa + Rabat",
       "m": 4,
-      "t": "Événement"
+      "t": "Événement corpo/Spectacle/Sport"
     },
     {
       "id": 6,
