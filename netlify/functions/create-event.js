@@ -78,7 +78,13 @@ exports.handler = async (event) => {
     }
 
     const { sha, content } = await getGithubFile(config);
-    const newId = Number(content.nxtId || 1);
+    content.events = Array.isArray(content.events) ? content.events : [];
+    const maxExistingId = content.events.reduce(
+      (max, item) => Math.max(max, Number(item.id) || 0),
+      0
+    );
+    const configuredNextId = Number(content.nxtId) || 1;
+    const newId = Math.max(configuredNextId, maxExistingId + 1);
     const newEvent = {
       id: newId,
       g: String(payload.g || "").trim(),
@@ -89,7 +95,6 @@ exports.handler = async (event) => {
       t: String(payload.t || "").trim()
     };
 
-    content.events = Array.isArray(content.events) ? content.events : [];
     content.events.push(newEvent);
     content.nxtId = newId + 1;
     content.meta = content.meta || {};

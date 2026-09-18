@@ -48,14 +48,18 @@ exports.handler = async (event) => {
       return response(500, { error: "events.json invalide." });
     }
 
-    const before = data.events.length;
-    data.events = data.events.filter(
-      (e) => String(e.id) !== String(payload.id)
-    );
+    const matchingIndexes = data.events.reduce((indexes, item, index) => {
+      if (String(item.id) === String(payload.id)) indexes.push(index);
+      return indexes;
+    }, []);
 
-    if (data.events.length === before) {
+    if (matchingIndexes.length === 0) {
       return response(404, { error: "Événement introuvable." });
     }
+    if (matchingIndexes.length > 1) {
+      return response(409, { error: "Identifiant dupliqué : suppression refusée." });
+    }
+    data.events.splice(matchingIndexes[0], 1);
 
     data.updated_at = new Date().toISOString();
 

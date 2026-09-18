@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T14:39:42.106Z",
+  "updated_at": "2026-09-18T17:02:49.000Z",
   "events": [
     {
       "id": 2,
@@ -33,7 +33,7 @@
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "EV: Rose Royal rabat + Casa 23-24 sept",
+      "n": "Rose Royal Rabat — 23 sept.",
       "m": 9,
       "t": "Événement corpo/Spectacle/Sport"
     },
@@ -42,7 +42,7 @@
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "EV: La belle et la bete Casa 13dec",
+      "n": "La belle et la bête (kids) — 13 déc.",
       "m": 12,
       "t": "Événement corpo/Spectacle/Sport"
     },
@@ -78,7 +78,7 @@
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "EV: Andalussyat Casa 10dec Rabat 11 dec Mazagan12dec",
+      "n": "Adaloussyate Casa — 10 déc.",
       "m": 12,
       "t": "Événement corpo/Spectacle/Sport"
     },
@@ -132,7 +132,7 @@
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "EV: Al Capone Rabat + Casa 9-10dec",
+      "n": "Al Capone Rabat — 9 déc.",
       "m": 12,
       "t": "Événement corpo/Spectacle/Sport"
     },
@@ -141,7 +141,7 @@
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "EV: Carmen Rabat + Casa 11-12nov",
+      "n": "Carmen Rabat — 11 nov.",
       "m": 11,
       "t": "Événement corpo/Spectacle/Sport"
     },
@@ -150,8 +150,8 @@
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "EV: Festival du film 20 au 28nov",
-      "m": 12,
+      "n": "Festival International du Film — 20 au 28 nov.",
+      "m": 11,
       "t": "Événement corpo/Spectacle/Sport"
     },
     {
@@ -2558,7 +2558,7 @@
       "t": "Événement"
     },
     {
-      "id": 2,
+      "id": 322,
       "g": "H&S Group",
       "bu": "",
       "e": "",
@@ -2567,7 +2567,7 @@
       "t": "Lancement"
     },
     {
-      "id": 5,
+      "id": 323,
       "g": "Dislog Group",
       "bu": "Healthcare",
       "e": "Steripharma",
@@ -2576,7 +2576,7 @@
       "t": "Congrès/TR"
     },
     {
-      "id": 6,
+      "id": 324,
       "g": "Dislog Group",
       "bu": "Healthcare",
       "e": "Steripharma",
@@ -2585,7 +2585,7 @@
       "t": "Congrès/TR"
     },
     {
-      "id": 7,
+      "id": 325,
       "g": "Dislog Group",
       "bu": "healthcare",
       "e": "Steripharma",
@@ -2594,7 +2594,7 @@
       "t": "Congrès/TR"
     },
     {
-      "id": 8,
+      "id": 326,
       "g": "Dislog Group",
       "bu": "Healthcare",
       "e": "Steripharma",
@@ -2603,7 +2603,7 @@
       "t": "Congrès/TR"
     },
     {
-      "id": 11,
+      "id": 327,
       "g": "Dislog Group",
       "bu": "",
       "e": "",
@@ -2612,16 +2612,16 @@
       "t": "Événement corpo/Spectacle/Sport"
     },
     {
-      "id": 12,
+      "id": 328,
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "Comediablanca Taghazout",
+      "n": "Comediablanca Taghazout — 23 et 24 oct.",
       "m": 10,
       "t": "Événement corpo/Spectacle/Sport"
     },
     {
-      "id": 13,
+      "id": 329,
       "g": "LVE Group",
       "bu": "",
       "e": "",
@@ -2630,52 +2630,52 @@
       "t": "Lancement"
     },
     {
-      "id": 14,
+      "id": 330,
       "g": "H&S Group",
       "bu": "",
       "e": "",
-      "n": "UM6P Bridge Africa Summit",
+      "n": "L’UM6P Bridge Africa Summit — 11 au 13 nov.",
       "m": 11,
       "t": "Événement corpo/Spectacle/Sport"
     },
     {
-      "id": 15,
+      "id": 331,
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "Jalil Tijani Casablanca",
+      "n": "Jalil Tijani Casablanca — 17 nov.",
       "m": 11,
       "t": "Événement corpo/Spectacle/Sport"
     },
     {
-      "id": 16,
+      "id": 332,
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "Mimo Lasrak Casablanca 14-Oct",
+      "n": "Mimo Lazrak Casablanca — 24 nov.",
       "m": 11,
       "t": "Événement corpo/Spectacle/Sport"
     },
     {
-      "id": 17,
+      "id": 333,
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "Jalil Tijani",
+      "n": "Jalil Tijani — 13 déc.",
       "m": 12,
       "t": "Événement corpo/Spectacle/Sport"
     },
     {
-      "id": 18,
+      "id": 334,
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "Mimo lazrak",
+      "n": "Mimo Lazrak — 14 déc.",
       "m": 12,
       "t": "Événement corpo/Spectacle/Sport"
     },
     {
-      "id": 19,
+      "id": 335,
       "g": "Dislog Group",
       "bu": "Healthcare",
       "e": "Steripharma",
@@ -2684,7 +2684,7 @@
       "t": "Congrès/TR"
     },
     {
-      "id": 20,
+      "id": 336,
       "g": "Dislog Group",
       "bu": "Healthcare",
       "e": "Steripharma",
@@ -2693,7 +2693,7 @@
       "t": "Congrès/TR"
     },
     {
-      "id": 21,
+      "id": 337,
       "g": "Dislog Group",
       "bu": "Healthcare",
       "e": "Steripharma",
@@ -2702,7 +2702,7 @@
       "t": "Congrès/TR"
     },
     {
-      "id": 22,
+      "id": 338,
       "g": "Dislog Group",
       "bu": "Healthcare",
       "e": "Steripharma",
@@ -2711,17 +2711,80 @@
       "t": "Congrès/TR"
     },
     {
-      "id": 23,
+      "id": 339,
       "g": "Dislog Group",
       "bu": "",
       "e": "",
-      "n": "Mimo lazrak casablanca",
+      "n": "Mimo Lazrak Casablanca — 14 oct.",
       "m": 10,
+      "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 340,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Rose Royal Casablanca — 24 sept.",
+      "m": 9,
+      "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 341,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Gala Rotary — 9 oct.",
+      "m": 10,
+      "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 342,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Carmen Casablanca — 12 nov.",
+      "m": 11,
+      "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 343,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Al Capone Casablanca — 10 déc.",
+      "m": 12,
+      "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 344,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Adaloussyate Rabat — 11 déc.",
+      "m": 12,
+      "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 345,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Adaloussyate Mazagan — 12 déc.",
+      "m": 12,
+      "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 346,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "La belle et la bête — 13 déc.",
+      "m": 12,
       "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 24,
+  "nxtId": 347,
   "meta": {
-    "updated_at": "2026-09-18T09:42:17.094Z"
+    "updated_at": "2026-09-18T17:02:49.000Z"
   }
 }

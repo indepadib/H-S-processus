@@ -48,13 +48,18 @@ exports.handler = async (event) => {
       return response(500, { error: "events.json invalide." });
     }
 
-    const idx = data.events.findIndex(
-      (e) => String(e.id) === String(payload.id)
-    );
+    const matchingIndexes = data.events.reduce((indexes, item, index) => {
+      if (String(item.id) === String(payload.id)) indexes.push(index);
+      return indexes;
+    }, []);
 
-    if (idx === -1) {
+    if (matchingIndexes.length === 0) {
       return response(404, { error: "Événement introuvable." });
     }
+    if (matchingIndexes.length > 1) {
+      return response(409, { error: "Identifiant dupliqué : mise à jour refusée." });
+    }
+    const idx = matchingIndexes[0];
 
     data.events[idx] = {
       ...data.events[idx],
