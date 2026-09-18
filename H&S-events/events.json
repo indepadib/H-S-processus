@@ -2700,10 +2700,19 @@
       "n": "Mimo lazrak",
       "m": 12,
       "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 19,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Somipev marrakech",
+      "m": 12,
+      "t": "Congrès/TR"
     }
   ],
-  "nxtId": 19,
+  "nxtId": 20,
   "meta": {
-    "updated_at": "2026-09-18T09:37:48.453Z"
+    "updated_at": "2026-09-18T09:39:34.681Z"
   }
 }
