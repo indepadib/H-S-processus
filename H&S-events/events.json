@@ -2772,10 +2772,19 @@
       "n": "Lancement nouveau site web",
       "m": 2,
       "t": "Lancement"
+    },
+    {
+      "id": 5,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Amicale ORL Tanger",
+      "m": 9,
+      "t": "Congrès/TR"
     }
   ],
-  "nxtId": 5,
+  "nxtId": 6,
   "meta": {
-    "updated_at": "2026-03-30T21:24:16.184Z"
+    "updated_at": "2026-09-18T09:21:25.161Z"
   }
 }
