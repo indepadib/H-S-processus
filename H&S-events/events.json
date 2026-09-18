@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:37:09.243Z",
+  "updated_at": "2026-09-18T09:38:07.926Z",
   "events": [
     {
       "id": 2,
@@ -160,15 +160,6 @@
       "bu": "",
       "e": "",
       "n": "EV: Festival du film",
-      "m": 12,
-      "t": "Événement"
-    },
-    {
-      "id": 27,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "EV: Santa pour enfant Casa",
       "m": 12,
       "t": "Événement"
     },
