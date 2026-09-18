@@ -2790,10 +2790,19 @@
       "n": "The West Tanger",
       "m": 9,
       "t": "Congrès/TR"
+    },
+    {
+      "id": 7,
+      "g": "Dislog Group",
+      "bu": "healthcare",
+      "e": "Steripharma",
+      "n": "Cardio Oriental",
+      "m": 9,
+      "t": "Congrès/TR"
     }
   ],
-  "nxtId": 7,
+  "nxtId": 8,
   "meta": {
-    "updated_at": "2026-09-18T09:21:54.363Z"
+    "updated_at": "2026-09-18T09:22:20.302Z"
   }
 }
