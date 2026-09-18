@@ -2664,10 +2664,19 @@
       "n": "Gala Rotary Fondation",
       "m": 10,
       "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 10,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Mimo Lazrak",
+      "m": 10,
+      "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 10,
+  "nxtId": 11,
   "meta": {
-    "updated_at": "2026-09-18T09:30:25.278Z"
+    "updated_at": "2026-09-18T09:30:47.785Z"
   }
 }
