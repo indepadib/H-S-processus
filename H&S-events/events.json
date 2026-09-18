@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:34:03.035Z",
+  "updated_at": "2026-09-18T09:34:07.711Z",
   "events": [
     {
       "id": 2,
@@ -250,15 +250,6 @@
       "bu": "Healthcare",
       "e": "DMD",
       "n": "MEDICA TRADE FAIR Congrès",
-      "m": 11,
-      "t": "Congrès"
-    },
-    {
-      "id": 37,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "DMD",
-      "n": "International eHealth Forum 4ème édition ? Congrès",
       "m": 11,
       "t": "Congrès"
     },
