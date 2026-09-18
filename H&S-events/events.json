@@ -2682,10 +2682,19 @@
       "n": "Dislog Basketball League",
       "m": 10,
       "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 12,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Comediablanca Taghazout",
+      "m": 10,
+      "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 12,
+  "nxtId": 13,
   "meta": {
-    "updated_at": "2026-09-18T09:31:05.787Z"
+    "updated_at": "2026-09-18T09:31:22.955Z"
   }
 }
