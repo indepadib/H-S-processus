@@ -2709,10 +2709,19 @@
       "n": "Somipev marrakech",
       "m": 12,
       "t": "Congrès/TR"
+    },
+    {
+      "id": 20,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès SOMACHIR marrakech",
+      "m": 12,
+      "t": "Congrès/TR"
     }
   ],
-  "nxtId": 20,
+  "nxtId": 21,
   "meta": {
-    "updated_at": "2026-09-18T09:39:34.681Z"
+    "updated_at": "2026-09-18T09:39:54.246Z"
   }
 }
