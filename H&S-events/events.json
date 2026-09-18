@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:27:52.962Z",
+  "updated_at": "2026-09-18T09:28:02.223Z",
   "events": [
     {
       "id": 2,
@@ -1359,15 +1359,6 @@
       "n": "Campagne ODM5",
       "m": 5,
       "t": "Campagne"
-    },
-    {
-      "id": 174,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "AGSMF Congrès",
-      "m": 10,
-      "t": "Congrès"
     },
     {
       "id": 175,
