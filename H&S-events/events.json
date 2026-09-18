@@ -2781,10 +2781,19 @@
       "n": "Amicale ORL Tanger",
       "m": 9,
       "t": "Congrès/TR"
+    },
+    {
+      "id": 6,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "The West Tanger",
+      "m": 9,
+      "t": "Congrès/TR"
     }
   ],
-  "nxtId": 6,
+  "nxtId": 7,
   "meta": {
-    "updated_at": "2026-09-18T09:21:25.161Z"
+    "updated_at": "2026-09-18T09:21:54.363Z"
   }
 }
