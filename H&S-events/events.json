@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:19:58.275Z",
+  "updated_at": "2026-09-18T09:20:01.145Z",
   "events": [
     {
       "id": 2,
@@ -999,15 +999,6 @@
       "n": "Campagne Falifer",
       "m": 8,
       "t": "Campagne"
-    },
-    {
-      "id": 119,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "Congrès Journée Mohamedia",
-      "m": 9,
-      "t": "Congrès"
     },
     {
       "id": 120,
