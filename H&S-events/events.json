@@ -2691,10 +2691,19 @@
       "n": "Jalil Tijani Casablanca",
       "m": 11,
       "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 16,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Mimo Lasrak Casablanca",
+      "m": 11,
+      "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 16,
+  "nxtId": 17,
   "meta": {
-    "updated_at": "2026-09-18T09:36:23.902Z"
+    "updated_at": "2026-09-18T09:36:35.406Z"
   }
 }
