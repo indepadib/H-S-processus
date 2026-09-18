@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:20:39.695Z",
+  "updated_at": "2026-09-18T09:22:58.035Z",
   "events": [
     {
       "id": 2,
@@ -1511,15 +1511,6 @@
       "e": "KPH",
       "n": "Congrès: Officine Pharma Africa Meeting",
       "m": 1,
-      "t": "Congrès"
-    },
-    {
-      "id": 180,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "KPH",
-      "n": "LES JDM (GRDVS) Congrès",
-      "m": 9,
       "t": "Congrès"
     },
     {
