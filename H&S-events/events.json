@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:20:29.460Z",
+  "updated_at": "2026-09-18T09:20:39.695Z",
   "events": [
     {
       "id": 2,
@@ -702,15 +702,6 @@
       "n": "Campagne Tambacor",
       "m": 7,
       "t": "Campagne"
-    },
-    {
-      "id": 86,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "Congrès AFOMEK",
-      "m": 9,
-      "t": "Congrès"
     },
     {
       "id": 87,
