@@ -2682,10 +2682,19 @@
       "n": "UM6P Bridge Africa Summit",
       "m": 11,
       "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 15,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Jalil Tijani Casablanca",
+      "m": 11,
+      "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 15,
+  "nxtId": 16,
   "meta": {
-    "updated_at": "2026-09-18T09:33:02.767Z"
+    "updated_at": "2026-09-18T09:36:23.902Z"
   }
 }
