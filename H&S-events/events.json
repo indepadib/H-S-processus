@@ -2763,10 +2763,19 @@
       "n": "Cardio Oriental",
       "m": 9,
       "t": "Congrès/TR"
+    },
+    {
+      "id": 8,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "Congrès AGON",
+      "m": 9,
+      "t": "Congrès/TR"
     }
   ],
-  "nxtId": 8,
+  "nxtId": 9,
   "meta": {
-    "updated_at": "2026-09-18T09:22:20.302Z"
+    "updated_at": "2026-09-18T09:23:55.550Z"
   }
 }
