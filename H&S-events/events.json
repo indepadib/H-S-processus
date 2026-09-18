@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:29:51.478Z",
+  "updated_at": "2026-09-18T09:34:03.035Z",
   "events": [
     {
       "id": 2,
@@ -44,15 +44,6 @@
       "e": "",
       "n": "EV: J'aimerais arrêté Casa + RABAT",
       "m": 10,
-      "t": "Événement"
-    },
-    {
-      "id": 10,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "EV: Sherlock Holmes CASA + RABAT",
-      "m": 11,
       "t": "Événement"
     },
     {
@@ -2662,15 +2653,6 @@
       "bu": "",
       "e": "",
       "n": "Gala Rotary Fondation",
-      "m": 10,
-      "t": "Événement corpo/Spectacle/Sport"
-    },
-    {
-      "id": 10,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "Mimo Lazrak",
       "m": 10,
       "t": "Événement corpo/Spectacle/Sport"
     },
