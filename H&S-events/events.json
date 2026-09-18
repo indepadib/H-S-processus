@@ -2700,10 +2700,19 @@
       "n": "Ouverture Site Tetouan",
       "m": 10,
       "t": "Lancement"
+    },
+    {
+      "id": 14,
+      "g": "H&S Group",
+      "bu": "",
+      "e": "",
+      "n": "UM6P Bridge Africa Summit",
+      "m": 11,
+      "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 14,
+  "nxtId": 15,
   "meta": {
-    "updated_at": "2026-09-18T09:32:00.512Z"
+    "updated_at": "2026-09-18T09:33:02.767Z"
   }
 }
