@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:28:59.804Z",
+  "updated_at": "2026-09-18T09:29:51.478Z",
   "events": [
     {
       "id": 2,
@@ -1314,15 +1314,6 @@
       "n": "Campagne AM",
       "m": 9,
       "t": "Campagne"
-    },
-    {
-      "id": 169,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "ADN Fes Congrès",
-      "m": 10,
-      "t": "Congrès"
     },
     {
       "id": 170,
