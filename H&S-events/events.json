@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:06:23.236Z",
+  "updated_at": "2026-09-18T09:06:26.816Z",
   "events": [
     {
       "id": 2,
@@ -90,15 +90,6 @@
       "n": "EV: Caftan week",
       "m": 5,
       "t": "Événement"
-    },
-    {
-      "id": 16,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "Campagne IPO",
-      "m": 7,
-      "t": "Campagne"
     },
     {
       "id": 17,
