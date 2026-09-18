@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:18:37.840Z",
+  "updated_at": "2026-09-18T09:19:58.275Z",
   "events": [
     {
       "id": 2,
@@ -1089,15 +1089,6 @@
       "n": "Campagne Allergo-Comod",
       "m": 7,
       "t": "Campagne"
-    },
-    {
-      "id": 129,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "Congrès Journée Hopital militaire rabat cardio",
-      "m": 9,
-      "t": "Congrès"
     },
     {
       "id": 130,
