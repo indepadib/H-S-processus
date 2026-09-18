@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:16:25.748Z",
+  "updated_at": "2026-09-18T09:16:34.244Z",
   "events": [
     {
       "id": 2,
@@ -1880,15 +1880,6 @@
       "e": "Franprix",
       "n": "Lancement",
       "m": 6,
-      "t": "Lancement"
-    },
-    {
-      "id": 217,
-      "g": "One Retail",
-      "bu": "Lifestyle",
-      "e": "Monoprix",
-      "n": "Lancement",
-      "m": 9,
       "t": "Lancement"
     },
     {
