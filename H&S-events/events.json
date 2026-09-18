@@ -2691,10 +2691,19 @@
       "n": "Comediablanca Taghazout",
       "m": 10,
       "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 13,
+      "g": "LVE Group",
+      "bu": "",
+      "e": "",
+      "n": "Ouverture Site Tetouan",
+      "m": 10,
+      "t": "Lancement"
     }
   ],
-  "nxtId": 13,
+  "nxtId": 14,
   "meta": {
-    "updated_at": "2026-09-18T09:31:22.955Z"
+    "updated_at": "2026-09-18T09:32:00.512Z"
   }
 }
