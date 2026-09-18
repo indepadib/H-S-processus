@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:38:07.926Z",
+  "updated_at": "2026-09-18T09:41:19.542Z",
   "events": [
     {
       "id": 2,
@@ -35,15 +35,6 @@
       "e": "",
       "n": "EV: Rose Royal rabat + Casa",
       "m": 9,
-      "t": "Événement"
-    },
-    {
-      "id": 9,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "EV: J'aimerais arrêté Casa + RABAT",
-      "m": 10,
       "t": "Événement"
     },
     {
@@ -2619,15 +2610,6 @@
       "n": "Congrès AGON",
       "m": 9,
       "t": "Congrès/TR"
-    },
-    {
-      "id": 9,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "Gala Rotary Fondation",
-      "m": 10,
-      "t": "Événement corpo/Spectacle/Sport"
     },
     {
       "id": 11,
