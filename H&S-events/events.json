@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:35:52.758Z",
+  "updated_at": "2026-09-18T09:37:09.243Z",
   "events": [
     {
       "id": 2,
@@ -116,15 +116,6 @@
       "e": "",
       "n": "EV: Dislog golf open",
       "m": 5,
-      "t": "Événement"
-    },
-    {
-      "id": 21,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "EV: La belle et la bete Casa",
-      "m": 12,
       "t": "Événement"
     },
     {
