@@ -2655,10 +2655,19 @@
       "n": "Congrès AGON",
       "m": 9,
       "t": "Congrès/TR"
+    },
+    {
+      "id": 9,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Gala Rotary Fondation",
+      "m": 10,
+      "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 9,
+  "nxtId": 10,
   "meta": {
-    "updated_at": "2026-09-18T09:23:55.550Z"
+    "updated_at": "2026-09-18T09:30:25.278Z"
   }
 }
