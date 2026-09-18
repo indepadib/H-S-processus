@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:28:17.330Z",
+  "updated_at": "2026-09-18T09:28:59.804Z",
   "events": [
     {
       "id": 2,
@@ -1552,11 +1552,11 @@
     {
       "id": 202,
       "g": "LVE Group",
-      "bu": "Hygiène",
-      "e": "KPH",
-      "n": "Congrès Logiterre",
+      "bu": "",
+      "e": "",
+      "n": "Salon Logiterre",
       "m": 10,
-      "t": "Congrès"
+      "t": "Congrès/TR"
     },
     {
       "id": 203,
