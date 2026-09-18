@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:23:24.667Z",
+  "updated_at": "2026-09-18T09:23:32.458Z",
   "events": [
     {
       "id": 2,
@@ -882,15 +882,6 @@
       "n": "TR: STAFF CHU",
       "m": 7,
       "t": "Événement"
-    },
-    {
-      "id": 107,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "Congrès SMSL",
-      "m": 9,
-      "t": "Congrès"
     },
     {
       "id": 108,
