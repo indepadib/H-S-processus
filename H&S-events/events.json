@@ -2673,10 +2673,19 @@
       "n": "Mimo Lazrak",
       "m": 10,
       "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 11,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Dislog Basketball League",
+      "m": 10,
+      "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 11,
+  "nxtId": 12,
   "meta": {
-    "updated_at": "2026-09-18T09:30:47.785Z"
+    "updated_at": "2026-09-18T09:31:05.787Z"
   }
 }
