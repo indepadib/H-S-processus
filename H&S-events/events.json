@@ -2700,10 +2700,19 @@
       "n": "Jalil Tijani",
       "m": 12,
       "t": "Événement corpo/Spectacle/Sport"
+    },
+    {
+      "id": 18,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Mimo lazrak",
+      "m": 12,
+      "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 18,
+  "nxtId": 19,
   "meta": {
-    "updated_at": "2026-09-18T09:37:39.785Z"
+    "updated_at": "2026-09-18T09:37:48.453Z"
   }
 }
