@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:27:49.333Z",
+  "updated_at": "2026-09-18T09:27:52.962Z",
   "events": [
     {
       "id": 2,
@@ -1457,15 +1457,6 @@
       "e": "KPH",
       "n": "PARA EXPO 26-28juin Congrès",
       "m": 6,
-      "t": "Congrès"
-    },
-    {
-      "id": 188,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "KPH",
-      "n": "Congrès CPHI",
-      "m": 10,
       "t": "Congrès"
     },
     {
