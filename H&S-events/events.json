@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:26:12.160Z",
+  "updated_at": "2026-09-18T09:27:19.686Z",
   "events": [
     {
       "id": 2,
@@ -576,15 +576,6 @@
       "n": "Campagne Azelastin-Comod",
       "m": 8,
       "t": "Campagne"
-    },
-    {
-      "id": 76,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "Congrès CPHI",
-      "m": 10,
-      "t": "Congrès"
     },
     {
       "id": 77,
