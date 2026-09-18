@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:22:58.035Z",
+  "updated_at": "2026-09-18T09:23:19.772Z",
   "events": [
     {
       "id": 2,
@@ -1341,15 +1341,6 @@
       "n": "Campagne Bactrim/ Tiberal",
       "m": 6,
       "t": "Campagne"
-    },
-    {
-      "id": 160,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "JPIT Congrès",
-      "m": 9,
-      "t": "Congrès"
     },
     {
       "id": 161,
