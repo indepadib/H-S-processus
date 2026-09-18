@@ -2727,10 +2727,19 @@
       "n": "ASSED",
       "m": 12,
       "t": "Congrès/TR"
+    },
+    {
+      "id": 22,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "SMC",
+      "m": 12,
+      "t": "Congrès/TR"
     }
   ],
-  "nxtId": 22,
+  "nxtId": 23,
   "meta": {
-    "updated_at": "2026-09-18T09:40:09.269Z"
+    "updated_at": "2026-09-18T09:40:21.337Z"
   }
 }
