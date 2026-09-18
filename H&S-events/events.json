@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:27:19.686Z",
+  "updated_at": "2026-09-18T09:27:27.453Z",
   "events": [
     {
       "id": 2,
@@ -936,15 +936,6 @@
       "n": "Campagne Falifer",
       "m": 8,
       "t": "Campagne"
-    },
-    {
-      "id": 120,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "Congrès Journées Endo Oriental",
-      "m": 10,
-      "t": "Congrès"
     },
     {
       "id": 121,
