@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:16:34.244Z",
+  "updated_at": "2026-09-18T09:17:36.949Z",
   "events": [
     {
       "id": 2,
@@ -612,15 +612,6 @@
       "n": "Campagne Azelastin-Comod",
       "m": 8,
       "t": "Campagne"
-    },
-    {
-      "id": 75,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "Congrès SMO-Ophta-Casa",
-      "m": 9,
-      "t": "Congrès"
     },
     {
       "id": 76,
