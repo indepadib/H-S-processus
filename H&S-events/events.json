@@ -2718,10 +2718,19 @@
       "n": "SMC",
       "m": 12,
       "t": "Congrès/TR"
+    },
+    {
+      "id": 23,
+      "g": "Dislog Group",
+      "bu": "",
+      "e": "",
+      "n": "Mimo lazrak casablanca",
+      "m": 10,
+      "t": "Événement corpo/Spectacle/Sport"
     }
   ],
-  "nxtId": 23,
+  "nxtId": 24,
   "meta": {
-    "updated_at": "2026-09-18T09:40:21.337Z"
+    "updated_at": "2026-09-18T09:42:17.094Z"
   }
 }
