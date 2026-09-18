@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-17T16:11:45.354Z",
+  "updated_at": "2026-09-18T09:06:14.200Z",
   "events": [
     {
       "id": 2,
@@ -27,15 +27,6 @@
       "n": "EV: Remise de diplome ISCAE",
       "m": 5,
       "t": "Événement"
-    },
-    {
-      "id": 7,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "IPO Dislog Affichage",
-      "m": 6,
-      "t": "Autre"
     },
     {
       "id": 8,
