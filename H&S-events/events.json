@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T09:27:35.697Z",
+  "updated_at": "2026-09-18T09:27:41.669Z",
   "events": [
     {
       "id": 2,
@@ -1116,15 +1116,6 @@
       "n": "Campagne Falifer",
       "m": 9,
       "t": "Campagne"
-    },
-    {
-      "id": 144,
-      "g": "Dislog Group",
-      "bu": "Healthcare",
-      "e": "Steripharma",
-      "n": "Congrès SMG-Ophta Marrakech",
-      "m": 10,
-      "t": "Congrès"
     },
     {
       "id": 145,
