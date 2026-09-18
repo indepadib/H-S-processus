@@ -2718,10 +2718,19 @@
       "n": "Congrès SOMACHIR marrakech",
       "m": 12,
       "t": "Congrès/TR"
+    },
+    {
+      "id": 21,
+      "g": "Dislog Group",
+      "bu": "Healthcare",
+      "e": "Steripharma",
+      "n": "ASSED",
+      "m": 12,
+      "t": "Congrès/TR"
     }
   ],
-  "nxtId": 21,
+  "nxtId": 22,
   "meta": {
-    "updated_at": "2026-09-18T09:39:54.246Z"
+    "updated_at": "2026-09-18T09:40:09.269Z"
   }
 }
