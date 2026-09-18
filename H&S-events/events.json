@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T12:11:03.833Z",
+  "updated_at": "2026-09-18T12:11:26.724Z",
   "events": [
     {
       "id": 2,
@@ -1872,15 +1872,6 @@
       "n": "Post aid",
       "m": 3,
       "t": "Activation"
-    },
-    {
-      "id": 245,
-      "g": "One Retail",
-      "bu": "Beauty",
-      "e": "Beauty For You",
-      "n": "EV: Pop up malls",
-      "m": 4,
-      "t": "Événement"
     },
     {
       "id": 246,
