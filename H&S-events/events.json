@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T17:15:36.324Z",
+  "updated_at": "2026-09-23T12:38:47.033Z",
   "events": [
     {
       "id": 2,
@@ -117,15 +117,6 @@
       "n": "EV: 8m2 Rabat + Casa",
       "m": 2,
       "t": "Événement"
-    },
-    {
-      "id": 23,
-      "g": "Dislog Group",
-      "bu": "",
-      "e": "",
-      "n": "EV: ASS TROPHEE HII DE GOLF",
-      "m": 10,
-      "t": "Événement corpo/Spectacle/Sport"
     },
     {
       "id": 24,
